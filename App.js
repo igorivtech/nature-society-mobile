@@ -1,21 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { options } from "./values/options";
+
+import { AppLoading } from "expo";
+
+import { OnboardingScreen } from "./components/screens/OnboardingScreen";
+
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { fontsLoader } from "./values/fonts";
+
+
+const HomeStack = createStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const { fontsLoaded } = fontsLoader();
+
+  if (fontsLoaded) {
+    return (
+      <NavigationContainer>
+        <HomeStack.Navigator screenOptions={options.navigation}>
+          <HomeStack.Screen
+            name="Onboarding"
+            component={OnboardingScreen}
+            options={options.headerOff}
+          />
+        </HomeStack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return <AppLoading />;
+  }
+}
