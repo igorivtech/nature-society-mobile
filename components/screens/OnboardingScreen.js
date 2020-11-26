@@ -38,7 +38,17 @@ export const OnboardingScreen = ({ navigation }) => {
   const finishButtonAlpha = useRef(new Animated.Value(0)).current;
   const finishButtonScale = useRef(new Animated.Value(0.5)).current;
   const textAlpha = useRef(new Animated.Value(1)).current;
+  const textScale = useRef(new Animated.Value(0)).current;
 
+  useEffect(()=>{
+    Animated.timing(textScale, {
+      toValue: 1,
+      duration: 500,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true
+    }).start();
+  }, []);
+  
   const next = () => {
     if (doneVisible) {
       return;
@@ -139,7 +149,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.onboardingContainer}>
-      
+
       <TouchableWithoutFeedback onPress={next} style={styles.halfLeft}>
         <View style={styles.fillParent} />
       </TouchableWithoutFeedback>
@@ -171,7 +181,13 @@ export const OnboardingScreen = ({ navigation }) => {
           />
         </Animated.View>
 
-        <Animated.Text style={{...textStyles.onboardingText, opacity: textAlpha}}>{currText}</Animated.Text>
+        <Animated.Text style={{
+          ...textStyles.onboardingText, 
+          opacity: textAlpha,
+          transform: [
+            {scale: textScale}
+          ]
+          }}>{currText}</Animated.Text>
 
         {doneVisible ? (
           <Animated.View
