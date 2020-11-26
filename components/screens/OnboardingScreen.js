@@ -54,7 +54,6 @@ export const OnboardingScreen = () => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
   const [currIndex, setIndex] = useState(0);
   const [doneVisible, setDoneVisible] = useState(false);
-  const [showDoneButton, setShowDoneButton] = useState(false);
 
   //
 
@@ -78,7 +77,6 @@ export const OnboardingScreen = () => {
     }
     if (currIndex == 2) {
       setDoneVisible(true);
-      setShowDoneButton(true);
       Animated.timing(doneButtonAlpha, {
         toValue: 0.5,
         duration: 500,
@@ -160,7 +158,7 @@ export const OnboardingScreen = () => {
         </Animated.View>
         <Text style={textStyles.onboardingText}>{currText}</Text>
 
-        {showDoneButton ? (
+        {doneVisible ? (
           <Animated.View
             style={{
               opacity: doneButtonAlpha,
