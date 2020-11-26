@@ -28,7 +28,7 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-const buttonAnimation = 400;
+const buttonAnimation = 300;
 
 const Button = ({ index, selected, setIndex, doneVisible = false }) => {
 
