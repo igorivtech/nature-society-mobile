@@ -55,7 +55,7 @@ export const OnboardingScreen = () => {
 
   useEffect(() => {
     if (currIndex >= 0) {
-      setCurrText(titles[currIndex]);
+      fadeText(titles[currIndex]);
     }
     if (currIndex == 2) {
       setDoneVisible(true);
@@ -78,7 +78,7 @@ export const OnboardingScreen = () => {
 
   const doneOnPress = () => {
     setIndex(-1);
-    setCurrText(strings.onboardingScreen.done);
+    fadeText(strings.onboardingScreen.done);
     setFinishVisible(true);
     Animated.timing(buttonsYTranslate, {
       toValue: -(height / 2 - 100),
@@ -117,6 +117,10 @@ export const OnboardingScreen = () => {
       useNativeDriver: true,
       delay: 2*duration
     }).start();
+  };
+
+  const fadeText = (text) => {
+    setCurrText(text);
   };
 
   return (
