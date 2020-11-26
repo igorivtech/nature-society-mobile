@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
   Pressable,
   Image,
   TouchableWithoutFeedback,
+  Animated,
+  Easing,
 } from "react-native";
 import { strings } from "../../values/strings";
 import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
-import { width, height } from '../../values/consts'
+import { width, height } from "../../values/consts";
+
+const duration = 1200
 
 const images = {
   0: require("../../assets/images/Explore.png"),
@@ -23,37 +27,24 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-const Button = ({
-  index,
-  selected,
-  setIndex,
-  onDone,
-  style,
-  doneVisible = false,
-}) => {
+const Button = ({ index, selected, setIndex, doneVisible = false }) => {
   const onPress = () => {
     if (setIndex != null) {
       if (doneVisible) {
         return;
       }
       setIndex(index);
-    } else if (onDone != null) {
-      onDone();
     }
   };
 
   return (
-    <Pressable onPress={onPress} style={style}>
+    <Pressable onPress={onPress}>
       <Image
         style={{
           opacity: selected ? 1 : 0.5,
           transform: [{ scale: selected ? 1 : 0.8 }],
         }}
-        source={
-          index != null
-            ? images[index]
-            : require("../../assets/images/onboarding_done.png")
-        }
+        source={images[index]}
       />
     </Pressable>
   );
@@ -62,15 +53,19 @@ const Button = ({
 export const OnboardingScreen = () => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
   const [currIndex, setIndex] = useState(0);
-  const [doneActive, setDoneActive] = useState(false);
   const [doneVisible, setDoneVisible] = useState(false);
 
   //
 
-  const [buttonsYTranslate, setButtonsYTranslate] = useState(0);
-  const [doneButtonYTranslate, setDoneButtonYTranslate] = useState(0);
-  
+  const buttonsYTranslate = useRef(new Animated.Value(0)).current;
+  const doneButtonYTranslate = useRef(new Animated.Value(0)).current;
+  const doneButtonAlpha = useRef(new Animated.Value(0)).current;
+  const doneButtonScale = useRef(new Animated.Value(0)).current;
+
   const next = () => {
+    if (doneVisible) {
+      return;
+    }
     if (currIndex < 2) {
       setIndex(currIndex + 1);
     }
@@ -81,18 +76,52 @@ export const OnboardingScreen = () => {
       setCurrText(titles[currIndex]);
     }
     if (currIndex == 2) {
-      setTimeout(() => {
-        setDoneVisible(true);
-      }, 1500);
+      setDoneVisible(true);
+      Animated.timing(doneButtonAlpha, {
+        toValue: 0.5,
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+        delay: 1500
+      }).start();
+      Animated.timing(doneButtonScale, {
+        toValue: 0.8,
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+        delay: 1500
+      }).start();
     }
   }, [currIndex]);
 
   const doneOnPress = () => {
-    setDoneActive(true);
     setIndex(-1);
     setCurrText(strings.onboardingScreen.done);
-    setButtonsYTranslate(-(height/2 - 100));
-    setDoneButtonYTranslate(-200);
+    
+    Animated.timing(buttonsYTranslate, {
+      toValue: -(height / 2 - 100),
+      duration: duration,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(doneButtonYTranslate, {
+      toValue: -200,
+      duration: duration,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(doneButtonAlpha, {
+      toValue: 1,
+      duration: duration,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(doneButtonScale, {
+      toValue: 1,
+      duration: duration,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
   };
 
   return (
@@ -102,9 +131,12 @@ export const OnboardingScreen = () => {
       </TouchableWithoutFeedback>
 
       <View style={styles.onboardingMainContainer}>
-        <View style={{ ...styles.onboardingButtonsContainer, transform: [
-          { translateY: buttonsYTranslate }
-        ] }}>
+        <Animated.View
+          style={{
+            ...styles.onboardingButtonsContainer,
+            transform: [{ translateY: buttonsYTranslate }],
+          }}
+        >
           <Button
             index={2}
             selected={currIndex == 2}
@@ -123,18 +155,26 @@ export const OnboardingScreen = () => {
             setIndex={setIndex}
             doneVisible={doneVisible}
           />
-        </View>
+        </Animated.View>
         <Text style={textStyles.onboardingText}>{currText}</Text>
 
-        {doneVisible ? (
-          <Button
-            selected={doneActive}
-            onDone={doneOnPress}
-            style={{ marginTop: 40 , transform: [
-              {translateY: doneButtonYTranslate}
-            ]}}
-          />
-        ) : null}
+        <Animated.View
+            style={{
+              opacity: doneButtonAlpha,
+              marginTop: 40,
+              transform: [
+                { translateY: doneButtonYTranslate },
+                { scale: doneButtonScale },
+              ],
+            }}
+          >
+            <Pressable onPress={doneOnPress}>
+              <Image
+                source={require("../../assets/images/onboarding_done.png")}
+              />
+            </Pressable>
+          </Animated.View>
+
       </View>
     </View>
   );
