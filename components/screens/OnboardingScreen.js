@@ -23,7 +23,7 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-export const OnboardingScreen = ({navigation}) => {
+export const OnboardingScreen = ({ navigation }) => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
   const [currIndex, setIndex] = useState(0);
   const [doneVisible, setDoneVisible] = useState(false);
@@ -122,24 +122,24 @@ export const OnboardingScreen = ({navigation}) => {
     // out
     Animated.timing(textAlpha, {
       toValue: 0.5,
-      duration: 250,
+      duration: 200,
       useNativeDriver: true,
     }).start();
     // change
     setTimeout(() => {
       setCurrText(text);
-    }, 250);
-    // in
-    Animated.timing(textAlpha, {
-      toValue: 1,
-      duration: 250,
-      useNativeDriver: true,
-      delay: 250,
-    }).start();
+      // in
+      Animated.timing(textAlpha, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }, 200);
   };
 
   return (
     <View style={styles.onboardingContainer}>
+      
       <TouchableWithoutFeedback onPress={next} style={styles.halfLeft}>
         <View style={styles.fillParent} />
       </TouchableWithoutFeedback>
