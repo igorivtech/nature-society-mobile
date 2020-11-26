@@ -38,4 +38,17 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: 'flex-start',
   },
+
+  halfLeft: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: width / 2 
+  },
+
+  fillParent: {
+    height: '100%',
+    width: '100%',
+  }
 });

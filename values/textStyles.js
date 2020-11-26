@@ -6,6 +6,6 @@ export const textStyles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     fontFamily: fonts.normal,
-    fontSize: 25,
+    fontSize: 22,
   },
 });
