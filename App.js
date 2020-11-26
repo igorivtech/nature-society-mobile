@@ -16,24 +16,24 @@ const HomeStack = createStackNavigator();
 export default function App() {
   const { fontsLoaded } = fontsLoader();
 
-  if (fontsLoaded) {
-    return (
-      <NavigationContainer>
-        <HomeStack.Navigator screenOptions={options.navigation}>
-          <HomeStack.Screen
-            name="Onboarding"
-            component={OnboardingScreen}
-            options={options.headerOff}
-          />
-          <HomeStack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={options.headerOff}
-          />
-        </HomeStack.Navigator>
-      </NavigationContainer>
-    );
-  } else {
+  if (!fontsLoaded) {
     return <AppLoading />;
   }
+
+  return (
+    <NavigationContainer>
+      <HomeStack.Navigator screenOptions={options.navigation}>
+        <HomeStack.Screen
+          name="Onboarding"
+          component={OnboardingScreen}
+          options={options.headerOff}
+        />
+        <HomeStack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={options.headerOff}
+        />
+      </HomeStack.Navigator>
+    </NavigationContainer>
+  );
 }
