@@ -13,17 +13,15 @@ import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { width, height } from "../../values/consts";
 import { colors } from "../../values/colors";
-import {Button, CoolButton} from "../views/onboarding/views"
+import { Button, CoolButton } from "../views/onboarding/views";
 
 const duration = 1200;
-
 
 const titles = {
   0: strings.onboardingScreen.item1,
   1: strings.onboardingScreen.item2,
   2: strings.onboardingScreen.item3,
 };
-
 
 export const OnboardingScreen = () => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
@@ -39,6 +37,7 @@ export const OnboardingScreen = () => {
   const doneButtonScale = useRef(new Animated.Value(0)).current;
   const finishButtonAlpha = useRef(new Animated.Value(0)).current;
   const finishButtonScale = useRef(new Animated.Value(0.5)).current;
+  const textAlpha = useRef(new Animated.Value(1)).current;
 
   const next = () => {
     if (doneVisible) {
@@ -107,20 +106,36 @@ export const OnboardingScreen = () => {
     //
     Animated.timing(finishButtonAlpha, {
       toValue: 1,
-      duration: duration/2,
+      duration: duration / 2,
       useNativeDriver: true,
-      delay: 2*duration
+      delay: 2 * duration,
     }).start();
     Animated.spring(finishButtonScale, {
       toValue: 1,
-      duration: duration/2,
+      duration: duration / 2,
       useNativeDriver: true,
-      delay: 2*duration
+      delay: 2 * duration,
     }).start();
   };
 
   const fadeText = (text) => {
-    setCurrText(text);
+    // out
+    Animated.timing(textAlpha, {
+      toValue: 0.5,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+    // change
+    setTimeout(() => {
+      setCurrText(text);
+    }, 250);
+    // in
+    Animated.timing(textAlpha, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+      delay: 250,
+    }).start();
   };
 
   return (
@@ -155,7 +170,8 @@ export const OnboardingScreen = () => {
             doneVisible={doneVisible}
           />
         </Animated.View>
-        <Text style={textStyles.onboardingText}>{currText}</Text>
+
+        <Animated.Text style={{...textStyles.onboardingText, opacity: textAlpha}}>{currText}</Animated.Text>
 
         {doneVisible ? (
           <Animated.View

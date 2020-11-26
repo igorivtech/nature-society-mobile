@@ -4,6 +4,7 @@ import {fonts} from './fonts'
 
 export const textStyles = StyleSheet.create({
   onboardingText: {
+    color: 'black',
     textAlign: 'center',
     marginTop: 20,
     fontFamily: fonts.normal,
