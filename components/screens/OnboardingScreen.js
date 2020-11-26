@@ -23,7 +23,7 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-export const OnboardingScreen = () => {
+export const OnboardingScreen = ({navigation}) => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
   const [currIndex, setIndex] = useState(0);
   const [doneVisible, setDoneVisible] = useState(false);
@@ -49,7 +49,7 @@ export const OnboardingScreen = () => {
   };
 
   const finish = () => {
-    console.log("finish");
+    navigation.push("Home");
   };
 
   useEffect(() => {

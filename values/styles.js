@@ -3,6 +3,11 @@ import { colors } from "./colors";
 import { width, height } from './consts'
 
 export const styles = StyleSheet.create({
+
+  mapStyle: {
+    width: width,
+    height: height,
+  },
   centerChildren: {
     alignItems: "center",
     justifyContent: "center",
