@@ -9,6 +9,7 @@ import {
 import { strings } from "../../values/strings";
 import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
+import { width, height } from '../../values/consts'
 
 const images = {
   0: require("../../assets/images/Explore.png"),
@@ -22,7 +23,14 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-const Button = ({ index, selected, setIndex, onDone, style, doneVisible = false }) => {
+const Button = ({
+  index,
+  selected,
+  setIndex,
+  onDone,
+  style,
+  doneVisible = false,
+}) => {
   const onPress = () => {
     if (setIndex != null) {
       if (doneVisible) {
@@ -57,6 +65,11 @@ export const OnboardingScreen = () => {
   const [doneActive, setDoneActive] = useState(false);
   const [doneVisible, setDoneVisible] = useState(false);
 
+  //
+
+  const [buttonsYTranslate, setButtonsYTranslate] = useState(0);
+  const [doneButtonYTranslate, setDoneButtonYTranslate] = useState(0);
+  
   const next = () => {
     if (currIndex < 2) {
       setIndex(currIndex + 1);
@@ -70,7 +83,7 @@ export const OnboardingScreen = () => {
     if (currIndex == 2) {
       setTimeout(() => {
         setDoneVisible(true);
-      }, 2000);
+      }, 1500);
     }
   }, [currIndex]);
 
@@ -78,6 +91,8 @@ export const OnboardingScreen = () => {
     setDoneActive(true);
     setIndex(-1);
     setCurrText(strings.onboardingScreen.done);
+    setButtonsYTranslate(-(height/2 - 100));
+    setDoneButtonYTranslate(-200);
   };
 
   return (
@@ -87,15 +102,38 @@ export const OnboardingScreen = () => {
       </TouchableWithoutFeedback>
 
       <View style={styles.onboardingMainContainer}>
-        <View style={styles.onboardingButtonsContainer}>
-          <Button index={2} selected={currIndex == 2} setIndex={setIndex} doneVisible={doneVisible} />
-          <Button index={1} selected={currIndex == 1} setIndex={setIndex} doneVisible={doneVisible} />
-          <Button index={0} selected={currIndex == 0} setIndex={setIndex} doneVisible={doneVisible} />
+        <View style={{ ...styles.onboardingButtonsContainer, transform: [
+          { translateY: buttonsYTranslate }
+        ] }}>
+          <Button
+            index={2}
+            selected={currIndex == 2}
+            setIndex={setIndex}
+            doneVisible={doneVisible}
+          />
+          <Button
+            index={1}
+            selected={currIndex == 1}
+            setIndex={setIndex}
+            doneVisible={doneVisible}
+          />
+          <Button
+            index={0}
+            selected={currIndex == 0}
+            setIndex={setIndex}
+            doneVisible={doneVisible}
+          />
         </View>
         <Text style={textStyles.onboardingText}>{currText}</Text>
 
         {doneVisible ? (
-          <Button selected={doneActive} onDone={doneOnPress} style={{marginTop: 50}} />
+          <Button
+            selected={doneActive}
+            onDone={doneOnPress}
+            style={{ marginTop: 40 , transform: [
+              {translateY: doneButtonYTranslate}
+            ]}}
+          />
         ) : null}
       </View>
     </View>

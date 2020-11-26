@@ -1,8 +1,6 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+import { width, height } from './consts'
 
 export const styles = StyleSheet.create({
   centerChildren: {
