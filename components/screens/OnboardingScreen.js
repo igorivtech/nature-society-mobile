@@ -54,6 +54,7 @@ export const OnboardingScreen = () => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
   const [currIndex, setIndex] = useState(0);
   const [doneVisible, setDoneVisible] = useState(false);
+  const [showDoneButton, setShowDoneButton] = useState(false);
 
   //
 
@@ -77,6 +78,7 @@ export const OnboardingScreen = () => {
     }
     if (currIndex == 2) {
       setDoneVisible(true);
+      setShowDoneButton(true);
       Animated.timing(doneButtonAlpha, {
         toValue: 0.5,
         duration: 500,
@@ -158,22 +160,24 @@ export const OnboardingScreen = () => {
         </Animated.View>
         <Text style={textStyles.onboardingText}>{currText}</Text>
 
-        <Animated.View
-          style={{
-            opacity: doneButtonAlpha,
-            marginTop: 40,
-            transform: [
-              { translateY: doneButtonYTranslate },
-              { scale: doneButtonScale },
-            ],
-          }}
-        >
-          <Pressable onPress={doneOnPress}>
-            <Image
-              source={require("../../assets/images/onboarding_done.png")}
-            />
-          </Pressable>
-        </Animated.View>
+        {showDoneButton ? (
+          <Animated.View
+            style={{
+              opacity: doneButtonAlpha,
+              marginTop: 40,
+              transform: [
+                { translateY: doneButtonYTranslate },
+                { scale: doneButtonScale },
+              ],
+            }}
+          >
+            <Pressable onPress={doneOnPress}>
+              <Image
+                source={require("../../assets/images/onboarding_done.png")}
+              />
+            </Pressable>
+          </Animated.View>
+        ) : null}
       </View>
     </View>
   );
