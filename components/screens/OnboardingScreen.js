@@ -13,7 +13,7 @@ import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { width, height } from "../../values/consts";
 
-const duration = 1200
+const duration = 1200;
 
 const images = {
   0: require("../../assets/images/Explore.png"),
@@ -82,14 +82,14 @@ export const OnboardingScreen = () => {
         duration: 500,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: true,
-        delay: 1500
+        delay: 1500,
       }).start();
       Animated.timing(doneButtonScale, {
         toValue: 0.8,
         duration: 500,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: true,
-        delay: 1500
+        delay: 1500,
       }).start();
     }
   }, [currIndex]);
@@ -97,7 +97,7 @@ export const OnboardingScreen = () => {
   const doneOnPress = () => {
     setIndex(-1);
     setCurrText(strings.onboardingScreen.done);
-    
+
     Animated.timing(buttonsYTranslate, {
       toValue: -(height / 2 - 100),
       duration: duration,
@@ -159,22 +159,21 @@ export const OnboardingScreen = () => {
         <Text style={textStyles.onboardingText}>{currText}</Text>
 
         <Animated.View
-            style={{
-              opacity: doneButtonAlpha,
-              marginTop: 40,
-              transform: [
-                { translateY: doneButtonYTranslate },
-                { scale: doneButtonScale },
-              ],
-            }}
-          >
-            <Pressable onPress={doneOnPress}>
-              <Image
-                source={require("../../assets/images/onboarding_done.png")}
-              />
-            </Pressable>
-          </Animated.View>
-
+          style={{
+            opacity: doneButtonAlpha,
+            marginTop: 40,
+            transform: [
+              { translateY: doneButtonYTranslate },
+              { scale: doneButtonScale },
+            ],
+          }}
+        >
+          <Pressable onPress={doneOnPress}>
+            <Image
+              source={require("../../assets/images/onboarding_done.png")}
+            />
+          </Pressable>
+        </Animated.View>
       </View>
     </View>
   );
