@@ -28,7 +28,28 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
+const buttonAnimation = 400;
+
 const Button = ({ index, selected, setIndex, doneVisible = false }) => {
+
+  const alpha = useRef(new Animated.Value(0)).current;
+  const scale = useRef(new Animated.Value(0.8)).current;
+
+  useEffect(()=>{
+    Animated.timing(alpha, {
+      toValue: selected ? 1 : 0.5,
+      duration: buttonAnimation,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(scale, {
+      toValue: selected ? 1 : 0.8,
+      duration: buttonAnimation,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+  }, [selected])
+
   const onPress = () => {
     if (setIndex != null) {
       if (doneVisible) {
@@ -40,10 +61,10 @@ const Button = ({ index, selected, setIndex, doneVisible = false }) => {
 
   return (
     <Pressable onPress={onPress}>
-      <Image
+      <Animated.Image
         style={{
-          opacity: selected ? 1 : 0.5,
-          transform: [{ scale: selected ? 1 : 0.8 }],
+          opacity: alpha,
+          transform: [{ scale: scale }],
         }}
         source={images[index]}
       />
