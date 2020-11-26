@@ -13,14 +13,10 @@ import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { width, height } from "../../values/consts";
 import { colors } from "../../values/colors";
+import {Button, CoolButton} from "../views/onboarding/views"
 
 const duration = 1200;
 
-const images = {
-  0: require("../../assets/images/Explore.png"),
-  1: require("../../assets/images/Report.png"),
-  2: require("../../assets/images/Progress.png"),
-};
 
 const titles = {
   0: strings.onboardingScreen.item1,
@@ -28,70 +24,6 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-const buttonAnimation = 300;
-
-const Button = ({ index, selected, setIndex, doneVisible = false }) => {
-
-  const alpha = useRef(new Animated.Value(0)).current;
-  const scale = useRef(new Animated.Value(0.8)).current;
-
-  useEffect(()=>{
-    Animated.timing(alpha, {
-      toValue: selected ? 1 : 0.5,
-      duration: buttonAnimation,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(scale, {
-      toValue: selected ? 1 : 0.8,
-      duration: buttonAnimation,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
-  }, [selected])
-
-  const onPress = () => {
-    if (setIndex != null) {
-      if (doneVisible) {
-        return;
-      }
-      setIndex(index);
-    }
-  };
-
-  return (
-    <Pressable onPress={onPress}>
-      <Animated.Image
-        style={{
-          opacity: alpha,
-          transform: [{ scale: scale }],
-        }}
-        source={images[index]}
-      />
-    </Pressable>
-  );
-};
-
-const CoolButton = ({ onPress }) => {
-  return (
-    <Pressable onPress={onPress}>
-      <View
-        style={{
-          backgroundColor: colors.treeBlues,
-          height: 44,
-          width: 222,
-          borderRadius: 12,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={textStyles.onboardingCoolButton}>
-          {strings.onboardingScreen.coolButton}
-        </Text>
-      </View>
-    </Pressable>
-  );
-};
 
 export const OnboardingScreen = () => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
