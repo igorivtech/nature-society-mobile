@@ -48,5 +48,6 @@ export const styles = StyleSheet.create({
   fillParent: {
     height: '100%',
     width: '100%',
-  }
+  },
+
 });

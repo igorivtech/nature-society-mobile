@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "./colors";
 import {fonts} from './fonts'
 
 export const textStyles = StyleSheet.create({
@@ -8,4 +9,11 @@ export const textStyles = StyleSheet.create({
     fontFamily: fonts.normal,
     fontSize: 22,
   },
+
+  onboardingCoolButton: {
+    color: 'white',
+    fontWeight: '700',
+    fontFamily: fonts.normal,
+    fontSize: 24,
+  }
 });

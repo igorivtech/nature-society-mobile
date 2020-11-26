@@ -12,6 +12,7 @@ import { strings } from "../../values/strings";
 import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { width, height } from "../../values/consts";
+import { colors } from "../../values/colors";
 
 const duration = 1200;
 
@@ -50,10 +51,32 @@ const Button = ({ index, selected, setIndex, doneVisible = false }) => {
   );
 };
 
+const CoolButton = ({ onPress }) => {
+  return (
+    <Pressable onPress={onPress}>
+      <View
+        style={{
+          backgroundColor: colors.treeBlues,
+          height: 44,
+          width: 222,
+          borderRadius: 12,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={textStyles.onboardingCoolButton}>
+          {strings.onboardingScreen.coolButton}
+        </Text>
+      </View>
+    </Pressable>
+  );
+};
+
 export const OnboardingScreen = () => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
   const [currIndex, setIndex] = useState(0);
   const [doneVisible, setDoneVisible] = useState(false);
+  const [finishVisible, setFinishVisible] = useState(false);
 
   //
 
@@ -61,6 +84,8 @@ export const OnboardingScreen = () => {
   const doneButtonYTranslate = useRef(new Animated.Value(0)).current;
   const doneButtonAlpha = useRef(new Animated.Value(0)).current;
   const doneButtonScale = useRef(new Animated.Value(0)).current;
+  const finishButtonAlpha = useRef(new Animated.Value(0)).current;
+  const finishButtonScale = useRef(new Animated.Value(0.5)).current;
 
   const next = () => {
     if (doneVisible) {
@@ -69,6 +94,10 @@ export const OnboardingScreen = () => {
     if (currIndex < 2) {
       setIndex(currIndex + 1);
     }
+  };
+
+  const finish = () => {
+    console.log("finish");
   };
 
   useEffect(() => {
@@ -97,7 +126,7 @@ export const OnboardingScreen = () => {
   const doneOnPress = () => {
     setIndex(-1);
     setCurrText(strings.onboardingScreen.done);
-
+    setFinishVisible(true);
     Animated.timing(buttonsYTranslate, {
       toValue: -(height / 2 - 100),
       duration: duration,
@@ -121,6 +150,19 @@ export const OnboardingScreen = () => {
       duration: duration,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
+    }).start();
+    //
+    Animated.timing(finishButtonAlpha, {
+      toValue: 1,
+      duration: duration/2,
+      useNativeDriver: true,
+      delay: 2*duration
+    }).start();
+    Animated.spring(finishButtonScale, {
+      toValue: 1,
+      duration: duration/2,
+      useNativeDriver: true,
+      delay: 2*duration
     }).start();
   };
 
@@ -177,6 +219,19 @@ export const OnboardingScreen = () => {
           </Animated.View>
         ) : null}
       </View>
+
+      {finishVisible ? (
+        <Animated.View
+          style={{
+            transform: [{ scale: finishButtonScale }],
+            opacity: finishButtonAlpha,
+            position: "absolute",
+            bottom: 50,
+          }}
+        >
+          <CoolButton onPress={finish} />
+        </Animated.View>
+      ) : null}
     </View>
   );
 };
