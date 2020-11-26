@@ -1,5 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { colors } from "./colors";
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   centerChildren: {
@@ -28,8 +31,11 @@ export const styles = StyleSheet.create({
   },
 
   onboardingMainContainer: {
+    top: height/2 - 60,
+    position: 'absolute',
     width: "100%",
     paddingHorizontal: 30,
     alignItems: "center",
+    justifyContent: 'flex-start',
   },
 });

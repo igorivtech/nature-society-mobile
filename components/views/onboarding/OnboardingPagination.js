@@ -16,7 +16,11 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-const Button = ({ index, selected, onPress }) => {
+const Button = ({ index, selected, setIndex }) => {
+  const onPress = () => {
+    setIndex(index);
+  };
+
   return (
     <Pressable onPress={onPress}>
       <Image
@@ -47,9 +51,9 @@ export const OnboardingPagination = () => {
   return (
     <View style={styles.onboardingMainContainer}>
       <View style={styles.onboardingButtonsContainer}>
-        <Button index={2} selected={currIndex == 2} onPress={next} />
-        <Button index={1} selected={currIndex == 1} onPress={next} />
-        <Button index={0} selected={currIndex == 0} onPress={next} />
+        <Button index={2} selected={currIndex == 2} setIndex={setIndex} />
+        <Button index={1} selected={currIndex == 1} setIndex={setIndex} />
+        <Button index={0} selected={currIndex == 0} setIndex={setIndex} />
       </View>
       <Text style={textStyles.onboardingText}>{currText}</Text>
     </View>
