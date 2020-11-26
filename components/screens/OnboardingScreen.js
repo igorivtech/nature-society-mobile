@@ -103,7 +103,7 @@ export const OnboardingScreen = ({ navigation }) => {
     }).start();
     Animated.timing(doneButtonAlpha, {
       toValue: 1,
-      duration: duration,
+      duration: duration/2,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
     }).start();
