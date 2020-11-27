@@ -15,7 +15,7 @@ import { width, height } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { Button, CoolButton } from "../views/onboarding/views";
 
-const duration = 1200;
+const doneDuration = 1600;
 
 const titles = {
   0: strings.onboardingScreen.item1,
@@ -86,52 +86,57 @@ export const OnboardingScreen = ({ navigation }) => {
   }, [currIndex]);
 
   const doneOnPress = () => {
+    if (currIndex == -1) {
+      return;
+    }
     setIndex(-1);
-    fadeText(strings.onboardingScreen.done);
+    setTimeout(()=>{
+      fadeText(strings.onboardingScreen.done);
+    }, 100);
     setFinishVisible(true);
     Animated.timing(buttonsYTranslate, {
       toValue: -(height / 2 - 100),
-      duration: duration,
+      duration: doneDuration,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
     }).start();
     Animated.timing(doneButtonYTranslate, {
       toValue: -200,
-      duration: duration,
+      duration: doneDuration,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
     }).start();
     Animated.timing(doneButtonAlpha, {
       toValue: 1,
-      duration: duration/2,
+      duration: doneDuration/2,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
     }).start();
     Animated.timing(doneButtonScale, {
       toValue: 1,
-      duration: duration,
+      duration: doneDuration,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
     }).start();
     //
     Animated.timing(finishButtonAlpha, {
       toValue: 1,
-      duration: duration / 2,
+      duration: doneDuration / 2,
       useNativeDriver: true,
-      delay: 2 * duration,
+      delay: 2 * doneDuration,
     }).start();
     Animated.spring(finishButtonScale, {
       toValue: 1,
-      duration: duration / 2,
+      duration: doneDuration / 2,
       useNativeDriver: true,
-      delay: 2 * duration,
+      delay: 2 * doneDuration,
     }).start();
   };
 
   const fadeText = (text) => {
     // out
     Animated.timing(textAlpha, {
-      toValue: 0.2,
+      toValue: 0.1,
       duration: 200,
       useNativeDriver: true,
     }).start();
