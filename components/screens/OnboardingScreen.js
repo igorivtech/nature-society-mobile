@@ -131,7 +131,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const fadeText = (text) => {
     // out
     Animated.timing(textAlpha, {
-      toValue: 0.5,
+      toValue: 0.2,
       duration: 200,
       useNativeDriver: true,
     }).start();
