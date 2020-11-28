@@ -94,12 +94,14 @@ export const OnboardingScreen = ({ navigation }) => {
       fadeText(strings.onboardingScreen.done);
     }, 100);
     setFinishVisible(true);
+    // Hstack buttons
     Animated.timing(buttonsYTranslate, {
       toValue: -(height / 2 - 100),
       duration: doneDuration,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
     }).start();
+    // done button
     Animated.timing(doneButtonYTranslate, {
       toValue: -200,
       duration: doneDuration,
@@ -118,7 +120,7 @@ export const OnboardingScreen = ({ navigation }) => {
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
     }).start();
-    //
+    // finish button
     Animated.timing(finishButtonAlpha, {
       toValue: 1,
       duration: doneDuration / 2,
