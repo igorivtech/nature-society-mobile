@@ -12,7 +12,7 @@ const images = {
 
 const buttonAnimation = 300;
 
-export const Button = ({ index, selected, setIndex, doneVisible = false }) => {
+export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false }) => {
   const alpha = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0.8)).current;
 

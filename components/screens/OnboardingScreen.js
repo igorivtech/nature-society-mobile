@@ -13,7 +13,7 @@ import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { width, height } from "../../values/consts";
 import { colors } from "../../values/colors";
-import { Button, CoolButton } from "../views/onboarding/views";
+import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 
 const doneDuration = 1600;
 
@@ -168,19 +168,19 @@ export const OnboardingScreen = ({ navigation }) => {
             transform: [{ translateY: buttonsYTranslate }],
           }}
         >
-          <Button
+          <OnboardingButton
             index={2}
             selected={currIndex == 2}
             setIndex={setIndex}
             doneVisible={doneVisible}
           />
-          <Button
+          <OnboardingButton
             index={1}
             selected={currIndex == 1}
             setIndex={setIndex}
             doneVisible={doneVisible}
           />
-          <Button
+          <OnboardingButton
             index={0}
             selected={currIndex == 0}
             setIndex={setIndex}
