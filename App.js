@@ -26,9 +26,26 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <HomeStack.Navigator initialRouteName='Onboarding' headerMode='none'>
+      <HomeStack.Navigator initialRouteName="Onboarding" headerMode="none">
         <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
-        <HomeStack.Screen name="Home" component={HomeScreen} />
+        <HomeStack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={() => ({
+            gestureEnabled: false,
+            transitionSpec: {
+              open: { animation: 'timing', config: { duration: 1000 } },
+              close: { animation: 'timing', config: { duration: 1000 } },
+            },
+            cardStyleInterpolator: ({ current: { progress } }) => {
+              return {
+                cardStyle: {
+                  opacity: progress
+                }
+              }
+            },
+          })}
+        />
       </HomeStack.Navigator>
     </NavigationContainer>
   );
