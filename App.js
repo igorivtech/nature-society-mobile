@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { Easing } from "react-native";
 
 import { AppLoading } from "expo";
 import { fontsLoader } from "./values/fonts";
@@ -12,6 +13,7 @@ import { options } from "./values/options";
 
 import { OnboardingScreen } from "./components/screens/OnboardingScreen";
 import { HomeScreen } from "./components/screens/HomeScreen";
+import { NAV_DURATION } from "./values/consts";
 
 enableScreens();
 
@@ -34,15 +36,21 @@ export default function App() {
           options={() => ({
             gestureEnabled: false,
             transitionSpec: {
-              open: { animation: 'timing', config: { duration: 1000 } },
-              close: { animation: 'timing', config: { duration: 1000 } },
+              open: {
+                animation: "timing",
+                config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+              },
+              close: {
+                animation: "timing",
+                config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+              },
             },
             cardStyleInterpolator: ({ current: { progress } }) => {
               return {
                 cardStyle: {
-                  opacity: progress
-                }
-              }
+                  opacity: progress,
+                },
+              };
             },
           })}
         />
