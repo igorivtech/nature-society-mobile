@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <HomeStack.Navigator initialRouteName='Onboarding' headerMode='none' >
+      <HomeStack.Navigator initialRouteName='Onboarding' headerMode='none'>
         <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
         <HomeStack.Screen name="Home" component={HomeScreen} />
       </HomeStack.Navigator>
