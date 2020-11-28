@@ -59,7 +59,7 @@ export const OnboardingScreen = ({ navigation }) => {
   };
 
   const finish = () => {
-    navigation.push("Home");
+    navigation.navigate("Home");
   };
 
   useEffect(() => {
