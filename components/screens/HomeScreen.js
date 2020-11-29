@@ -18,6 +18,7 @@ import { colors } from "../../values/colors";
 import { fonts } from "../../values/fonts";
 import { textStyles } from "../../values/textStyles";
 import { MAP_STYLE } from "../../values/map_style";
+import { SharedElement } from "react-navigation-shared-element";
 
 const SPACING = 40;
 const CARD_TRANSLATE_Y = 20;
@@ -164,11 +165,15 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
     <View style={cardStyle}>
       <TouchableWithoutFeedback onPress={showPlace}>
         <Animated.View style={styles.mainCardContainer(translateY)}>
-          <View style={{
-            backgroundColor: 'white',
-            ...StyleSheet.absoluteFill,
-            borderRadius: 15
-          }}/>
+
+          <SharedElement id={`place.${item.key}.bg`}>
+            <View style={{
+              backgroundColor: 'white',
+              ...StyleSheet.absoluteFill,
+              borderRadius: 15
+            }}/>
+          </SharedElement>
+          
 
           <View style={styles.cardDetailsContainer}>
             <View style={styles.cardLocationContainer}>

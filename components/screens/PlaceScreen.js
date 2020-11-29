@@ -1,12 +1,26 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { SharedElement } from "react-navigation-shared-element";
 
-export const PlaceScreen = ({ navigation, route }) => {
+const PlaceScreen = ({ navigation, route }) => {
   const { place } = route.params;
-  
+
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <SharedElement id={`place.${place.key}.bg`}>
+      <View>
+        <Text></Text>
+      </View>
+    </SharedElement>
   );
 };
+
+PlaceScreen.sharedElements = (route, otherRoute, showing) => {
+  const {place} = route.params;
+  return [
+    {
+      id: `place.${place.key}.bg`
+    }
+  ]
+}
+
+export default PlaceScreen;
