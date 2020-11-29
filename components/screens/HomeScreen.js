@@ -168,6 +168,8 @@ const PlaceCard = ({ item, index, scrollX }) => {
               rating={item.cleanness}
               color={colors.treeBlues}
             />
+
+            <View style={styles.spacer(2)} />
           </View>
         </View>
 
