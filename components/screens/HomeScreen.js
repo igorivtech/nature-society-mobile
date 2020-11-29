@@ -166,9 +166,8 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
       <TouchableWithoutFeedback onPress={showPlace}>
         <Animated.View style={styles.mainCardContainer(translateY)}>
 
-          <SharedElement id={`place.${item.key}.bg`}>
+          <SharedElement style={StyleSheet.absoluteFill} id={`place.${item.key}.bg`}>
             <View style={{
-              backgroundColor: 'white',
               ...StyleSheet.absoluteFill,
               borderRadius: 15
             }}/>
