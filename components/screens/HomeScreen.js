@@ -19,6 +19,7 @@ import { fonts } from "../../values/fonts";
 import { textStyles } from "../../values/textStyles";
 import { MAP_STYLE } from "../../values/map_style";
 import { SharedElement } from "react-navigation-shared-element";
+import { strings } from "../../values/strings";
 
 const SPACING = 40;
 const CARD_TRANSLATE_Y = 20;
@@ -189,7 +190,7 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
               <View>
                 <Text style={textStyles.cardTitle}>{item.title}</Text>
                 <Text style={textStyles.cardDetail}>
-                  {`${item.distance} ק״מ ממך`}
+                  {strings.distanceFromYou(item.distance)}
                 </Text>
               </View>
               <Image

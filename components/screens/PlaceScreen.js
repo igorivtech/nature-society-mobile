@@ -45,7 +45,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           <Text style={textStyles.boldOfSize(24)}>{place.title}</Text>
 
           <Text style={textStyles.normalOfSize(24)}>
-            {`${place.distance} ק״מ ממך`}
+            {strings.distanceFromYou(place.distance)}
           </Text>
         </View>
 

@@ -1,4 +1,7 @@
 export const strings = {
+    distanceFromYou: (distance) => {
+        return `${distance} ק״מ ממך`
+    },
     onboardingScreen: {
         item1: "גלו אתרי טבע שלא הכרתם",
         item2: "דווחו מהשטח והשפיעו על מצב הטבע",
