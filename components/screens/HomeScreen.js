@@ -225,8 +225,11 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
               <View style={styles.spacer(2)} />
             </View>
           </View>
-
-          <Image style={styles.cardMainImage} source={{ uri: item.image }} />
+                  
+          <SharedElement style={styles.cardMainImage} id={`place.${item.key}.image`}>
+            <Image style={{...styles.cardMainImage, width: '100%'}} source={{ uri: item.image }} />
+          </SharedElement>
+          
         </Animated.View>
       </TouchableWithoutFeedback>
     </View>
