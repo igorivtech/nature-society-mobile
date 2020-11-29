@@ -116,30 +116,14 @@ const PlaceCard = ({ item, index, scrollX }) => {
         height: ITEM_HEIGHT,
       }}
     >
-      <Animated.View
-        style={styles.mainCardContainer(translateY)}
-      >
-        <View
-          style={{
-            justifyContent: 'space-between',
-            paddingVertical: 16,
-            paddingHorizontal: 10,
-            height: "100%",
-            backgroundColor: "red",
-            flex: 1,
-          }}
-        >
-          <View
-            style={{
-              alignItems: 'center',
-              flexDirection: "row",
-              backgroundColor: "cyan",
-              justifyContent: "flex-end",
-            }}
-          >
-            <View style={{
-              marginRight: 8,
-            }}>
+      <Animated.View style={styles.mainCardContainer(translateY)}>
+        <View style={styles.cardDetailsContainer}>
+          <View style={styles.cardLocationContainer}>
+            <View
+              style={{
+                marginRight: 8,
+              }}
+            >
               <Text
                 style={{
                   fontFamily: fonts.bold,
@@ -163,22 +147,20 @@ const PlaceCard = ({ item, index, scrollX }) => {
                 {`${item.distance} ק״מ ממך`}
               </Text>
             </View>
-            <Image style={{
-              width: 22,
-            }} source={require("../../assets/images/Marker.png")} />
+            <Image
+              style={{
+                width: 22,
+              }}
+              source={require("../../assets/images/Marker.png")}
+            />
           </View>
 
-          <View
-            style={{
-              alignItems: 'center',
-              flexDirection: "row",
-              backgroundColor: "cyan",
-              justifyContent: "flex-end",
-            }}
-          >
-            <View style={{
-              marginRight: 8,
-            }}>
+          <View style={styles.cardLocationContainer}>
+            <View
+              style={{
+                marginRight: 8,
+              }}
+            >
               <Text
                 style={{
                   fontFamily: fonts.bold,
@@ -202,11 +184,14 @@ const PlaceCard = ({ item, index, scrollX }) => {
                 {item.lastVisitorGender == 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"}
               </Text>
             </View>
-            <Image style={{
-              width: 22,
-              height: 22,
-              borderRadius: 11,
-            }} source={{uri: item.lastVisitorImage}} />
+            <Image
+              style={{
+                width: 22,
+                height: 22,
+                borderRadius: 11,
+              }}
+              source={{ uri: item.lastVisitorImage }}
+            />
           </View>
           <View style={{ flexDirection: "row" }}></View>
         </View>

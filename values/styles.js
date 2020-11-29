@@ -1,11 +1,10 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { width, height } from './consts'
+import { width, height } from "./consts";
 
 export const styles = StyleSheet.create({
-
   mapStyle: {
-    position: 'absolute',
+    position: "absolute",
     width: width,
     height: height,
   },
@@ -39,32 +38,32 @@ export const styles = StyleSheet.create({
   },
 
   onboardingMainContainer: {
-    top: height/2 - 60,
-    position: 'absolute',
+    top: height / 2 - 60,
+    position: "absolute",
     width: "100%",
     paddingHorizontal: 30,
     alignItems: "center",
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
   },
 
   halfLeft: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     bottom: 0,
-    right: width / 2 
+    right: width / 2,
   },
 
   fillParent: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
   },
 
   homeTopContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 64,
-    justifyContent: 'space-between',
-    marginTop: 20
+    justifyContent: "space-between",
+    marginTop: 20,
   },
 
   mainCardContainer: (translateY) => ({
@@ -77,5 +76,21 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "white",
     transform: [{ translateY }],
-  })
+  }),
+
+  cardDetailsContainer: {
+    justifyContent: "space-between",
+    paddingVertical: 16,
+    paddingHorizontal: 10,
+    height: "100%",
+    backgroundColor: "red",
+    flex: 1,
+  },
+
+  cardLocationContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "cyan",
+    justifyContent: "flex-end",
+  }
 });
