@@ -13,8 +13,8 @@ import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 
 import * as Animatable from 'react-native-animatable';
+import { RecentVisitor } from "../views/home/views";
 
-import {RecentVisitor} from '../screens/HomeScreen'
 
 const recentVisitors = [
   {name: "איגור", role: "לקט", image: "https://yt3.ggpht.com/ytc/AAUvwngMp380bo6VdFqO0Y81qDqJKsedWvTosxGAAZwp=s900-c-k-c0x00ffffff-no-rj"},

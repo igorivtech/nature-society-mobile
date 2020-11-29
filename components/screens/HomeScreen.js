@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { HomeButton } from "../views/home/views";
+import { HomeButton, RatingView, RecentVisitor } from "../views/home/views";
 import { styles } from "../../values/styles";
 import { height, width, DATA } from "../../values/consts";
 import { colors } from "../../values/colors";
@@ -239,28 +239,3 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
   );
 };
 
-export const RecentVisitor = ({ title, details, image, large = false }) => {
-  return (
-    <View style={{...styles.cardLocationContainer, marginLeft: large ? 30 : 0}}>
-      <View
-        style={{
-          marginRight: large ? 12 : 8,
-        }}
-      >
-        <Text style={textStyles.cardTitle}>{title}</Text>
-        <Text style={textStyles.cardDetail}>{details}</Text>
-      </View>
-      <Image style={styles.cardVisitorPic(large)} source={{ uri: image }} />
-    </View>
-  );
-};
-
-const RatingView = ({ rating, color, image }) => {
-  return (
-    <View style={styles.ratingContainer}>
-      <Text style={textStyles.rating(color)}>{rating}</Text>
-
-      <Image source={image} />
-    </View>
-  );
-};
