@@ -8,6 +8,7 @@ export const NAV_DURATION = 600;
 export const DATA = [
   {
     key: '1',
+    location: [23, 52],
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
@@ -20,6 +21,7 @@ export const DATA = [
   },
   {
     key: '2',
+    location: [3, 5],
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
@@ -32,6 +34,7 @@ export const DATA = [
   },
   {
     key: '3',
+    location: [13,12],
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
@@ -44,6 +47,7 @@ export const DATA = [
   },
   {
     key: '4',
+    location: [3, 52],
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",

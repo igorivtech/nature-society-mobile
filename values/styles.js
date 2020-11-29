@@ -110,5 +110,10 @@ export const styles = StyleSheet.create({
   spacer: (size) => ({
     width: size,
     height: size
-  })
+  }),
+
+  cardDetailIcon: {
+    marginLeft: 8,
+    width: 22,
+  }
 });

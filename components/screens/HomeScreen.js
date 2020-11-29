@@ -122,20 +122,14 @@ const PlaceCard = ({ item, index, scrollX }) => {
       <Animated.View style={styles.mainCardContainer(translateY)}>
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
-            <View
-              style={{
-                marginRight: 8,
-              }}
-            >
+            <View>
               <Text style={textStyles.cardTitle}>{item.title}</Text>
               <Text style={textStyles.cardDetail}>
                 {`${item.distance} ק״מ ממך`}
               </Text>
             </View>
             <Image
-              style={{
-                width: 22,
-              }}
+              style={styles.cardDetailIcon}
               source={require("../../assets/images/Marker.png")}
             />
           </View>
