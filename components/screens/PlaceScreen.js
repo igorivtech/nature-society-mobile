@@ -78,6 +78,8 @@ export const PlaceScreen = ({ navigation, route }) => {
             {recentVisitors.map((visitor) => <RecentVisitor large title={visitor.name} details={visitor.role} image={visitor.image} /> )}
           </View>
         </View>
+
+        <Text>{place.description}</Text>
         
       </View>
     </View>
