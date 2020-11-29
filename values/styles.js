@@ -23,6 +23,14 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
 
+  fullWidth: {
+    width: '100%'
+  },
+
+  marginLeft: (margin) => ({
+    marginLeft: margin
+  }),
+
   safeAreaContainer: {
     justifyContent: "space-between",
     flex: 1,

@@ -90,7 +90,7 @@ export const HomeScreen = ({ navigation }) => {
   };
 
   const showPlace = (place) => {
-    navigation.navigate("Place", { place });
+    navigation.navigate("Place", { place, locked: false });
   };
 
   return (

@@ -40,5 +40,21 @@ export const textStyles = StyleSheet.create({
     fontFamily: fonts.normal,
     fontWeight: "400",
     textAlign: "right",
+  }),
+
+  normalOfSize: (size) => ({
+    textAlign: "right",
+    fontFamily: fonts.normal,
+    fontSize: size,
+    color: colors.darkWithTone,
+  }),
+
+  boldOfSize: (size) => ({
+    
+    textAlign: "right",
+    fontFamily: fonts.bold,
+    fontSize: size,
+    color: colors.darkWithTone,
+    
   })
 });

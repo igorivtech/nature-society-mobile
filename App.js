@@ -11,7 +11,7 @@ import { NavigationContainer } from "@react-navigation/native";
 //
 import { OnboardingScreen } from "./components/screens/OnboardingScreen";
 import { HomeScreen } from "./components/screens/HomeScreen";
-import PlaceScreen from "./components/screens/PlaceScreen";
+import {PlaceScreen} from "./components/screens/PlaceScreen";
 
 
 enableScreens();
