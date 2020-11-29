@@ -23,6 +23,9 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   const textRef = useRef();
   const ratingRef = useRef();
+  const visitorsRef = useRef();
+  const descRef = useRef();
+  const actionsRef = useRef();
 
   const waze = () => {
     console.log("waze");
@@ -40,6 +43,9 @@ export const PlaceScreen = ({ navigation, route }) => {
     Promise.all([
       textRef.current.fadeOut(200),
       ratingRef.current.fadeOut(200),
+      visitorsRef.current.fadeOut(200),
+      descRef.current.fadeOut(200),
+      actionsRef.current.fadeOut(200)
     ]).then(() => navigation.goBack())
   }
 
@@ -91,29 +97,21 @@ export const PlaceScreen = ({ navigation, route }) => {
           <Image style={s.imageStyle} source={{ uri: place.image }} />
         </SharedElement>
 
-        <View style={styles.fullWidth}>
+        <Animatable.View ref={visitorsRef} style={styles.fullWidth}>
           <Text style={textStyles.normalOfSize(12)}>{strings.placeScreen.recentVisitors(locked)}</Text>
           <View style={s.recentVisitorsContainer}>
             {recentVisitors.map((visitor, index) => <RecentVisitor key={`${index}`} large title={visitor.name} details={visitor.role} image={visitor.image} /> )}
           </View>
-        </View>
+        </Animatable.View>
 
-        <Text style={{
-          ...textStyles.normalOfSize(16),
-          ...styles.fullWidth,
-        }}>{place.description}</Text>
+        <Animatable.Text ref={descRef} style={s.desc}>{place.description}</Animatable.Text>
         
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          ...styles.fullWidth,
-        }}>
+        <Animatable.View ref={actionsRef} style={s.actions}>
 
             <PlaceAction onPress={waze} title={strings.placeScreen.waze} icon={require("../../assets/images/waze_icon.png")} />
             <PlaceAction onPress={share} title={strings.placeScreen.share} icon={require("../../assets/images/share_icon.png")} />
             <PlaceAction onPress={report} title={strings.placeScreen.report} icon={require("../../assets/images/report_icon.png")} />
-        </View>
+        </Animatable.View>
 
       </View>
     </View>
@@ -159,6 +157,18 @@ const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  desc: {
+    ...textStyles.normalOfSize(16),
+    ...styles.fullWidth,
+  },
+
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    ...styles.fullWidth,
+  },
 
   recentVisitorsContainer: {
     marginTop: 4,
