@@ -35,6 +35,8 @@ export const HomeScreen = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
+  const mapRef = useRef(null);
+
   const [places, setPlaces] = useState([]);
   const [hideList, setHideList] = useState(true);
 
@@ -51,7 +53,7 @@ export const HomeScreen = () => {
     setPlaces([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     setTimeout(() => {
       setHideList(false);
     }, 1000);
@@ -71,7 +73,11 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.homeContainer}>
-      <MapView provider={PROVIDER_GOOGLE} style={styles.mapStyle} />
+      <MapView
+        ref={mapRef}
+        provider={PROVIDER_GOOGLE}
+        style={styles.mapStyle}
+      />
       <SafeAreaView style={styles.homeContainer}>
         <View style={styles.homeTopContainer}>
           <HomeButton index={2} onPress={progress} />
@@ -90,7 +96,13 @@ export const HomeScreen = () => {
           { useNativeDriver: true }
         )}
         scrollEventThrottle={16}
-        onMomentumScrollEnd={(e) => console.log(e.nativeEvent.contentOffset.x)}
+        onMomentumScrollEnd={(e) => {
+          const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH
+          mapRef.current.animateToCoordinate({
+            latitude: DATA[index].location[0],
+            longitude: DATA[index].location[1]
+          }, 1000);
+        }}
         keyExtractor={(item) => item.key}
         snapToInterval={ITEM_WIDTH}
         decelerationRate={0}
