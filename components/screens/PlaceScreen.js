@@ -74,7 +74,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           <View style={s.bgStyle} />
         </SharedElement>
 
-        <Animatable.View ref={textRef} animation='bounceIn' delay={600} style={styles.fullWidth}>
+        <Animatable.View useNativeDriver ref={textRef} animation='bounceIn' delay={600} style={styles.fullWidth}>
           <Text style={textStyles.boldOfSize(24)}>{place.title}</Text>
 
           <Text style={textStyles.normalOfSize(24)}>
@@ -82,7 +82,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           </Text>
         </Animatable.View>
 
-        <Animatable.View ref={ratingRef} animation='bounceIn' delay={800} style={s.ratingContainer}>
+        <Animatable.View useNativeDriver ref={ratingRef} animation='bounceIn' delay={800} style={s.ratingContainer}>
           <PlaceRating
             locked
             title={strings.placeScreen.crowdnessTitle}
@@ -105,16 +105,16 @@ export const PlaceScreen = ({ navigation, route }) => {
           <Image style={s.imageStyle} source={{ uri: place.image }} />
         </SharedElement>
 
-        <Animatable.View animation='fadeInUp' delay={500} ref={visitorsRef} style={styles.fullWidth}>
+        <Animatable.View useNativeDriver animation='fadeInUp' delay={500} ref={visitorsRef} style={styles.fullWidth}>
           <Text style={textStyles.normalOfSize(12)}>{strings.placeScreen.recentVisitors(locked)}</Text>
           <View style={s.recentVisitorsContainer}>
             {recentVisitors.map((visitor, index) => <RecentVisitor key={`${index}`} large title={visitor.name} details={visitor.role} image={visitor.image} /> )}
           </View>
         </Animatable.View>
 
-        <Animatable.Text animation='fadeInUp' delay={700} ref={descRef} style={s.desc}>{place.description}</Animatable.Text>
+        <Animatable.Text useNativeDriver animation='fadeInUp' delay={700} ref={descRef} style={s.desc}>{place.description}</Animatable.Text>
         
-        <Animatable.View animation='fadeInUp' delay={900} ref={actionsRef} style={s.actions}>
+        <Animatable.View useNativeDriver animation='fadeInUp' delay={900} ref={actionsRef} style={s.actions}>
 
             <PlaceAction onPress={waze} title={strings.placeScreen.waze} icon={require("../../assets/images/waze_icon.png")} />
             <PlaceAction onPress={share} title={strings.placeScreen.share} icon={require("../../assets/images/share_icon.png")} />
