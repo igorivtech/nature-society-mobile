@@ -52,7 +52,7 @@ export const PlaceScreen = ({ navigation, route }) => {
         <View style={s.ratingContainer}>
           <PlaceRating
             locked
-            title={"עומס מבקרים"}
+            title={strings.placeScreen.crowdnessTitle}
             image={require("../../assets/images/HowBusyOrange.png")}
             color={colors.desertRock}
             rating={place.crowdness}
@@ -61,7 +61,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           <PlaceRating
             locked
             leftMargin={40}
-            title={locked ? "מצב וניקיון הטבע" : "מצב הטבע"}
+            title={strings.placeScreen.cleannessTitle(locked)}
             image={require("../../assets/images/HeartL.png")}
             color={colors.grass}
             rating={place.cleanness}

@@ -9,6 +9,10 @@ export const strings = {
     placeScreen: {
         recentVisitors: (locked) => {
             return locked ? "מבקרים פעילים" : "מבקר אחרון"
-        }
+        },
+        cleannessTitle: (locked) => {
+            return locked ? "מצב וניקיון הטבע" : "מצב הטבע"
+        },
+        crowdnessTitle: "עומס מבקרים"
     }
 }
