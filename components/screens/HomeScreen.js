@@ -164,6 +164,12 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
     <View style={cardStyle}>
       <TouchableWithoutFeedback onPress={showPlace}>
         <Animated.View style={styles.mainCardContainer(translateY)}>
+          <View style={{
+            backgroundColor: 'white',
+            ...StyleSheet.absoluteFill,
+            borderRadius: 15
+          }}/>
+
           <View style={styles.cardDetailsContainer}>
             <View style={styles.cardLocationContainer}>
               <View>
