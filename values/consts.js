@@ -7,7 +7,7 @@ export const NAV_DURATION = 600;
 
 export const DATA = [
   {
-    key: 1,
+    key: '1',
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
@@ -19,7 +19,7 @@ export const DATA = [
     lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
   },
   {
-    key: 2,
+    key: '2',
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
@@ -31,7 +31,7 @@ export const DATA = [
     lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
   },
   {
-    key: 3,
+    key: '3',
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
@@ -43,7 +43,7 @@ export const DATA = [
     lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
   },
   {
-    key: 4,
+    key: '4',
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
