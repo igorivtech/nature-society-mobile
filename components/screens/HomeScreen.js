@@ -130,7 +130,14 @@ export const HomeScreen = ({ navigation }) => {
             if (index == 0 || index == places.length - 1) {
               return <View style={spacerStyle} />;
             }
-            return <PlaceCard callback={showPlace} index={index} item={item} scrollX={scrollX} />;
+            return (
+              <PlaceCard
+                callback={showPlace}
+                index={index}
+                item={item}
+                scrollX={scrollX}
+              />
+            );
           }}
         />
       </SafeAreaView>
@@ -159,20 +166,23 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
 
   const showPlace = () => {
     callback(item);
-  }
+  };
 
   return (
     <View style={cardStyle}>
       <TouchableWithoutFeedback onPress={showPlace}>
         <Animated.View style={styles.mainCardContainer(translateY)}>
-
-          <SharedElement style={StyleSheet.absoluteFill} id={`place.${item.key}.bg`}>
-            <View style={{
-              ...StyleSheet.absoluteFill,
-              borderRadius: 15
-            }}/>
+          <SharedElement
+            style={StyleSheet.absoluteFill}
+            id={`place.${item.key}.bg`}
+          >
+            <View
+              style={{
+                ...StyleSheet.absoluteFill,
+                borderRadius: 15,
+              }}
+            />
           </SharedElement>
-          
 
           <View style={styles.cardDetailsContainer}>
             <View style={styles.cardLocationContainer}>
@@ -188,24 +198,10 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
               />
             </View>
 
-            <View style={styles.cardLocationContainer}>
-              <View
-                style={{
-                  marginRight: 8,
-                }}
-              >
-                <Text style={textStyles.cardTitle}>{item.lastVisitorName}</Text>
-                <Text style={textStyles.cardDetail}>
-                  {item.lastVisitorGender == 0
+            <RecentVisitor title={item.lastVisitorName} details={item.lastVisitorGender == 0
                     ? "ביקר לאחרונה"
-                    : "ביקרה לאחרונה"}
-                </Text>
-              </View>
-              <Image
-                style={styles.cardVisitorPic}
-                source={{ uri: item.lastVisitorImage }}
-              />
-            </View>
+                    : "ביקרה לאחרונה"} image={item.lastVisitorImage} />
+
             <View style={styles.cardLocationContainer}>
               <RatingView
                 image={require("../../assets/images/HowBusy.png")}
@@ -224,13 +220,37 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
               <View style={styles.spacer(2)} />
             </View>
           </View>
-                  
-          <SharedElement style={styles.cardMainImage} id={`place.${item.key}.image`}>
-            <Image style={{...styles.cardMainImage, width: '100%'}} source={{ uri: item.image }} />
+
+          <SharedElement
+            style={styles.cardMainImage}
+            id={`place.${item.key}.image`}
+          >
+            <Image
+              style={{ ...styles.cardMainImage, width: "100%" }}
+              source={{ uri: item.image }}
+            />
           </SharedElement>
-          
         </Animated.View>
       </TouchableWithoutFeedback>
+    </View>
+  );
+};
+
+const RecentVisitor = ({title, details, image}) => {
+  return (
+    <View style={styles.cardLocationContainer}>
+      <View
+        style={{
+          marginRight: 8,
+        }}
+      >
+        <Text style={textStyles.cardTitle}>{title}</Text>
+        <Text style={textStyles.cardDetail}>{details}</Text>
+      </View>
+      <Image
+        style={styles.cardVisitorPic}
+        source={{ uri: image }}
+      />
     </View>
   );
 };
