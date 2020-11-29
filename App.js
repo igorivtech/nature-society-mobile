@@ -3,7 +3,11 @@ import React from "react";
 //
 import { AppLoading } from "expo";
 import { fontsLoader } from "./values/fonts";
-import { fadeOptions } from "./values/options";
+import {
+  fadeOptions,
+  slideFromLeftOptions,
+  slideFromRightOptions,
+} from "./values/options";
 //
 import { enableScreens } from "react-native-screens";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
@@ -12,7 +16,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { OnboardingScreen } from "./components/screens/OnboardingScreen";
 import { HomeScreen } from "./components/screens/HomeScreen";
 import { PlaceScreen } from "./components/screens/PlaceScreen";
-
+import { ExploreScreen } from "./components/screens/ExploreScreen";
+import { ProgressScreen } from "./components/screens/ProgressScreen";
+import { ReportScreen } from "./components/screens/ReportScreen";
 
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
@@ -36,6 +42,24 @@ export default function App() {
         <HomeStack.Screen
           name="Place"
           component={PlaceScreen}
+          options={fadeOptions}
+        />
+
+        <HomeStack.Screen
+          name="Explore"
+          component={ExploreScreen}
+          options={slideFromRightOptions}
+        />
+
+        <HomeStack.Screen
+          name="Progress"
+          component={ProgressScreen}
+          options={slideFromLeftOptions}
+        />
+
+        <HomeStack.Screen
+          name="Report"
+          component={ReportScreen}
           options={fadeOptions}
         />
       </HomeStack.Navigator>

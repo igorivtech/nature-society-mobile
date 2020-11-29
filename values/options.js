@@ -45,3 +45,45 @@ export const fadeOptions = () => ({
     };
   },
 });
+
+export const slideFromRightOptions = () => ({
+  gestureEnabled: false,
+  transitionSpec: {
+    open: {
+      animation: "timing",
+      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+    },
+    close: {
+      animation: "timing",
+      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+    },
+  },
+  cardStyleInterpolator: ({ current: { progress } }) => {
+    return {
+      cardStyle: {
+        opacity: progress,
+      },
+    };
+  },
+});
+
+export const slideFromLeftOptions = () => ({
+  gestureEnabled: false,
+  transitionSpec: {
+    open: {
+      animation: "timing",
+      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+    },
+    close: {
+      animation: "timing",
+      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+    },
+  },
+  cardStyleInterpolator: ({ current: { progress } }) => {
+    return {
+      cardStyle: {
+        opacity: progress,
+      },
+    };
+  },
+});

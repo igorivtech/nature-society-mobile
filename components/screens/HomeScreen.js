@@ -67,15 +67,15 @@ export const HomeScreen = ({ navigation }) => {
   }, [places]);
 
   const progress = () => {
-    console.log("progress pressed");
+    navigation.navigate("Progress");
   };
 
   const report = () => {
-    console.log("report pressed");
+    navigation.navigate("Report");
   };
 
   const explore = () => {
-    console.log("explore pressed");
+    navigation.navigate("Explore");
   };
 
   const animateToItem = (item) => {
