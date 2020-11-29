@@ -7,23 +7,6 @@ import { fonts } from "../../values/fonts";
 import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 
-const PlaceRating = ({ locked, title, image, color, rating, leftMargin = 0 }) => {
-  return (
-    <View
-      style={styles.marginLeft(leftMargin)}
-    >
-      <Text style={textStyles.normalOfSize(14)}>{title}</Text>
-      
-      <View
-        style={s.ratingInnerContainer}
-      >
-        <Text style={{ ...textStyles.normalOfSize(36), color, marginRight: 8 }}>{rating}</Text>
-        <Image source={image} />
-      </View>
-    </View>
-  );
-};
-
 export const PlaceScreen = ({ navigation, route }) => {
   const { place, locked } = route.params;
 
@@ -59,6 +42,24 @@ export const PlaceScreen = ({ navigation, route }) => {
         <SharedElement style={s.imageStyle} id={`place.${place.key}.image`}>
           <Image style={s.imageStyle} source={{ uri: place.image }} />
         </SharedElement>
+      </View>
+    </View>
+  );
+};
+
+
+const PlaceRating = ({ locked, title, image, color, rating, leftMargin = 0 }) => {
+  return (
+    <View
+      style={styles.marginLeft(leftMargin)}
+    >
+      <Text style={textStyles.normalOfSize(14)}>{title}</Text>
+      
+      <View
+        style={s.ratingInnerContainer}
+      >
+        <Text style={{ ...textStyles.normalOfSize(36), color, marginRight: 8 }}>{rating}</Text>
+        <Image source={image} />
       </View>
     </View>
   );
