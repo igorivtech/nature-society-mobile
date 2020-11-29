@@ -140,9 +140,9 @@ export const styles = StyleSheet.create({
     width: 22,
   },
 
-  cardVisitorPic: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-  },
+  cardVisitorPic: (large) => ({
+    width: large ? 27 : 22,
+    height: large ? 27 :22,
+    borderRadius: large ? (27/2) : 11,
+  }),
 });

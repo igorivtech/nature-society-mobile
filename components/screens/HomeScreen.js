@@ -240,18 +240,18 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
   );
 };
 
-const RecentVisitor = ({ title, details, image }) => {
+export const RecentVisitor = ({ title, details, image, large = false }) => {
   return (
-    <View style={styles.cardLocationContainer}>
+    <View style={{...styles.cardLocationContainer, marginLeft: large ? 30 : 0}}>
       <View
         style={{
-          marginRight: 8,
+          marginRight: large ? 12 : 8,
         }}
       >
         <Text style={textStyles.cardTitle}>{title}</Text>
         <Text style={textStyles.cardDetail}>{details}</Text>
       </View>
-      <Image style={styles.cardVisitorPic} source={{ uri: image }} />
+      <Image style={styles.cardVisitorPic(large)} source={{ uri: image }} />
     </View>
   );
 };

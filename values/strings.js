@@ -5,5 +5,10 @@ export const strings = {
         item3: "צברו נקודות ועלו שלבים",
         done: "במקום שתרצו לבקר\nכדי לגלות מה עומס המבקרים\nהשתמשו בנקודות שצברתם",
         coolButton: "מגניב"
+    },
+    placeScreen: {
+        recentVisitors: (locked) => {
+            return locked ? "מבקרים פעילים" : "מבקר אחרון"
+        }
     }
 }
