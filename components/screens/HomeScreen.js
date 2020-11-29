@@ -69,21 +69,19 @@ export const HomeScreen = ({ navigation }) => {
   const progress = () => {
     setHideList(true);
     setTimeout(() => {
-      navigation.navigate("Progress");  
+      navigation.navigate("Progress");
     }, 400);
   };
 
   const report = () => {
     setHideList(true);
-    setTimeout(() => {
-      navigation.navigate("Report");  
-    }, 400);
+    navigation.navigate("Report");
   };
 
   const explore = () => {
     setHideList(true);
     setTimeout(() => {
-      navigation.navigate("Explore");  
+      navigation.navigate("Explore");
     }, 400);
   };
 
