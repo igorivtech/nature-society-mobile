@@ -32,5 +32,13 @@ export const textStyles = StyleSheet.create({
     textAlign: "right",
     fontSize: 14,
     color: colors.darkWithTone,
-  }
+  },
+
+  rating: (color) => ({
+    marginRight: 4,
+    color: color,
+    fontFamily: fonts.normal,
+    fontWeight: "400",
+    textAlign: "right",
+  })
 });

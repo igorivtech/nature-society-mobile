@@ -160,11 +160,33 @@ const PlaceCard = ({ item, index, scrollX }) => {
               source={{ uri: item.lastVisitorImage }}
             />
           </View>
-          <View style={{ flexDirection: "row" }}></View>
+          <View style={styles.cardLocationContainer}>
+            <RatingView
+              image={require("../../assets/images/HowBusy.png")}
+              rating={item.crowdness}
+              color={colors.grass}
+            />
+
+            <RatingView
+              image={require("../../assets/images/Heart.png")}
+              rating={item.cleanness}
+              color={colors.treeBlues}
+            />
+          </View>
         </View>
 
         <Image style={styles.cardMainImage} source={{ uri: item.image }} />
       </Animated.View>
+    </View>
+  );
+};
+
+const RatingView = ({ rating, color, image }) => {
+  return (
+    <View style={styles.ratingContainer}>
+      <Text style={textStyles.rating(color)}>{rating}</Text>
+
+      <Image source={image} />
     </View>
   );
 };

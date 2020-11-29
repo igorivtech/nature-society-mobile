@@ -83,14 +83,14 @@ export const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 10,
     height: "100%",
-    backgroundColor: "red",
+    // backgroundColor: "red",
     flex: 1,
   },
 
   cardLocationContainer: {
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: "cyan",
+    // backgroundColor: "cyan",
     justifyContent: "flex-end",
   },
 
@@ -100,5 +100,10 @@ export const styles = StyleSheet.create({
     width: "33%",
     height: "100%",
     backgroundColor: "#ccc",
+  },
+
+  ratingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   }
 });
