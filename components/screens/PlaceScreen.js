@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { TapGestureHandler } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
 import { fonts } from "../../values/fonts";
@@ -28,6 +29,17 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   return (
     <View style={s.container}>
+
+      <TouchableWithoutFeedback onPress={()=>navigation.goBack()} style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 100
+      }}>
+        <View style={StyleSheet.absoluteFill} />
+      </TouchableWithoutFeedback>
+      
       <View style={s.containerStyle}>
         <SharedElement
           style={StyleSheet.absoluteFill}
