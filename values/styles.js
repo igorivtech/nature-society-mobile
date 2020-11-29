@@ -5,6 +5,7 @@ import { width, height } from './consts'
 export const styles = StyleSheet.create({
 
   mapStyle: {
+    position: 'absolute',
     width: width,
     height: height,
   },
@@ -55,4 +56,10 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
 
+  homeTopContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 64,
+    justifyContent: 'space-between',
+    marginTop: 20
+  }
 });
