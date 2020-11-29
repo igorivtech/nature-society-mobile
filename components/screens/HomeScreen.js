@@ -67,15 +67,24 @@ export const HomeScreen = ({ navigation }) => {
   }, [places]);
 
   const progress = () => {
-    navigation.navigate("Progress");
+    setHideList(true);
+    setTimeout(() => {
+      navigation.navigate("Progress");  
+    }, 400);
   };
 
   const report = () => {
-    navigation.navigate("Report");
+    setHideList(true);
+    setTimeout(() => {
+      navigation.navigate("Report");  
+    }, 400);
   };
 
   const explore = () => {
-    navigation.navigate("Explore");
+    setHideList(true);
+    setTimeout(() => {
+      navigation.navigate("Explore");  
+    }, 400);
   };
 
   const animateToItem = (item) => {
