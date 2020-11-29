@@ -30,13 +30,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   return (
     <View style={s.container}>
 
-      <TouchableWithoutFeedback onPress={()=>navigation.goBack()} style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 100
-      }}>
+      <TouchableWithoutFeedback onPress={()=>navigation.goBack()} style={s.tap}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
       
@@ -71,6 +65,14 @@ export const PlaceScreen = ({ navigation, route }) => {
 };
 
 const s = StyleSheet.create({
+
+  tap: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 100
+  },
 
   ratingInnerContainer: {
     marginTop: 4,
