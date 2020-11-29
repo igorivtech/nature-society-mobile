@@ -72,27 +72,13 @@ export const PlaceScreen = ({ navigation, route }) => {
           <Image style={s.imageStyle} source={{ uri: place.image }} />
         </SharedElement>
 
-        <View
-          style={{
-            width: "100%",
-            // backgroundColor: "#DDD",
-          }}
-        >
+        <View style={styles.fullWidth}>
           <Text style={textStyles.normalOfSize(12)}>{strings.placeScreen.recentVisitors(locked)}</Text>
-
-          <View style={{
-            marginTop: 4,
-            justifyContent: 'flex-start',
-            flexDirection: 'row-reverse',
-            // backgroundColor: 'cyan'
-          }}>
-
+          <View style={s.recentVisitorsContainer}>
             {recentVisitors.map((visitor) => <RecentVisitor large title={visitor.name} details={visitor.role} image={visitor.image} /> )}
-
           </View>
-          
-
         </View>
+        
       </View>
     </View>
   );
@@ -121,6 +107,14 @@ const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  recentVisitorsContainer: {
+    marginTop: 4,
+    justifyContent: 'flex-start',
+    flexDirection: 'row-reverse',
+    // backgroundColor: 'cyan'
+  },
+
   tap: {
     position: "absolute",
     top: 0,
