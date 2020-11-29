@@ -16,6 +16,7 @@ import { height, width, DATA } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { fonts } from "../../values/fonts";
 import { textStyles } from "../../values/textStyles";
+import { MAP_STYLE } from "../../values/map_style";
 
 const SPACING = 40;
 const CARD_TRANSLATE_Y = 20;
@@ -53,7 +54,7 @@ export const HomeScreen = () => {
     setPlaces([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     setTimeout(() => {
       setHideList(false);
       if (places.length > 1) {
@@ -75,15 +76,21 @@ export const HomeScreen = () => {
   };
 
   const animateToItem = (item) => {
-    mapRef.current.animateCamera({center: {
-      latitude: item.location[0],
-      longitude: item.location[1]
-    }}, 1000)
+    mapRef.current.animateCamera(
+      {
+        center: {
+          latitude: item.location[0],
+          longitude: item.location[1],
+        },
+      },
+      1000
+    );
   };
 
   return (
     <View style={styles.homeContainer}>
       <MapView
+        customMapStyle={MAP_STYLE}
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.mapStyle}
@@ -107,7 +114,7 @@ export const HomeScreen = () => {
         )}
         scrollEventThrottle={16}
         onMomentumScrollEnd={(e) => {
-          const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH
+          const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH;
           animateToItem(DATA[index]);
         }}
         keyExtractor={(item) => item.key}
