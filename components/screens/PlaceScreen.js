@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,9 @@ import { height, recentVisitors } from "../../values/consts";
 export const PlaceScreen = ({ navigation, route }) => {
   const { place, locked } = route.params;
 
+  const textRef = useRef();
+  const ratingRef = useRef();
+
   const waze = () => {
     console.log("waze");
   }
@@ -33,10 +36,17 @@ export const PlaceScreen = ({ navigation, route }) => {
     console.log("report");
   }
 
+  const goBack = () => {
+    Promise.all([
+      textRef.current.fadeOut(200),
+      ratingRef.current.fadeOut(200),
+    ]).then(() => navigation.goBack())
+  }
+
   return (
     <View style={s.container}>
       <TouchableWithoutFeedback
-        onPress={() => navigation.goBack()}
+        onPress={goBack}
         style={s.tap}
       >
         <View style={StyleSheet.absoluteFill} />
@@ -50,7 +60,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           <View style={s.bgStyle} />
         </SharedElement>
 
-        <Animatable.View animation='bounceIn' delay={600} style={styles.fullWidth}>
+        <Animatable.View ref={textRef} animation='bounceIn' delay={600} style={styles.fullWidth}>
           <Text style={textStyles.boldOfSize(24)}>{place.title}</Text>
 
           <Text style={textStyles.normalOfSize(24)}>
@@ -58,7 +68,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           </Text>
         </Animatable.View>
 
-        <Animatable.View animation='bounceIn' delay={800} style={s.ratingContainer}>
+        <Animatable.View ref={ratingRef} animation='bounceIn' delay={800} style={s.ratingContainer}>
           <PlaceRating
             locked
             title={strings.placeScreen.crowdnessTitle}
