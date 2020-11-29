@@ -8,6 +8,7 @@ import {
   Animated,
   Image,
   Easing,
+  TouchableWithoutFeedback,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
@@ -152,62 +153,62 @@ const PlaceCard = ({ item, index, scrollX }) => {
   });
   return (
     <View style={cardStyle}>
-      <Animated.View style={styles.mainCardContainer(translateY)}>
-        <View style={styles.cardDetailsContainer}>
-          <View style={styles.cardLocationContainer}>
-            <View>
-              <Text style={textStyles.cardTitle}>{item.title}</Text>
-              <Text style={textStyles.cardDetail}>
-                {`${item.distance} ק״מ ממך`}
-              </Text>
+      <TouchableWithoutFeedback>
+        <Animated.View style={styles.mainCardContainer(translateY)}>
+          <View style={styles.cardDetailsContainer}>
+            <View style={styles.cardLocationContainer}>
+              <View>
+                <Text style={textStyles.cardTitle}>{item.title}</Text>
+                <Text style={textStyles.cardDetail}>
+                  {`${item.distance} ק״מ ממך`}
+                </Text>
+              </View>
+              <Image
+                style={styles.cardDetailIcon}
+                source={require("../../assets/images/Marker.png")}
+              />
             </View>
-            <Image
-              style={styles.cardDetailIcon}
-              source={require("../../assets/images/Marker.png")}
-            />
-          </View>
 
-          <View style={styles.cardLocationContainer}>
-            <View
-              style={{
-                marginRight: 8,
-              }}
-            >
-              <Text style={textStyles.cardTitle}>{item.lastVisitorName}</Text>
-              <Text style={textStyles.cardDetail}>
-                {item.lastVisitorGender == 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"}
-              </Text>
+            <View style={styles.cardLocationContainer}>
+              <View
+                style={{
+                  marginRight: 8,
+                }}
+              >
+                <Text style={textStyles.cardTitle}>{item.lastVisitorName}</Text>
+                <Text style={textStyles.cardDetail}>
+                  {item.lastVisitorGender == 0
+                    ? "ביקר לאחרונה"
+                    : "ביקרה לאחרונה"}
+                </Text>
+              </View>
+              <Image
+                style={styles.cardVisitorPic}
+                source={{ uri: item.lastVisitorImage }}
+              />
             </View>
-            <Image
-              style={{
-                width: 22,
-                height: 22,
-                borderRadius: 11,
-              }}
-              source={{ uri: item.lastVisitorImage }}
-            />
+            <View style={styles.cardLocationContainer}>
+              <RatingView
+                image={require("../../assets/images/HowBusy.png")}
+                rating={item.crowdness}
+                color={colors.grass}
+              />
+
+              <View style={styles.spacer(16)} />
+
+              <RatingView
+                image={require("../../assets/images/Heart.png")}
+                rating={item.cleanness}
+                color={colors.treeBlues}
+              />
+
+              <View style={styles.spacer(2)} />
+            </View>
           </View>
-          <View style={styles.cardLocationContainer}>
-            <RatingView
-              image={require("../../assets/images/HowBusy.png")}
-              rating={item.crowdness}
-              color={colors.grass}
-            />
 
-            <View style={styles.spacer(16)} />
-
-            <RatingView
-              image={require("../../assets/images/Heart.png")}
-              rating={item.cleanness}
-              color={colors.treeBlues}
-            />
-
-            <View style={styles.spacer(2)} />
-          </View>
-        </View>
-
-        <Image style={styles.cardMainImage} source={{ uri: item.image }} />
-      </Animated.View>
+          <Image style={styles.cardMainImage} source={{ uri: item.image }} />
+        </Animated.View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };

@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   },
 
   safeAreaContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     flex: 1,
   },
 
@@ -105,10 +105,8 @@ export const styles = StyleSheet.create({
 
   mainListStyle: (paddingTop, yTranslate) => ({
     paddingTop,
-    transform: [
-      {translateY: yTranslate}
-    ],
-    flexGrow: 0
+    transform: [{ translateY: yTranslate }],
+    flexGrow: 0,
   }),
 
   cardMainImage: {
@@ -126,11 +124,17 @@ export const styles = StyleSheet.create({
 
   spacer: (size) => ({
     width: size,
-    height: size
+    height: size,
   }),
 
   cardDetailIcon: {
     marginLeft: 8,
     width: 22,
-  }
+  },
+
+  cardVisitorPic: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+  },
 });
