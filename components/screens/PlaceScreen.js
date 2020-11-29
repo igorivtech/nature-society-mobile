@@ -6,10 +6,8 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
-import { TapGestureHandler } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
-import { fonts } from "../../values/fonts";
 import { strings } from "../../values/strings";
 import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
@@ -179,5 +177,3 @@ PlaceScreen.sharedElements = (route, otherRoute, showing) => {
     },
   ];
 };
-
-// export default PlaceScreen;
