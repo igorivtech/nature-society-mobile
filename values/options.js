@@ -1,4 +1,6 @@
 import { TransitionPresets } from "@react-navigation/stack";
+import { Easing } from "react-native";
+import { NAV_DURATION } from "./consts";
 
 const forFade = ({ current }) => ({
   cardStyle: {
@@ -21,3 +23,25 @@ export const options = {
     animationTypeForReplace: isSignout ? "pop" : "push",
   }),
 };
+
+
+export const fadeOptions = () => ({
+  gestureEnabled: false,
+  transitionSpec: {
+    open: {
+      animation: "timing",
+      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+    },
+    close: {
+      animation: "timing",
+      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+    },
+  },
+  cardStyleInterpolator: ({ current: { progress } }) => {
+    return {
+      cardStyle: {
+        opacity: progress,
+      },
+    };
+  },
+});
