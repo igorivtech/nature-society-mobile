@@ -54,10 +54,6 @@ export const HomeScreen = ({ navigation }) => {
   }, [hideList]);
 
   useEffect(() => {
-    setPlaces([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
-  }, []);
-
-  useEffect(() => {
     setTimeout(() => {
       setHideList(false);
       if (places.length > 1) {
@@ -65,6 +61,17 @@ export const HomeScreen = ({ navigation }) => {
       }
     }, 1000);
   }, [places]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (places.length == 0) {
+        setPlaces([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
+      } else {
+        setHideList(false);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const progress = () => {
     setHideList(true);
@@ -74,7 +81,6 @@ export const HomeScreen = ({ navigation }) => {
   };
 
   const report = () => {
-    setHideList(true);
     navigation.navigate("Report");
   };
 
