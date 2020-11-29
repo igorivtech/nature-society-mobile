@@ -33,7 +33,7 @@ const cardStyle = {
 
 const spacerStyle = { width: SPACER_ITEM_SIZE };
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
@@ -88,6 +88,10 @@ export const HomeScreen = () => {
     );
   };
 
+  const showPlace = (place) => {
+    navigation.navigate("Place", { place });
+  };
+
   return (
     <View style={styles.homeContainer}>
       <MapView
@@ -125,7 +129,7 @@ export const HomeScreen = () => {
             if (index == 0 || index == places.length - 1) {
               return <View style={spacerStyle} />;
             }
-            return <PlaceCard index={index} item={item} scrollX={scrollX} />;
+            return <PlaceCard callback={showPlace} index={index} item={item} scrollX={scrollX} />;
           }}
         />
       </SafeAreaView>
@@ -140,7 +144,7 @@ export const HomeScreen = () => {
 // crowdness: 3.6,
 // image:
 
-const PlaceCard = ({ item, index, scrollX }) => {
+const PlaceCard = ({ item, index, scrollX, callback }) => {
   const inputRange = [
     (index - 2) * ITEM_WIDTH,
     (index - 1) * ITEM_WIDTH,
@@ -151,9 +155,14 @@ const PlaceCard = ({ item, index, scrollX }) => {
     inputRange,
     outputRange: [0, -CARD_TRANSLATE_Y, 0],
   });
+
+  const showPlace = () => {
+    callback(item);
+  }
+
   return (
     <View style={cardStyle}>
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={showPlace}>
         <Animated.View style={styles.mainCardContainer(translateY)}>
           <View style={styles.cardDetailsContainer}>
             <View style={styles.cardLocationContainer}>
