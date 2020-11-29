@@ -14,6 +14,8 @@ import { strings } from "../../values/strings";
 import { styles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 
+import * as Animatable from 'react-native-animatable';
+
 import {RecentVisitor} from '../screens/HomeScreen'
 
 const recentVisitors = [
@@ -41,15 +43,15 @@ export const PlaceScreen = ({ navigation, route }) => {
           <View style={s.bgStyle} />
         </SharedElement>
 
-        <View style={styles.fullWidth}>
+        <Animatable.View animation='bounceIn' delay={600} style={styles.fullWidth}>
           <Text style={textStyles.boldOfSize(24)}>{place.title}</Text>
 
           <Text style={textStyles.normalOfSize(24)}>
             {strings.distanceFromYou(place.distance)}
           </Text>
-        </View>
+        </Animatable.View>
 
-        <View style={s.ratingContainer}>
+        <Animatable.View animation='bounceIn' delay={800} style={s.ratingContainer}>
           <PlaceRating
             locked
             title={strings.placeScreen.crowdnessTitle}
@@ -66,7 +68,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             color={colors.grass}
             rating={place.cleanness}
           />
-        </View>
+        </Animatable.View>
 
         <SharedElement style={s.imageStyle} id={`place.${place.key}.image`}>
           <Image style={s.imageStyle} source={{ uri: place.image }} />
