@@ -80,7 +80,7 @@ const s = StyleSheet.create({
 
   containerStyle: {
     flex: 1,
-    marginTop: 45,
+    marginTop: 64,
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 40,
@@ -88,8 +88,8 @@ const s = StyleSheet.create({
   },
 
   imageStyle: {
-    height: 200,
-    width: 200,
+    width: '100%',
+    aspectRatio: 1.3
   },
 
   container: {
