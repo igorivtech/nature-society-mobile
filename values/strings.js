@@ -16,7 +16,10 @@ export const strings = {
         cleannessTitle: (locked) => {
             return locked ? "מצב וניקיון הטבע" : "מצב הטבע"
         },
-        crowdnessTitle: "עומס מבקרים"
+        crowdnessTitle: "עומס מבקרים",
+        waze: "הגיעו למקום\nעם Waze",
+        share: "שתפו את המקום\nעם חברים",
+        report: "כתבו דיווח\nמשלכם למקום"
     },
     homeScreen: {
         recentVisitor: (male) => {

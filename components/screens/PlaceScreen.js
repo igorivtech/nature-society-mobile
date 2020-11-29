@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
@@ -19,6 +20,18 @@ import { recentVisitors } from "../../values/consts";
 
 export const PlaceScreen = ({ navigation, route }) => {
   const { place, locked } = route.params;
+
+  const waze = () => {
+    console.log("waze");
+  }
+
+  const share = () => {
+    console.log("share");
+  }
+
+  const report = () => {
+    console.log("report");
+  }
 
   return (
     <View style={s.container}>
@@ -77,12 +90,40 @@ export const PlaceScreen = ({ navigation, route }) => {
 
         <Text style={{
           ...textStyles.normalOfSize(16),
-          width: '100%',
+          ...styles.fullWidth,
         }}>{place.description}</Text>
         
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          ...styles.fullWidth,
+        }}>
+
+            <PlaceAction onPress={waze} title={strings.placeScreen.waze} icon={require("../../assets/images/waze_icon.png")} />
+            <PlaceAction onPress={share} title={strings.placeScreen.share} icon={require("../../assets/images/share_icon.png")} />
+            <PlaceAction onPress={report} title={strings.placeScreen.report} icon={require("../../assets/images/report_icon.png")} />
+        </View>
+
       </View>
     </View>
   );
+};
+
+const PlaceAction = ({title, icon, onPress}) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={{
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    }}>
+      <Image source={icon} />
+      <Text style={{
+        ...textStyles.normalOfSize(12),
+        textAlign: 'center',
+        marginTop: 6
+      }}>{title}</Text>
+    </TouchableOpacity>
+  )
 };
 
 const PlaceRating = ({
