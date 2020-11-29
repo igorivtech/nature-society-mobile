@@ -1,6 +1,6 @@
 import { TransitionPresets } from "@react-navigation/stack";
 import { Easing } from "react-native";
-import { NAV_DURATION } from "./consts";
+import { NAV_DURATION, width } from "./consts";
 
 const forFade = ({ current }) => ({
   cardStyle: {
@@ -61,7 +61,12 @@ export const slideFromRightOptions = () => ({
   cardStyleInterpolator: ({ current: { progress } }) => {
     return {
       cardStyle: {
-        opacity: progress,
+        transform: [
+          {translateX: progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [width, 0]
+          })}
+        ]
       },
     };
   },
