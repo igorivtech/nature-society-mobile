@@ -23,6 +23,11 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
 
+  safeAreaContainer: {
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+
   onboardingContainer: {
     flex: 1,
     backgroundColor: colors.grass,
@@ -100,14 +105,10 @@ export const styles = StyleSheet.create({
 
   mainListStyle: (paddingTop, yTranslate) => ({
     paddingTop,
-    // backgroundColor: 'yellow',
-    right: 0,
-    left: 0,
-    position: "absolute",
-    bottom: 0,
     transform: [
       {translateY: yTranslate}
-    ]
+    ],
+    flexGrow: 0
   }),
 
   cardMainImage: {

@@ -95,40 +95,39 @@ export const HomeScreen = () => {
         provider={PROVIDER_GOOGLE}
         style={styles.mapStyle}
       />
-      <SafeAreaView style={styles.homeContainer}>
+      <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.homeTopContainer}>
           <HomeButton index={2} onPress={progress} />
           <HomeButton index={1} onPress={report} />
           <HomeButton index={0} onPress={explore} />
         </View>
+        <Animated.FlatList
+          data={places}
+          horizontal
+          style={styles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
+          contentContainerStyle={styles.mainListContainer}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: true }
+          )}
+          scrollEventThrottle={16}
+          onMomentumScrollEnd={(e) => {
+            const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH;
+            animateToItem(DATA[index]);
+          }}
+          keyExtractor={(item) => item.key}
+          snapToInterval={ITEM_WIDTH}
+          decelerationRate={0}
+          bounces={false}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item, index }) => {
+            if (index == 0 || index == places.length - 1) {
+              return <View style={spacerStyle} />;
+            }
+            return <PlaceCard index={index} item={item} scrollX={scrollX} />;
+          }}
+        />
       </SafeAreaView>
-
-      <Animated.FlatList
-        data={places}
-        horizontal
-        style={styles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
-        contentContainerStyle={styles.mainListContainer}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: true }
-        )}
-        scrollEventThrottle={16}
-        onMomentumScrollEnd={(e) => {
-          const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH;
-          animateToItem(DATA[index]);
-        }}
-        keyExtractor={(item) => item.key}
-        snapToInterval={ITEM_WIDTH}
-        decelerationRate={0}
-        bounces={false}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => {
-          if (index == 0 || index == places.length - 1) {
-            return <View style={spacerStyle} />;
-          }
-          return <PlaceCard index={index} item={item} scrollX={scrollX} />;
-        }}
-      />
     </View>
   );
 };
