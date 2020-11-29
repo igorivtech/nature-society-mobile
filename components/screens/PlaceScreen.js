@@ -75,7 +75,7 @@ export const PlaceScreen = ({ navigation, route }) => {
         <View style={styles.fullWidth}>
           <Text style={textStyles.normalOfSize(12)}>{strings.placeScreen.recentVisitors(locked)}</Text>
           <View style={s.recentVisitorsContainer}>
-            {recentVisitors.map((visitor) => <RecentVisitor large title={visitor.name} details={visitor.role} image={visitor.image} /> )}
+            {recentVisitors.map((visitor, index) => <RecentVisitor key={`${index}`} large title={visitor.name} details={visitor.role} image={visitor.image} /> )}
           </View>
         </View>
 
