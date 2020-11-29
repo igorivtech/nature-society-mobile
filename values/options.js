@@ -87,7 +87,12 @@ export const slideFromLeftOptions = () => ({
   cardStyleInterpolator: ({ current: { progress } }) => {
     return {
       cardStyle: {
-        opacity: progress,
+        transform: [
+          {translateX: progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-width, 0]
+          })}
+        ]
       },
     };
   },
