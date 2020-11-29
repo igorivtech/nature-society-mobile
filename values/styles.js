@@ -118,6 +118,7 @@ export const styles = StyleSheet.create({
   }),
 
   cardMainImage: {
+    resizeMode: 'cover',
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
     width: "33%",
