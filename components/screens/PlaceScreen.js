@@ -15,7 +15,7 @@ import { textStyles } from "../../values/textStyles";
 
 import * as Animatable from 'react-native-animatable';
 import { RecentVisitor } from "../views/home/views";
-import { recentVisitors } from "../../values/consts";
+import { height, recentVisitors } from "../../values/consts";
 
 
 export const PlaceScreen = ({ navigation, route }) => {
@@ -194,7 +194,7 @@ const s = StyleSheet.create({
 
   imageStyle: {
     width: "100%",
-    aspectRatio: 1.3,
+    height: height * 0.27,
   },
 
   container: {
