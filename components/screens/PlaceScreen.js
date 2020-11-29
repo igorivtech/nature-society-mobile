@@ -221,6 +221,7 @@ const s = StyleSheet.create({
   },
 
   imageStyle: {
+    borderRadius: 15,
     width: "100%",
     height: height * 0.27,
   },
