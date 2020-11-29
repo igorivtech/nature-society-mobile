@@ -94,6 +94,19 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 
+  mainListContainer: {
+    paddingBottom: 8,
+  },
+
+  mainListStyle: (paddingTop) => ({
+    paddingTop,
+    // backgroundColor: 'yellow',
+    right: 0,
+    left: 0,
+    position: "absolute",
+    bottom: 0,
+  }),
+
   cardMainImage: {
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,

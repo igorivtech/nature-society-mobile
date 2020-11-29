@@ -65,18 +65,8 @@ export const HomeScreen = () => {
       <Animated.FlatList
         data={places}
         horizontal
-        style={{
-          paddingTop: CARD_TRANSLATE_Y,
-          // backgroundColor: 'yellow',
-          right: 0,
-          left: 0,
-          position: "absolute",
-          bottom: 0,
-        }}
-        contentContainerStyle={{
-          paddingBottom: 8,
-          alignItems: "center",
-        }}
+        style={styles.mainListStyle(CARD_TRANSLATE_Y)}
+        contentContainerStyle={styles.mainListContainer}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: scrollX } } }],
           { useNativeDriver: true }
