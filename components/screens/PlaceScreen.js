@@ -51,7 +51,7 @@ export const PlaceScreen = ({ navigation, route }) => {
         </View>
 
         <View style={s.ratingContainer}>
-          <PlaceRating locked title={'עומס מבקרים'} image={require("../../assets/images/HeartL.png")} color={colors.desertRock} rating={place.crowdness} />
+          <PlaceRating locked title={'עומס מבקרים'} image={require("../../assets/images/HowBusyOrange.png")} color={colors.desertRock} rating={place.crowdness} />
 
           <PlaceRating locked leftMargin={40} title={locked ? "מצב וניקיון הטבע" : "מצב הטבע"} image={require("../../assets/images/HeartL.png")} color={colors.grass} rating={place.cleanness} />
         </View>
@@ -115,9 +115,9 @@ const s = StyleSheet.create({
 PlaceScreen.sharedElements = (route, otherRoute, showing) => {
   const { place } = route.params;
   return [
-    {
-      id: `place.${place.key}.bg`,
-    },
+    // {
+    //   id: `place.${place.key}.bg`,
+    // },
     {
       id: `place.${place.key}.image`,
     },
