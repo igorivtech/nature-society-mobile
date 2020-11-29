@@ -1,4 +1,4 @@
-const MAP_STYLE = [
+export const MAP_STYLE = [
     {
         "featureType": "administrative",
         "elementType": "geometry",
