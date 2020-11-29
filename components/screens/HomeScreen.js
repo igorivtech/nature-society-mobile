@@ -12,6 +12,8 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { styles } from "../../values/styles";
 import { height, width, DATA } from "../../values/consts";
+import { colors } from "../../values/colors";
+import { fonts } from "../../values/fonts";
 
 const SPACING = 40;
 const CARD_TRANSLATE_Y = 20;
@@ -64,6 +66,7 @@ export const HomeScreen = () => {
           bottom: 0,
         }}
         contentContainerStyle={{
+          paddingBottom: 8,
           alignItems: "center",
         }}
         onScroll={Animated.event(
@@ -71,7 +74,7 @@ export const HomeScreen = () => {
           { useNativeDriver: true }
         )}
         scrollEventThrottle={16}
-        onMomentumScrollEnd={(e)=>console.log(e.nativeEvent)}
+        onMomentumScrollEnd={(e) => console.log(e.nativeEvent)}
         keyExtractor={(item) => item.key}
         snapToInterval={ITEM_WIDTH}
         decelerationRate={0}
@@ -79,7 +82,7 @@ export const HomeScreen = () => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item, index }) => {
           if (index == 0 || index == places.length - 1) {
-            return <View style={{width: SPACER_ITEM_SIZE}} />
+            return <View style={{ width: SPACER_ITEM_SIZE }} />;
           }
           return <PlaceCard index={index} item={item} scrollX={scrollX} />;
         }}
@@ -88,11 +91,18 @@ export const HomeScreen = () => {
   );
 };
 
+// title: "בריכת נמרוד",
+// distance: 34,
+// lastVisitor: "איגור",
+// cleanness: 4.4,
+// crowdness: 3.6,
+// image:
+
 const PlaceCard = ({ item, index, scrollX }) => {
   const inputRange = [
     (index - 2) * ITEM_WIDTH,
     (index - 1) * ITEM_WIDTH,
-    (index) * ITEM_WIDTH,
+    index * ITEM_WIDTH,
   ];
 
   const translateY = scrollX.interpolate({
@@ -108,27 +118,119 @@ const PlaceCard = ({ item, index, scrollX }) => {
     >
       <Animated.View
         style={{
+          padding: 3,
+          borderRadius: 15,
           flexDirection: "row",
-          margin: 8,
+          marginHorizontal: 10,
           flex: 1,
           alignItems: "center",
-          justifyContent: "space-around",
-          backgroundColor: "red",
+          justifyContent: "space-between",
+          backgroundColor: "white",
           transform: [{ translateY }],
         }}
       >
-        <Image
-          style={{ width: 50, height: 50, backgroundColor: "black" }}
-          source={{ uri: item.image }}
-        />
-        <Text
+        <View
           style={{
-            fontSize: 20,
-            color: "white",
+            justifyContent: 'space-between',
+            paddingVertical: 16,
+            paddingHorizontal: 10,
+            height: "100%",
+            backgroundColor: "red",
+            flex: 1,
           }}
         >
-          {item.title}
-        </Text>
+          <View
+            style={{
+              alignItems: 'center',
+              flexDirection: "row",
+              backgroundColor: "cyan",
+              justifyContent: "flex-end",
+            }}
+          >
+            <View style={{
+              marginRight: 8,
+            }}>
+              <Text
+                style={{
+                  fontFamily: fonts.bold,
+                  fontWeight: "700",
+                  textAlign: "right",
+                  fontSize: 14,
+                  color: colors.darkWithTone,
+                }}
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: fonts.normal,
+                  fontWeight: "400",
+                  textAlign: "right",
+                  fontSize: 14,
+                  color: colors.darkWithTone,
+                }}
+              >
+                {`${item.distance} ק״מ ממך`}
+              </Text>
+            </View>
+            <Image style={{
+              width: 22,
+            }} source={require("../../assets/images/Marker.png")} />
+          </View>
+
+          <View
+            style={{
+              alignItems: 'center',
+              flexDirection: "row",
+              backgroundColor: "cyan",
+              justifyContent: "flex-end",
+            }}
+          >
+            <View style={{
+              marginRight: 8,
+            }}>
+              <Text
+                style={{
+                  fontFamily: fonts.bold,
+                  fontWeight: "700",
+                  textAlign: "right",
+                  fontSize: 14,
+                  color: colors.darkWithTone,
+                }}
+              >
+                {item.lastVisitorName}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: fonts.normal,
+                  fontWeight: "400",
+                  textAlign: "right",
+                  fontSize: 14,
+                  color: colors.darkWithTone,
+                }}
+              >
+                {item.lastVisitorGender == 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"}
+              </Text>
+            </View>
+            <Image style={{
+              width: 22,
+              height: 22,
+              borderRadius: 11,
+            }} source={{uri: item.lastVisitorImage}} />
+          </View>
+          <View style={{ flexDirection: "row" }}></View>
+        </View>
+
+        <Image
+          style={{
+            borderTopRightRadius: 15,
+            borderBottomRightRadius: 15,
+            width: "33%",
+            height: "100%",
+            backgroundColor: "#ccc",
+          }}
+          source={{ uri: item.image }}
+        />
       </Animated.View>
     </View>
   );
