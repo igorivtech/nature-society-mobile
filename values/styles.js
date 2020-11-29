@@ -92,5 +92,13 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "cyan",
     justifyContent: "flex-end",
+  },
+
+  cardMainImage: {
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
+    width: "33%",
+    height: "100%",
+    backgroundColor: "#ccc",
   }
 });

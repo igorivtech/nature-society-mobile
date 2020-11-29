@@ -16,5 +16,21 @@ export const textStyles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: fonts.normal,
     fontSize: 24,
+  },
+
+  cardTitle: {
+    fontFamily: fonts.bold,
+    fontWeight: "700",
+    textAlign: "right",
+    fontSize: 14,
+    color: colors.darkWithTone,
+  },
+
+  cardDetail: {
+    fontFamily: fonts.normal,
+    fontWeight: "400",
+    textAlign: "right",
+    fontSize: 14,
+    color: colors.darkWithTone,
   }
 });

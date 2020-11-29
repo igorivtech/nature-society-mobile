@@ -14,6 +14,8 @@ import { styles } from "../../values/styles";
 import { height, width, DATA } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { fonts } from "../../values/fonts";
+import { textStyles } from "../../values/textStyles";
+
 
 const SPACING = 40;
 const CARD_TRANSLATE_Y = 20;
@@ -21,6 +23,11 @@ const ITEM_WIDTH = width - 2 * SPACING;
 // const ITEM_WIDTH = width * 0.79;
 const ITEM_HEIGHT = ITEM_WIDTH * 0.466;
 const SPACER_ITEM_SIZE = (width - ITEM_WIDTH) / 2;
+
+const cardStyle = {
+  width: ITEM_WIDTH,
+  height: ITEM_HEIGHT,
+}
 
 export const HomeScreen = () => {
   const [places, setPlaces] = useState([]);
@@ -111,10 +118,7 @@ const PlaceCard = ({ item, index, scrollX }) => {
   });
   return (
     <View
-      style={{
-        width: ITEM_WIDTH,
-        height: ITEM_HEIGHT,
-      }}
+      style={cardStyle}
     >
       <Animated.View style={styles.mainCardContainer(translateY)}>
         <View style={styles.cardDetailsContainer}>
@@ -124,26 +128,8 @@ const PlaceCard = ({ item, index, scrollX }) => {
                 marginRight: 8,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: fonts.bold,
-                  fontWeight: "700",
-                  textAlign: "right",
-                  fontSize: 14,
-                  color: colors.darkWithTone,
-                }}
-              >
-                {item.title}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.normal,
-                  fontWeight: "400",
-                  textAlign: "right",
-                  fontSize: 14,
-                  color: colors.darkWithTone,
-                }}
-              >
+              <Text style={textStyles.cardTitle}>{item.title}</Text>
+              <Text style={textStyles.cardDetail}>
                 {`${item.distance} ק״מ ממך`}
               </Text>
             </View>
@@ -161,26 +147,8 @@ const PlaceCard = ({ item, index, scrollX }) => {
                 marginRight: 8,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: fonts.bold,
-                  fontWeight: "700",
-                  textAlign: "right",
-                  fontSize: 14,
-                  color: colors.darkWithTone,
-                }}
-              >
-                {item.lastVisitorName}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.normal,
-                  fontWeight: "400",
-                  textAlign: "right",
-                  fontSize: 14,
-                  color: colors.darkWithTone,
-                }}
-              >
+              <Text style={textStyles.cardTitle}>{item.lastVisitorName}</Text>
+              <Text style={textStyles.cardDetail}>
                 {item.lastVisitorGender == 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"}
               </Text>
             </View>
@@ -196,16 +164,7 @@ const PlaceCard = ({ item, index, scrollX }) => {
           <View style={{ flexDirection: "row" }}></View>
         </View>
 
-        <Image
-          style={{
-            borderTopRightRadius: 15,
-            borderBottomRightRadius: 15,
-            width: "33%",
-            height: "100%",
-            backgroundColor: "#ccc",
-          }}
-          source={{ uri: item.image }}
-        />
+        <Image style={styles.cardMainImage} source={{ uri: item.image }} />
       </Animated.View>
     </View>
   );
