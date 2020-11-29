@@ -20,6 +20,10 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  homeContainer: {
+    flex: 1,
+  },
+
   onboardingContainer: {
     flex: 1,
     backgroundColor: colors.grass,
