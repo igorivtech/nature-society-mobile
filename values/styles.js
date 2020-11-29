@@ -65,5 +65,17 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 64,
     justifyContent: 'space-between',
     marginTop: 20
-  }
+  },
+
+  mainCardContainer: (translateY) => ({
+    padding: 3,
+    borderRadius: 15,
+    flexDirection: "row",
+    marginHorizontal: 10,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    transform: [{ translateY }],
+  })
 });

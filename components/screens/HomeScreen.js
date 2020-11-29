@@ -117,17 +117,7 @@ const PlaceCard = ({ item, index, scrollX }) => {
       }}
     >
       <Animated.View
-        style={{
-          padding: 3,
-          borderRadius: 15,
-          flexDirection: "row",
-          marginHorizontal: 10,
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor: "white",
-          transform: [{ translateY }],
-        }}
+        style={styles.mainCardContainer(translateY)}
       >
         <View
           style={{
