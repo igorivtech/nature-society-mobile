@@ -201,9 +201,7 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
 
             <RecentVisitor
               title={item.lastVisitorName}
-              details={
-                item.lastVisitorGender == 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
-              }
+              details={strings.homeScreen.recentVisitor(item.lastVisitorGender == 0)}
               image={item.lastVisitorImage}
             />
 

@@ -17,5 +17,10 @@ export const strings = {
             return locked ? "מצב וניקיון הטבע" : "מצב הטבע"
         },
         crowdnessTitle: "עומס מבקרים"
+    },
+    homeScreen: {
+        recentVisitor: (male) => {
+            return male != 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
+        }
     }
 }
