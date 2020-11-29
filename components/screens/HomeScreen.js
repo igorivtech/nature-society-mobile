@@ -53,11 +53,14 @@ export const HomeScreen = () => {
     setPlaces([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   }, []);
 
-  useEffect(() => {
+  useEffect(()=>{
     setTimeout(() => {
       setHideList(false);
+      if (places.length > 1) {
+        animateToItem(places[1]);
+      }
     }, 1000);
-  }, []);
+  }, [places]);
 
   const progress = () => {
     console.log("progress pressed");
@@ -69,6 +72,13 @@ export const HomeScreen = () => {
 
   const explore = () => {
     console.log("explore pressed");
+  };
+
+  const animateToItem = (item) => {
+    mapRef.current.animateCamera({center: {
+      latitude: item.location[0],
+      longitude: item.location[1]
+    }}, 1000)
   };
 
   return (
@@ -98,10 +108,7 @@ export const HomeScreen = () => {
         scrollEventThrottle={16}
         onMomentumScrollEnd={(e) => {
           const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH
-          mapRef.current.animateToCoordinate({
-            latitude: DATA[index].location[0],
-            longitude: DATA[index].location[1]
-          }, 1000);
+          animateToItem(DATA[index]);
         }}
         keyExtractor={(item) => item.key}
         snapToInterval={ITEM_WIDTH}
