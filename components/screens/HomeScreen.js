@@ -16,7 +16,6 @@ import { colors } from "../../values/colors";
 import { fonts } from "../../values/fonts";
 import { textStyles } from "../../values/textStyles";
 
-
 const SPACING = 40;
 const CARD_TRANSLATE_Y = 20;
 const ITEM_WIDTH = width - 2 * SPACING;
@@ -27,7 +26,9 @@ const SPACER_ITEM_SIZE = (width - ITEM_WIDTH) / 2;
 const cardStyle = {
   width: ITEM_WIDTH,
   height: ITEM_HEIGHT,
-}
+};
+
+const spacerStyle = { width: SPACER_ITEM_SIZE };
 
 export const HomeScreen = () => {
   const [places, setPlaces] = useState([]);
@@ -89,7 +90,7 @@ export const HomeScreen = () => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item, index }) => {
           if (index == 0 || index == places.length - 1) {
-            return <View style={{ width: SPACER_ITEM_SIZE }} />;
+            return <View style={spacerStyle} />;
           }
           return <PlaceCard index={index} item={item} scrollX={scrollX} />;
         }}
@@ -117,9 +118,7 @@ const PlaceCard = ({ item, index, scrollX }) => {
     outputRange: [0, -CARD_TRANSLATE_Y, 0],
   });
   return (
-    <View
-      style={cardStyle}
-    >
+    <View style={cardStyle}>
       <Animated.View style={styles.mainCardContainer(translateY)}>
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
