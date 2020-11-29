@@ -36,13 +36,15 @@ const cardStyle = {
 const spacerStyle = { width: SPACER_ITEM_SIZE };
 
 export const HomeScreen = ({ navigation }) => {
+
+  const [places, setPlaces] = useState([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
+  const [hideList, setHideList] = useState(true);
+  const firstTime = useRef(true);
+
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
   const mapRef = useRef(null);
-
-  const [places, setPlaces] = useState([]);
-  const [hideList, setHideList] = useState(true);
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
@@ -54,18 +56,13 @@ export const HomeScreen = ({ navigation }) => {
   }, [hideList]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setHideList(false);
-      if (places.length > 1) {
-        animateToItem(places[1]);
-      }
-    }, 1000);
-  }, [places]);
-
-  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      if (places.length == 0) {
-        setPlaces([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
+      if (firstTime.current) {
+        setTimeout(() => {
+          setHideList(false);
+          animateToItem(DATA[0]);
+          firstTime.current = false;
+        }, 1000);
       } else {
         setHideList(false);
       }
