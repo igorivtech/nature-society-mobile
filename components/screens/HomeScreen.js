@@ -11,7 +11,7 @@ import {
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { styles } from "../../values/styles";
-import { height, width } from "../../values/consts";
+import { height, width, DATA } from "../../values/consts";
 
 const SPACING = 40;
 const CARD_TRANSLATE_Y = 20;
@@ -133,54 +133,3 @@ const PlaceCard = ({ item, index, scrollX }) => {
     </View>
   );
 };
-
-const DATA = [
-  {
-    key: 1,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-  {
-    key: 2,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-  {
-    key: 3,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-  {
-    key: 5,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-  {
-    key: 6,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-  {
-    key: 7,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-  {
-    key: 8,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-  {
-    key: 9,
-    title: "בריכת נמרוד",
-    image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
-  },
-];
