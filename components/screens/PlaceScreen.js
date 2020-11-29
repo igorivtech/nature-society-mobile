@@ -227,7 +227,7 @@ const s = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: colors.grass,
+    backgroundColor: colors.clear,
   },
 });
 

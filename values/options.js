@@ -44,6 +44,9 @@ export const fadeOptions = () => ({
       },
     };
   },
+  cardStyle: {
+    backgroundColor: 'transparent',
+  }
 });
 
 export const slideFromRightOptions = () => ({
