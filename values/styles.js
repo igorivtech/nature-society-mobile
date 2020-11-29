@@ -98,13 +98,16 @@ export const styles = StyleSheet.create({
     paddingBottom: 8,
   },
 
-  mainListStyle: (paddingTop) => ({
+  mainListStyle: (paddingTop, yTranslate) => ({
     paddingTop,
     // backgroundColor: 'yellow',
     right: 0,
     left: 0,
     position: "absolute",
     bottom: 0,
+    transform: [
+      {translateY: yTranslate}
+    ]
   }),
 
   cardMainImage: {

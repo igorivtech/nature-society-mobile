@@ -7,6 +7,7 @@ import {
   FlatList,
   Animated,
   Image,
+  Easing,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
@@ -31,13 +32,30 @@ const cardStyle = {
 const spacerStyle = { width: SPACER_ITEM_SIZE };
 
 export const HomeScreen = () => {
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
+
   const [places, setPlaces] = useState([]);
+  const [hideList, setHideList] = useState(true);
+
+  useEffect(() => {
+    Animated.timing(listYTranslate, {
+      toValue: hideList ? height * 0.25 : 0,
+      duration: 700,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+  }, [hideList]);
 
   useEffect(() => {
     setPlaces([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   }, []);
 
-  const scrollX = useRef(new Animated.Value(0)).current;
+  useEffect(()=>{
+    setTimeout(() => {
+      setHideList(false);
+    }, 1000);
+  }, []);
 
   const progress = () => {
     console.log("progress pressed");
@@ -65,14 +83,14 @@ export const HomeScreen = () => {
       <Animated.FlatList
         data={places}
         horizontal
-        style={styles.mainListStyle(CARD_TRANSLATE_Y)}
+        style={styles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
         contentContainerStyle={styles.mainListContainer}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: scrollX } } }],
           { useNativeDriver: true }
         )}
         scrollEventThrottle={16}
-        onMomentumScrollEnd={(e) => console.log(e.nativeEvent)}
+        onMomentumScrollEnd={(e) => console.log(e.nativeEvent.contentOffset.x)}
         keyExtractor={(item) => item.key}
         snapToInterval={ITEM_WIDTH}
         decelerationRate={0}
