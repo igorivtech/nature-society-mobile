@@ -105,5 +105,10 @@ export const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
-  }
+  },
+
+  spacer: (size) => ({
+    width: size,
+    height: size
+  })
 });

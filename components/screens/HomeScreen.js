@@ -162,10 +162,12 @@ const PlaceCard = ({ item, index, scrollX }) => {
           </View>
           <View style={styles.cardLocationContainer}>
             <RatingView
-              image={require("../../assets/images/HowBusy.png")}
+              image={require("../../assets/images/Heart.png")}
               rating={item.crowdness}
               color={colors.grass}
             />
+
+            <View style={styles.spacer(16)} />
 
             <RatingView
               image={require("../../assets/images/Heart.png")}
