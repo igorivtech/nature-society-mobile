@@ -79,7 +79,10 @@ export const PlaceScreen = ({ navigation, route }) => {
           </View>
         </View>
 
-        <Text>{place.description}</Text>
+        <Text style={{
+          ...textStyles.normalOfSize(16),
+          width: '100%',
+        }}>{place.description}</Text>
         
       </View>
     </View>
