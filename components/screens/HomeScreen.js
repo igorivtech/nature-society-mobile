@@ -198,9 +198,13 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
               />
             </View>
 
-            <RecentVisitor title={item.lastVisitorName} details={item.lastVisitorGender == 0
-                    ? "ביקר לאחרונה"
-                    : "ביקרה לאחרונה"} image={item.lastVisitorImage} />
+            <RecentVisitor
+              title={item.lastVisitorName}
+              details={
+                item.lastVisitorGender == 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
+              }
+              image={item.lastVisitorImage}
+            />
 
             <View style={styles.cardLocationContainer}>
               <RatingView
@@ -236,7 +240,7 @@ const PlaceCard = ({ item, index, scrollX, callback }) => {
   );
 };
 
-const RecentVisitor = ({title, details, image}) => {
+const RecentVisitor = ({ title, details, image }) => {
   return (
     <View style={styles.cardLocationContainer}>
       <View
@@ -247,10 +251,7 @@ const RecentVisitor = ({title, details, image}) => {
         <Text style={textStyles.cardTitle}>{title}</Text>
         <Text style={textStyles.cardDetail}>{details}</Text>
       </View>
-      <Image
-        style={styles.cardVisitorPic}
-        source={{ uri: image }}
-      />
+      <Image style={styles.cardVisitorPic} source={{ uri: image }} />
     </View>
   );
 };
