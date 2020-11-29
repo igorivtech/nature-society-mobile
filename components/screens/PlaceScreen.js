@@ -17,6 +17,8 @@ import * as Animatable from 'react-native-animatable';
 import { RecentVisitor } from "../views/home/views";
 import { height, recentVisitors } from "../../values/consts";
 
+const fadeOutDuration = 300;
+
 
 export const PlaceScreen = ({ navigation, route }) => {
   const { place, locked } = route.params;
@@ -41,11 +43,11 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   const goBack = () => {
     Promise.all([
-      textRef.current.fadeOut(200),
-      ratingRef.current.fadeOut(200),
-      visitorsRef.current.fadeOut(200),
-      descRef.current.fadeOut(200),
-      actionsRef.current.fadeOut(200)
+      textRef.current.fadeOut(fadeOutDuration),
+      ratingRef.current.fadeOut(fadeOutDuration),
+      visitorsRef.current.fadeOut(fadeOutDuration),
+      descRef.current.fadeOut(fadeOutDuration),
+      actionsRef.current.fadeOut(fadeOutDuration)
     ]).then(() => navigation.goBack())
   }
 
