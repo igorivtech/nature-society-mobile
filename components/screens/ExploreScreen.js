@@ -127,8 +127,9 @@ export const ExploreScreen = ({ navigation }) => {
             keyExtractor={(item) => item.key}
             renderItem={({ item, index }) => {
               return (
-                <TouchableOpacity onPress={()=>showItem(item)} style={{backgroundColor: 'cyan'}}>
-                  <Text>{item.title}</Text>
+                <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
+                  <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardTitle}>{item.title}</Text>
+                  <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>
                 </TouchableOpacity>
               );
             }}
@@ -223,6 +224,31 @@ const SearchCard = ({ item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  smallCardTitle: {
+    width: '50%',
+    ...textStyles.boldOfSize(18),
+    color: colors.treeBlues
+  },
+
+  smallCardDetail: {
+    width: '50%',
+    ...textStyles.normalOfSize(18),
+    color: colors.treeBlues,
+    textAlign: 'center',
+  },
+
+  smallCardContainer: {
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderColor: colors.treeBlues,
+    borderWidth: 1,
+    borderRadius: 15,
+    marginBottom: 15,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+  },
 
   listsContainer: {
     flex: 1,

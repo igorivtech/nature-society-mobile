@@ -2,6 +2,13 @@ export const strings = {
     distanceFromYou: (distance) => {
         return `${distance} ק״מ ממך`
     },
+    distanceFromYouAlt: (distance) => {
+        let str = ""
+        str += `km`
+        str += ` ${distance} `
+        str += 'ממך'
+        return str
+    },
     onboardingScreen: {
         item1: "גלו אתרי טבע שלא הכרתם",
         item2: "דווחו מהשטח והשפיעו על מצב הטבע",
