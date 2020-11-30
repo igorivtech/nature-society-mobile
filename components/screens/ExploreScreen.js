@@ -22,6 +22,11 @@ export const ExploreScreen = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOn, setSearchOn] = useState(false);
 
+  const closeSearch = () => {
+    setSearchTerm('');
+    setSearchOn(false);
+    textInputRef.current.blur();
+  }
 
   return (
     <View style={styles.container}>
@@ -36,11 +41,7 @@ export const ExploreScreen = ({ navigation }) => {
 
       <View style={styles.searchScreenContainer}>
         <View style={styles.searchContainer(searchOn)}>
-          {searchOn ? (<TouchableOpacity onPress={() => {
-            setSearchTerm('');
-            setSearchOn(false);
-            textInputRef.current.blur();
-          }} >
+          {searchOn ? (<TouchableOpacity onPress={closeSearch} >
             <Image source={require("../../assets/images/search_close_icon.png")} />
           </TouchableOpacity>) : null}
           
