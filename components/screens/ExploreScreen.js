@@ -53,6 +53,10 @@ export const ExploreScreen = ({ navigation }) => {
     [setSearchTerm]
   );
 
+  const showItem = (item) => {
+    console.log(`showing item ${item.title}`);
+  }
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
@@ -99,9 +103,8 @@ export const ExploreScreen = ({ navigation }) => {
           data={places}
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => {
-            console.log({ item });
             return (
-              <View style={styles.card}>
+              <TouchableOpacity style={styles.card} onPress={()=>showItem(item)} >
                 <Image style={styles.cardImage} source={{ uri: item.image }} />
                 <View style={styles.cardDetailsContainer}>
                   <View style={styles.ratingContainer}>
@@ -125,7 +128,7 @@ export const ExploreScreen = ({ navigation }) => {
                     />
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           }}
         />
