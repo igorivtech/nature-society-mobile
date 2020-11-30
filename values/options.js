@@ -73,6 +73,9 @@ export const slideFromRightOptions = () => ({
       },
     };
   },
+  cardStyle: {
+    backgroundColor: 'transparent',
+  }
 });
 
 export const slideFromLeftOptions = () => ({
@@ -99,4 +102,7 @@ export const slideFromLeftOptions = () => ({
       },
     };
   },
+  cardStyle: {
+    backgroundColor: 'transparent',
+  }
 });
