@@ -32,13 +32,14 @@ export const ExploreScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [keyboardHeight] = useKeyboard();
+  const [keyboardBottomPadding, setKeyboardBottomPadding] = useState(40);
 
   useEffect(() => {
     setPlaces(DATA);
   }, []);
 
   useEffect(()=>{
-    console.log(keyboardHeight);
+    setKeyboardBottomPadding(40 + keyboardHeight);
   }, [keyboardHeight])
 
   const closeSearch = () => {
@@ -77,7 +78,7 @@ export const ExploreScreen = ({ navigation }) => {
         />
 
         <FlatList
-          contentContainerStyle={styles.flatListContainer}
+          contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
           data={places}
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => {
@@ -189,10 +190,11 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
   },
-  flatListContainer: {
+  flatListContainer: (keyboardBottomPadding) => ({
     paddingVertical: 34,
     paddingHorizontal: 40,
-  },
+    paddingBottom: keyboardBottomPadding
+  }),
 
   card: {
     borderWidth: 1,
