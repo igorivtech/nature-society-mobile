@@ -81,7 +81,7 @@ export const ExploreScreen = ({ navigation }) => {
           data={places}
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => {
-            return <SearchCard item={item} index={index} />;
+            return <SearchCard showItem={showItem} item={item} index={index} />;
           }}
         />
       </View>
@@ -128,7 +128,7 @@ const SearchBar = ({
   );
 };
 
-const SearchCard = ({ item, index }) => {
+const SearchCard = ({ item, showItem, index }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={() => showItem(item)}>
       <Image style={styles.cardImage} source={{ uri: item.image }} />
