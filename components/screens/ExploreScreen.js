@@ -25,7 +25,6 @@ const INNER_BORDER_RADIUS = BORDER_RADIUS - CARD_PADDING;
 const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation }) => {
-  const textInputRef = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
 
@@ -39,7 +38,6 @@ export const ExploreScreen = ({ navigation }) => {
     setSearchTerm("");
     setSearchOn(false);
     Keyboard.dismiss();
-    // textInputRef.current.blur();
   };
 
   const goBack = () => {
@@ -66,86 +64,20 @@ export const ExploreScreen = ({ navigation }) => {
       <SafeAreaView />
 
       <View style={styles.searchScreenContainer}>
-        <View style={styles.searchContainer(searchOn)}>
-          {searchOn ? (
-            <TouchableOpacity onPress={closeSearch}>
-              <Image
-                source={require("../../assets/images/search_close_icon.png")}
-              />
-            </TouchableOpacity>
-          ) : null}
-
-          <TextInput
-            ref={textInputRef}
-            onFocus={() => setSearchOn(true)}
-            onBlur={() => setSearchOn(false)}
-            onChangeText={textChanged}
-            value={searchTerm}
-            selectionColor={colors.desertRock}
-            placeholderTextColor={colors.treeBlues}
-            placeholder={
-              searchOn ? strings.exploreScreen.searchPlaceholder : ""
-            }
-            style={styles.searchInput}
-          />
-
-          <Image
-            source={
-              searchOn
-                ? require("../../assets/images/search_icon.png")
-                : require("../../assets/images/search_off_icon.png")
-            }
-          />
-        </View>
+        <SearchBar
+          searchTerm={searchTerm}
+          searchOn={searchOn}
+          setSearchOn={setSearchOn}
+          closeSearch={closeSearch}
+          textChanged={textChanged}
+        />
 
         <FlatList
           contentContainerStyle={styles.flatListContainer}
           data={places}
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => {
-            return (
-              <TouchableOpacity
-                style={styles.card}
-                onPress={() => showItem(item)}
-              >
-                <Image style={styles.cardImage} source={{ uri: item.image }} />
-                <View style={styles.cardDetailsContainer}>
-
-                  <View style={styles.cardLocationContainer}>
-                    <Text style={textStyles.normalOfSize(14)}>
-                      {strings.distanceFromYou(item.distance)}
-                    </Text>
-
-                    <View style={{ flexDirection: "row", alignItems: 'center' }}>
-                      <Text style={textStyles.boldOfSize(16)}>{item.title}</Text>
-
-                      <Image style={styles.translateY(-2)} source={require("../../assets/images/marker_small.png")} />
-                    </View>
-                  </View>
-
-                  <View style={styles.ratingContainer}>
-                    <PlaceRating
-                      small
-                      locked={item.locked}
-                      title={strings.placeScreen.crowdnessTitle}
-                      image={require("../../assets/images/HowBusy.png")}
-                      color={colors.desertRock}
-                      rating={item.crowdness}
-                    />
-
-                    <PlaceRating
-                      small
-                      locked={item.locked}
-                      leftMargin={40}
-                      title={strings.placeScreen.cleannessTitle(item.locked)}
-                      image={require("../../assets/images/Heart.png")}
-                      color={colors.grass}
-                      rating={item.cleanness}
-                    />
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
+            return <SearchCard item={item} index={index} />;
           }}
         />
       </View>
@@ -153,12 +85,93 @@ export const ExploreScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const SearchBar = ({
+  searchTerm,
+  searchOn,
+  setSearchOn,
+  closeSearch,
+  textChanged,
+}) => {
+  return (
+    <View style={styles.searchContainer(searchOn)}>
+      {searchOn ? (
+        <TouchableOpacity onPress={closeSearch}>
+          <Image
+            source={require("../../assets/images/search_close_icon.png")}
+          />
+        </TouchableOpacity>
+      ) : null}
 
+      <TextInput
+        onFocus={() => setSearchOn(true)}
+        onBlur={() => setSearchOn(false)}
+        onChangeText={textChanged}
+        value={searchTerm}
+        selectionColor={colors.desertRock}
+        placeholderTextColor={colors.treeBlues}
+        placeholder={searchOn ? strings.exploreScreen.searchPlaceholder : ""}
+        style={styles.searchInput}
+      />
+
+      <Image
+        source={
+          searchOn
+            ? require("../../assets/images/search_icon.png")
+            : require("../../assets/images/search_off_icon.png")
+        }
+      />
+    </View>
+  );
+};
+
+const SearchCard = ({ item, index }) => {
+  return (
+    <TouchableOpacity style={styles.card} onPress={() => showItem(item)}>
+      <Image style={styles.cardImage} source={{ uri: item.image }} />
+      <View style={styles.cardDetailsContainer}>
+        <View style={styles.cardLocationContainer}>
+          <Text style={textStyles.normalOfSize(14)}>
+            {strings.distanceFromYou(item.distance)}
+          </Text>
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={textStyles.boldOfSize(16)}>{item.title}</Text>
+
+            <Image
+              style={styles.translateY(-2)}
+              source={require("../../assets/images/marker_small.png")}
+            />
+          </View>
+        </View>
+
+        <View style={styles.ratingContainer}>
+          <PlaceRating
+            small
+            locked={item.locked}
+            title={strings.placeScreen.crowdnessTitle}
+            image={require("../../assets/images/HowBusy.png")}
+            color={colors.desertRock}
+            rating={item.crowdness}
+          />
+
+          <PlaceRating
+            small
+            locked={item.locked}
+            leftMargin={40}
+            title={strings.placeScreen.cleannessTitle(item.locked)}
+            image={require("../../assets/images/Heart.png")}
+            color={colors.grass}
+            rating={item.cleanness}
+          />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
   translateY: (translateY) => ({
-    transform: [
-      {translateY}
-    ]
+    transform: [{ translateY }],
   }),
 
   cardLocationContainer: {
@@ -195,7 +208,7 @@ const styles = StyleSheet.create({
   },
 
   cardDetailsContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     paddingVertical: 8,
     paddingHorizontal: 16,
     height: 80,
