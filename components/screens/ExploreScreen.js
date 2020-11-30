@@ -95,6 +95,7 @@ export const ExploreScreen = ({ navigation }) => {
             console.log({item});
             return (
               <View style={{
+                overflow: 'hidden',
                 borderRadius: 15,
                 width: '100%',
                 aspectRatio: 1.7,
@@ -103,8 +104,6 @@ export const ExploreScreen = ({ navigation }) => {
               }}>
                 
                 <Image style={{
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15,
                   flexGrow: 1
                 }} source={{uri: item.image}} />
 
