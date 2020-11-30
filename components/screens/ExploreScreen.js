@@ -111,11 +111,7 @@ export const ExploreScreen = ({ navigation }) => {
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
             data={places}
             keyExtractor={(item) => item.key}
-            renderItem={({ item, index }) => {
-              return (
-                <SearchCard showItem={showItem} item={item} index={index} />
-              );
-            }}
+            renderItem={({ item, index }) => <SearchCard showItem={showItem} item={item} index={index} />}
           />
           <Animated.FlatList
             scrollIndicatorInsets={styles.scrollInsets}
@@ -126,20 +122,22 @@ export const ExploreScreen = ({ navigation }) => {
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
             data={filteredPlaces}
             keyExtractor={(item) => item.key}
-            renderItem={({ item, index }) => {
-              return (
-                <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
-                  <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardTitle}>{item.title}</Text>
-                  <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>
-                </TouchableOpacity>
-              );
-            }}
+            renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} />}
           />
         </View>
       </View>
     </View>
   );
 };
+
+const TextCard = ({ item, showItem, index }) => {
+  return (
+    <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
+      <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardTitle}>{item.title}</Text>
+      <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>
+    </TouchableOpacity>
+  )
+}
 
 const SearchBar = ({
   searchTerm,
