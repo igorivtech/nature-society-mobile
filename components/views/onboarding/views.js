@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, Pressable, Animated, Easing } from "react-native";
+import { View, Text, Pressable, Animated, Easing, TouchableOpacity } from "react-native";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
@@ -55,7 +55,7 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
 
 export const CoolButton = ({ onPress }) => {
   return (
-    <Pressable onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
       <View
         style={{
           backgroundColor: colors.treeBlues,
@@ -70,6 +70,6 @@ export const CoolButton = ({ onPress }) => {
           {strings.onboardingScreen.coolButton}
         </Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
