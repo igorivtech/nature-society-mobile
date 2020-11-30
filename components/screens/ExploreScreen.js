@@ -12,6 +12,7 @@ import {
   Keyboard,
   FlatList,
 } from "react-native";
+import { useKeyboard } from "../../hooks/useKeyboard";
 import { colors } from "../../values/colors";
 import { DATA, NAV_CLOSE_TAP_SIZE } from "../../values/consts";
 import { strings } from "../../values/strings";
@@ -29,10 +30,16 @@ export const ExploreScreen = ({ navigation }) => {
   const [searchOn, setSearchOn] = useState(false);
 
   const [places, setPlaces] = useState([]);
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
+  const [keyboardHeight] = useKeyboard();
 
   useEffect(() => {
     setPlaces(DATA);
   }, []);
+
+  useEffect(()=>{
+    console.log(keyboardHeight);
+  }, [keyboardHeight])
 
   const closeSearch = () => {
     setSearchTerm("");
@@ -44,12 +51,9 @@ export const ExploreScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const textChanged = useCallback(
-    (value) => {
-      setSearchTerm(value);
-    },
-    [setSearchTerm]
-  );
+  const textChanged = useCallback( (value) => {
+    setSearchTerm(value);
+  }, [setSearchTerm]);
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
