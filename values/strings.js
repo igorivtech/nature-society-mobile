@@ -25,5 +25,8 @@ export const strings = {
         recentVisitor: (male) => {
             return male != 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
         }
+    },
+    exploreScreen: {
+        searchPlaceholder: 'חפש'
     }
 }
