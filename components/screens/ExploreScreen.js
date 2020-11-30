@@ -127,7 +127,7 @@ export const ExploreScreen = ({ navigation }) => {
             keyExtractor={(item) => item.key}
             renderItem={({ item, index }) => {
               return (
-                <TouchableOpacity style={{backgroundColor: 'cyan'}}>
+                <TouchableOpacity onPress={()=>showItem(item)} style={{backgroundColor: 'cyan'}}>
                   <Text>{item.title}</Text>
                 </TouchableOpacity>
               );
