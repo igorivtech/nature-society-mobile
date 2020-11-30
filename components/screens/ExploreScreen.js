@@ -20,6 +20,8 @@ import { DATA, NAV_CLOSE_TAP_SIZE, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { PlaceRating } from "./PlaceScreen";
+import Highlighter from 'react-native-highlight-words';
+import { fonts } from "../../values/fonts";
 
 const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -122,7 +124,7 @@ export const ExploreScreen = ({ navigation }) => {
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
             data={filteredPlaces}
             keyExtractor={(item) => item.key}
-            renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} />}
+            renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
           />
         </View>
       </View>
@@ -130,10 +132,17 @@ export const ExploreScreen = ({ navigation }) => {
   );
 };
 
-const TextCard = ({ item, showItem, index }) => {
+const TextCard = ({ item, showItem, index, searchTerm }) => {
   return (
     <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
-      <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardTitle}>{item.title}</Text>
+      <Highlighter
+        adjustsFontSizeToFit={true} 
+        numberOfLines={1}
+        style={styles.smallCardTitle}
+        highlightStyle={{fontFamily: fonts.bold}}
+        searchWords={searchTerm.length == 0 ? [] : [searchTerm]}
+        textToHighlight={item.title}
+      />
       <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>
     </TouchableOpacity>
   )
@@ -230,7 +239,7 @@ const styles = StyleSheet.create({
 
   smallCardTitle: {
     width: '50%',
-    ...textStyles.boldOfSize(18),
+    ...textStyles.normalOfSize(18),
     color: colors.treeBlues
   },
 
