@@ -1,39 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   View,
-  Text,
-  StyleSheet,
   SafeAreaView,
-  FlatList,
   Animated,
-  Image,
   Easing,
-  TouchableWithoutFeedback,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { HomeButton, RatingView, RecentVisitor } from "../views/home/views";
+import { HomeButton } from "../views/home/views";
 import { styles } from "../../values/styles";
-import { height, width, DATA } from "../../values/consts";
-import { colors } from "../../values/colors";
-import { fonts } from "../../values/fonts";
-import { textStyles } from "../../values/textStyles";
+import { height, DATA } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
-import { SharedElement } from "react-navigation-shared-element";
-import { strings } from "../../values/strings";
-
-const SPACING = 40;
-const CARD_TRANSLATE_Y = 20;
-const ITEM_WIDTH = width - 2 * SPACING;
-// const ITEM_WIDTH = width * 0.79;
-const ITEM_HEIGHT = ITEM_WIDTH * 0.466;
-const SPACER_ITEM_SIZE = (width - ITEM_WIDTH) / 2;
-
-const cardStyle = {
-  width: ITEM_WIDTH,
-  height: ITEM_HEIGHT,
-};
-
-const spacerStyle = { width: SPACER_ITEM_SIZE };
+import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
 
 export const HomeScreen = ({ navigation }) => {
 
@@ -155,97 +132,3 @@ export const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
-
-// title: "בריכת נמרוד",
-// distance: 34,
-// lastVisitor: "איגור",
-// cleanness: 4.4,
-// crowdness: 3.6,
-// image:
-
-const PlaceCard = ({ item, index, scrollX, callback }) => {
-  const inputRange = [
-    (index - 2) * ITEM_WIDTH,
-    (index - 1) * ITEM_WIDTH,
-    index * ITEM_WIDTH,
-  ];
-
-  const translateY = scrollX.interpolate({
-    inputRange,
-    outputRange: [0, -CARD_TRANSLATE_Y, 0],
-  });
-
-  const showPlace = () => {
-    callback(item);
-  };
-
-  return (
-    <View style={cardStyle}>
-      <TouchableWithoutFeedback onPress={showPlace}>
-        <Animated.View style={styles.mainCardContainer(translateY)}>
-          <SharedElement
-            style={StyleSheet.absoluteFill}
-            id={`place.${item.key}.bg`}
-          >
-            <View
-              style={{
-                ...StyleSheet.absoluteFill,
-                borderRadius: 15,
-              }}
-            />
-          </SharedElement>
-
-          <View style={styles.cardDetailsContainer}>
-            <View style={styles.cardLocationContainer}>
-              <View>
-                <Text style={textStyles.cardTitle}>{item.title}</Text>
-                <Text style={textStyles.cardDetail}>
-                  {strings.distanceFromYou(item.distance)}
-                </Text>
-              </View>
-              <Image
-                style={styles.cardDetailIcon}
-                source={require("../../assets/images/Marker.png")}
-              />
-            </View>
-
-            <RecentVisitor
-              title={item.lastVisitorName}
-              details={strings.homeScreen.recentVisitor(item.lastVisitorGender == 0)}
-              image={item.lastVisitorImage}
-            />
-
-            <View style={styles.cardLocationContainer}>
-              <RatingView
-                image={require("../../assets/images/HowBusy.png")}
-                rating={item.crowdness}
-                color={colors.grass}
-              />
-
-              <View style={styles.spacer(16)} />
-
-              <RatingView
-                image={require("../../assets/images/Heart.png")}
-                rating={item.cleanness}
-                color={colors.treeBlues}
-              />
-
-              <View style={styles.spacer(2)} />
-            </View>
-          </View>
-
-          <SharedElement
-            style={styles.cardMainImage}
-            id={`place.${item.key}.image`}
-          >
-            <Image
-              style={{ ...styles.cardMainImage, width: "100%" }}
-              source={{ uri: item.image }}
-            />
-          </SharedElement>
-        </Animated.View>
-      </TouchableWithoutFeedback>
-    </View>
-  );
-};
-
