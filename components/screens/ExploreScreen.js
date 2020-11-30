@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,9 @@ const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation }) => {
 
+  const textInputRef = useRef();
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchOn, setSearchOn] = useState(false);
 
 
   return (
@@ -32,38 +34,30 @@ export const ExploreScreen = ({ navigation }) => {
 
       <SafeAreaView />
 
-      <View style={styles.searchContainer}>
-        <View
-          style={{
-            borderBottomColor: colors.treeBlues,
-            borderBottomWidth: 2,
-            marginVertical: 4,
-            marginHorizontal: 8,
-            padding: 4,
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
-          <TouchableOpacity onPress={() => setSearchTerm('')} >
+      <View style={styles.searchScreenContainer}>
+        <View style={styles.searchContainer(searchOn)}>
+          {searchOn ? (<TouchableOpacity onPress={() => {
+            setSearchTerm('');
+            setSearchOn(false);
+            textInputRef.current.blur();
+          }} >
             <Image source={require("../../assets/images/search_close_icon.png")} />
-          </TouchableOpacity>
+          </TouchableOpacity>) : null}
+          
 
           <TextInput
+            ref={textInputRef}
+            onFocus={()=>setSearchOn(true)}
+            onBlur={()=>setSearchOn(false)}
             onChangeText={value=>setSearchTerm(value)}
             value={searchTerm}
             selectionColor={colors.desertRock}
             placeholderTextColor={colors.treeBlues}
-            placeholder={strings.exploreScreen.searchPlaceholder}
-            style={{
-              paddingHorizontal: 8,
-              flexGrow: 1,
-              textAlign: "right",
-              ...textStyles.normalOfSize(24),
-              color: colors.treeBlues,
-            }}
+            placeholder={searchOn ? strings.exploreScreen.searchPlaceholder : ''}
+            style={styles.searchInput}
           />
 
-          <Image source={require("../../assets/images/search_icon.png")} />
+          <Image source={searchOn ? require("../../assets/images/search_icon.png") : require("../../assets/images/search_off_icon.png")} />
         </View>
       </View>
     </View>
@@ -71,12 +65,30 @@ export const ExploreScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+
+  searchInput: {
+    paddingHorizontal: 8,
+    flexGrow: 1,
+    textAlign: "right",
+    ...textStyles.normalOfSize(24),
+    color: colors.treeBlues,
+  },
+
+  searchContainer: (searchOn) => ({
+    borderBottomColor: colors.treeBlues,
+    borderBottomWidth: searchOn ? 2 : 1,
+    marginVertical: 4,
+    marginHorizontal: 8,
+    padding: 4,
+    alignItems: "center",
+    flexDirection: "row",
+  }),
   container: {
     flex: 1,
     backgroundColor: colors.clear,
   },
 
-  searchContainer: {
+  searchScreenContainer: {
     paddingHorizontal: 40,
     paddingVertical: 30,
     borderTopLeftRadius: 30,
