@@ -8,6 +8,7 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
+  Keyboard
 } from "react-native";
 import { colors } from "../../values/colors";
 import { NAV_CLOSE_TAP_SIZE } from "../../values/consts";
@@ -25,7 +26,8 @@ export const ExploreScreen = ({ navigation }) => {
   const closeSearch = () => {
     setSearchTerm('');
     setSearchOn(false);
-    textInputRef.current.blur();
+    Keyboard.dismiss();
+    // textInputRef.current.blur();
   }
 
   return (
