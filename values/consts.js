@@ -4,6 +4,7 @@ export const width = Dimensions.get("window").width;
 export const height = Dimensions.get("window").height;
 
 export const NAV_DURATION = 500;
+export const NAV_DURATION_CLOSE = 400;
 
 export const NAV_CLOSE_TAP_SIZE = 64;
 

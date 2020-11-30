@@ -1,6 +1,6 @@
 import { TransitionPresets } from "@react-navigation/stack";
 import { Easing } from "react-native";
-import { NAV_DURATION, width } from "./consts";
+import { NAV_DURATION, NAV_DURATION_CLOSE, width } from "./consts";
 
 const forFade = ({ current }) => ({
   cardStyle: {
@@ -34,7 +34,7 @@ export const fadeOptions = () => ({
     },
     close: {
       animation: "timing",
-      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+      config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
     },
   },
   cardStyleInterpolator: ({ current: { progress } }) => {
@@ -58,7 +58,7 @@ export const slideFromRightOptions = () => ({
     },
     close: {
       animation: "timing",
-      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+      config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
     },
   },
   cardStyleInterpolator: ({ current: { progress } }) => {
@@ -84,7 +84,7 @@ export const slideFromLeftOptions = () => ({
     },
     close: {
       animation: "timing",
-      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
+      config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
     },
   },
   cardStyleInterpolator: ({ current: { progress } }) => {
