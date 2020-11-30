@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useEffect } from "react";
 import {
   View,
@@ -45,6 +45,10 @@ export const ExploreScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
+  const textChanged = useCallback((value) => {
+    setSearchTerm(value)
+  }, [setSearchTerm]);
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
@@ -54,6 +58,7 @@ export const ExploreScreen = ({ navigation }) => {
       <SafeAreaView />
 
       <View style={styles.searchScreenContainer}>
+
         <View style={styles.searchContainer(searchOn)}>
           {searchOn ? (
             <TouchableOpacity onPress={closeSearch}>
@@ -67,7 +72,7 @@ export const ExploreScreen = ({ navigation }) => {
             ref={textInputRef}
             onFocus={() => setSearchOn(true)}
             onBlur={() => setSearchOn(false)}
-            onChangeText={(value) => setSearchTerm(value)}
+            onChangeText={textChanged}
             value={searchTerm}
             selectionColor={colors.desertRock}
             placeholderTextColor={colors.treeBlues}
@@ -154,6 +159,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     marginHorizontal: 40,
     padding: 4,
+    height: 36,
     alignItems: "center",
     flexDirection: "row",
   }),
