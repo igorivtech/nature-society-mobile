@@ -29,7 +29,7 @@ import {
 const fadeOutDuration = 100;
 
 export const PlaceScreen = ({ navigation, route }) => {
-  const { place, locked } = route.params;
+  const { place } = route.params;
 
   const textRef = useRef();
   const ratingRef = useRef();
@@ -111,7 +111,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={s.ratingContainer}
           >
             <PlaceRating
-              locked
+              locked={place.locked}
               title={strings.placeScreen.crowdnessTitle}
               image={require("../../assets/images/HowBusyOrange.png")}
               color={colors.desertRock}
@@ -119,9 +119,9 @@ export const PlaceScreen = ({ navigation, route }) => {
             />
 
             <PlaceRating
-              locked
+              locked={place.locked}
               leftMargin={40}
-              title={strings.placeScreen.cleannessTitle(locked)}
+              title={strings.placeScreen.cleannessTitle(place.locked)}
               image={require("../../assets/images/HeartL.png")}
               color={colors.grass}
               rating={place.cleanness}
@@ -140,7 +140,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={styles.fullWidth}
           >
             <Text style={textStyles.normalOfSize(12)}>
-              {strings.placeScreen.recentVisitors(locked)}
+              {strings.placeScreen.recentVisitors(place.locked)}
             </Text>
             <View style={s.recentVisitorsContainer}>
               {recentVisitors.map((visitor, index) => (
@@ -217,20 +217,21 @@ const PlaceAction = ({ title, icon, onPress }) => {
   );
 };
 
-const PlaceRating = ({
+export const PlaceRating = ({
   locked,
   title,
   image,
   color,
   rating,
   leftMargin = 0,
+  small = false
 }) => {
   return (
     <View style={styles.marginLeft(leftMargin)}>
-      <Text style={textStyles.normalOfSize(14)}>{title}</Text>
+      <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
 
       <View style={s.ratingInnerContainer}>
-        <Text style={{ ...textStyles.normalOfSize(36), color, marginRight: 8 }}>
+        <Text style={{ ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 }}>
           {rating}
         </Text>
         <Image source={image} />
@@ -269,6 +270,7 @@ const s = StyleSheet.create({
   },
 
   ratingInnerContainer: {
+    alignSelf: 'flex-end',
     marginTop: 4,
     flexDirection: "row",
   },

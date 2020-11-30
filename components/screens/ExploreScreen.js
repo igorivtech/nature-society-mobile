@@ -16,6 +16,7 @@ import { colors } from "../../values/colors";
 import { DATA, NAV_CLOSE_TAP_SIZE } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
+import { PlaceRating } from "./PlaceScreen";
 
 const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -30,9 +31,9 @@ export const ExploreScreen = ({ navigation }) => {
 
   const [places, setPlaces] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setPlaces(DATA);
-  }, [])
+  }, []);
 
   const closeSearch = () => {
     setSearchTerm("");
@@ -45,9 +46,12 @@ export const ExploreScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const textChanged = useCallback((value) => {
-    setSearchTerm(value)
-  }, [setSearchTerm]);
+  const textChanged = useCallback(
+    (value) => {
+      setSearchTerm(value);
+    },
+    [setSearchTerm]
+  );
 
   return (
     <View style={styles.container}>
@@ -58,7 +62,6 @@ export const ExploreScreen = ({ navigation }) => {
       <SafeAreaView />
 
       <View style={styles.searchScreenContainer}>
-
         <View style={styles.searchContainer(searchOn)}>
           {searchOn ? (
             <TouchableOpacity onPress={closeSearch}>
@@ -94,17 +97,36 @@ export const ExploreScreen = ({ navigation }) => {
         <FlatList
           contentContainerStyle={styles.flatListContainer}
           data={places}
-          keyExtractor={(item)=>item.key}
-          renderItem={({item, index})=>{
-            console.log({item});
+          keyExtractor={(item) => item.key}
+          renderItem={({ item, index }) => {
+            console.log({ item });
             return (
               <View style={styles.card}>
-                <Image style={styles.cardImage} source={{uri: item.image}} />
+                <Image style={styles.cardImage} source={{ uri: item.image }} />
                 <View style={styles.cardDetailsContainer}>
+                  <View style={styles.ratingContainer}>
+                    <PlaceRating
+                      small
+                      locked={item.locked}
+                      title={strings.placeScreen.crowdnessTitle}
+                      image={require("../../assets/images/HowBusy.png")}
+                      color={colors.desertRock}
+                      rating={item.crowdness}
+                    />
 
+                    <PlaceRating
+                      small
+                      locked={item.locked}
+                      leftMargin={40}
+                      title={strings.placeScreen.cleannessTitle(item.locked)}
+                      image={require("../../assets/images/Heart.png")}
+                      color={colors.grass}
+                      rating={item.cleanness}
+                    />
+                  </View>
                 </View>
               </View>
-            )
+            );
           }}
         />
       </View>
@@ -114,33 +136,38 @@ export const ExploreScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 
+
+  ratingContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "flex-end",
+  },
   flatListContainer: {
     paddingVertical: 34,
-    paddingHorizontal: 40
+    paddingHorizontal: 40,
   },
 
   card: {
     borderWidth: 1,
     borderColor: colors.treeBlues,
     padding: CARD_PADDING,
-    overflow: 'hidden',
+    overflow: "hidden",
     borderRadius: BORDER_RADIUS,
-    width: '100%',
+    width: "100%",
     aspectRatio: CARD_ASPECT_RATIO,
-    marginBottom: 24
+    marginBottom: 24,
   },
 
   cardImage: {
     borderTopLeftRadius: INNER_BORDER_RADIUS,
     borderTopRightRadius: INNER_BORDER_RADIUS,
-    flexGrow: 1
+    flexGrow: 1,
   },
 
   cardDetailsContainer: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     height: 80,
-    backgroundColor: 'cyan',
     borderBottomLeftRadius: INNER_BORDER_RADIUS,
     borderBottomRightRadius: INNER_BORDER_RADIUS,
   },
@@ -159,7 +186,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     marginHorizontal: 40,
     padding: 4,
-    height: 36,
+    // height: 36,
     alignItems: "center",
     flexDirection: "row",
   }),
