@@ -29,12 +29,13 @@ export const ExploreScreen = ({ navigation }) => {
     // textInputRef.current.blur();
   };
 
+  const goBack = () => {
+    navigation.goBack();
+  }
+
   return (
     <View style={styles.container}>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.goBack()}
-        style={styles.tap}
-      >
+      <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
 
@@ -63,6 +64,7 @@ export const ExploreScreen = ({ navigation }) => {
           <Image source={searchOn ? require("../../assets/images/search_icon.png") : require("../../assets/images/search_off_icon.png")} />
         </View>
       </View>
+    
     </View>
   );
 };
