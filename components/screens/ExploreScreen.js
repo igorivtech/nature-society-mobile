@@ -11,10 +11,12 @@ import {
   TouchableOpacity,
   Keyboard,
   FlatList,
+  Animated,
+  Easing,
 } from "react-native";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { colors } from "../../values/colors";
-import { DATA, NAV_CLOSE_TAP_SIZE } from "../../values/consts";
+import { DATA, NAV_CLOSE_TAP_SIZE, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { PlaceRating } from "./PlaceScreen";
@@ -34,13 +36,25 @@ export const ExploreScreen = ({ navigation }) => {
   const [keyboardHeight] = useKeyboard();
   const [keyboardBottomPadding, setKeyboardBottomPadding] = useState(40);
 
+  const cardListAlpha = useRef(new Animated.Value(1)).current;
+
+  useEffect(()=> {
+    Animated.timing(cardListAlpha, {
+      useNativeDriver: true,
+      duration: 300,
+      easing: Easing.inOut(Easing.ease),
+      toValue: searchOn ? 0 : 1
+    }).start();
+  }, [searchOn])
+
   useEffect(() => {
     setPlaces(DATA);
+    setFilteredPlaces(DATA);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     setKeyboardBottomPadding(40 + keyboardHeight);
-  }, [keyboardHeight])
+  }, [keyboardHeight]);
 
   const closeSearch = () => {
     setSearchTerm("");
@@ -52,9 +66,20 @@ export const ExploreScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const textChanged = useCallback( (value) => {
+  const textChanged = (value) => {
     setSearchTerm(value);
-  }, [setSearchTerm]);
+    if (value.length == 0) {
+      setFilteredPlaces(places);
+    } else {
+      const filtered = places.filter((place) => {
+        const s1 = place.title.toLowerCase();
+        const s2 = value.toLowerCase();
+        return s1.indexOf(s2) > -1;
+      })
+      console.log(filtered.length);
+      setFilteredPlaces(filtered);
+    }
+  };
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
@@ -77,14 +102,38 @@ export const ExploreScreen = ({ navigation }) => {
           textChanged={textChanged}
         />
 
-        <FlatList
-          contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
-          data={places}
-          keyExtractor={(item) => item.key}
-          renderItem={({ item, index }) => {
-            return <SearchCard showItem={showItem} item={item} index={index} />;
-          }}
-        />
+        <View style={styles.listsContainer}>
+          <Animated.FlatList
+            style={{...StyleSheet.absoluteFill, zIndex: searchOn ? -1 : 1, opacity: cardListAlpha.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 1]
+            })}}
+            contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
+            data={places}
+            keyExtractor={(item) => item.key}
+            renderItem={({ item, index }) => {
+              return (
+                <SearchCard showItem={showItem} item={item} index={index} />
+              );
+            }}
+          />
+          <Animated.FlatList
+            style={{...StyleSheet.absoluteFill, opacity: cardListAlpha.interpolate({
+              inputRange: [0, 1],
+              outputRange: [1, 0]
+            })}}
+            contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
+            data={filteredPlaces}
+            keyExtractor={(item) => item.key}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity style={{backgroundColor: 'cyan'}}>
+                  <Text>{item.title}</Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -109,7 +158,6 @@ const SearchBar = ({
 
       <TextInput
         onFocus={() => setSearchOn(true)}
-        onBlur={() => setSearchOn(false)}
         onChangeText={textChanged}
         value={searchTerm}
         selectionColor={colors.desertRock}
@@ -175,6 +223,12 @@ const SearchCard = ({ item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  listsContainer: {
+    flex: 1,
+    width: '100%'
+  },
+
   translateY: (translateY) => ({
     transform: [{ translateY }],
   }),
@@ -193,7 +247,7 @@ const styles = StyleSheet.create({
   flatListContainer: (keyboardBottomPadding) => ({
     paddingVertical: 34,
     paddingHorizontal: 40,
-    paddingBottom: keyboardBottomPadding
+    paddingBottom: keyboardBottomPadding,
   }),
 
   card: {
