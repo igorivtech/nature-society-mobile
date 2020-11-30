@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 import {
   View,
   Text,
@@ -9,9 +10,10 @@ import {
   Image,
   TouchableOpacity,
   Keyboard,
+  FlatList,
 } from "react-native";
 import { colors } from "../../values/colors";
-import { NAV_CLOSE_TAP_SIZE } from "../../values/consts";
+import { DATA, NAV_CLOSE_TAP_SIZE } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 
@@ -22,6 +24,12 @@ export const ExploreScreen = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
 
+  const [places, setPlaces] = useState([]);
+
+  useEffect(()=>{
+    setPlaces(DATA);
+  }, [])
+
   const closeSearch = () => {
     setSearchTerm("");
     setSearchOn(false);
@@ -31,7 +39,7 @@ export const ExploreScreen = ({ navigation }) => {
 
   const goBack = () => {
     navigation.goBack();
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -41,11 +49,15 @@ export const ExploreScreen = ({ navigation }) => {
 
       <SafeAreaView />
 
-      <View style={styles.searchScreenContainer}>
+      <View style={styles.searchScreenContainer} onLayout={(a, b, c) => {
+
+      }} >
         <View style={styles.searchContainer(searchOn)}>
           {searchOn ? (
             <TouchableOpacity onPress={closeSearch}>
-              <Image source={require("../../assets/images/search_close_icon.png")} />
+              <Image
+                source={require("../../assets/images/search_close_icon.png")}
+              />
             </TouchableOpacity>
           ) : null}
 
@@ -57,14 +69,57 @@ export const ExploreScreen = ({ navigation }) => {
             value={searchTerm}
             selectionColor={colors.desertRock}
             placeholderTextColor={colors.treeBlues}
-            placeholder={searchOn ? strings.exploreScreen.searchPlaceholder : ""}
+            placeholder={
+              searchOn ? strings.exploreScreen.searchPlaceholder : ""
+            }
             style={styles.searchInput}
           />
 
-          <Image source={searchOn ? require("../../assets/images/search_icon.png") : require("../../assets/images/search_off_icon.png")} />
+          <Image
+            source={
+              searchOn
+                ? require("../../assets/images/search_icon.png")
+                : require("../../assets/images/search_off_icon.png")
+            }
+          />
         </View>
+
+        <FlatList
+          contentContainerStyle={{
+            paddingVertical: 34,
+            paddingHorizontal: 40
+          }}
+          data={places}
+          keyExtractor={(item)=>item.key}
+          renderItem={({item, index})=>{
+            console.log({item});
+            return (
+              <View style={{
+                borderRadius: 15,
+                width: '100%',
+                aspectRatio: 1.7,
+                backgroundColor: 'yellow',
+                marginBottom: 24
+              }}>
+                
+                <Image style={{
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15,
+                  flexGrow: 1
+                }} source={{uri: item.image}} />
+
+                <View style={{
+                  height: 80,
+                  backgroundColor: 'cyan'
+                }}>
+
+                </View>
+
+              </View>
+            )
+          }}
+        />
       </View>
-    
     </View>
   );
 };
@@ -82,7 +137,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.treeBlues,
     borderBottomWidth: searchOn ? 2 : 1,
     marginVertical: 4,
-    marginHorizontal: 8,
+    marginHorizontal: 40,
     padding: 4,
     alignItems: "center",
     flexDirection: "row",
@@ -93,7 +148,6 @@ const styles = StyleSheet.create({
   },
 
   searchScreenContainer: {
-    paddingHorizontal: 40,
     paddingVertical: 30,
     borderTopLeftRadius: 30,
     flex: 1,
