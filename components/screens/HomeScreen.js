@@ -12,7 +12,7 @@ import { height, DATA } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = ({ navigation, route }) => {
 
   const [places, setPlaces] = useState([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   const [hideList, setHideList] = useState(true);
@@ -46,6 +46,15 @@ export const HomeScreen = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    const params = route.params
+    if (params != null && params.searchItem != null) {
+      setTimeout(() => {
+        showPlace(params.searchItem);  
+      }, 500);
+    }
+  }, [route]);
 
   const progress = () => {
     setHideList(true);

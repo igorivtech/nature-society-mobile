@@ -54,7 +54,7 @@ export const ExploreScreen = ({ navigation }) => {
   );
 
   const showItem = (item) => {
-    console.log(`showing item ${item.title}`);
+    navigation.navigate("Home", {searchItem: item});
   }
 
   return (
