@@ -54,8 +54,8 @@ export const ExploreScreen = ({ navigation }) => {
   );
 
   const showItem = (item) => {
-    navigation.navigate("Home", {searchItem: item});
-  }
+    navigation.navigate("Home", { searchItem: item });
+  };
 
   return (
     <View style={styles.container}>
@@ -104,9 +104,25 @@ export const ExploreScreen = ({ navigation }) => {
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => {
             return (
-              <TouchableOpacity style={styles.card} onPress={()=>showItem(item)} >
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => showItem(item)}
+              >
                 <Image style={styles.cardImage} source={{ uri: item.image }} />
                 <View style={styles.cardDetailsContainer}>
+
+                  <View style={styles.cardLocationContainer}>
+                    <Text style={textStyles.normalOfSize(14)}>
+                      {strings.distanceFromYou(item.distance)}
+                    </Text>
+
+                    <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                      <Text style={textStyles.boldOfSize(16)}>{item.title}</Text>
+
+                      <Image style={styles.translateY(-2)} source={require("../../assets/images/marker_small.png")} />
+                    </View>
+                  </View>
+
                   <View style={styles.ratingContainer}>
                     <PlaceRating
                       small
@@ -139,7 +155,18 @@ export const ExploreScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 
+  translateY: (translateY) => ({
+    transform: [
+      {translateY}
+    ]
+  }),
 
+  cardLocationContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginLeft: 16,
+    justifyContent: "space-between",
+  },
   ratingContainer: {
     flexDirection: "row",
     width: "100%",
@@ -168,6 +195,7 @@ const styles = StyleSheet.create({
   },
 
   cardDetailsContainer: {
+    justifyContent: 'space-between',
     paddingVertical: 8,
     paddingHorizontal: 16,
     height: 80,
