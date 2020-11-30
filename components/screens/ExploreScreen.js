@@ -17,6 +17,10 @@ import { DATA, NAV_CLOSE_TAP_SIZE } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 
+const BORDER_RADIUS = 15;
+const CARD_PADDING = 2;
+const CARD_ASPECT_RATIO = 1.31;
+const INNER_BORDER_RADIUS = BORDER_RADIUS - CARD_PADDING;
 const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation }) => {
@@ -49,9 +53,7 @@ export const ExploreScreen = ({ navigation }) => {
 
       <SafeAreaView />
 
-      <View style={styles.searchScreenContainer} onLayout={(a, b, c) => {
-
-      }} >
+      <View style={styles.searchScreenContainer}>
         <View style={styles.searchContainer(searchOn)}>
           {searchOn ? (
             <TouchableOpacity onPress={closeSearch}>
@@ -85,35 +87,17 @@ export const ExploreScreen = ({ navigation }) => {
         </View>
 
         <FlatList
-          contentContainerStyle={{
-            paddingVertical: 34,
-            paddingHorizontal: 40
-          }}
+          contentContainerStyle={styles.flatListContainer}
           data={places}
           keyExtractor={(item)=>item.key}
           renderItem={({item, index})=>{
             console.log({item});
             return (
-              <View style={{
-                overflow: 'hidden',
-                borderRadius: 15,
-                width: '100%',
-                aspectRatio: 1.7,
-                backgroundColor: 'yellow',
-                marginBottom: 24
-              }}>
-                
-                <Image style={{
-                  flexGrow: 1
-                }} source={{uri: item.image}} />
-
-                <View style={{
-                  height: 80,
-                  backgroundColor: 'cyan'
-                }}>
+              <View style={styles.card}>
+                <Image style={styles.cardImage} source={{uri: item.image}} />
+                <View style={styles.cardDetailsContainer}>
 
                 </View>
-
               </View>
             )
           }}
@@ -124,6 +108,38 @@ export const ExploreScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+
+  flatListContainer: {
+    paddingVertical: 34,
+    paddingHorizontal: 40
+  },
+
+  card: {
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    padding: CARD_PADDING,
+    overflow: 'hidden',
+    borderRadius: BORDER_RADIUS,
+    width: '100%',
+    aspectRatio: CARD_ASPECT_RATIO,
+    marginBottom: 24
+  },
+
+  cardImage: {
+    borderTopLeftRadius: INNER_BORDER_RADIUS,
+    borderTopRightRadius: INNER_BORDER_RADIUS,
+    flexGrow: 1
+  },
+
+  cardDetailsContainer: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    height: 80,
+    backgroundColor: 'cyan',
+    borderBottomLeftRadius: INNER_BORDER_RADIUS,
+    borderBottomRightRadius: INNER_BORDER_RADIUS,
+  },
+
   searchInput: {
     paddingHorizontal: 8,
     flexGrow: 1,
