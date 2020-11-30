@@ -103,6 +103,7 @@ export const ExploreScreen = ({ navigation }) => {
 
         <View style={styles.listsContainer}>
           <Animated.FlatList
+            scrollIndicatorInsets={styles.scrollInsets}
             style={{...StyleSheet.absoluteFill, zIndex: searchOn ? -1 : 1, opacity: cardListAlpha.interpolate({
               inputRange: [0, 1],
               outputRange: [0, 1]
@@ -117,6 +118,7 @@ export const ExploreScreen = ({ navigation }) => {
             }}
           />
           <Animated.FlatList
+            scrollIndicatorInsets={styles.scrollInsets}
             style={{...StyleSheet.absoluteFill, opacity: cardListAlpha.interpolate({
               inputRange: [0, 1],
               outputRange: [1, 0]
@@ -223,6 +225,10 @@ const SearchCard = ({ item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  scrollInsets: {
+    right: 1
+  },
 
   smallCardTitle: {
     width: '50%',
