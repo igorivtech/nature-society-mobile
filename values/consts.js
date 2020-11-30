@@ -42,7 +42,7 @@ export const DATA = [
     cleanness: 4.4,
     crowdness: 3.6,
     image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
+      "https://lh3.googleusercontent.com/-H6PacdskbPehw_P3NQvLvIix3PK3gNC82AZXhpFhYm5PVY26CqyHieUp_jifhmYY-FrcezAVQ=w640-h400-e365-rj-sc0x00ffffff",
     lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
     description:
       "כל היא שעומדת בבסיס הסביבתנות - תנועה פוליטית' חברתית ופילוסופית רחבה ומגוונת שמטרתה להגן על מרכיב הטבע שנותר בסביבה הטבעית' ובמקרים רבים אף לשקם או להרחיב את חלקו של הטבע בסביבה זו. הגנת הסביבה' בהקשר זה' היא הניסיון לשמר מצב של השפעה אנושית מינימלית על הסביבה הטבעית",
@@ -58,7 +58,7 @@ export const DATA = [
     cleanness: 4.4,
     crowdness: 3.6,
     image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
+      "https://iso.500px.com/wp-content/uploads/2017/10/PhotographingTwilight_TannerWendellStewart-218136823.jpg",
     lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
     description:
       "כל היא שעומדת בבסיס הסביבתנות - תנועה פוליטית' חברתית ופילוסופית רחבה ומגוונת שמטרתה להגן על מרכיב הטבע שנותר בסביבה הטבעית' ובמקרים רבים אף לשקם או להרחיב את חלקו של הטבע בסביבה זו. הגנת הסביבה' בהקשר זה' היא הניסיון לשמר מצב של השפעה אנושית מינימלית על הסביבה הטבעית",
@@ -74,7 +74,7 @@ export const DATA = [
     cleanness: 4.4,
     crowdness: 3.6,
     image:
-      "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
+      "https://www.rei.com/dam/catskills_060117_003_hero_lg.jpg",
     lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
     description:
       "כל היא שעומדת בבסיס הסביבתנות - תנועה פוליטית' חברתית ופילוסופית רחבה ומגוונת שמטרתה להגן על מרכיב הטבע שנותר בסביבה הטבעית' ובמקרים רבים אף לשקם או להרחיב את חלקו של הטבע בסביבה זו. הגנת הסביבה' בהקשר זה' היא הניסיון לשמר מצב של השפעה אנושית מינימלית על הסביבה הטבעית",
