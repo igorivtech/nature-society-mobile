@@ -8,7 +8,7 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-  Keyboard
+  Keyboard,
 } from "react-native";
 import { colors } from "../../values/colors";
 import { NAV_CLOSE_TAP_SIZE } from "../../values/consts";
@@ -18,17 +18,16 @@ import { textStyles } from "../../values/textStyles";
 const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation }) => {
-
   const textInputRef = useRef();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
 
   const closeSearch = () => {
-    setSearchTerm('');
+    setSearchTerm("");
     setSearchOn(false);
     Keyboard.dismiss();
     // textInputRef.current.blur();
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -43,20 +42,21 @@ export const ExploreScreen = ({ navigation }) => {
 
       <View style={styles.searchScreenContainer}>
         <View style={styles.searchContainer(searchOn)}>
-          {searchOn ? (<TouchableOpacity onPress={closeSearch} >
-            <Image source={require("../../assets/images/search_close_icon.png")} />
-          </TouchableOpacity>) : null}
-          
+          {searchOn ? (
+            <TouchableOpacity onPress={closeSearch}>
+              <Image source={require("../../assets/images/search_close_icon.png")} />
+            </TouchableOpacity>
+          ) : null}
 
           <TextInput
             ref={textInputRef}
-            onFocus={()=>setSearchOn(true)}
-            onBlur={()=>setSearchOn(false)}
-            onChangeText={value=>setSearchTerm(value)}
+            onFocus={() => setSearchOn(true)}
+            onBlur={() => setSearchOn(false)}
+            onChangeText={(value) => setSearchTerm(value)}
             value={searchTerm}
             selectionColor={colors.desertRock}
             placeholderTextColor={colors.treeBlues}
-            placeholder={searchOn ? strings.exploreScreen.searchPlaceholder : ''}
+            placeholder={searchOn ? strings.exploreScreen.searchPlaceholder : ""}
             style={styles.searchInput}
           />
 
@@ -68,7 +68,6 @@ export const ExploreScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-
   searchInput: {
     paddingHorizontal: 8,
     flexGrow: 1,
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     marginLeft: EXIT_SIZE,
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   tap: {
