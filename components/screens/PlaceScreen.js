@@ -169,6 +169,7 @@ const s = StyleSheet.create({
   desc: {
     ...textStyles.normalOfSize(16),
     ...styles.fullWidth,
+    lineHeight: 17
   },
 
   actions: {
