@@ -32,8 +32,14 @@ export const styles = StyleSheet.create({
   }),
 
   safeAreaContainer: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
     justifyContent: "space-between",
-    flex: 1,
+    zIndex: 0,
+    // flex: 1,
   },
 
   onboardingContainer: {
