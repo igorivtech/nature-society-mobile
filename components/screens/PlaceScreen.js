@@ -15,7 +15,7 @@ import { textStyles } from "../../values/textStyles";
 
 import * as Animatable from 'react-native-animatable';
 import { RecentVisitor } from "../views/home/views";
-import { height, recentVisitors } from "../../values/consts";
+import { height, NAV_CLOSE_TAP_SIZE, recentVisitors } from "../../values/consts";
 
 const fadeOutDuration = 100;
 
@@ -214,7 +214,7 @@ const s = StyleSheet.create({
 
   containerStyle: {
     flex: 1,
-    marginTop: 64,
+    marginTop: NAV_CLOSE_TAP_SIZE,
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 40,

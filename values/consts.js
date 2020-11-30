@@ -5,6 +5,7 @@ export const height = Dimensions.get("window").height;
 
 export const NAV_DURATION = 500;
 
+export const NAV_CLOSE_TAP_SIZE = 64;
 
 export const recentVisitors = [
   {name: "איגור", role: "לקט", image: "https://yt3.ggpht.com/ytc/AAUvwngMp380bo6VdFqO0Y81qDqJKsedWvTosxGAAZwp=s900-c-k-c0x00ffffff-no-rj"},
