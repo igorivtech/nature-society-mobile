@@ -76,7 +76,6 @@ export const ExploreScreen = ({ navigation }) => {
         const s2 = value.toLowerCase();
         return s1.indexOf(s2) > -1;
       })
-      console.log(filtered.length);
       setFilteredPlaces(filtered);
     }
   };
