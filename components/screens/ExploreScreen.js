@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,10 @@ import { textStyles } from "../../values/textStyles";
 const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation }) => {
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback
@@ -37,15 +41,16 @@ export const ExploreScreen = ({ navigation }) => {
             marginHorizontal: 8,
             padding: 4,
             alignItems: "center",
-            // backgroundColor: "cyan",
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity onPress={() => { console.log("close text search"); }} >
+          <TouchableOpacity onPress={() => setSearchTerm('')} >
             <Image source={require("../../assets/images/search_close_icon.png")} />
           </TouchableOpacity>
 
           <TextInput
+            onChangeText={value=>setSearchTerm(value)}
+            value={searchTerm}
             selectionColor={colors.desertRock}
             placeholderTextColor={colors.treeBlues}
             placeholder={strings.exploreScreen.searchPlaceholder}
@@ -78,6 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     marginLeft: EXIT_SIZE,
+    alignItems: 'center',
   },
 
   tap: {
