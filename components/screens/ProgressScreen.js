@@ -15,7 +15,7 @@ export const ProgressScreen = ({navigation}) => {
 
   const loginLogout = () => {
     if (user === null) {
-      // login
+      navigation.navigate('Login');
     } else {
       // logout
     }
