@@ -87,9 +87,20 @@ export const LoginScreen = ({ navigation }) => {
     }
   }
 
-  const selectImage = () => {
+  const selectImage = async () => {
     setLoadingImage(true);
-  }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      //allowsEditing: true,
+      //aspect: [4, 3],
+      quality: 0.75,
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result);
+    }
+    setLoadingImage(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -110,6 +121,7 @@ export const LoginScreen = ({ navigation }) => {
             signup={signup}
           />
           <SignupView
+            image={image}
             loadingImage={loadingImage}
             selectImage={selectImage}
             visible={!isLogin}

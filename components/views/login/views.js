@@ -1,5 +1,12 @@
 import React, { memo } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
@@ -8,149 +15,144 @@ import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
 import { CARD_RADIUS, width } from "../../../values/consts";
 
-export const LoginView = memo(({
-  visible,
-  email,
-  onEmailChanged,
-  password,
-  onPasswordChanged,
-  forgotPassword,
-  login,
-  signup,
-}) => {
-  return (
-    <View style={styles.absolutePopup(visible)}>
-      <Animatable.View animation={visible ? 'fadeIn' : 'fadeOut'} style={styles.cardContainer}>
-        <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
+export const LoginView = memo(
+  ({
+    visible,
+    email,
+    onEmailChanged,
+    password,
+    onPasswordChanged,
+    forgotPassword,
+    login,
+    signup,
+  }) => {
+    return (
+      <View style={styles.absolutePopup(visible)}>
+        <Animatable.View
+          animation={visible ? "fadeIn" : "fadeOut"}
+          style={styles.cardContainer}
+        >
+          <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
-        <Input
-          autoCapitalize="none"
-          keyboardType="email-address"
-          title={strings.email}
-          onChange={onEmailChanged}
-          value={email}
-        />
-        <Input
-          extraMargin={true}
-          autoCapitalize="none"
-          title={strings.password}
-          onChange={onPasswordChanged}
-          value={password}
-          secure={true}
-        />
-
-        <CoolButton
-          textStyle={{
-            ...textStyles.boldOfSize(24),
-            color: "white",
-          }}
-          title={strings.login}
-          onPress={login}
-        />
-
-        <View style={styles.bottomButtonsContainer}>
-          <SmallButton
-            onPress={forgotPassword}
-            title={strings.loginScreen.forgotPassword}
+          <Input
+            autoCapitalize="none"
+            keyboardType="email-address"
+            title={strings.email}
+            onChange={onEmailChanged}
+            value={email}
           />
-          <SmallButton onPress={signup} title={strings.loginScreen.signup} />
-        </View>
-      </Animatable.View>
-    </View>
-  );
-});
+          <Input
+            extraMargin={true}
+            autoCapitalize="none"
+            title={strings.password}
+            onChange={onPasswordChanged}
+            value={password}
+            secure={true}
+          />
 
-export const SignupView = memo(({
-  visible,
-  name,
-  onNameChanged,
-  email,
-  onEmailChanged,
-  password,
-  onPasswordChanged,
-  login,
-  signup,
-  selectImage,
-  image,
-  loadingImage
-}) => {
-  return (
-    <View>
-      <Animatable.View animation={visible ? 'fadeIn' : 'fadeOut'} style={styles.cardContainer}>
-        <Text style={styles.loginTitle}>{strings.loginScreen.signupTitle}</Text>
+          <CoolButton
+            textStyle={{
+              ...textStyles.boldOfSize(24),
+              color: "white",
+            }}
+            title={strings.login}
+            onPress={login}
+          />
 
-        <Input title={strings.fullName} onChange={onNameChanged} value={name} />
+          <View style={styles.bottomButtonsContainer}>
+            <SmallButton
+              onPress={forgotPassword}
+              title={strings.loginScreen.forgotPassword}
+            />
+            <SmallButton onPress={signup} title={strings.loginScreen.signup} />
+          </View>
+        </Animatable.View>
+      </View>
+    );
+  }
+);
 
-        <Input
-          autoCapitalize="none"
-          keyboardType="email-address"
-          title={strings.email}
-          onChange={onEmailChanged}
-          value={email}
-        />
-        <Input
-          autoCapitalize="none"
-          title={strings.password}
-          onChange={onPasswordChanged}
-          value={password}
-          secure={true}
-        />
+const PIC_SIZE = 111;
+const INNER_PIC_SIZE = PIC_SIZE - 6;
 
-         <View style={{
-          marginBottom: 44,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          alignSelf: 'stretch'
-        }}>
+export const SignupView = memo(
+  ({
+    visible,
+    name,
+    onNameChanged,
+    email,
+    onEmailChanged,
+    password,
+    onPasswordChanged,
+    login,
+    signup,
+    selectImage,
+    image,
+    loadingImage,
+  }) => {
+    return (
+      <View>
+        <Animatable.View
+          animation={visible ? "fadeIn" : "fadeOut"}
+          style={styles.cardContainer}
+        >
+          <Text style={styles.loginTitle}>
+            {strings.loginScreen.signupTitle}
+          </Text>
 
-          <TouchableOpacity onPress={selectImage} style={{
-            height: 111,
-            width: 111,
-            borderRadius: 111/2,
-            borderWidth: 1,
-            borderColor: colors.treeBlues,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            {loadingImage ? (
-            <ActivityIndicator color={colors.treeBlues} />
-            ) : (
-              <Image source={require("../../../assets/images/upload_icon.png")} />
-            )}
-            {image ? (<Image style={{
-              width: 109,
-              height: 109,
-              padding: 2,
-              borderRadius: 109/2
-            }} source={{uri: ""}} />) : null}
-          </TouchableOpacity>
+          <Input
+            title={strings.fullName}
+            onChange={onNameChanged}
+            value={name}
+          />
 
-          <Text style={{
-            ...textStyles.normalOfSize(18),
-            textAlign: 'center',
-            color: colors.treeBlues
-          }}>{strings.loginScreen.profilePic}</Text>
+          <Input
+            autoCapitalize="none"
+            keyboardType="email-address"
+            title={strings.email}
+            onChange={onEmailChanged}
+            value={email}
+          />
+          <Input
+            autoCapitalize="none"
+            title={strings.password}
+            onChange={onPasswordChanged}
+            value={password}
+            secure={true}
+          />
 
-        </View>
+          <View style={styles.profilePicContainer}>
+            <TouchableOpacity onPress={selectImage} style={styles.profilePicButton}>
+              {loadingImage ? (
+                <ActivityIndicator color={colors.treeBlues} />
+              ) : (
+                <Image source={require("../../../assets/images/upload_icon.png")} />
+              )}
+              {image ? (<Image style={styles.profilePic} source={{ uri: image.uri }} />) : null}
+            </TouchableOpacity>
+            <Text style={styles.profilePicTitle}>
+              {strings.loginScreen.profilePic}
+            </Text>
+          </View>
 
-        <CoolButton
-          textStyle={{
-            ...textStyles.boldOfSize(24),
-            color: "white",
-          }}
-          title={strings.loginScreen.finishSignup}
-          onPress={signup}
-        />
+          <CoolButton
+            textStyle={{
+              ...textStyles.boldOfSize(24),
+              color: "white",
+            }}
+            title={strings.loginScreen.finishSignup}
+            onPress={signup}
+          />
 
-        <View style={styles.bottomButtonsSignupContainer}>
-          <Text style={styles.orText}>{strings.or}</Text>
-          <SmallButton onPress={login} title={strings.login} />
-        </View>
-      </Animatable.View>
-    </View>
-  );
-});
+          <View style={styles.bottomButtonsSignupContainer}>
+            <Text style={styles.orText}>{strings.or}</Text>
+            <SmallButton onPress={login} title={strings.login} />
+          </View>
+        </Animatable.View>
+      </View>
+    );
+  }
+);
 
 export const SmallButton = ({ title, onPress }) => {
   return (
@@ -161,10 +163,42 @@ export const SmallButton = ({ title, onPress }) => {
 };
 
 const styles = StyleSheet.create({
+  profilePicTitle: {
+    ...textStyles.normalOfSize(18),
+    textAlign: "center",
+    color: colors.treeBlues,
+  },
+
+  profilePic: {
+    position: "absolute",
+    backgroundColor: "red",
+    width: INNER_PIC_SIZE,
+    height: INNER_PIC_SIZE,
+    overflow: "hidden",
+    borderRadius: INNER_PIC_SIZE / 2,
+  },
+
+  profilePicButton: {
+    height: PIC_SIZE,
+    width: PIC_SIZE,
+    borderRadius: PIC_SIZE / 2,
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profilePicContainer: {
+    marginBottom: 44,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    alignSelf: "stretch",
+  },
 
   absolutePopup: (visible) => ({
-    position: 'absolute',
-    zIndex: visible ? 1 : -1
+    position: "absolute",
+    zIndex: visible ? 1 : -1,
   }),
 
   orText: {
