@@ -14,6 +14,7 @@ import { colors } from "../../values/colors";
 import { CARD_RADIUS, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
+import { CoolButton } from "../views/onboarding/views";
 
 export const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -30,6 +31,10 @@ export const LoginScreen = ({ navigation }) => {
   const goBack = () => {
     navigation.goBack();
   };
+
+  const login = () => {
+    console.log("login");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,6 +53,8 @@ export const LoginScreen = ({ navigation }) => {
             value={password}
             secure={true}
           />
+
+          <CoolButton title={strings.login} onPress={login} />
         </View>
       </ScrollView>
     </SafeAreaView>

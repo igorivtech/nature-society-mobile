@@ -1,6 +1,7 @@
 export const strings = {
     email: 'אימייל',
     password: 'סיסמה',
+    login: 'התחברות',
     distanceFromYou: (distance) => {
         return `${distance} ק״מ ממך`
     },

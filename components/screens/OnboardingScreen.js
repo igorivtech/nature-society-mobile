@@ -225,7 +225,7 @@ export const OnboardingScreen = ({ navigation }) => {
             bottom: 50,
           }}
         >
-          <CoolButton onPress={finish} />
+          <CoolButton title={strings.onboardingScreen.coolButton} onPress={finish} />
         </Animated.View>
       ) : null}
     </View>
