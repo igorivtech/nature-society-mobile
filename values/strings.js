@@ -50,7 +50,7 @@ export const strings = {
         signupTitle: 'הרשמה למדד הטבע',
         login: 'התחברות',
         signup: 'הרשמה',
-        forgotPassword: 'שכחתי סיסמא',
+        forgotPassword: 'שכחתי סיסמה',
         finishSignup: 'סיום הרשמה',
     }
 }
