@@ -24,7 +24,6 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   const [name, setName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
-  const [signupPassword, setSignupPassword] = useState("");
 
   const [image, setImage] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
@@ -84,10 +83,6 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   const onSignupEmailChanged = (value) => {
     setSignupEmail(value);
-  };
-
-  const onSignupPasswordChanged = (value) => {
-    setSignupPassword(value);
   };
 
   const goBack = () => {
