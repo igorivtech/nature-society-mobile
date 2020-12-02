@@ -9,6 +9,7 @@ import {
   Animated,
   Easing,
   ScrollView,
+  Keyboard,
 } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
@@ -16,8 +17,13 @@ import { CARD_RADIUS, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { CoolButton } from "../views/onboarding/views";
+import * as Animatable from 'react-native-animatable';
+import {useKeyboard} from '../../hooks/useKeyboard'
 
 export const LoginScreen = ({ navigation }) => {
+
+  const [keyboardHeight] = useKeyboard();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -47,7 +53,11 @@ export const LoginScreen = ({ navigation }) => {
 
   const tapClose = (event) => {
     if (event.nativeEvent.state === State.END) {
-      goBack();
+      if (keyboardHeight > 0) {
+        Keyboard.dismiss();
+      } else {
+        goBack();
+      }
     }
   }
 
@@ -73,7 +83,7 @@ export const LoginScreen = ({ navigation }) => {
 
 const LoginView = ({email, onEmailChanged, password, onPasswordChanged, forgotPassword, login, signup}) => {
   return (
-    <View style={styles.cardContainer}>
+    <Animatable.View animation='fadeInUpBig' style={styles.cardContainer}>
       <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
       <Input
@@ -101,7 +111,7 @@ const LoginView = ({email, onEmailChanged, password, onPasswordChanged, forgotPa
         <SmallButton onPress={forgotPassword} title={strings.loginScreen.forgotPassword} />
         <SmallButton onPress={signup} title={strings.loginScreen.signup} />
       </View>
-    </View>
+    </Animatable.View>
   )
 }
 
