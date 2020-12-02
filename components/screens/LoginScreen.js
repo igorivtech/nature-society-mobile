@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -22,10 +22,15 @@ import {useKeyboard} from '../../hooks/useKeyboard'
 
 export const LoginScreen = ({ navigation }) => {
 
-  const [keyboardHeight] = useKeyboard();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [keyboardHeight] = useKeyboard();
+  const [paddingBottom, setPaddingBottom] = useState(40);
+
+  useEffect(() => {
+    setPaddingBottom(40 + keyboardHeight);
+  }, [keyboardHeight]);
 
   const onEmailChanged = (value) => {
     setEmail(value);
@@ -63,7 +68,7 @@ export const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView contentContainerStyle={styles.scrollView(paddingBottom)}>
         <TapGestureHandler onHandlerStateChange={tapClose}>
           <View style={StyleSheet.absoluteFill} />
         </TapGestureHandler>
@@ -249,10 +254,11 @@ const styles = StyleSheet.create({
     marginBottom,
   }),
 
-  scrollView: {
+  scrollView: (paddingBottom) => ({
     justifyContent: "center",
     flexGrow: 1,
-  },
+    paddingBottom
+  }),
 
   loginTitle: {
     marginBottom: 38,
