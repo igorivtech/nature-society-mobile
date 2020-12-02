@@ -19,7 +19,7 @@ export const LoginView = ({
 }) => {
   return (
     <View>
-      <Animatable.View animation="fadeInUpBig" style={styles.cardContainer}>
+      <Animatable.View style={styles.cardContainer}>
         <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
         <Input
@@ -58,6 +58,58 @@ export const LoginView = ({
     </View>
   );
 };
+
+export const SignupView = ({
+    name,
+    onNameChanged,
+    email,
+    onEmailChanged,
+    password,
+    onPasswordChanged,
+    forgotPassword,
+    login,
+    signup,
+  }) => {
+    return (
+      <View>
+        <Animatable.View style={styles.cardContainer}>
+          <Text style={styles.loginTitle}>{strings.loginScreen.signupTitle}</Text>
+
+          <Input
+            title={strings.fullName}
+            onChange={onNameChanged}
+            value={name}
+          />
+  
+          <Input
+            autoCapitalize="none"
+            keyboardType="email-address"
+            title={strings.email}
+            onChange={onEmailChanged}
+            value={email}
+          />
+          <Input
+            extraMargin={true}
+            autoCapitalize="none"
+            title={strings.password}
+            onChange={onPasswordChanged}
+            value={password}
+            secure={true}
+          />
+  
+          <CoolButton
+            textStyle={{
+              ...textStyles.boldOfSize(24),
+              color: "white",
+            }}
+            title={strings.loginScreen.finishSignup}
+            onPress={signup}
+          />
+  
+        </Animatable.View>
+      </View>
+    );
+  };
 
 export const SmallButton = ({ title, onPress }) => {
   return (

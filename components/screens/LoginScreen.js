@@ -9,10 +9,13 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
-import { LoginView } from "../views/login/views";
+import { LoginView, SignupView } from "../views/login/views";
 
 export const LoginScreen = ({ navigation }) => {
 
+  const [isLogin, setIsLogin] = useState(true);
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [scrollEnabled, setScrollEnabled] = useState(false);
@@ -24,6 +27,10 @@ export const LoginScreen = ({ navigation }) => {
     setPaddingBottom(keyboardHeight);
     setScrollEnabled(keyboardHeight > 0);
   }, [keyboardHeight]);
+
+  const onNameChanged = (value) => {
+    setName(value);
+  };
 
   const onEmailChanged = (value) => {
     setEmail(value);
@@ -38,11 +45,19 @@ export const LoginScreen = ({ navigation }) => {
   };
 
   const login = () => {
-    console.log("login");
+    if (isLogin) {
+
+    } else {
+      setIsLogin(true);
+    }
   }
 
   const signup = () => {
-    console.log("signup");
+    if (isLogin) {
+      setIsLogin(false);
+    } else {
+      
+    }
   }
 
   const forgotPassword = () => {
@@ -66,7 +81,8 @@ export const LoginScreen = ({ navigation }) => {
           <View style={StyleSheet.absoluteFill} />
         </TapGestureHandler>
         <View>
-          <LoginView
+
+          {isLogin ? (<LoginView
             email={email}
             onEmailChanged={onEmailChanged}
             password={password}
@@ -74,7 +90,18 @@ export const LoginScreen = ({ navigation }) => {
             forgotPassword={forgotPassword}
             login={login}
             signup={signup}
-          />
+          />) : (<SignupView
+            name={name}
+            onNameChanged={onNameChanged}
+            email={email}
+            onEmailChanged={onEmailChanged}
+            password={password}
+            onPasswordChanged={onPasswordChanged}
+            forgotPassword={forgotPassword}
+            login={login}
+            signup={signup}
+          />)}
+          
         </View>
       </ScrollView>
     </SafeAreaView>

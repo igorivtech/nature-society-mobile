@@ -1,5 +1,6 @@
 export const strings = {
     email: 'אימייל',
+    fullName: 'שם מלא',
     password: 'סיסמה',
     login: 'התחברות',
     distanceFromYou: (distance) => {
@@ -45,8 +46,10 @@ export const strings = {
     },
     loginScreen: {
         title: 'התחברות למדד הטבע',
+        signupTitle: 'הרשמה למדד הטבע',
         login: 'התחברות',
         signup: 'הרשמה',
-        forgotPassword: 'שכחתי סיסמא'
+        forgotPassword: 'שכחתי סיסמא',
+        finishSignup: 'סיום הרשמה',
     }
 }
