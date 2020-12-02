@@ -1,19 +1,22 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import {
   ActivityIndicator,
+  Animated,
+  Easing,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import * as Animatable from "react-native-animatable";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { Input } from "./Input";
 import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
 import { CARD_RADIUS, width } from "../../../values/consts";
+
+const CARD_ANIMATION_DURATION = 600;
 
 export const LoginView = memo(
   ({
@@ -26,12 +29,21 @@ export const LoginView = memo(
     login,
     signup,
   }) => {
+
+    const opacity = useRef(new Animated.Value(1)).current;
+
+    useEffect(()=>{
+      Animated.timing(opacity, {
+        toValue: visible ? 1 : 0,
+        useNativeDriver: true,
+        duration: CARD_ANIMATION_DURATION,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+    }, [visible]);
+
     return (
       <View style={styles.absolutePopup(visible)}>
-        <Animatable.View
-          animation={visible ? "fadeIn" : "fadeOut"}
-          style={styles.cardContainer}
-        >
+        <Animated.View style={styles.cardContainer(opacity)}>
           <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
           <Input
@@ -66,7 +78,7 @@ export const LoginView = memo(
             />
             <SmallButton onPress={signup} title={strings.loginScreen.signup} />
           </View>
-        </Animatable.View>
+        </Animated.View>
       </View>
     );
   }
@@ -90,12 +102,21 @@ export const SignupView = memo(
     image,
     loadingImage,
   }) => {
+
+    const opacity = useRef(new Animated.Value(0)).current;
+
+    useEffect(()=>{
+      Animated.timing(opacity, {
+        toValue: visible ? 1 : 0,
+        useNativeDriver: true,
+        duration: CARD_ANIMATION_DURATION,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+    }, [visible]);
+
     return (
       <View>
-        <Animatable.View
-          animation={visible ? "fadeIn" : "fadeOut"}
-          style={styles.cardContainer}
-        >
+        <Animated.View style={styles.cardContainer(opacity)}>
           <Text style={styles.loginTitle}>
             {strings.loginScreen.signupTitle}
           </Text>
@@ -148,7 +169,7 @@ export const SignupView = memo(
             <Text style={styles.orText}>{strings.or}</Text>
             <SmallButton onPress={login} title={strings.login} />
           </View>
-        </Animatable.View>
+        </Animated.View>
       </View>
     );
   }
@@ -236,7 +257,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  cardContainer: {
+  cardContainer: (opacity) => ({
+    opacity: opacity,
     alignItems: "center",
     justifyContent: "space-between",
     paddingTop: 32,
@@ -254,5 +276,5 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0, 0, 0, 0.035)",
     shadowRadius: 12,
     shadowOpacity: 1,
-  },
+  }),
 });
