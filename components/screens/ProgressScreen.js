@@ -7,7 +7,12 @@ import {EXIT_SIZE} from "../screens/ExploreScreen";
 
 export const ProgressScreen = ({navigation}) => {
 
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    name: "יעל השכנה",
+    email: "yael@nextdoor",
+    image: "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png"
+  });
 
   const goBack = () => {
     navigation.goBack();
@@ -17,7 +22,7 @@ export const ProgressScreen = ({navigation}) => {
     if (user === null) {
       navigation.navigate('Login');
     } else {
-      // logout
+      navigation.navigate('Profile', { user });
     }
   }
 

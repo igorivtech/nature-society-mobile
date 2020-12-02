@@ -1,0 +1,153 @@
+import React, { useEffect, useRef, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Keyboard,
+} from "react-native";
+import { State, TapGestureHandler } from "react-native-gesture-handler";
+import { colors } from "../../values/colors";
+import {useKeyboard} from '../../hooks/useKeyboard'
+import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
+import * as ImagePicker from 'expo-image-picker';
+import { height, width } from "../../values/consts";
+
+const scrollZero = {
+  y: 0,
+  animated: true,
+}
+
+export const ProfileScreen = ({ navigation, route }) => {
+
+  const {user} = route.params;
+  console.log({user});    
+
+  const [name, setName] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+
+  const [image, setImage] = useState(null);
+  const [loadingImage, setLoadingImage] = useState(false);
+  
+  const [scrollEnabled, setScrollEnabled] = useState(false);
+  const [keyboardHeight] = useKeyboard();
+  const [paddingBottom, setPaddingBottom] = useState(0);
+  const [safeAreaHeight, setSafeAreaHeight] = useState(height);
+
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    setPaddingBottom(keyboardHeight);
+    setScrollEnabled(keyboardHeight > 0);
+    if (keyboardHeight === 0) {
+      scrollRef.current.scrollTo(scrollZero);
+    }
+  }, [keyboardHeight]);
+
+  const selectImage = async () => {
+    setLoadingImage(true);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      // allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 0.75,
+    });
+    // console.log(result);
+    if (!result.cancelled) {
+      setImage(result);
+    }
+    setLoadingImage(false);
+  };
+
+  const onSafeAreaLayout = (event) => {
+    setSafeAreaHeight(event.nativeEvent.layout.height);
+  }
+
+  const onNameChanged = (value) => {
+    setName(value);
+  };
+
+  const onSignupEmailChanged = (value) => {
+    setSignupEmail(value);
+  };
+
+  const onSignupPasswordChanged = (value) => {
+    setSignupPassword(value);
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  const login = () => {
+    console.log("login");
+  }
+
+  const signup = () => {
+    console.log("signup");
+  }
+
+  const tapClose = (event) => {
+    if (event.nativeEvent.state === State.END) {
+      if (keyboardHeight > 0 ) {
+        Keyboard.dismiss();
+      } else {
+        goBack();
+      }
+    }
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
+
+        <View style={styles.popupsContainer(safeAreaHeight)}>
+
+          <TapGestureHandler onHandlerStateChange={tapClose}>
+            <View style={StyleSheet.absoluteFill} />
+          </TapGestureHandler>
+
+          <SignupView
+            image={image}
+            loadingImage={loadingImage}
+            selectImage={selectImage}
+            visible={true}
+            name={name}
+            onNameChanged={onNameChanged}
+            email={signupEmail}
+            onEmailChanged={onSignupEmailChanged}
+            password={signupPassword}
+            onPasswordChanged={onSignupPasswordChanged}
+            login={login}
+            signup={signup}
+          />
+
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({ 
+  container: {
+    flex: 1,
+    backgroundColor: colors.grass,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  scrollView: (paddingBottom) => ({
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: "center",
+    paddingBottom,
+  }),
+
+  popupsContainer: (height) => ({
+    height,
+    width: width,
+    alignItems: 'center',
+    justifyContent: 'center',
+  })
+});

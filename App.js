@@ -20,6 +20,7 @@ import { ExploreScreen } from "./components/screens/ExploreScreen";
 import { ProgressScreen } from "./components/screens/ProgressScreen";
 import { ReportScreen } from "./components/screens/ReportScreen";
 import { LoginScreen } from "./components/screens/LoginScreen";
+import { ProfileScreen } from "./components/screens/ProfileScreen";
 
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
@@ -67,6 +68,12 @@ export default function App() {
         <HomeStack.Screen
           name="Login"
           component={LoginScreen}
+          options={fadeOptions}
+        />
+
+        <HomeStack.Screen
+          name="Profile"
+          component={ProfileScreen}
           options={fadeOptions}
         />
 
