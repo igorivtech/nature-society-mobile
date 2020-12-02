@@ -1,4 +1,5 @@
 export const strings = {
+    or: 'או',
     email: 'אימייל',
     fullName: 'שם מלא',
     password: 'סיסמה',

@@ -60,56 +60,56 @@ export const LoginView = ({
 };
 
 export const SignupView = ({
-    name,
-    onNameChanged,
-    email,
-    onEmailChanged,
-    password,
-    onPasswordChanged,
-    forgotPassword,
-    login,
-    signup,
-  }) => {
-    return (
-      <View>
-        <Animatable.View style={styles.cardContainer}>
-          <Text style={styles.loginTitle}>{strings.loginScreen.signupTitle}</Text>
+  name,
+  onNameChanged,
+  email,
+  onEmailChanged,
+  password,
+  onPasswordChanged,
+  forgotPassword,
+  login,
+  signup,
+}) => {
+  return (
+    <View>
+      <Animatable.View style={styles.cardContainer}>
+        <Text style={styles.loginTitle}>{strings.loginScreen.signupTitle}</Text>
 
-          <Input
-            title={strings.fullName}
-            onChange={onNameChanged}
-            value={name}
-          />
-  
-          <Input
-            autoCapitalize="none"
-            keyboardType="email-address"
-            title={strings.email}
-            onChange={onEmailChanged}
-            value={email}
-          />
-          <Input
-            extraMargin={true}
-            autoCapitalize="none"
-            title={strings.password}
-            onChange={onPasswordChanged}
-            value={password}
-            secure={true}
-          />
-  
-          <CoolButton
-            textStyle={{
-              ...textStyles.boldOfSize(24),
-              color: "white",
-            }}
-            title={strings.loginScreen.finishSignup}
-            onPress={signup}
-          />
-  
-        </Animatable.View>
-      </View>
-    );
-  };
+        <Input title={strings.fullName} onChange={onNameChanged} value={name} />
+
+        <Input
+          autoCapitalize="none"
+          keyboardType="email-address"
+          title={strings.email}
+          onChange={onEmailChanged}
+          value={email}
+        />
+        <Input
+          extraMargin={true}
+          autoCapitalize="none"
+          title={strings.password}
+          onChange={onPasswordChanged}
+          value={password}
+          secure={true}
+        />
+
+        <CoolButton
+          textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: "white",
+          }}
+          title={strings.loginScreen.finishSignup}
+          onPress={signup}
+        />
+
+        <View style={styles.bottomButtonsSignupContainer}>
+          <Text style={styles.orText}>{strings.or}</Text>
+          <SmallButton onPress={login} title={strings.login} />
+        </View>
+      </Animatable.View>
+    </View>
+  );
+};
 
 export const SmallButton = ({ title, onPress }) => {
   return (
@@ -120,6 +120,18 @@ export const SmallButton = ({ title, onPress }) => {
 };
 
 const styles = StyleSheet.create({
+  orText: {
+    marginTop: 12,
+    marginBottom: 8,
+    ...textStyles.normalOfSize(12),
+    textAlign: "center",
+    color: colors.lighterShade,
+  },
+
+  bottomButtonsSignupContainer: {
+    alignItems: "center",
+  },
+
   bottomButtonsContainer: {
     marginTop: 18,
     flexDirection: "row",
