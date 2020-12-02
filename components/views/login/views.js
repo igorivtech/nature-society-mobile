@@ -325,7 +325,7 @@ export const ProfileView = memo(
             value={email}
           />
 
-          <View style={styles.profilePicContainer}>
+          <View style={styles.profilePicContainerLarge}>
             <TouchableOpacity onPress={selectImage} style={styles.profilePicButton}>
               {loadingImage ? (
                 <ActivityIndicator color={colors.treeBlues} />
@@ -394,6 +394,14 @@ const styles = StyleSheet.create({
 
   profilePicContainer: {
     marginBottom: 44,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    alignSelf: "stretch",
+  },
+
+  profilePicContainerLarge: {
+    marginBottom: 64,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
