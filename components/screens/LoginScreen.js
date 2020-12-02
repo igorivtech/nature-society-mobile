@@ -100,7 +100,7 @@ const Input = ({ title, value, onChange, secure = false }) => {
 
   return (
     <View style={styles.animatedTextContainer}>
-      <Animated.Text style={styles.animatedText(textTranslateY, textScale)}>
+      <Animated.Text style={styles.animatedPlaceholder(textTranslateY, textScale)}>
         {title}
       </Animated.Text>
       <TextInput
@@ -118,13 +118,12 @@ const Input = ({ title, value, onChange, secure = false }) => {
 
 const styles = StyleSheet.create({
   textInput: {
-    //   backgroundColor: "red",
     ...textStyles.normalOfSize(18),
     color: colors.treeBlues,
   },
 
-  animatedText: (textTranslateY, textScale) => ({
-    transform: [{ translateY: textTranslateY }, { scale: textScale }],
+  animatedPlaceholder: (translateY, scale) => ({
+    transform: [{ translateY }, { scale }],
     position: "absolute",
     right: 4,
     bottom: 4,
