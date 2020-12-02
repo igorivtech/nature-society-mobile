@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { colors } from "../../values/colors";
 import { CARD_RADIUS, width } from "../../values/consts";
+import { strings } from "../../values/strings";
+import { textStyles } from "../../values/textStyles";
 
 export const LoginScreen = ({ navigation }) => {
   const goBack = () => {
@@ -16,21 +18,27 @@ export const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.cardContainer}
-      ></View>
+      <View style={styles.cardContainer}>
+        <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  loginTitle: {
+      ...textStyles.boldOfSize(24),
+      color: colors.treeBlues,
+      textAlign: 'right',
+      width: '100%'
+  },
 
   cardContainer: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: 'space-between',
     paddingTop: 32,
     paddingBottom: 24,
     paddingHorizontal: 40,
-    paddingHorizontal: 0,
     width: width - 2 * 30,
     alignSelf: "center",
     aspectRatio: 1 / 1.1,

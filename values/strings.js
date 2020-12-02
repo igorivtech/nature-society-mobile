@@ -39,5 +39,8 @@ export const strings = {
     progressScreen: {
         signup: 'הרשמה',
         logout: 'התנתקות',
+    },
+    loginScreen: {
+        title: 'התחברות למדד הטבע'
     }
 }
