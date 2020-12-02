@@ -115,7 +115,7 @@ export const SignupView = memo(
     }, [visible]);
 
     return (
-      <View>
+      <View style={styles.zPopup(visible)}>
         <Animated.View style={styles.cardContainer(opacity)}>
           <Text style={styles.loginTitle}>
             {strings.loginScreen.signupTitle}
@@ -219,6 +219,11 @@ const styles = StyleSheet.create({
 
   absolutePopup: (visible) => ({
     position: "absolute",
+    zIndex: visible ? 1 : -1,
+  }),
+
+
+  zPopup: (visible) => ({
     zIndex: visible ? 1 : -1,
   }),
 
