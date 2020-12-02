@@ -18,6 +18,29 @@ import { CARD_RADIUS, width } from "../../../values/consts";
 
 const CARD_ANIMATION_DURATION = 400;
 
+const useVisible = (visible, initialValue) => {
+
+  const opacity = useRef(new Animated.Value(initialValue)).current;
+  const scale = useRef(new Animated.Value(initialValue)).current;
+
+  useEffect(()=>{
+    Animated.timing(opacity, {
+      toValue: visible ? 1 : 0,
+      useNativeDriver: true,
+      duration: visible ? CARD_ANIMATION_DURATION : (CARD_ANIMATION_DURATION - 100),
+      timing: Easing.inOut(Easing.ease)
+    }).start();
+    Animated.timing(scale, {
+      toValue: visible ? 1 : 0.8,
+      useNativeDriver: true,
+      duration: visible ? CARD_ANIMATION_DURATION : (CARD_ANIMATION_DURATION - 100),
+      timing: Easing.inOut(Easing.ease)
+    }).start();
+  }, [visible]);
+
+  return {opacity, scale}
+}
+
 export const LoginView = memo(
   ({
     visible,
@@ -30,23 +53,7 @@ export const LoginView = memo(
     signup,
   }) => {
 
-    const opacity = useRef(new Animated.Value(1)).current;
-    const scale = useRef(new Animated.Value(1)).current;
-
-    useEffect(()=>{
-      Animated.timing(opacity, {
-        toValue: visible ? 1 : 0,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-      Animated.timing(scale, {
-        toValue: visible ? 1 : 0.8,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-    }, [visible]);
+    const {opacity, scale} = useVisible(visible, 1);
 
     return (
       <View style={styles.absolutePopup(visible)}>
@@ -99,24 +106,8 @@ export const ForgotPasswordView = memo(
     restorePassword
   }) => {
 
-    const opacity = useRef(new Animated.Value(0)).current;
-    const scale = useRef(new Animated.Value(0)).current;
-
-    useEffect(()=>{
-      Animated.timing(opacity, {
-        toValue: visible ? 1 : 0,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-      Animated.timing(scale, {
-        toValue: visible ? 1 : 0.8,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-    }, [visible]);
-
+    const {opacity, scale} = useVisible(visible, 0);
+    
     return (
       <View style={styles.absolutePopup(visible)}>
         <Animated.View style={styles.cardContainer(opacity, scale)}>
@@ -152,23 +143,7 @@ export const EmailSentView = memo(
     gotIt,
   }) => {
 
-    const opacity = useRef(new Animated.Value(0)).current;
-    const scale = useRef(new Animated.Value(0)).current;
-
-    useEffect(()=>{
-      Animated.timing(opacity, {
-        toValue: visible ? 1 : 0,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-      Animated.timing(scale, {
-        toValue: visible ? 1 : 0.8,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-    }, [visible]);
+    const {opacity, scale} = useVisible(visible, 0);
 
     return (
       <View style={styles.absolutePopup(visible)}>
@@ -211,23 +186,7 @@ export const SignupView = memo(
     loadingImage,
   }) => {
 
-    const opacity = useRef(new Animated.Value(0)).current;
-    const scale = useRef(new Animated.Value(0)).current;
-
-    useEffect(()=>{
-      Animated.timing(opacity, {
-        toValue: visible ? 1 : 0,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-      Animated.timing(scale, {
-        toValue: visible ? 1 : 0.8,
-        useNativeDriver: true,
-        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-    }, [visible]);
+    const {opacity, scale} = useVisible(visible, 0);
 
     return (
       <View style={styles.absolutePopup(visible)}>
