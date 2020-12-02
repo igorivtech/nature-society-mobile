@@ -4,8 +4,6 @@ import {
   SafeAreaView,
   Animated,
   Easing,
-  Image,
-  Text,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
@@ -13,8 +11,7 @@ import { styles } from "../../values/styles";
 import { height, DATA } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
-import { textStyles } from "../../values/textStyles";
-import { colors } from "../../values/colors";
+import { GrowthPoints } from "../views/home/GrowthPoints";
 
 export const HomeScreen = ({ navigation, route }) => {
 
@@ -148,23 +145,3 @@ export const HomeScreen = ({ navigation, route }) => {
   );
 };
 
-
-const GrowthPoints = () => {
-
-  const [points, setPoints] = useState(0);
-
-  useEffect(()=>{
-    setTimeout(() => {
-      setPoints(100);
-    }, 1000);
-  }, [])
-
-  return (<View style={styles.pointsGrowthContainer}>
-    <Text 
-    adjustsFontSizeToFit={true}
-    numberOfLines={1}
-    style={textStyles.pointsGrowthText} >{points}</Text>
-    <Image source={require("../../assets/images/growth_icon.png")} />
-
-  </View>)
-}
