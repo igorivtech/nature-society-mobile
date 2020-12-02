@@ -127,8 +127,7 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
   return (
     <View style={styles.animatedTextContainer}>
       <Animated.Text onLayout={(e) => {
-        const {x, y, width, height} = e.nativeEvent.layout;
-        placeholderWidth.current = width;
+        placeholderWidth.current = e.nativeEvent.layout.width;
       }} style={styles.animatedPlaceholder(textTranslateX, textTranslateY, textScale)}>
         {title}
       </Animated.Text>
