@@ -57,7 +57,10 @@ export const LoginScreen = ({ navigation }) => {
             secure={true}
           />
 
-          <CoolButton title={strings.login} onPress={login} />
+          <CoolButton textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: 'white'
+          }} title={strings.login} onPress={login} />
         </View>
       </ScrollView>
     </SafeAreaView>

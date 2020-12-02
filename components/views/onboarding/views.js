@@ -53,7 +53,8 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
   );
 };
 
-export const CoolButton = ({ title, onPress }) => {
+export const CoolButton = ({ textStyle = {}, title, onPress }) => {
+  
   return (
     <TouchableOpacity onPress={onPress}>
       <View
@@ -66,7 +67,7 @@ export const CoolButton = ({ title, onPress }) => {
           justifyContent: "center",
         }}
       >
-        <Text style={textStyles.onboardingCoolButton}>
+        <Text style={{...textStyles.onboardingCoolButton, ...textStyle}}>
           {title}
         </Text>
       </View>
