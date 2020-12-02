@@ -9,19 +9,23 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
-import { LoginView, SignupView } from "../views/login/views";
+import { ForgotPasswordView, LoginView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
 
 export const LoginScreen = ({ navigation }) => {
 
-  const [isLogin, setIsLogin] = useState(true);
+  const [loginVisible, setLoginVisible] = useState(true);
+  const [signupVisible, setSignupVisible] = useState(false);
+  const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
 
   const [name, setName] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
+  const [restoreEmail, setRestoreEmail] = useState("");
+
   const [image, setImage] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
   
@@ -66,32 +70,46 @@ export const LoginScreen = ({ navigation }) => {
   };
 
   const goBack = () => {
-    navigation.goBack();
+    if (forgotPasswordVisible) {
+      login();
+    } else {
+      navigation.goBack();
+    }
   };
 
   const login = () => {
-    if (isLogin) {
-
+    if (loginVisible) {
+      console.log("login");
     } else {
-      setIsLogin(true);
+      setLoginVisible(true);
+      setSignupVisible(false);
+      setForgotPasswordVisible(false);
     }
   }
 
   const signup = () => {
-    if (isLogin) {
-      setIsLogin(false);
+    if (signupVisible) {
+      console.log("signup");
     } else {
-      
+      setSignupVisible(true);
+      setLoginVisible(false);
+      setForgotPasswordVisible(false);
     }
   }
 
   const forgotPassword = () => {
-    console.log("forgotPassword");
+    if (forgotPasswordVisible) {
+      console.log("forgotPassword");
+    } else {
+      setForgotPasswordVisible(true);
+      setLoginVisible(false);
+      setSignupVisible(false);
+    }
   }
 
   const tapClose = (event) => {
     if (event.nativeEvent.state === State.END) {
-      if (keyboardHeight > 0) {
+      if (keyboardHeight > 0  ) {
         Keyboard.dismiss();
       } else {
         goBack();
@@ -118,6 +136,10 @@ export const LoginScreen = ({ navigation }) => {
     setSafeAreaHeight(event.nativeEvent.layout.height);
   }
 
+  const restorePassword = () => {
+    console.log("restorePassword");
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
@@ -129,7 +151,7 @@ export const LoginScreen = ({ navigation }) => {
           </TapGestureHandler>
 
           <LoginView
-            visible={isLogin}
+            visible={loginVisible}
             email={loginEmail}
             onEmailChanged={onLoginEmailChanged}
             password={loginPassword}
@@ -142,7 +164,7 @@ export const LoginScreen = ({ navigation }) => {
             image={image}
             loadingImage={loadingImage}
             selectImage={selectImage}
-            visible={!isLogin}
+            visible={signupVisible}
             name={name}
             onNameChanged={onNameChanged}
             email={signupEmail}
@@ -151,6 +173,13 @@ export const LoginScreen = ({ navigation }) => {
             onPasswordChanged={onSignupPasswordChanged}
             login={login}
             signup={signup}
+          />
+
+          <ForgotPasswordView 
+            visible={forgotPasswordVisible}
+            email={restoreEmail}
+            onEmailChanged={setRestoreEmail}
+            restorePassword={restorePassword}
           />
           
         </View>

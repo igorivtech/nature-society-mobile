@@ -84,6 +84,53 @@ export const LoginView = memo(
   }
 );
 
+export const ForgotPasswordView = memo(
+  ({
+    visible,
+    email,
+    onEmailChanged,
+    restorePassword
+  }) => {
+
+    const opacity = useRef(new Animated.Value(0)).current;
+
+    useEffect(()=>{
+      Animated.timing(opacity, {
+        toValue: visible ? 1 : 0,
+        useNativeDriver: true,
+        duration: CARD_ANIMATION_DURATION,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+    }, [visible]);
+
+    return (
+      <View style={styles.absolutePopup(visible)}>
+        <Animated.View style={styles.cardContainer(opacity)}>
+          <Text style={styles.loginTitle}>{strings.loginScreen.restorePassword}</Text>
+
+          <Input
+            autoCapitalize="none"
+            keyboardType="email-address"
+            title={strings.email}
+            onChange={onEmailChanged}
+            value={email}
+          />
+
+          <CoolButton
+            textStyle={{
+              ...textStyles.boldOfSize(24),
+              color: "white",
+            }}
+            title={strings.loginScreen.restorePasswordButton}
+            onPress={restorePassword}
+          />
+
+        </Animated.View>
+      </View>
+    );
+  }
+);
+
 const PIC_SIZE = 111;
 const INNER_PIC_SIZE = PIC_SIZE - 6;
 
