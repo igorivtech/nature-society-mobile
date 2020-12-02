@@ -97,6 +97,7 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
   const textTranslateX = useRef(new Animated.Value(0)).current;
   const textScale = useRef(new Animated.Value(1)).current;
   const placeholderWidth = useRef();
+  const placeholderHeight = useRef();
 
   const onBlur = () => {
     if (value.length === 0) {
@@ -130,7 +131,7 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
       Animated.timing(textTranslateY, {
         duration: DURATION,
         useNativeDriver: true,
-        toValue: -30,
+        toValue: -30, // -placeholderHeight.current - 12,
         easing: Easing.inOut(Easing.ease),
       }),
       Animated.timing(textTranslateX, {
@@ -152,6 +153,7 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
     <View style={styles.animatedTextContainer}>
       <Animated.Text onLayout={(e) => {
         placeholderWidth.current = e.nativeEvent.layout.width;
+        placeholderHeight.current = e.nativeEvent.layout.height;
       }} style={styles.animatedPlaceholder(textTranslateX, textTranslateY, textScale)}>
         {title}
       </Animated.Text>
