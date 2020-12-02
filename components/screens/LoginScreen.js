@@ -57,39 +57,53 @@ export const LoginScreen = ({ navigation }) => {
         <TapGestureHandler onHandlerStateChange={tapClose}>
           <View style={StyleSheet.absoluteFill} />
         </TapGestureHandler>
-        <View style={styles.cardContainer}>
-          <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
-
-          <Input
-            autoCapitalize='none'
-            keyboardType='email-address'
-            title={strings.email}
-            onChange={onEmailChanged}
-            value={email}
-          />
-          <Input
-            extraMargin={true}
-            autoCapitalize='none'
-            title={strings.password}
-            onChange={onPasswordChanged}
-            value={password}
-            secure={true}
-          />
-
-          <CoolButton textStyle={{
-            ...textStyles.boldOfSize(24),
-            color: 'white'
-          }} title={strings.login} onPress={login} />
-
-          <View style={styles.bottomButtonsContainer}>
-            <SmallButton onPress={forgotPassword} title={strings.loginScreen.forgotPassword} />
-            <SmallButton onPress={signup} title={strings.loginScreen.signup} />
-          </View>
-        </View>
+        <LoginView
+          email={email}
+          onEmailChanged={onEmailChanged}
+          password={password}
+          onPasswordChanged={onPasswordChanged}
+          forgotPassword={forgotPassword}
+          login={login}
+          signup={signup}
+         />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+const LoginView = ({email, onEmailChanged, password, onPasswordChanged, forgotPassword, login, signup}) => {
+  return (
+    <View style={styles.cardContainer}>
+      <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
+
+      <Input
+        autoCapitalize='none'
+        keyboardType='email-address'
+        title={strings.email}
+        onChange={onEmailChanged}
+        value={email}
+      />
+      <Input
+        extraMargin={true}
+        autoCapitalize='none'
+        title={strings.password}
+        onChange={onPasswordChanged}
+        value={password}
+        secure={true}
+      />
+
+      <CoolButton textStyle={{
+        ...textStyles.boldOfSize(24),
+        color: 'white'
+      }} title={strings.login} onPress={login} />
+
+      <View style={styles.bottomButtonsContainer}>
+        <SmallButton onPress={forgotPassword} title={strings.loginScreen.forgotPassword} />
+        <SmallButton onPress={signup} title={strings.loginScreen.signup} />
+      </View>
+    </View>
+  )
+}
 
 const SmallButton = ({title, onPress}) => {
   return (
