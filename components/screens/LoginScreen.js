@@ -62,15 +62,25 @@ export const LoginScreen = ({ navigation }) => {
 };
 
 const DURATION = 300;
+const TEXT_SCALE = 0.7;
 
 const Input = ({ title, value, onChange, secure = false }) => {
+  
   const textTranslateY = useRef(new Animated.Value(0)).current;
+  const textTranslateX = useRef(new Animated.Value(0)).current;
   const textScale = useRef(new Animated.Value(1)).current;
+  const placeholderWidth = useRef();
 
   const onBlur = () => {
     if (value.length === 0) {
       Animated.parallel([
         Animated.timing(textTranslateY, {
+          duration: DURATION,
+          useNativeDriver: true,
+          toValue: 0,
+          easing: Easing.inOut(Easing.ease),
+        }),
+        Animated.timing(textTranslateX, {
           duration: DURATION,
           useNativeDriver: true,
           toValue: 0,
@@ -89,6 +99,7 @@ const Input = ({ title, value, onChange, secure = false }) => {
   };
 
   const onFocus = () => {
+    console.log({pWidth: placeholderWidth.current});
     Animated.parallel([
       Animated.timing(textTranslateY, {
         duration: DURATION,
@@ -96,10 +107,16 @@ const Input = ({ title, value, onChange, secure = false }) => {
         toValue: -30,
         easing: Easing.inOut(Easing.ease),
       }),
+      Animated.timing(textTranslateX, {
+        duration: DURATION,
+        useNativeDriver: true,
+        toValue: placeholderWidth.current * (1 - TEXT_SCALE)/2,
+        easing: Easing.inOut(Easing.ease),
+      }),
       Animated.timing(textScale, {
         duration: DURATION,
         useNativeDriver: true,
-        toValue: 0.7,
+        toValue: TEXT_SCALE,
         easing: Easing.inOut(Easing.ease),
       }),
     ]).start();
@@ -107,7 +124,10 @@ const Input = ({ title, value, onChange, secure = false }) => {
 
   return (
     <View style={styles.animatedTextContainer}>
-      <Animated.Text style={styles.animatedPlaceholder(textTranslateY, textScale)}>
+      <Animated.Text onLayout={(e) => {
+        const {x, y, width, height} = e.nativeEvent.layout;
+        placeholderWidth.current = width;
+      }} style={styles.animatedPlaceholder(textTranslateX, textTranslateY, textScale)}>
         {title}
       </Animated.Text>
       <TextInput
@@ -129,8 +149,8 @@ const styles = StyleSheet.create({
     color: colors.treeBlues,
   },
 
-  animatedPlaceholder: (translateY, scale) => ({
-    transform: [{ translateY }, { scale }],
+  animatedPlaceholder: (translateX, translateY, scale) => ({
+    transform: [{ translateX }, { translateY }, { scale }],
     position: "absolute",
     right: 4,
     bottom: 4,
