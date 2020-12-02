@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, Easing, StyleSheet, TextInput, View } from "react-native";
 import { colors } from "../../../values/colors";
 import { textStyles } from "../../../values/textStyles";
@@ -13,6 +13,14 @@ export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', titl
   const textScale = useRef(new Animated.Value(1)).current;
   const placeholderWidth = useRef();
   const placeholderHeight = useRef();
+
+  useEffect(()=>{
+    if (value.length > 0 && textTranslateY._value == 0) {
+      textTranslateY.setValue(-30);
+      textTranslateX.setValue(placeholderWidth.current * (1 - TEXT_SCALE)/2);
+      textScale.setValue(TEXT_SCALE);
+    }
+  }, [value])
 
   const onBlur = () => {
     if (value.length === 0) {
