@@ -10,6 +10,7 @@ import {
   Easing,
   ScrollView,
 } from "react-native";
+import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import { CARD_RADIUS, width } from "../../values/consts";
 import { strings } from "../../values/strings";
@@ -44,9 +45,18 @@ export const LoginScreen = ({ navigation }) => {
     console.log("forgotPassword");
   }
 
+  const tapClose = (event) => {
+    if (event.nativeEvent.state === State.END) {
+      goBack();
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
+        <TapGestureHandler onHandlerStateChange={tapClose}>
+          <View style={StyleSheet.absoluteFill} />
+        </TapGestureHandler>
         <View style={styles.cardContainer}>
           <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
