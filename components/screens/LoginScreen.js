@@ -13,6 +13,11 @@ import { ForgotPasswordView, LoginView, SignupView } from "../views/login/views"
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
 
+const scrollZero = {
+  y: 0,
+  animated: true,
+}
+
 export const LoginScreen = ({ navigation }) => {
 
   const [loginVisible, setLoginVisible] = useState(true);
@@ -35,11 +40,6 @@ export const LoginScreen = ({ navigation }) => {
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
 
   const scrollRef = useRef();
-
-  const scrollZero = {
-    y: 0,
-    animated: true,
-}
 
   useEffect(() => {
     setPaddingBottom(keyboardHeight);
