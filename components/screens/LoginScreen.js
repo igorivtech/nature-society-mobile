@@ -177,6 +177,7 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
 const styles = StyleSheet.create({
 
   bottomButtonsContainer: {
+    marginTop: 18,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
