@@ -94,6 +94,7 @@ export const LoginScreen = ({ navigation }) => {
       setLoginVisible(true);
       setSignupVisible(false);
       setForgotPasswordVisible(false);
+      setNewPasswordVisible(false);
     }
   }
 
@@ -104,6 +105,7 @@ export const LoginScreen = ({ navigation }) => {
       setSignupVisible(true);
       setLoginVisible(false);
       setForgotPasswordVisible(false);
+      setNewPasswordVisible(false);
     }
   }
 
@@ -114,6 +116,7 @@ export const LoginScreen = ({ navigation }) => {
       setForgotPasswordVisible(true);
       setLoginVisible(false);
       setSignupVisible(false);
+      setNewPasswordVisible(false);
     }
   }
 
@@ -159,7 +162,7 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const changePassword = () => {
-    console.log("changePassword");
+    navigation.goBack();
   }
 
   return (
