@@ -4,34 +4,34 @@ import * as Animatable from "react-native-animatable";
 import { styles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 
+const animation = {
+    0: {
+      opacity: 1,
+      transform: [
+        {translateX: 0},
+        {scale: 1},
+      ]
+    },
+    1: {
+      opacity: 0,
+      transform: [
+        {translateX: 130/2},
+        {scale: 0},
+      ]
+    }
+  }
+
 export const GrowthPoints = () => {
 
     const [points, setPoints] = useState(0);
     const ref = useRef();
   
-    const animation = {
-      0: {
-        opacity: 1,
-        transform: [
-          {translateX: 0},
-          {scale: 1},
-        ]
-      },
-      1: {
-        opacity: 0,
-        transform: [
-          {translateX: 130/2},
-          {scale: 0},
-        ]
-      }
-    }
-  
     useEffect(()=>{
       setTimeout(() => {
         setPoints(100);
         setTimeout(() => {
-          ref.current.animate(animation, 700);
-        }, 1000);
+          ref.current.animate(animation, 800);
+        }, 2000);
       }, 2000);
     }, [])
   
