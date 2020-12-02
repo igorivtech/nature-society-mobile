@@ -57,5 +57,7 @@ export const strings = {
         restorePasswordButton: 'שחזר סיסמה',
         emailSentButton: 'אוקיי, אבדוק',
         emailSentDesc: 'לינק ליצירת סיסמה חדשה נשלח\nאליך לאימייל.',
+        chooseNewPasswordTitle: 'בחר סיסמה חדשה',
+        chooseNewPasswordTitle: 'החלף סיסמה',
     }
 }

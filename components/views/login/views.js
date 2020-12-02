@@ -167,6 +167,45 @@ export const EmailSentView = memo(
   }
 );
 
+export const NewPasswordView = memo(
+  ({
+    visible,
+    newPassword,
+    onNewPasswordChanged,
+    changePassword
+  }) => {
+
+    const {opacity, scale} = useVisible(visible, 0);
+    
+    return (
+      <View style={styles.absolutePopup(visible)}>
+        <Animated.View style={styles.cardContainer(opacity, scale)}>
+          <Text style={styles.loginTitle}>{strings.loginScreen.chooseNewPasswordTitle}</Text>
+
+          <Input
+            extraMargin={true}
+            autoCapitalize="none"
+            title={strings.password}
+            onChange={onNewPasswordChanged}
+            value={newPassword}
+            secure={true}
+          />
+
+          <CoolButton
+            textStyle={{
+              ...textStyles.boldOfSize(24),
+              color: "white",
+            }}
+            title={strings.loginScreen.chooseNewPasswordTitle}
+            onPress={changePassword}
+          />
+
+        </Animated.View>
+      </View>
+    );
+  }
+);
+
 const PIC_SIZE = 111;
 const INNER_PIC_SIZE = PIC_SIZE - 6;
 

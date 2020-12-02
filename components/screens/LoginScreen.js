@@ -9,7 +9,7 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
-import { EmailSentView, ForgotPasswordView, LoginView, SignupView } from "../views/login/views";
+import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
 
@@ -23,7 +23,8 @@ export const LoginScreen = ({ navigation }) => {
   const [loginVisible, setLoginVisible] = useState(true);
   const [signupVisible, setSignupVisible] = useState(false);
   const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
-  const [emailSentVisible, sentEmailSentVisible] = useState(false);
+  const [emailSentVisible, setEmailSentVisible] = useState(false);
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
 
   const [name, setName] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
@@ -31,6 +32,7 @@ export const LoginScreen = ({ navigation }) => {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [restoreEmail, setRestoreEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const [image, setImage] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
@@ -70,8 +72,12 @@ export const LoginScreen = ({ navigation }) => {
     setSignupPassword(value);
   };
 
+  const onNewPasswordChanged = (value) => {
+    setNewPassword(value);
+  };
+
   const goBack = () => {
-    if (emailSentVisible) {
+    if (emailSentVisible || newPasswordVisible) {
       return;
     }
     if (forgotPasswordVisible || signupVisible) {
@@ -142,13 +148,18 @@ export const LoginScreen = ({ navigation }) => {
 
   const restorePassword = () => {
     if (restoreEmail.length > 0) {
-      sentEmailSentVisible(true);
+      setEmailSentVisible(true);
       setForgotPasswordVisible(false);
     }
   }
 
   const gotIt = () => {
-    console.log("gotIt");
+    setNewPasswordVisible(true);
+    setEmailSentVisible(false);
+  }
+
+  const changePassword = () => {
+    console.log("changePassword");
   }
 
   return (
@@ -195,6 +206,13 @@ export const LoginScreen = ({ navigation }) => {
 
           <EmailSentView visible={emailSentVisible} gotIt={gotIt} />
           
+          <NewPasswordView 
+            visible={newPasswordVisible}
+            newPassword={newPassword}
+            onNewPasswordChanged={onNewPasswordChanged}
+            changePassword={changePassword}
+          />
+
         </View>
       </ScrollView>
     </SafeAreaView>
