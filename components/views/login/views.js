@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
@@ -70,7 +70,9 @@ export const SignupView = memo(({
   onPasswordChanged,
   login,
   signup,
-  selectImage
+  selectImage,
+  image,
+  loadingImage
 }) => {
   return (
     <View>
@@ -111,7 +113,17 @@ export const SignupView = memo(({
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Image source={require("../../../assets/images/upload_icon.png")} />
+            {loadingImage ? (
+            <ActivityIndicator color={colors.treeBlues} />
+            ) : (
+              <Image source={require("../../../assets/images/upload_icon.png")} />
+            )}
+            {image ? (<Image style={{
+              width: 109,
+              height: 109,
+              padding: 2,
+              borderRadius: 109/2
+            }} source={{uri: ""}} />) : null}
           </TouchableOpacity>
 
           <Text style={{

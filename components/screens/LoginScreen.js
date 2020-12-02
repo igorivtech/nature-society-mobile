@@ -22,6 +22,7 @@ export const LoginScreen = ({ navigation }) => {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [image, setImage] = useState(null);
+  const [loadingImage, setLoadingImage] = useState(false);
   
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [keyboardHeight] = useKeyboard();
@@ -87,7 +88,7 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const selectImage = () => {
-    console.log("selectImage");
+    setLoadingImage(true);
   }
 
   return (
@@ -109,6 +110,7 @@ export const LoginScreen = ({ navigation }) => {
             signup={signup}
           />
           <SignupView
+            loadingImage={loadingImage}
             selectImage={selectImage}
             visible={!isLogin}
             name={name}
