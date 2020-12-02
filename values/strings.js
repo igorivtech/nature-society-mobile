@@ -35,5 +35,9 @@ export const strings = {
     },
     exploreScreen: {
         searchPlaceholder: 'חפש'
+    },
+    progressScreen: {
+        signup: 'הרשמה',
+        logout: 'התנתקות',
     }
 }
