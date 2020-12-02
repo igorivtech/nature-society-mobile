@@ -9,6 +9,7 @@ import { colors } from "../../../values/colors";
 import { CARD_RADIUS, width } from "../../../values/consts";
 
 export const LoginView = ({
+  visible,
   email,
   onEmailChanged,
   password,
@@ -19,7 +20,7 @@ export const LoginView = ({
 }) => {
   return (
     <View>
-      <Animatable.View style={styles.cardContainer}>
+      <Animatable.View animation={visible ? 'fadeIn' : 'fadeOut'} style={styles.cardContainer}>
         <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
         <Input
@@ -60,6 +61,7 @@ export const LoginView = ({
 };
 
 export const SignupView = ({
+  visible,
   name,
   onNameChanged,
   email,
@@ -72,7 +74,7 @@ export const SignupView = ({
 }) => {
   return (
     <View>
-      <Animatable.View style={styles.cardContainer}>
+      <Animatable.View animation={visible ? 'fadeIn' : 'fadeOut'} style={styles.cardContainer}>
         <Text style={styles.loginTitle}>{strings.loginScreen.signupTitle}</Text>
 
         <Input title={strings.fullName} onChange={onNameChanged} value={name} />

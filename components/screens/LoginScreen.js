@@ -83,6 +83,7 @@ export const LoginScreen = ({ navigation }) => {
         <View>
 
           {isLogin ? (<LoginView
+            visible={isLogin}
             email={email}
             onEmailChanged={onEmailChanged}
             password={password}
@@ -91,6 +92,7 @@ export const LoginScreen = ({ navigation }) => {
             login={login}
             signup={signup}
           />) : (<SignupView
+            visible={!isLogin}
             name={name}
             onNameChanged={onNameChanged}
             email={email}
