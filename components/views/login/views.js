@@ -96,8 +96,9 @@ const styles = StyleSheet.create({
       paddingTop: 32,
       paddingBottom: 24,
       paddingHorizontal: 40,
-      width: width - 2 * 30,
-      alignSelf: "center",
+    //   width: width - 2 * 30,
+    width: '100%',
+    //   alignSelf: "center",
       backgroundColor: "white",
       borderRadius: CARD_RADIUS,
       shadowOffset: {

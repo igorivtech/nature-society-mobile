@@ -84,7 +84,9 @@ const styles = StyleSheet.create({
   scrollView: (paddingBottom) => ({
     justifyContent: "center",
     flexGrow: 1,
-    paddingBottom
+    paddingBottom,
+    alignItems: 'center',
+    paddingHorizontal: 30
   }),
 
   container: {
