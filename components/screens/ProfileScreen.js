@@ -95,7 +95,7 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const updateChanges = () => {
-    console.log("updateChanges");
+    goBack();
   }
 
   const logout = () => {
