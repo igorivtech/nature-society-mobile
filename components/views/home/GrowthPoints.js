@@ -24,7 +24,7 @@ const opacity = (on) => ({
   },
 });
 
-const TEXT_DURATION = 500;
+const TEXT_DURATION = 600;
 
 export const GrowthPoints = () => {
   const [points, setPoints] = useState(0);
