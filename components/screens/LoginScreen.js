@@ -9,7 +9,7 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
-import { ForgotPasswordView, LoginView, SignupView } from "../views/login/views";
+import { EmailSentView, ForgotPasswordView, LoginView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
 
@@ -23,6 +23,7 @@ export const LoginScreen = ({ navigation }) => {
   const [loginVisible, setLoginVisible] = useState(true);
   const [signupVisible, setSignupVisible] = useState(false);
   const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
+  const [emailSentVisible, sentEmailSentVisible] = useState(false);
 
   const [name, setName] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
@@ -70,7 +71,10 @@ export const LoginScreen = ({ navigation }) => {
   };
 
   const goBack = () => {
-    if (forgotPasswordVisible) {
+    if (emailSentVisible) {
+      return;
+    }
+    if (forgotPasswordVisible || signupVisible) {
       login();
     } else {
       navigation.goBack();
@@ -109,7 +113,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const tapClose = (event) => {
     if (event.nativeEvent.state === State.END) {
-      if (keyboardHeight > 0  ) {
+      if (keyboardHeight > 0 ) {
         Keyboard.dismiss();
       } else {
         goBack();
@@ -137,7 +141,14 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const restorePassword = () => {
-    console.log("restorePassword");
+    if (restoreEmail.length > 0) {
+      sentEmailSentVisible(true);
+      setForgotPasswordVisible(false);
+    }
+  }
+
+  const gotIt = () => {
+    console.log("gotIt");
   }
 
   return (
@@ -181,6 +192,8 @@ export const LoginScreen = ({ navigation }) => {
             onEmailChanged={setRestoreEmail}
             restorePassword={restorePassword}
           />
+
+          <EmailSentView visible={emailSentVisible} gotIt={gotIt} />
           
         </View>
       </ScrollView>

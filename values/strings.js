@@ -55,5 +55,7 @@ export const strings = {
         profilePic: 'תמונת פרופיל',
         restorePassword: 'שחזור סיסמה',
         restorePasswordButton: 'שחזר סיסמה',
+        emailSentButton: 'אוקיי, אבדוק',
+        emailSentDesc: 'לינק ליצירת סיסמה חדשה נשלח\nאליך לאימייל.',
     }
 }

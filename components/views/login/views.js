@@ -132,6 +132,45 @@ export const ForgotPasswordView = memo(
   }
 );
 
+export const EmailSentView = memo(
+  ({
+    visible,
+    gotIt,
+  }) => {
+
+    const opacity = useRef(new Animated.Value(0)).current;
+
+    useEffect(()=>{
+      Animated.timing(opacity, {
+        toValue: visible ? 1 : 0,
+        useNativeDriver: true,
+        duration: CARD_ANIMATION_DURATION,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+    }, [visible]);
+
+    return (
+      <View style={styles.absolutePopup(visible)}>
+        <Animated.View style={styles.cardContainer(opacity)}>
+          <Text style={styles.emailSentTitle}>{strings.loginScreen.restorePassword}</Text>
+
+          <Text style={styles.emailSentDesc}>{strings.loginScreen.emailSentDesc}</Text>
+
+          <CoolButton
+            textStyle={{
+              ...textStyles.boldOfSize(24),
+              color: "white",
+            }}
+            title={strings.loginScreen.emailSentButton}
+            onPress={gotIt}
+          />
+
+        </Animated.View>
+      </View>
+    );
+  }
+);
+
 const PIC_SIZE = 111;
 const INNER_PIC_SIZE = PIC_SIZE - 6;
 
@@ -323,5 +362,21 @@ const styles = StyleSheet.create({
     textAlign: "right",
     width: "100%",
   },
+
+  emailSentTitle: {
+    marginBottom: 20,
+    ...textStyles.boldOfSize(24),
+    color: colors.treeBlues,
+    textAlign: "right",
+    width: "100%",
+  },
+
+  emailSentDesc: {
+    marginBottom: 48,
+    ...textStyles.normalOfSize(18),
+    color: colors.treeBlues,
+    textAlign: "right",
+    width: "100%",
+  }
 
 });
