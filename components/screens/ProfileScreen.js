@@ -9,7 +9,7 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
-import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, ProfileView, SignupView } from "../views/login/views";
+import { ProfileView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
 
