@@ -80,12 +80,12 @@ export const ProfileScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const login = () => {
-    console.log("login");
+  const updateChanged = () => {
+    console.log("updateChanged");
   }
 
-  const signup = () => {
-    console.log("signup");
+  const logout = () => {
+    navigation.navigate("Progress", {logout: true, user: null})
   }
 
   const tapClose = (event) => {
@@ -119,8 +119,8 @@ export const ProfileScreen = ({ navigation, route }) => {
             onEmailChanged={onSignupEmailChanged}
             password={signupPassword}
             onPasswordChanged={onSignupPasswordChanged}
-            login={login}
-            signup={signup}
+            login={logout}
+            signup={updateChanged}
           />
 
         </View>
