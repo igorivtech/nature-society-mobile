@@ -115,9 +115,9 @@ export const LoginScreen = ({ navigation }) => {
   const login = () => {
     if (loginVisible) {
       navigation.navigate("Progress", { user: {
-        name: "יעל השכנה",
+        name: name.trim() !== "" ? name.trim() : "יעל השכנה",
         email: loginEmail.trim() !== "" ? loginEmail.trim() : yael.email,
-        image: yael.image
+        image: image ? image.uri : yael.image
       } });
     } else {
       setLoginVisible(true);
@@ -131,7 +131,7 @@ export const LoginScreen = ({ navigation }) => {
     if (signupVisible) {
       navigation.navigate("Progress", { user: {
         name: name.trim() !== "" ? name.trim() : "יעל השכנה",
-        email: signupEmail ?? yael.email,
+        email: signupEmail.trim() !== "" ? signupEmail.trim() : yael.email,
         image: image ? image.uri : yael.image
       } });
     } else {
