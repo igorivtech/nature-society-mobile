@@ -13,11 +13,11 @@ export const useKeyboard = () => {
   };
 
   useEffect(() => {
-    Keyboard.addListener("keyboardDidShow", onKeyboardDidShow);
-    Keyboard.addListener("keyboardDidHide", onKeyboardDidHide);
+    Keyboard.addListener("keyboardWillShow", onKeyboardDidShow);
+    Keyboard.addListener("keyboardWillHide", onKeyboardDidHide);
     return () => {
-      Keyboard.removeListener("keyboardDidShow", onKeyboardDidShow);
-      Keyboard.removeListener("keyboardDidHide", onKeyboardDidHide);
+      Keyboard.removeListener("keyboardWillShow", onKeyboardDidShow);
+      Keyboard.removeListener("keyboardWillHide", onKeyboardDidHide);
     };
   }, []);
 
