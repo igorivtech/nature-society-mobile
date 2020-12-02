@@ -92,7 +92,7 @@ export const LoginScreen = ({ navigation }) => {
         </TapGestureHandler>
         <View>
 
-          {isLogin ? (<LoginView
+          <LoginView
             visible={isLogin}
             email={loginEmail}
             onEmailChanged={onLoginEmailChanged}
@@ -101,7 +101,8 @@ export const LoginScreen = ({ navigation }) => {
             forgotPassword={forgotPassword}
             login={login}
             signup={signup}
-          />) : (<SignupView
+          />
+          <SignupView
             visible={!isLogin}
             name={name}
             onNameChanged={onNameChanged}
@@ -111,7 +112,7 @@ export const LoginScreen = ({ navigation }) => {
             onPasswordChanged={onSignupPasswordChanged}
             login={login}
             signup={signup}
-          />)}
+          />
           
         </View>
       </ScrollView>

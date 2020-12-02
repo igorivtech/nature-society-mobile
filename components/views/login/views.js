@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { strings } from "../../../values/strings";
@@ -8,7 +8,7 @@ import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
 import { CARD_RADIUS, width } from "../../../values/consts";
 
-export const LoginView = ({
+export const LoginView = memo(({
   visible,
   email,
   onEmailChanged,
@@ -58,9 +58,9 @@ export const LoginView = ({
       </Animatable.View>
     </View>
   );
-};
+});
 
-export const SignupView = ({
+export const SignupView = memo(({
   visible,
   name,
   onNameChanged,
@@ -109,7 +109,7 @@ export const SignupView = ({
       </Animatable.View>
     </View>
   );
-};
+});
 
 export const SmallButton = ({ title, onPress }) => {
   return (
