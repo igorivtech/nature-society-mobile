@@ -26,10 +26,10 @@ export const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const [keyboardHeight] = useKeyboard();
-  const [paddingBottom, setPaddingBottom] = useState(40);
+  const [paddingBottom, setPaddingBottom] = useState(0);
 
   useEffect(() => {
-    setPaddingBottom(40 + keyboardHeight);
+    setPaddingBottom(keyboardHeight);
   }, [keyboardHeight]);
 
   const onEmailChanged = (value) => {
