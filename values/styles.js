@@ -152,4 +152,19 @@ export const styles = StyleSheet.create({
     height: large ? 27 :22,
     borderRadius: large ? (27/2) : 11,
   }),
+
+  pointsGrowthContainer: {
+    position: 'absolute',
+    top: height * 0.22,
+    right: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 5,
+    borderTopRightRadius: 56 / 2,
+    borderBottomRightRadius: 56 / 2,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    maxWidth: 130,
+  },
 });

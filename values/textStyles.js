@@ -56,5 +56,14 @@ export const textStyles = StyleSheet.create({
     fontSize: size,
     color: colors.darkWithTone,
     
-  })
+  }),
+
+  pointsGrowthText: {
+    flexShrink: 1,
+    paddingHorizontal: 11,
+    fontFamily: fonts.normal,
+    fontSize: 40,
+    textAlign: 'center',
+    color: colors.treeBlues
+  }
 });

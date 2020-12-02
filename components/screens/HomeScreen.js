@@ -159,30 +159,11 @@ const GrowthPoints = () => {
     }, 1000);
   }, [])
 
-  return (<View style={{
-    position: 'absolute',
-    top: height * 0.22,
-    right: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 5,
-    borderTopRightRadius: 56 / 2,
-    borderBottomRightRadius: 56 / 2,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
-    maxWidth: 130,
-  }}>
+  return (<View style={styles.pointsGrowthContainer}>
     <Text 
     adjustsFontSizeToFit={true}
     numberOfLines={1}
-    style={{
-      flexShrink: 1,
-      paddingHorizontal: 11,
-      ...textStyles.normalOfSize(40),
-      textAlign: 'center',
-      color: colors.treeBlues
-    }} >{points}</Text>
+    style={textStyles.pointsGrowthText} >{points}</Text>
     <Image source={require("../../assets/images/growth_icon.png")} />
 
   </View>)
