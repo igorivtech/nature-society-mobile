@@ -23,11 +23,11 @@ import { PlaceRating } from "./PlaceScreen";
 import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 
-const BORDER_RADIUS = 15;
+export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
 const CARD_ASPECT_RATIO = 1.31;
 const INNER_BORDER_RADIUS = BORDER_RADIUS - CARD_PADDING;
-const EXIT_SIZE = 26;
+export const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
