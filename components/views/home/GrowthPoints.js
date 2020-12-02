@@ -21,22 +21,14 @@ const animation = {
   }
 }
 
-const opacityOff = {
+const opacity = (on) => ({
   0: {
-    opacity: 1,
+    opacity: on ? 0 : 1,
   },
   1: {
-    opacity: 0,
+    opacity: on ? 1 : 0,
   }
-}
-const opacityOn = {
-  0: {
-    opacity: 0,
-  },
-  1: {
-    opacity: 1,
-  }
-}
+})
 
 const TEXT_DURATION = 500;
 
@@ -48,12 +40,12 @@ export const GrowthPoints = () => {
   
     useEffect(()=>{
       setTimeout(() => {
-        textRef.current.animate(opacityOff, TEXT_DURATION).then(()=>{
+        textRef.current.animate(opacity(false), TEXT_DURATION).then(()=>{
           setPoints(100);
-          textRef.current.animate(opacityOn, TEXT_DURATION).then(()=>{
+          textRef.current.animate(opacity(true), TEXT_DURATION).then(()=>{
             setTimeout(() => {
               containerRef.current.animate(animation, 800);
-            }, 4000);
+            }, 2500);
           })
         })
       }, 2000);
