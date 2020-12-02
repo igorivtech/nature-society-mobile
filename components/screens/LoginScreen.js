@@ -43,11 +43,14 @@ export const LoginScreen = ({ navigation }) => {
           <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
           <Input
+            autoCapitalize='none'
+            keyboardType='email-address'
             title={strings.email}
             onChange={onEmailChanged}
             value={email}
           />
           <Input
+            autoCapitalize='none'
             title={strings.password}
             onChange={onPasswordChanged}
             value={password}
@@ -64,7 +67,7 @@ export const LoginScreen = ({ navigation }) => {
 const DURATION = 300;
 const TEXT_SCALE = 0.7;
 
-const Input = ({ title, value, onChange, secure = false }) => {
+const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, value, onChange, secure = false }) => {
   
   const textTranslateY = useRef(new Animated.Value(0)).current;
   const textTranslateX = useRef(new Animated.Value(0)).current;
@@ -99,7 +102,6 @@ const Input = ({ title, value, onChange, secure = false }) => {
   };
 
   const onFocus = () => {
-    console.log({pWidth: placeholderWidth.current});
     Animated.parallel([
       Animated.timing(textTranslateY, {
         duration: DURATION,
@@ -131,6 +133,8 @@ const Input = ({ title, value, onChange, secure = false }) => {
         {title}
       </Animated.Text>
       <TextInput
+        autoCapitalize={autoCapitalize}
+        keyboardType={keyboardType}
         onChangeText={onChange}
         secureTextEntry={secure}
         value={value}
