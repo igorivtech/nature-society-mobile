@@ -52,6 +52,25 @@ export const LoginScreen = ({ navigation }) => {
     }
   }, [keyboardHeight]);
 
+  const selectImage = async () => {
+    setLoadingImage(true);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      // allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 0.75,
+    });
+    // console.log(result);
+    if (!result.cancelled) {
+      setImage(result);
+    }
+    setLoadingImage(false);
+  };
+
+  const onSafeAreaLayout = (event) => {
+    setSafeAreaHeight(event.nativeEvent.layout.height);
+  }
+
   const onNameChanged = (value) => {
     setName(value);
   };
@@ -130,25 +149,6 @@ export const LoginScreen = ({ navigation }) => {
     }
   }
 
-  const selectImage = async () => {
-    setLoadingImage(true);
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // allowsEditing: true,
-      // aspect: [4, 3],
-      quality: 0.75,
-    });
-    // console.log(result);
-    if (!result.cancelled) {
-      setImage(result);
-    }
-    setLoadingImage(false);
-  };
-
-  const onSafeAreaLayout = (event) => {
-    setSafeAreaHeight(event.nativeEvent.layout.height);
-  }
-
   const restorePassword = () => {
     if (restoreEmail.length > 0) {
       setEmailSentVisible(true);
@@ -162,7 +162,8 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const changePassword = () => {
-    navigation.goBack();
+    setLoginPassword(newPassword);
+    login();
   }
 
   return (
