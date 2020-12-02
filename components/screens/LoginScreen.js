@@ -65,15 +65,17 @@ export const LoginScreen = ({ navigation }) => {
         <TapGestureHandler onHandlerStateChange={tapClose}>
           <View style={StyleSheet.absoluteFill} />
         </TapGestureHandler>
-        <LoginView
-          email={email}
-          onEmailChanged={onEmailChanged}
-          password={password}
-          onPasswordChanged={onPasswordChanged}
-          forgotPassword={forgotPassword}
-          login={login}
-          signup={signup}
-         />
+        <View>
+          <LoginView
+            email={email}
+            onEmailChanged={onEmailChanged}
+            password={password}
+            onPasswordChanged={onPasswordChanged}
+            forgotPassword={forgotPassword}
+            login={login}
+            signup={signup}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
