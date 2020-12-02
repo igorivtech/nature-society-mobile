@@ -4,6 +4,8 @@ import {
   SafeAreaView,
   Animated,
   Easing,
+  Image,
+  Text,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
@@ -11,11 +13,14 @@ import { styles } from "../../values/styles";
 import { height, DATA } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
+import { textStyles } from "../../values/textStyles";
+import { colors } from "../../values/colors";
 
 export const HomeScreen = ({ navigation, route }) => {
 
   const [places, setPlaces] = useState([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   const [hideList, setHideList] = useState(true);
+  const [points, setPoints] = useState(0);
   const firstTime = useRef(true);
 
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -137,7 +142,35 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
+
+        <GrowthPoints points={points} />
       </SafeAreaView>
     </View>
   );
 };
+
+
+const GrowthPoints = ({points}) => {
+  return (<View style={{
+    position: 'absolute',
+    top: height * 0.22,
+    right: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 5,
+    borderTopRightRadius: 56 / 2,
+    borderBottomRightRadius: 56 / 2,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8
+  }}>
+    <Text style={{
+      paddingHorizontal: 11,
+      ...textStyles.normalOfSize(40),
+      textAlign: 'center',
+      color: colors.treeBlues
+    }} >{points}</Text>
+    <Image source={require("../../assets/images/growth_icon.png")} />
+
+  </View>)
+}
