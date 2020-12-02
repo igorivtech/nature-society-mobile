@@ -16,8 +16,10 @@ export const LoginScreen = ({ navigation }) => {
   const [isLogin, setIsLogin] = useState(true);
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
   const [scrollEnabled, setScrollEnabled] = useState(false);
   
   const [keyboardHeight] = useKeyboard();
@@ -32,12 +34,20 @@ export const LoginScreen = ({ navigation }) => {
     setName(value);
   };
 
-  const onEmailChanged = (value) => {
-    setEmail(value);
+  const onLoginEmailChanged = (value) => {
+    setLoginEmail(value);
   };
 
-  const onPasswordChanged = (value) => {
-    setPassword(value);
+  const onLoginPasswordChanged = (value) => {
+    setLoginPassword(value);
+  };
+
+  const onSignupEmailChanged = (value) => {
+    setSignupEmail(value);
+  };
+
+  const onSignupPasswordChanged = (value) => {
+    setSignupPassword(value);
   };
 
   const goBack = () => {
@@ -84,10 +94,10 @@ export const LoginScreen = ({ navigation }) => {
 
           {isLogin ? (<LoginView
             visible={isLogin}
-            email={email}
-            onEmailChanged={onEmailChanged}
-            password={password}
-            onPasswordChanged={onPasswordChanged}
+            email={loginEmail}
+            onEmailChanged={onLoginEmailChanged}
+            password={loginPassword}
+            onPasswordChanged={onLoginPasswordChanged}
             forgotPassword={forgotPassword}
             login={login}
             signup={signup}
@@ -95,10 +105,10 @@ export const LoginScreen = ({ navigation }) => {
             visible={!isLogin}
             name={name}
             onNameChanged={onNameChanged}
-            email={email}
-            onEmailChanged={onEmailChanged}
-            password={password}
-            onPasswordChanged={onPasswordChanged}
+            email={signupEmail}
+            onEmailChanged={onSignupEmailChanged}
+            password={signupPassword}
+            onPasswordChanged={onSignupPasswordChanged}
             login={login}
             signup={signup}
           />)}
