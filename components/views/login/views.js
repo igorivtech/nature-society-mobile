@@ -115,7 +115,7 @@ export const SignupView = memo(
     }, [visible]);
 
     return (
-      <View style={styles.zPopup(visible)}>
+      <View style={styles.absolutePopup(visible)}>
         <Animated.View style={styles.cardContainer(opacity)}>
           <Text style={styles.loginTitle}>
             {strings.loginScreen.signupTitle}
@@ -222,9 +222,23 @@ const styles = StyleSheet.create({
     zIndex: visible ? 1 : -1,
   }),
 
-
-  zPopup: (visible) => ({
-    zIndex: visible ? 1 : -1,
+  cardContainer: (opacity) => ({
+    opacity: opacity,
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: 32,
+    paddingBottom: 24,
+    paddingHorizontal: 40,
+    width: width - 2 * 30,
+    backgroundColor: "white",
+    borderRadius: CARD_RADIUS,
+    shadowOffset: {
+      height: -4,
+      width: 0,
+    },
+    shadowColor: "rgba(0, 0, 0, 0.035)",
+    shadowRadius: 12,
+    shadowOpacity: 1,
   }),
 
   orText: {
@@ -262,24 +276,4 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  cardContainer: (opacity) => ({
-    opacity: opacity,
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 32,
-    paddingBottom: 24,
-    paddingHorizontal: 40,
-    //   width: width - 2 * 30,
-    width: "100%",
-    //   alignSelf: "center",
-    backgroundColor: "white",
-    borderRadius: CARD_RADIUS,
-    shadowOffset: {
-      height: -4,
-      width: 0,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.035)",
-    shadowRadius: 12,
-    shadowOpacity: 1,
-  }),
 });

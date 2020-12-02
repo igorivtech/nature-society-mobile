@@ -11,6 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { LoginView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
+import { height, width } from "../../values/consts";
 
 export const LoginScreen = ({ navigation }) => {
 
@@ -27,6 +28,7 @@ export const LoginScreen = ({ navigation }) => {
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [keyboardHeight] = useKeyboard();
   const [paddingBottom, setPaddingBottom] = useState(0);
+  const [safeAreaHeight, setSafeAreaHeight] = useState(height);
 
   const scrollRef = useRef();
 
@@ -112,13 +114,19 @@ export const LoginScreen = ({ navigation }) => {
     setLoadingImage(false);
   };
 
+  const onSafeAreaLayout = (event) => {
+    setSafeAreaHeight(event.nativeEvent.layout.height);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
-        <TapGestureHandler onHandlerStateChange={tapClose}>
-          <View style={StyleSheet.absoluteFill} />
-        </TapGestureHandler>
-        <View style={styles.popupsContainer}>
+      <ScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
+
+        <View style={styles.popupsContainer(safeAreaHeight)}>
+
+          <TapGestureHandler onHandlerStateChange={tapClose}>
+            <View style={StyleSheet.absoluteFill} />
+          </TapGestureHandler>
 
           <LoginView
             visible={isLogin}
@@ -166,8 +174,10 @@ const styles = StyleSheet.create({
     paddingBottom,
   }),
 
-  popupsContainer: {
+  popupsContainer: (height) => ({
+    height,
+    width: width,
+    alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'red'
-  }
+  })
 });
