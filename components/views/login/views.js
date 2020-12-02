@@ -114,6 +114,7 @@ export const ForgotPasswordView = memo(
             title={strings.email}
             onChange={onEmailChanged}
             value={email}
+            extraMargin={true}
           />
 
           <CoolButton
