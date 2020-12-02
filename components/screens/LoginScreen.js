@@ -36,6 +36,14 @@ export const LoginScreen = ({ navigation }) => {
     console.log("login");
   }
 
+  const signup = () => {
+    console.log("signup");
+  }
+
+  const forgotPassword = () => {
+    console.log("forgotPassword");
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -61,11 +69,31 @@ export const LoginScreen = ({ navigation }) => {
             ...textStyles.boldOfSize(24),
             color: 'white'
           }} title={strings.login} onPress={login} />
+
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            width: '100%'
+          }}>
+            
+            <SmallButton onPress={forgotPassword} title={strings.loginScreen.forgotPassword} />
+            <SmallButton onPress={signup} title={strings.loginScreen.signup} />
+
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+const SmallButton = ({title, onPress}) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <Text style={styles.smallButtonText}>{title}</Text>
+    </TouchableOpacity>
+  )
+}
 
 const DURATION = 300;
 const TEXT_SCALE = 0.7;
@@ -151,6 +179,15 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
 };
 
 const styles = StyleSheet.create({
+
+
+  smallButtonText: {
+    textDecorationLine: 'underline',
+    ...textStyles.normalOfSize(12),
+    textAlign: 'center',
+    color: colors.treeBlues
+  },
+
   textInput: {
     ...textStyles.normalOfSize(18),
     color: colors.treeBlues,
