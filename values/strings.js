@@ -4,6 +4,7 @@ export const strings = {
     fullName: 'שם מלא',
     password: 'סיסמה',
     login: 'התחברות',
+    logout: 'התנתקות',
     distanceFromYou: (distance) => {
         return `${distance} ק״מ ממך`
     },
@@ -48,10 +49,12 @@ export const strings = {
     loginScreen: {
         title: 'התחברות למדד הטבע',
         signupTitle: 'הרשמה למדד הטבע',
+        updateDetailsTitle: 'שינוי פרטים אישיים',
         login: 'התחברות',
         signup: 'הרשמה',
         forgotPassword: 'שכחתי סיסמה',
         finishSignup: 'סיום הרשמה',
+        updateDetails: 'עדכון שינויים',
         profilePic: 'תמונת פרופיל',
         restorePassword: 'שחזור סיסמה',
         restorePasswordButton: 'שחזר סיסמה',

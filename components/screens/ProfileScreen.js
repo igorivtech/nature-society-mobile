@@ -9,7 +9,7 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
-import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
+import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, ProfileView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
 
@@ -80,8 +80,8 @@ export const ProfileScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const updateChanged = () => {
-    console.log("updateChanged");
+  const updateChanges = () => {
+    console.log("updateChanges");
   }
 
   const logout = () => {
@@ -108,7 +108,7 @@ export const ProfileScreen = ({ navigation, route }) => {
             <View style={StyleSheet.absoluteFill} />
           </TapGestureHandler>
 
-          <SignupView
+          <ProfileView
             image={image}
             loadingImage={loadingImage}
             selectImage={selectImage}
@@ -117,10 +117,8 @@ export const ProfileScreen = ({ navigation, route }) => {
             onNameChanged={onNameChanged}
             email={signupEmail}
             onEmailChanged={onSignupEmailChanged}
-            password={signupPassword}
-            onPasswordChanged={onSignupPasswordChanged}
-            login={logout}
-            signup={updateChanged}
+            logout={logout}
+            updateChanges={updateChanges}
           />
 
         </View>

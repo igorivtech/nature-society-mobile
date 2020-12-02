@@ -288,6 +288,76 @@ export const SignupView = memo(
   }
 );
 
+export const ProfileView = memo(
+  ({
+    visible,
+    name,
+    onNameChanged,
+    email,
+    onEmailChanged,
+    logout,
+    updateChanges,
+    selectImage,
+    image,
+    loadingImage,
+  }) => {
+
+    const {opacity, scale} = useVisible(visible, 0);
+
+    return (
+      <View style={styles.absolutePopup(visible)}>
+        <Animated.View style={styles.cardContainer(opacity, scale)}>
+          <Text style={styles.loginTitle}>
+            {strings.loginScreen.updateDetailsTitle}
+          </Text>
+
+          <Input
+            title={strings.fullName}
+            onChange={onNameChanged}
+            value={name}
+          />
+
+          <Input
+            autoCapitalize="none"
+            keyboardType="email-address"
+            title={strings.email}
+            onChange={onEmailChanged}
+            value={email}
+          />
+
+          <View style={styles.profilePicContainer}>
+            <TouchableOpacity onPress={selectImage} style={styles.profilePicButton}>
+              {loadingImage ? (
+                <ActivityIndicator color={colors.treeBlues} />
+              ) : (
+                <Image source={require("../../../assets/images/upload_icon.png")} />
+              )}
+              {image ? (<Image style={styles.profilePic} source={{ uri: image.uri }} />) : null}
+            </TouchableOpacity>
+            <Text style={styles.profilePicTitle}>
+              {strings.loginScreen.profilePic}
+            </Text>
+          </View>
+
+          <CoolButton
+            textStyle={{
+              ...textStyles.boldOfSize(24),
+              color: "white",
+            }}
+            title={strings.loginScreen.updateDetails}
+            onPress={updateChanges}
+          />
+
+          <View style={styles.bottomButtonsSignupContainer}>
+            <Text style={styles.orText}>{strings.or}</Text>
+            <SmallButton onPress={logout} title={strings.logout} />
+          </View>
+        </Animated.View>
+      </View>
+    );
+  }
+);
+
 export const SmallButton = ({ title, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
