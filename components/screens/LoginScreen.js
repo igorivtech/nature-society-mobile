@@ -24,12 +24,14 @@ export const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [scrollEnabled, setScrollEnabled] = useState(false);
+  
   const [keyboardHeight] = useKeyboard();
   const [paddingBottom, setPaddingBottom] = useState(0);
 
   useEffect(() => {
     setPaddingBottom(keyboardHeight);
+    setScrollEnabled(keyboardHeight > 0);
   }, [keyboardHeight]);
 
   const onEmailChanged = (value) => {
@@ -68,7 +70,7 @@ export const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView(paddingBottom)}>
+      <ScrollView scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
         <TapGestureHandler onHandlerStateChange={tapClose}>
           <View style={StyleSheet.absoluteFill} />
         </TapGestureHandler>
