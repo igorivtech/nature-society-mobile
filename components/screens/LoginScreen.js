@@ -18,6 +18,12 @@ const scrollZero = {
   animated: true,
 }
 
+const yael = {
+  name: "יעל השכנה",
+  email: "yael@nextdoor",
+  image: "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png"
+}
+
 export const LoginScreen = ({ navigation }) => {
 
   const [loginVisible, setLoginVisible] = useState(true);
@@ -108,7 +114,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const login = () => {
     if (loginVisible) {
-      console.log("login");
+      navigation.navigate("Progress", { user: yael});
     } else {
       setLoginVisible(true);
       setSignupVisible(false);
@@ -119,7 +125,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const signup = () => {
     if (signupVisible) {
-      console.log("signup");
+      navigation.navigate("Progress", { user: yael});
     } else {
       setSignupVisible(true);
       setLoginVisible(false);

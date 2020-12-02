@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity } from "react-native";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import {EXIT_SIZE} from "../screens/ExploreScreen";
 
-export const ProgressScreen = ({navigation}) => {
+export const ProgressScreen = ({navigation, route}) => {
 
-  // const [user, setUser] = useState(null);
-  const [user, setUser] = useState({
-    name: "יעל השכנה",
-    email: "yael@nextdoor",
-    image: "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png"
-  });
+  const [user, setUser] = useState(null);
+
+  useEffect(()=>{
+    console.log({p: route.params});
+    if (route.params && route.params.user !== null) {
+      setUser(route.params.user);
+    }
+  }, [route])
 
   const goBack = () => {
     navigation.goBack();
