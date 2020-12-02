@@ -16,7 +16,7 @@ import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
 import { CARD_RADIUS, width } from "../../../values/consts";
 
-const CARD_ANIMATION_DURATION = 600;
+const CARD_ANIMATION_DURATION = 400;
 
 export const LoginView = memo(
   ({
@@ -31,19 +31,26 @@ export const LoginView = memo(
   }) => {
 
     const opacity = useRef(new Animated.Value(1)).current;
+    const scale = useRef(new Animated.Value(1)).current;
 
     useEffect(()=>{
       Animated.timing(opacity, {
         toValue: visible ? 1 : 0,
         useNativeDriver: true,
-        duration: CARD_ANIMATION_DURATION,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+      Animated.timing(scale, {
+        toValue: visible ? 1 : 0.8,
+        useNativeDriver: true,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
         timing: Easing.inOut(Easing.ease)
       }).start();
     }, [visible]);
 
     return (
       <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity)}>
+        <Animated.View style={styles.cardContainer(opacity, scale)}>
           <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
           <Input
@@ -93,19 +100,26 @@ export const ForgotPasswordView = memo(
   }) => {
 
     const opacity = useRef(new Animated.Value(0)).current;
+    const scale = useRef(new Animated.Value(0)).current;
 
     useEffect(()=>{
       Animated.timing(opacity, {
         toValue: visible ? 1 : 0,
         useNativeDriver: true,
-        duration: CARD_ANIMATION_DURATION,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+      Animated.timing(scale, {
+        toValue: visible ? 1 : 0.8,
+        useNativeDriver: true,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
         timing: Easing.inOut(Easing.ease)
       }).start();
     }, [visible]);
 
     return (
       <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity)}>
+        <Animated.View style={styles.cardContainer(opacity, scale)}>
           <Text style={styles.loginTitle}>{strings.loginScreen.restorePassword}</Text>
 
           <Input
@@ -139,19 +153,26 @@ export const EmailSentView = memo(
   }) => {
 
     const opacity = useRef(new Animated.Value(0)).current;
+    const scale = useRef(new Animated.Value(0)).current;
 
     useEffect(()=>{
       Animated.timing(opacity, {
         toValue: visible ? 1 : 0,
         useNativeDriver: true,
-        duration: CARD_ANIMATION_DURATION,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+      Animated.timing(scale, {
+        toValue: visible ? 1 : 0.8,
+        useNativeDriver: true,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
         timing: Easing.inOut(Easing.ease)
       }).start();
     }, [visible]);
 
     return (
       <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity)}>
+        <Animated.View style={styles.cardContainer(opacity, scale)}>
           <Text style={styles.emailSentTitle}>{strings.loginScreen.restorePassword}</Text>
 
           <Text style={styles.emailSentDesc}>{strings.loginScreen.emailSentDesc}</Text>
@@ -191,19 +212,26 @@ export const SignupView = memo(
   }) => {
 
     const opacity = useRef(new Animated.Value(0)).current;
+    const scale = useRef(new Animated.Value(0)).current;
 
     useEffect(()=>{
       Animated.timing(opacity, {
         toValue: visible ? 1 : 0,
         useNativeDriver: true,
-        duration: CARD_ANIMATION_DURATION,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+      Animated.timing(scale, {
+        toValue: visible ? 1 : 0.8,
+        useNativeDriver: true,
+        duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION*0.8,
         timing: Easing.inOut(Easing.ease)
       }).start();
     }, [visible]);
 
     return (
       <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity)}>
+        <Animated.View style={styles.cardContainer(opacity, scale)}>
           <Text style={styles.loginTitle}>
             {strings.loginScreen.signupTitle}
           </Text>
@@ -309,7 +337,8 @@ const styles = StyleSheet.create({
     zIndex: visible ? 1 : -1,
   }),
 
-  cardContainer: (opacity) => ({
+  cardContainer: (opacity, scale) => ({
+    transform: [{scale}],
     opacity: opacity,
     alignItems: "center",
     justifyContent: "space-between",
