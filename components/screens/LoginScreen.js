@@ -151,16 +151,7 @@ export const LoginScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-
-  scrollView: (paddingBottom) => ({
-    justifyContent: "center",
-    flexGrow: 1,
-    paddingBottom,
-    alignItems: 'center',
-    paddingHorizontal: 30
-  }),
-
+const styles = StyleSheet.create({ 
   container: {
     flex: 1,
     backgroundColor: colors.grass,
@@ -168,7 +159,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  scrollView: (paddingBottom) => ({
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: "center",
+    paddingBottom,
+  }),
+
   popupsContainer: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    // backgroundColor: 'red'
   }
 });
