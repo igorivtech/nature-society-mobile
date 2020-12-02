@@ -16,17 +16,16 @@ import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 
 export const LoginScreen = ({ navigation }) => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const onEmailChanged = (value) => {
-    setEmail(value)
-  }
+    setEmail(value);
+  };
 
   const onPasswordChanged = (value) => {
-    setPassword(value)
-  }
+    setPassword(value);
+  };
 
   const goBack = () => {
     navigation.goBack();
@@ -38,11 +37,19 @@ export const LoginScreen = ({ navigation }) => {
         <View style={styles.cardContainer}>
           <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
-          <Input title={strings.email} onChange={onEmailChanged} value={email} />
-          <Input title={strings.password} onChange={onPasswordChanged} value={password} secure={true} />
+          <Input
+            title={strings.email}
+            onChange={onEmailChanged}
+            value={email}
+          />
+          <Input
+            title={strings.password}
+            onChange={onPasswordChanged}
+            value={password}
+            secure={true}
+          />
         </View>
       </ScrollView>
-      
     </SafeAreaView>
   );
 };
@@ -50,7 +57,6 @@ export const LoginScreen = ({ navigation }) => {
 const DURATION = 300;
 
 const Input = ({ title, value, onChange, secure = false }) => {
-  
   const textTranslateY = useRef(new Animated.Value(0)).current;
   const textScale = useRef(new Animated.Value(1)).current;
 
@@ -93,29 +99,8 @@ const Input = ({ title, value, onChange, secure = false }) => {
   };
 
   return (
-    <View
-      style={{
-        width: "100%",
-        paddingTop: 16,
-        borderBottomColor: colors.treeBlues,
-        borderBottomWidth: 1,
-        paddingBottom: 4,
-      }}
-    >
-      <Animated.Text
-        style={{
-          transform: [
-            {translateY: textTranslateY},
-            {scale: textScale},
-          ],
-          position: "absolute",
-          right: 4,
-          bottom: 4,
-          ...textStyles.normalOfSize(18),
-          color: colors.treeBlues,
-          textDecorationLine: "underline",
-        }}
-      >
+    <View style={styles.animatedTextContainer}>
+      <Animated.Text style={styles.animatedText(textTranslateY, textScale)}>
         {title}
       </Animated.Text>
       <TextInput
@@ -124,12 +109,7 @@ const Input = ({ title, value, onChange, secure = false }) => {
         value={value}
         onBlur={onBlur}
         onFocus={onFocus}
-        style={{
-          //   backgroundColor: "red",
-          ...textStyles.normalOfSize(18),
-          color: colors.treeBlues,
-          textDecorationLine: "underline",
-        }}
+        style={styles.textInput}
         selectionColor={colors.desertRock}
       />
     </View>
@@ -137,10 +117,33 @@ const Input = ({ title, value, onChange, secure = false }) => {
 };
 
 const styles = StyleSheet.create({
+  textInput: {
+    //   backgroundColor: "red",
+    ...textStyles.normalOfSize(18),
+    color: colors.treeBlues,
+  },
+
+  animatedText: (textTranslateY, textScale) => ({
+    transform: [{ translateY: textTranslateY }, { scale: textScale }],
+    position: "absolute",
+    right: 4,
+    bottom: 4,
+    ...textStyles.normalOfSize(18),
+    color: colors.treeBlues,
+    textDecorationLine: "underline",
+  }),
+
+  animatedTextContainer: {
+    width: "100%",
+    paddingTop: 16,
+    borderBottomColor: colors.treeBlues,
+    borderBottomWidth: 1,
+    paddingBottom: 4,
+  },
 
   scrollView: {
-    justifyContent: 'center',
-    flexGrow: 1
+    justifyContent: "center",
+    flexGrow: 1,
   },
 
   loginTitle: {
