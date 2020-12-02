@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -28,9 +28,19 @@ export const LoginScreen = ({ navigation }) => {
   const [keyboardHeight] = useKeyboard();
   const [paddingBottom, setPaddingBottom] = useState(0);
 
+  const scrollRef = useRef();
+
+  const scrollZero = {
+    y: 0,
+    animated: true,
+}
+
   useEffect(() => {
     setPaddingBottom(keyboardHeight);
     setScrollEnabled(keyboardHeight > 0);
+    if (keyboardHeight === 0) {
+      scrollRef.current.scrollTo(scrollZero);
+    }
   }, [keyboardHeight]);
 
   const onNameChanged = (value) => {
@@ -104,7 +114,7 @@ export const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
+      <ScrollView ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
         <TapGestureHandler onHandlerStateChange={tapClose}>
           <View style={StyleSheet.absoluteFill} />
         </TapGestureHandler>
