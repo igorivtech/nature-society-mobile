@@ -20,7 +20,6 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const [places, setPlaces] = useState([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   const [hideList, setHideList] = useState(true);
-  const [points, setPoints] = useState(0);
   const firstTime = useRef(true);
 
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -143,14 +142,23 @@ export const HomeScreen = ({ navigation, route }) => {
           }}
         />
 
-        <GrowthPoints points={points} />
+        <GrowthPoints />
       </SafeAreaView>
     </View>
   );
 };
 
 
-const GrowthPoints = ({points}) => {
+const GrowthPoints = () => {
+
+  const [points, setPoints] = useState(0);
+
+  useEffect(()=>{
+    setTimeout(() => {
+      setPoints(100);
+    }, 1000);
+  }, [])
+
   return (<View style={{
     position: 'absolute',
     top: height * 0.22,
@@ -162,9 +170,14 @@ const GrowthPoints = ({points}) => {
     borderTopRightRadius: 56 / 2,
     borderBottomRightRadius: 56 / 2,
     borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8
+    borderBottomLeftRadius: 8,
+    maxWidth: 130,
   }}>
-    <Text style={{
+    <Text 
+    adjustsFontSizeToFit={true}
+    numberOfLines={1}
+    style={{
+      flexShrink: 1,
       paddingHorizontal: 11,
       ...textStyles.normalOfSize(40),
       textAlign: 'center',
