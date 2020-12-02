@@ -19,7 +19,7 @@ export const LoginView = memo(({
   signup,
 }) => {
   return (
-    <View>
+    <View style={styles.absolutePopup(visible)}>
       <Animatable.View animation={visible ? 'fadeIn' : 'fadeOut'} style={styles.cardContainer}>
         <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
@@ -120,6 +120,12 @@ export const SmallButton = ({ title, onPress }) => {
 };
 
 const styles = StyleSheet.create({
+
+  absolutePopup: (visible) => ({
+    position: 'absolute',
+    zIndex: visible ? 1 : -1
+  }),
+
   orText: {
     marginTop: 12,
     marginBottom: 8,

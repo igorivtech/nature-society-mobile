@@ -90,7 +90,7 @@ export const LoginScreen = ({ navigation }) => {
         <TapGestureHandler onHandlerStateChange={tapClose}>
           <View style={StyleSheet.absoluteFill} />
         </TapGestureHandler>
-        <View>
+        <View style={styles.popupsContainer}>
 
           <LoginView
             visible={isLogin}
@@ -136,4 +136,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  popupsContainer: {
+    justifyContent: 'center'
+  }
 });
