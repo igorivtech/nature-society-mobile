@@ -52,5 +52,6 @@ export const strings = {
         signup: 'הרשמה',
         forgotPassword: 'שכחתי סיסמה',
         finishSignup: 'סיום הרשמה',
+        profilePic: 'תמונת פרופיל'
     }
 }

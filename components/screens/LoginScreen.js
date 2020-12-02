@@ -10,6 +10,7 @@ import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { LoginView, SignupView } from "../views/login/views";
+import * as ImagePicker from 'expo-image-picker';
 
 export const LoginScreen = ({ navigation }) => {
 
@@ -20,8 +21,9 @@ export const LoginScreen = ({ navigation }) => {
   const [loginPassword, setLoginPassword] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
-  const [scrollEnabled, setScrollEnabled] = useState(false);
+  const [image, setImage] = useState(null);
   
+  const [scrollEnabled, setScrollEnabled] = useState(false);
   const [keyboardHeight] = useKeyboard();
   const [paddingBottom, setPaddingBottom] = useState(0);
 
@@ -84,6 +86,10 @@ export const LoginScreen = ({ navigation }) => {
     }
   }
 
+  const selectImage = () => {
+    console.log("selectImage");
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
@@ -103,6 +109,7 @@ export const LoginScreen = ({ navigation }) => {
             signup={signup}
           />
           <SignupView
+            selectImage={selectImage}
             visible={!isLogin}
             name={name}
             onNameChanged={onNameChanged}

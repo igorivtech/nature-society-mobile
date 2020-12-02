@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
@@ -70,6 +70,7 @@ export const SignupView = memo(({
   onPasswordChanged,
   login,
   signup,
+  selectImage
 }) => {
   return (
     <View>
@@ -92,6 +93,34 @@ export const SignupView = memo(({
           value={password}
           secure={true}
         />
+
+         <View style={{
+          marginBottom: 44,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          alignSelf: 'stretch'
+        }}>
+
+          <TouchableOpacity onPress={selectImage} style={{
+            height: 111,
+            width: 111,
+            borderRadius: 111/2,
+            borderWidth: 1,
+            borderColor: colors.treeBlues,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Image source={require("../../../assets/images/upload_icon.png")} />
+          </TouchableOpacity>
+
+          <Text style={{
+            ...textStyles.normalOfSize(18),
+            textAlign: 'center',
+            color: colors.treeBlues
+          }}>{strings.loginScreen.profilePic}</Text>
+
+        </View>
 
         <CoolButton
           textStyle={{
