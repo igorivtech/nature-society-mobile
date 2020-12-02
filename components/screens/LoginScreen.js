@@ -79,8 +79,6 @@ export const LoginScreen = ({ navigation }) => {
   );
 };
 
-
-
 const styles = StyleSheet.create({
 
   scrollView: (paddingBottom) => ({
