@@ -10,9 +10,12 @@ export const ProgressScreen = ({navigation, route}) => {
   const [user, setUser] = useState(null);
 
   useEffect(()=>{
-    console.log({p: route.params});
-    if (route.params && route.params.user !== null) {
-      setUser(route.params.user);
+    if (route.params !== null) {
+      if (route.params.user !== null) {
+        setUser(route.params.user);
+      } else if (route.params.logout) {
+        setUser(null);
+      }
     }
   }, [route])
 
