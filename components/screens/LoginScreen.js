@@ -58,6 +58,7 @@ export const LoginScreen = ({ navigation }) => {
             value={email}
           />
           <Input
+            extraMargin={true}
             autoCapitalize='none'
             title={strings.password}
             onChange={onPasswordChanged}
@@ -91,7 +92,7 @@ const SmallButton = ({title, onPress}) => {
 const DURATION = 300;
 const TEXT_SCALE = 0.7;
 
-const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, value, onChange, secure = false }) => {
+const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, value, onChange, secure = false, extraMargin = false }) => {
   
   const textTranslateY = useRef(new Animated.Value(0)).current;
   const textTranslateX = useRef(new Animated.Value(0)).current;
@@ -150,7 +151,7 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
   };
 
   return (
-    <View style={styles.animatedTextContainer}>
+    <View style={styles.animatedTextContainer(extraMargin ? 64 : 32)}>
       <Animated.Text onLayout={(e) => {
         placeholderWidth.current = e.nativeEvent.layout.width;
         placeholderHeight.current = e.nativeEvent.layout.height;
@@ -204,13 +205,14 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   }),
 
-  animatedTextContainer: {
+  animatedTextContainer: (marginBottom) => ({
     width: "100%",
     paddingTop: 16,
     borderBottomColor: colors.treeBlues,
     borderBottomWidth: 1,
     paddingBottom: 4,
-  },
+    marginBottom,
+  }),
 
   scrollView: {
     justifyContent: "center",
@@ -218,6 +220,7 @@ const styles = StyleSheet.create({
   },
 
   loginTitle: {
+    marginBottom: 38,
     ...textStyles.boldOfSize(24),
     color: colors.treeBlues,
     textAlign: "right",
@@ -232,7 +235,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     width: width - 2 * 30,
     alignSelf: "center",
-    aspectRatio: 1 / 1.1,
     backgroundColor: "white",
     borderRadius: CARD_RADIUS,
     shadowOffset: {
