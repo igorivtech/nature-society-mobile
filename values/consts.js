@@ -8,6 +8,8 @@ export const NAV_DURATION_CLOSE = 400;
 
 export const NAV_CLOSE_TAP_SIZE = 64;
 
+export const CARD_RADIUS = 24;
+
 export const recentVisitors = [
   {name: "איגור", role: "לקט", image: "https://yt3.ggpht.com/ytc/AAUvwngMp380bo6VdFqO0Y81qDqJKsedWvTosxGAAZwp=s900-c-k-c0x00ffffff-no-rj"},
   {name: "יואב", role: "צייד", image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"},
