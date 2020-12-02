@@ -132,6 +132,7 @@ export const LoginScreen = ({ navigation }) => {
     if (forgotPasswordVisible) {
       console.log("forgotPassword");
     } else {
+      setRestoreEmail(loginEmail);
       setForgotPasswordVisible(true);
       setLoginVisible(false);
       setSignupVisible(false);
