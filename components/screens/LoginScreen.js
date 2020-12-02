@@ -162,6 +162,7 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const changePassword = () => {
+    setLoginEmail(restoreEmail);
     setLoginPassword(newPassword);
     login();
   }
