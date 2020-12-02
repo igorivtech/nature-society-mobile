@@ -1,4 +1,6 @@
 export const strings = {
+    email: 'אימייל',
+    password: 'סיסמה',
     distanceFromYou: (distance) => {
         return `${distance} ק״מ ממך`
     },
@@ -41,6 +43,9 @@ export const strings = {
         logout: 'התנתקות',
     },
     loginScreen: {
-        title: 'התחברות למדד הטבע'
+        title: 'התחברות למדד הטבע',
+        login: 'התחברות',
+        signup: 'הרשמה',
+        forgotPassword: 'שכחתי סיסמא'
     }
 }
