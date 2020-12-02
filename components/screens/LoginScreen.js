@@ -133,6 +133,7 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
         {title}
       </Animated.Text>
       <TextInput
+        underlineColorAndroid={colors.clear}
         autoCapitalize={autoCapitalize}
         keyboardType={keyboardType}
         onChangeText={onChange}
