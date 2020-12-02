@@ -112,13 +112,9 @@ export const LoginScreen = ({ navigation }) => {
     }
   };
 
-  const finishLogin = () => {
-    navigation.navigate("Progress", { user: yael});
-  };
-
   const login = () => {
     if (loginVisible) {
-      finishLogin();
+      navigation.navigate("Progress", { user: yael });
     } else {
       setLoginVisible(true);
       setSignupVisible(false);
@@ -129,7 +125,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const signup = () => {
     if (signupVisible) {
-      finishLogin();
+      navigation.navigate("Progress", { user: yael });
     } else {
       setSignupVisible(true);
       setLoginVisible(false);
