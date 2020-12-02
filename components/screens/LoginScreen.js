@@ -70,16 +70,9 @@ export const LoginScreen = ({ navigation }) => {
             color: 'white'
           }} title={strings.login} onPress={login} />
 
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            width: '100%'
-          }}>
-            
+          <View style={styles.bottomButtonsContainer}>
             <SmallButton onPress={forgotPassword} title={strings.loginScreen.forgotPassword} />
             <SmallButton onPress={signup} title={strings.loginScreen.signup} />
-
           </View>
         </View>
       </ScrollView>
@@ -180,6 +173,12 @@ const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, valu
 
 const styles = StyleSheet.create({
 
+  bottomButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: '100%'
+  },
 
   smallButtonText: {
     textDecorationLine: 'underline',
