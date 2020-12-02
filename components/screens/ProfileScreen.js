@@ -21,7 +21,6 @@ const scrollZero = {
 export const ProfileScreen = ({ navigation, route }) => {
 
   const {user} = route.params;
-  console.log({user});    
 
   const [name, setName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
