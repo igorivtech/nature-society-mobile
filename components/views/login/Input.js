@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   
     animatedTextContainer: (marginBottom) => ({
       width: "100%",
-      paddingTop: 16,
+      paddingTop: 8,
       borderBottomColor: colors.treeBlues,
       borderBottomWidth: 1,
       paddingBottom: 4,
