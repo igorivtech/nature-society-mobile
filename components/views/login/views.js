@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
 
   profilePic: {
     position: "absolute",
-    backgroundColor: "red",
+    backgroundColor: "white",
     width: INNER_PIC_SIZE,
     height: INNER_PIC_SIZE,
     overflow: "hidden",

@@ -36,6 +36,21 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   const scrollRef = useRef();
 
+  useEffect(()=>{
+    console.log({user});
+    if (user.name) {
+      setName(user.name);
+    }
+    if (user.email) {
+      setSignupEmail(user.email);
+    }
+    if (user.image) {
+      setImage({
+        uri: user.image
+      })
+    }
+  }, [])
+
   useEffect(() => {
     setPaddingBottom(keyboardHeight);
     setScrollEnabled(keyboardHeight > 0);
