@@ -99,7 +99,6 @@ export const LoginScreen = ({ navigation }) => {
             onEmailChanged={onEmailChanged}
             password={password}
             onPasswordChanged={onPasswordChanged}
-            forgotPassword={forgotPassword}
             login={login}
             signup={signup}
           />)}

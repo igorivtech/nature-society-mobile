@@ -68,7 +68,6 @@ export const SignupView = ({
   onEmailChanged,
   password,
   onPasswordChanged,
-  forgotPassword,
   login,
   signup,
 }) => {
@@ -87,7 +86,6 @@ export const SignupView = ({
           value={email}
         />
         <Input
-          extraMargin={true}
           autoCapitalize="none"
           title={strings.password}
           onChange={onPasswordChanged}
