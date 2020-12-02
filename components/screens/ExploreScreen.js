@@ -317,6 +317,7 @@ const styles = StyleSheet.create({
   searchInput: {
     paddingHorizontal: 8,
     flexGrow: 1,
+    flexShrink: 1,
     textAlign: "right",
     ...textStyles.normalOfSize(24),
     color: colors.treeBlues,
