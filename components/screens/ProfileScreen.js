@@ -50,10 +50,17 @@ export const ProfileScreen = ({ navigation, route }) => {
   }, [])
 
   useEffect(() => {
-    setPaddingBottom(keyboardHeight);
+    setPaddingBottom(Math.max(keyboardHeight - 100, 0));
     setScrollEnabled(keyboardHeight > 0);
     if (keyboardHeight === 0) {
       scrollRef.current.scrollTo(scrollZero);
+    } else {
+      setTimeout(() => {
+        scrollRef.current.scrollTo({
+          y: height*0.15,
+          animated: true,
+        });  
+      }, 100);
     }
   }, [keyboardHeight]);
 
