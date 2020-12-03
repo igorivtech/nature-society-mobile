@@ -36,7 +36,6 @@ export const ProfileScreen = ({ navigation, route }) => {
   const scrollRef = useRef();
 
   useEffect(()=>{
-    console.log({user});
     if (user.name) {
       setName(user.name);
     }
