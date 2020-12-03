@@ -184,9 +184,11 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const changePassword = () => {
-    setLoginEmail(restoreEmail);
-    setLoginPassword(newPassword);
-    login();
+    if (newPassword.length > 0) {
+      setLoginEmail(restoreEmail);
+      setLoginPassword(newPassword);
+      login();
+    }
   }
 
   return (
