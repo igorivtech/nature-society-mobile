@@ -21,6 +21,7 @@ const pathPadding = 0;
 export const ProgressScreen = ({ navigation, route }) => {
   const [user, setUser] = useState(null);
   const [pathHeight, setPathHeight] = useState(0);
+  const [pathWidth, setPathWidth] = useState(0);
 
   useEffect(() => {
     if (route.params) {
@@ -53,11 +54,22 @@ export const ProgressScreen = ({ navigation, route }) => {
       <SafeAreaView />
 
       <View style={styles.progressScreenContainer}>
-        
-        <ScrollView onLayout={(e)=>setPathHeight(e.nativeEvent.layout.height)} style={styles.scrollView}>
-          <PathSegment pathHeight={pathHeight} />
+        <ScrollView
+          onLayout={(e) => {
+            setPathHeight(e.nativeEvent.layout.height);
+            setPathWidth(e.nativeEvent.layout.width);
+          }}
+          style={styles.scrollView}
+        >
+          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
         </ScrollView>
-        
+
         <TouchableOpacity
           onPress={loginLogout}
           style={styles.bottomButtonContainer}
@@ -77,17 +89,10 @@ export const ProgressScreen = ({ navigation, route }) => {
   );
 };
 
-const PathSegment = ({pathHeight}) => {
-  const [pathWidth, setPathWidth] = useState(0);
+const PathSegment = ({ pathHeight, pathWidth }) => {
 
   return (
-    <View
-      onLayout={(e) => {
-        const { height, width } = e.nativeEvent.layout;
-        setPathWidth(width);
-      }}
-      style={styles.pathContainer(pathHeight)}
-    >
+    <View style={styles.pathContainer(pathHeight)}>
       <Svg>
         {pathHeight > 0 ? (
           <Path
@@ -104,10 +109,9 @@ const PathSegment = ({pathHeight}) => {
 };
 
 const styles = StyleSheet.create({
-
   scrollView: {
     flex: 1,
-    width: '100%',  
+    width: "100%",
   },
 
   pathContainer: (height) => ({
