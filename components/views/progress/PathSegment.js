@@ -6,16 +6,18 @@ import {
   Animated,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { height } from "../../../values/consts";
 var path = require("svg-path-properties");
 
 const pathPadding = 0;
 const xTranslate = -50;
-const animationPadding = 250;
+const animationPadding = height * 0.4;
+const animationCenterExtra = 70;
 
 export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight, pathWidth }) => {
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
 
-    const topMarkerPosition = 0.2;
+    const topMarkerPosition = 0.15;
     const userProgress = 0.5;
     const bottomMarkerPosition = 0.8;
 
@@ -36,9 +38,9 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
 
     const inputRange = pathHeight > 0 ? [
       (index - 1) * pathHeight + animationPadding, 
-      index * pathHeight - 100, 
+      index * pathHeight - animationCenterExtra, 
       index * pathHeight, 
-      index * pathHeight + 100, 
+      index * pathHeight + animationCenterExtra, 
       (index + 1) * pathHeight - animationPadding
     ] : [0, 0, 0, 0, 0]
 
