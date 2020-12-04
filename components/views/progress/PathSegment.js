@@ -113,13 +113,26 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
             <Image style={styles.marker} ref={markerBigRef} source={markerImage} />
           </View>
         )}
-      
+
+        {pathWidth*pathHeight > 0 && (
+          <Image style={styles.trees(pathHeight, pathWidth)} source={require("../../../assets/images/trees.png")} />
+        )}
+        
       </View>
     );
   }
 );
 
+// trees - 52 × 82
+
 const styles = StyleSheet.create({
+
+  trees: (pathHeight, pathWidth) => ({
+    position: 'absolute',
+    top: pathHeight/2,
+    left: pathWidth / 2 + 52/2
+  }),
+
   marker: {
     position: "absolute",
   },
