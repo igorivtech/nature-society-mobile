@@ -40,7 +40,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
           left: x,
           transform: [
             { translateY: -markerHeight },
-            { translateX: (-markerWidth / 2) + 4  + xTranslate},
+            { translateX: (-markerWidth / 2) + 4 },
           ],
         });
       }
@@ -55,7 +55,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
           left: pSmall.x,
           transform: [
             { translateY: -(current ? 34 : done ? 76 : 34) / 2 },
-            { translateX: -(current ? 34 : done ? 76 : 34) / 2 + xTranslate},
+            { translateX: -(current ? 34 : done ? 76 : 34) / 2 },
           ],
         });
         // big
@@ -65,7 +65,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
           left: pBig.x,
           transform: [
             { translateY: -(current ? 76 : done ? 76 : 34) / 2 },
-            { translateX: -(current ? 76 : done ? 76 : 34) / 2 + xTranslate},
+            { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
           ],
         });
       }
@@ -95,7 +95,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
         )}
 
         {current ? (
-          <View style={StyleSheet.absoluteFill}>
+          <View style={{...StyleSheet.absoluteFill, ...styles.pathTranslate}}>
             <Image
               style={styles.marker}
               onLayout={(e) => {
@@ -109,7 +109,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
             <Image style={styles.marker} ref={markerBigRef} source={require("../../../assets/images/path_marker_big.png")} />
           </View>
         ) : (
-          <View style={StyleSheet.absoluteFill}>
+          <View style={{...StyleSheet.absoluteFill, ...styles.pathTranslate}}>
             <Image style={styles.marker} ref={markerSmallRef} source={markerImage} />
             <Image style={styles.marker} ref={markerBigRef} source={markerImage} />
           </View>
