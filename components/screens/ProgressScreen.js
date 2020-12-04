@@ -100,8 +100,8 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
               M${pathWidth / 2},0
               C${pathWidth - pathPadding},${pathHeight * 0.25}
               ${pathPadding},${pathHeight * 0.75}
-              ${pathWidth / 2},${pathHeight}`
-            }
+              ${pathWidth / 2},${pathHeight}
+            `}
             stroke="black"
             strokeWidth={1}
           />
