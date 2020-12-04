@@ -126,10 +126,12 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
           />
         ) : null}
       </Svg>
-      <Image onLayout={(e)=>{
-        setMarkerHeight(e.nativeEvent.layout.height);
-        setMarkerWidth(e.nativeEvent.layout.width);
-      }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
+        {pathHeight > 0 ? (
+          <Image onLayout={(e)=>{
+          setMarkerHeight(e.nativeEvent.layout.height);
+          setMarkerWidth(e.nativeEvent.layout.width);
+        }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
+      ) : null}
     </View>
   );
 };
