@@ -52,25 +52,14 @@ export const ProgressScreen = ({navigation, route}) => {
           const {height, width} = e.nativeEvent.layout;
           setPathHeight(height);
           setPathWidth(width)
-        }} style={{
-          flex: 1,
-          width: '100%',
-          margin: 32,
-          
-          // padding
-          backgroundColor: 'cyan'
-        }}>
-          <Svg style={{
-            ...StyleSheet.absoluteFill,
-            backgroundColor: 'red',
-          }}>
+        }} style={styles.pathContainer}>
+          <Svg>
             {pathHeight > 0 ? (
-              <Path 
-              d={`M${pathWidth/2},0 C${pathWidth-pathPadding},${pathHeight*0.25} ${pathPadding},${pathHeight*0.75} ${pathWidth/2},${pathHeight}`}
-              fill="none"
-              stroke="black"
-              strokeWidth={2}
-             />
+              <Path
+                d={`M${pathWidth/2},0 C${pathWidth-50},${pathHeight*0.25} ${0},${pathHeight*0.75} ${pathWidth/2},${pathHeight}`}
+                stroke="black"
+                strokeWidth={1}
+              />
             ) : null}
             
           </Svg>
@@ -91,6 +80,11 @@ export const ProgressScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+
+  pathContainer: {
+    flex: 1,
+    width: '100%'
+  },
 
   bottomButtonContainer: {
     bottom: 16,
