@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
-import {EXIT_SIZE} from "../screens/ExploreScreen";
+import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { height, width } from "../../values/consts";
-import Svg, {Path} from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 const pathPadding = 0;
 
-export const ProgressScreen = ({navigation, route}) => {
-
+export const ProgressScreen = ({ navigation, route }) => {
   const [user, setUser] = useState(null);
-  const [pathWidth, setPathWidth] = useState(0);
-  const [pathHeight, setPathHeight] = useState(0);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (route.params) {
       if (route.params.user !== null) {
         setUser(route.params.user);
@@ -23,7 +28,7 @@ export const ProgressScreen = ({navigation, route}) => {
         setUser(null);
       }
     }
-  }, [route])
+  }, [route]);
 
   const goBack = () => {
     navigation.goBack();
@@ -31,15 +36,14 @@ export const ProgressScreen = ({navigation, route}) => {
 
   const loginLogout = () => {
     if (user === null) {
-      navigation.navigate('Login');
+      navigation.navigate("Login");
     } else {
-      navigation.navigate('Profile', { user });
+      navigation.navigate("Profile", { user });
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
-
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
@@ -47,63 +51,80 @@ export const ProgressScreen = ({navigation, route}) => {
       <SafeAreaView />
 
       <View style={styles.progressScreenContainer}>
-
-        <View onLayout={(e)=>{
-          const {height, width} = e.nativeEvent.layout;
-          setPathHeight(height);
-          setPathWidth(width)
-        }} style={styles.pathContainer}>
-          <Svg>
-            {pathHeight > 0 ? (
-              <Path
-                d={`M${pathWidth/2},0 C${pathWidth-50},${pathHeight*0.25} ${0},${pathHeight*0.75} ${pathWidth/2},${pathHeight}`}
-                stroke="black"
-                strokeWidth={1}
-              />
-            ) : null}
-            
-          </Svg>
-        </View>
-
-        <TouchableOpacity onPress={loginLogout} style={styles.bottomButtonContainer}>
+        
+        <PathSegment />
+        
+        <TouchableOpacity
+          onPress={loginLogout}
+          style={styles.bottomButtonContainer}
+        >
           {user ? (
             <Image source={require("../../assets/images/settings_icon.png")} />
           ) : (
-            <Text style={styles.bottomText}>{strings.progressScreen.signup}</Text>
+            <Text style={styles.bottomText}>
+              {strings.progressScreen.signup}
+            </Text>
           )}
         </TouchableOpacity>
       </View>
 
-      <SafeAreaView style={styles.bottomSafeAreaStyle}/>
+      <SafeAreaView style={styles.bottomSafeAreaStyle} />
+    </View>
+  );
+};
+
+const PathSegment = ({}) => {
+  const [pathWidth, setPathWidth] = useState(0);
+  const [pathHeight, setPathHeight] = useState(0);
+
+  return (
+    <View
+      onLayout={(e) => {
+        const { height, width } = e.nativeEvent.layout;
+        setPathHeight(height);
+        setPathWidth(width);
+      }}
+      style={styles.pathContainer}
+    >
+      <Svg>
+        {pathHeight > 0 ? (
+          <Path
+            d={`M${pathWidth / 2},0 C${pathWidth - 50},${
+              pathHeight * 0.25
+            } ${0},${pathHeight * 0.75} ${pathWidth / 2},${pathHeight}`}
+            stroke="black"
+            strokeWidth={1}
+          />
+        ) : null}
+      </Svg>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-
   pathContainer: {
     flex: 1,
-    width: '100%'
+    width: "100%",
   },
 
   bottomButtonContainer: {
     bottom: 16,
-    right: 32,          
-    position: 'absolute',
+    right: 32,
+    position: "absolute",
     // borderBottomWidth: 1,
     // borderBottomColor: colors.treeBlues
   },
 
   bottomText: {
     ...textStyles.normalOfSize(18),
-    textAlign: 'center',
+    textAlign: "center",
     color: colors.treeBlues,
-    textDecorationLine: 'underline'
+    textDecorationLine: "underline",
   },
 
   bottomSafeAreaStyle: {
-    backgroundColor: 'white',
-    marginRight: EXIT_SIZE
+    backgroundColor: "white",
+    marginRight: EXIT_SIZE,
   },
 
   progressScreenContainer: {
@@ -116,7 +137,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.clear
+    backgroundColor: colors.clear,
   },
   tap: {
     position: "absolute",
@@ -125,4 +146,4 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: EXIT_SIZE,
   },
-})
+});
