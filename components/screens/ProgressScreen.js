@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -91,31 +91,40 @@ export const ProgressScreen = ({ navigation, route }) => {
 
 const PathSegment = ({ pathHeight, pathWidth }) => {
 
+
+  const path = `
+    M${pathWidth / 2},0
+    C${pathWidth - pathPadding},${pathHeight * 0.25}
+    ${pathPadding},${pathHeight * 0.75}
+    ${pathWidth / 2},${pathHeight}
+  `
+
+  const markerRef = useRef();
+
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
       <Svg>
         {pathHeight > 0 ? (
           <Path
-            d={`
-              M${pathWidth / 2},0
-              C${pathWidth - pathPadding},${pathHeight * 0.25}
-              ${pathPadding},${pathHeight * 0.75}
-              ${pathWidth / 2},${pathHeight}
-            `}
+            children={
+              <View style={{
+                top: 0,
+                right: 0,
+                height: 100,
+                width: 100,
+                backgroundColor: 'red'
+              }} />
+            }
+            d={path}
             stroke="black"
             strokeWidth={1}
-          >
-            <View style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              height: 100,
-              width: 100,
-              backgroundColor: 'red'
-            }} />
-          </Path>
+          />
+           
         ) : null}
       </Svg>
+      <Image style={{
+
+      }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
     </View>
   );
 };
