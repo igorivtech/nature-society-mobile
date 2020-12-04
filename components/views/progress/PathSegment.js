@@ -39,7 +39,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
           left: x,
           transform: [
             { translateY: -markerHeight },
-            { translateX: -markerWidth / 2 },
+            { translateX: (-markerWidth / 2) + 4 },
           ],
         });
       }
