@@ -4,11 +4,14 @@ import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import {EXIT_SIZE} from "../screens/ExploreScreen";
-import {Svg} from "expo";
+import { height, width } from "../../values/consts";
+import Svg, {Path} from "react-native-svg";
 
 export const ProgressScreen = ({navigation, route}) => {
 
   const [user, setUser] = useState(null);
+  const [pathWidth, setPathWidth] = useState(0);
+  const [pathHeight, setPathHeight] = useState(0);
 
   useEffect(()=>{
     if (route.params) {
@@ -42,6 +45,35 @@ export const ProgressScreen = ({navigation, route}) => {
       <SafeAreaView />
 
       <View style={styles.progressScreenContainer}>
+
+        <View onLayout={(e)=>{
+          const {height, width} = e.nativeEvent.layout;
+          setPathHeight(height);
+          setPathWidth(width)
+        }} style={{
+          flex: 1,
+          width: '100%',
+          margin: 32,
+          
+          // padding
+          backgroundColor: 'cyan'
+        }}>
+          <Svg style={{
+            ...StyleSheet.absoluteFill,
+            backgroundColor: 'red',
+          }}>
+            {pathHeight > 0 ? (
+              <Path 
+              d={`M${pathWidth/2},0 30,${pathHeight*0.25} ${pathWidth-30},${pathHeight*0.75} ${pathWidth/2},${pathHeight}`}
+              fill="none"
+              stroke="black"
+              strokeWidth={2}
+             />
+            ) : null}
+            
+          </Svg>
+        </View>
+
         <TouchableOpacity onPress={loginLogout} style={styles.bottomButtonContainer}>
           {user ? (
             <Image source={require("../../assets/images/settings_icon.png")} />
