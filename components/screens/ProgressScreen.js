@@ -93,6 +93,8 @@ export const ProgressScreen = ({ navigation, route }) => {
 const PathSegment = ({ pathHeight, pathWidth }) => {
 
   const markerRef = useRef();
+  const markerSmallRef = useRef();
+  const markerBigRef = useRef();
   const [markerHeight, setMarkerHeight] = useState(0);
   const [markerWidth, setMarkerWidth] = useState(0);
 
@@ -107,13 +109,34 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
   
   useEffect(()=>{
     if (pathHeight > 0 && markerHeight > 0 && markerWidth > 0) {
-      const {x, y} = properties.getPointAtLength(lineLength * 0.25);
+      // marker
+      const {x, y} = properties.getPointAtLength(lineLength * 0.5);
       markerRef.current.setNativeProps({
         top: y,
         left: x,
         transform: [
           {translateY: -markerHeight},
           {translateX: -markerWidth/2}
+        ]
+      });
+      // small
+      const pSmall = properties.getPointAtLength(lineLength * 0.15);
+      markerSmallRef.current.setNativeProps({
+        top: pSmall.y,
+        left: pSmall.x,
+        transform: [
+          {translateY: -34/2},
+          {translateX: -34/2}
+        ]
+      });
+      // big
+      const pBig = properties.getPointAtLength(lineLength * 0.8);
+      markerBigRef.current.setNativeProps({
+        top: pBig.y,
+        left: pBig.x,
+        transform: [
+          {translateY: -76/2},
+          {translateX: -76/2}
         ]
       });
     }
@@ -130,17 +153,24 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
           />
         ) : null}
       </Svg>
-        {pathHeight > 0 ? (
-          <Image onLayout={(e)=>{
-          setMarkerHeight(e.nativeEvent.layout.height);
-          setMarkerWidth(e.nativeEvent.layout.width);
-        }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
-      ) : null}
+      <Image style={styles.marker} onLayout={(e)=>{
+        setMarkerHeight(e.nativeEvent.layout.height);
+        setMarkerWidth(e.nativeEvent.layout.width);
+      }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
+
+      <Image style={styles.marker} ref={markerSmallRef} source={require("../../assets/images/path_marker_small.png")} />
+      <Image style={styles.marker} ref={markerBigRef} source={require("../../assets/images/path_marker_big.png")} />
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+
+  marker: {
+    position: 'absolute'
+  },
+
   scrollView: {
     flex: 1,
     width: "100%",
