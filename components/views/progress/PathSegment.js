@@ -7,19 +7,21 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { height, width } from "../../../values/consts";
+import { EXIT_SIZE } from "../../screens/ExploreScreen";
 var path = require("svg-path-properties");
 
 const pathPadding = 0;
 const animationPadding = height * 0.4;
 const animationCenterExtra = 70;
-const pathXCenter = width*0.3
+const pathWidth = width - EXIT_SIZE;
+const pathXCenter = pathWidth*0.3
+const topMarkerPosition = 0.15;
+const userProgress = 0.5;
+const bottomMarkerPosition = 0.8;
 
-export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight, pathWidth }) => {
+export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight }) => {
+
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
-
-    const topMarkerPosition = 0.15;
-    const userProgress = 0.5;
-    const bottomMarkerPosition = 0.8;
 
     const markerRef = useRef();
     const markerSmallRef = useRef();

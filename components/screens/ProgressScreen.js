@@ -22,7 +22,6 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   const [user, setUser] = useState(null);
   const [pathHeight, setPathHeight] = useState(0);
-  const [pathWidth, setPathWidth] = useState(0);
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -82,17 +81,16 @@ export const ProgressScreen = ({ navigation, route }) => {
           ref={scrollView}
           onLayout={(e) => {
             setPathHeight(e.nativeEvent.layout.height);
-            setPathWidth(e.nativeEvent.layout.width);
           }}
           style={styles.scrollView}
         >
-          <PathSegment index={0} scrollY={scrollY} done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment index={1} scrollY={scrollY} done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment index={2} scrollY={scrollY} done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment index={3} scrollY={scrollY} current={true} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment index={4} scrollY={scrollY} done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment index={5} scrollY={scrollY} done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment index={6} scrollY={scrollY} done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment index={0} scrollY={scrollY} done={false} pathHeight={pathHeight} />
+          <PathSegment index={1} scrollY={scrollY} done={false} pathHeight={pathHeight} />
+          <PathSegment index={2} scrollY={scrollY} done={false} pathHeight={pathHeight} />
+          <PathSegment index={3} scrollY={scrollY} current={true} pathHeight={pathHeight} />
+          <PathSegment index={4} scrollY={scrollY} done={true} pathHeight={pathHeight} />
+          <PathSegment index={5} scrollY={scrollY} done={true} pathHeight={pathHeight} />
+          <PathSegment index={6} scrollY={scrollY} done={true} pathHeight={pathHeight} />
         </Animated.ScrollView>
 
         <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
