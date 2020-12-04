@@ -13,11 +13,16 @@ var path = require("svg-path-properties");
 const pathPadding = 0;
 const animationPadding = height * 0.4;
 const animationCenterExtra = 70;
+//
 const pathWidth = width - EXIT_SIZE;
 const pathXCenter = pathWidth*0.3
+//
 const topMarkerPosition = 0.15;
 const userProgress = 0.5;
 const bottomMarkerPosition = 0.8;
+//
+const markerHeight = 72;
+const markerWidth = 65;
 
 export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight }) => {
 
@@ -26,8 +31,6 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     const markerRef = useRef();
     const markerSmallRef = useRef();
     const markerBigRef = useRef();
-    const [markerHeight, setMarkerHeight] = useState(0);
-    const [markerWidth, setMarkerWidth] = useState(0);
 
   //   const line = `
   //   M${pathWidth / 2},0
@@ -61,7 +64,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     })
 
     useEffect(() => {
-      if (pathHeight > 0 && markerHeight > 0 && markerWidth > 0) {
+      if (current && pathHeight > 0) {
         const { x, y } = properties.getPointAtLength(lineLength * userProgress);
         markerRef.current.setNativeProps({
           top: y,
@@ -72,7 +75,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
           ],
         });
       }
-    }, [pathHeight, markerHeight, markerWidth]);
+    }, [pathHeight]);
 
     useEffect(() => {
       if (pathHeight > 0) {
@@ -124,15 +127,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
 
         {current ? (
           <View style={StyleSheet.absoluteFill}>
-            <Image
-              style={styles.marker}
-              onLayout={(e) => {
-                setMarkerHeight(e.nativeEvent.layout.height);
-                setMarkerWidth(e.nativeEvent.layout.width);
-              }}
-              ref={markerRef}
-              source={require("../../../assets/images/path_marker.png")}
-            />
+            <Image style={styles.marker} ref={markerRef} source={require("../../../assets/images/path_marker.png")} />
             <Image style={styles.marker} ref={markerSmallRef} source={require("../../../assets/images/path_marker_small.png")} />
             <Image style={styles.marker} ref={markerBigRef} source={require("../../../assets/images/path_marker_big.png")} />
           </View>
@@ -152,6 +147,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
   }
 );
 
+// path_marker - 65 × 72
 // trees - 52 × 82
 
 const styles = StyleSheet.create({
