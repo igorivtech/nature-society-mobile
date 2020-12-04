@@ -53,13 +53,13 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     const properties = path.svgPathProperties(line);
     const lineLength = properties.getTotalLength();
 
-    const inputRange = pathHeight > 0 ? [
+    const inputRange = [
       (index - 1) * pathHeight + animationPadding, 
       index * pathHeight - animationCenterExtra, 
       index * pathHeight, 
       index * pathHeight + animationCenterExtra, 
       (index + 1) * pathHeight - animationPadding
-    ] : [0, 0, 0, 0, 0]
+    ]
 
     const opacity = scrollY.interpolate({
       inputRange,
@@ -68,7 +68,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     })
 
     useEffect(() => {
-      if (current && pathHeight > 0) {
+      if (current) {
         const { x, y } = properties.getPointAtLength(lineLength * userProgress);
         markerRef.current.setNativeProps({
           top: y,
@@ -79,32 +79,30 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
           ],
         });
       }
-    }, [pathHeight]);
+    }, []);
 
     useEffect(() => {
-      if (pathHeight > 0) {
-        // small
-        const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
-        markerSmallRef.current.setNativeProps({
-          top: pSmall.y,
-          left: pSmall.x,
-          transform: [
-            { translateY: -(current ? 34 : done ? 76 : 34) / 2 },
-            { translateX: -(current ? 34 : done ? 76 : 34) / 2 },
-          ],
-        });
-        // big
-        const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
-        markerBigRef.current.setNativeProps({
-          top: pBig.y,
-          left: pBig.x,
-          transform: [
-            { translateY: -(current ? 76 : done ? 76 : 34) / 2 },
-            { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
-          ],
-        });
-      }
-    }, [pathHeight]);
+      // small
+      const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
+      markerSmallRef.current.setNativeProps({
+        top: pSmall.y,
+        left: pSmall.x,
+        transform: [
+          { translateY: -(current ? 34 : done ? 76 : 34) / 2 },
+          { translateX: -(current ? 34 : done ? 76 : 34) / 2 },
+        ],
+      });
+      // big
+      const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
+      markerBigRef.current.setNativeProps({
+        top: pBig.y,
+        left: pBig.x,
+        transform: [
+          { translateY: -(current ? 76 : done ? 76 : 34) / 2 },
+          { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
+        ],
+      });
+    }, []);
 
     return (
       <View style={styles.pathContainer(pathHeight, pathWidth)}>
@@ -138,9 +136,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
           </View>
         )}
 
-        {pathWidth*pathHeight > 0 && (
-          <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
-        )}
+        <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
         
       </View>
     );
