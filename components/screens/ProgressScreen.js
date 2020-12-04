@@ -13,7 +13,6 @@ import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
-import { height, width } from "../../values/consts";
 import Svg, { Path } from "react-native-svg";
 var path = require("svg-path-properties");
 
@@ -62,53 +61,20 @@ export const ProgressScreen = ({ navigation, route }) => {
           }}
           style={styles.scrollView}
         >
-          <PathSegment
-            done={false}
-            pathHeight={pathHeight}
-            pathWidth={pathWidth}
-          />
-          <PathSegment
-            done={false}
-            pathHeight={pathHeight}
-            pathWidth={pathWidth}
-          />
-          <PathSegment
-            done={false}
-            pathHeight={pathHeight}
-            pathWidth={pathWidth}
-          />
-          <PathSegment
-            current={true}
-            pathHeight={pathHeight}
-            pathWidth={pathWidth}
-          />
-          <PathSegment
-            done={true}
-            pathHeight={pathHeight}
-            pathWidth={pathWidth}
-          />
-          <PathSegment
-            done={true}
-            pathHeight={pathHeight}
-            pathWidth={pathWidth}
-          />
-          <PathSegment
-            done={true}
-            pathHeight={pathHeight}
-            pathWidth={pathWidth}
-          />
+          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment current={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
         </ScrollView>
 
-        <TouchableOpacity
-          onPress={loginLogout}
-          style={styles.bottomButtonContainer}
-        >
+        <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
           {user ? (
             <Image source={require("../../assets/images/settings_icon.png")} />
           ) : (
-            <Text style={styles.bottomText}>
-              {strings.progressScreen.signup}
-            </Text>
+            <Text style={styles.bottomText}>{strings.progressScreen.signup}</Text>
           )}
         </TouchableOpacity>
       </View>
