@@ -112,7 +112,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
 
   scrollView: {
-    overflow: 'visible',
+    // overflow: 'visible',
     flex: 1,
     width: "100%",
   },
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
 
   progressScreenContainer: {
-    overflow: 'hidden',
+    // overflow: 'hidden',
     paddingVertical: 30,
     borderTopRightRadius: 30,
     flex: 1,
