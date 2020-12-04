@@ -158,15 +158,23 @@ const PathSegment = ({ current = false, done, pathHeight, pathWidth }) => {
         ) : null}
       </Svg>
       
-      {current ? (
-        <Image style={styles.marker} onLayout={(e)=>{
-          setMarkerHeight(e.nativeEvent.layout.height);
-          setMarkerWidth(e.nativeEvent.layout.width);
-        }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
-      ) : null}
-      
-      <Image style={styles.marker} ref={markerSmallRef} source={require("../../assets/images/path_marker_small.png")} />
-      <Image style={styles.marker} ref={markerBigRef} source={require("../../assets/images/path_marker_big.png")} />
+      <View style={StyleSheet.absoluteFill}>
+        {current ? (
+          <View style={StyleSheet.absoluteFill}>
+            <Image style={styles.marker} onLayout={(e)=>{
+              setMarkerHeight(e.nativeEvent.layout.height);
+              setMarkerWidth(e.nativeEvent.layout.width);
+            }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
+            <Image style={styles.marker} ref={markerSmallRef} source={require("../../assets/images/path_marker_small.png")} />
+            <Image style={styles.marker} ref={markerBigRef} source={require("../../assets/images/path_marker_big.png")} />
+          </View>
+        ) : (
+          <View style={StyleSheet.absoluteFill}>
+            <Image style={styles.marker} ref={markerSmallRef} source={require("../../assets/images/path_marker_small.png")} />
+            <Image style={styles.marker} ref={markerBigRef} source={require("../../assets/images/path_marker_big.png")} />
+          </View>          
+        )}
+      </View>
 
     </View>
   );
