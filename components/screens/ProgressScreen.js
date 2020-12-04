@@ -106,8 +106,8 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
   const lineLength = properties.getTotalLength();
   
   useEffect(()=>{
-    if (pathHeight > 0) {
-      const {x, y} = properties.getPointAtLength(lineLength * 0.15);
+    if (pathHeight > 0 && markerHeight > 0 && markerWidth > 0) {
+      const {x, y} = properties.getPointAtLength(lineLength * 0.85);
       markerRef.current.setNativeProps({
         top: y,
         left: x,
@@ -117,7 +117,7 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
         ]
       });
     }
-  }, [pathHeight])
+  }, [pathHeight, markerHeight, markerWidth])
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
