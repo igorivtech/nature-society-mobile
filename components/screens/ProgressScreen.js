@@ -90,8 +90,10 @@ export const ProgressScreen = ({ navigation, route }) => {
   );
 };
 
-const PathSegment = ({ current = false, done, pathHeight, pathWidth }) => {
-
+const PathSegment = ({ current = false, done = false, pathHeight, pathWidth }) => {
+  
+  const markerImage = done ? require("../../assets/images/path_marker_big.png") : require("../../assets/images/path_marker_small.png")
+  
   const markerRef = useRef();
   const markerSmallRef = useRef();
   const markerBigRef = useRef();
@@ -129,8 +131,8 @@ const PathSegment = ({ current = false, done, pathHeight, pathWidth }) => {
         top: pSmall.y,
         left: pSmall.x,
         transform: [
-          {translateY: -34/2},
-          {translateX: -34/2}
+          {translateY: -(current ? 34 : (done ? 76 : 34))/2},
+          {translateX: -(current ? 34 : (done ? 76 : 34))/2},
         ]
       });
       // big
@@ -139,8 +141,8 @@ const PathSegment = ({ current = false, done, pathHeight, pathWidth }) => {
         top: pBig.y,
         left: pBig.x,
         transform: [
-          {translateY: -76/2},
-          {translateX: -76/2}
+          {translateY: -(current ? 76 : (done ? 76 : 34))/2},
+          {translateX: -(current ? 76 : (done ? 76 : 34))/2},
         ]
       });
     }
@@ -170,8 +172,8 @@ const PathSegment = ({ current = false, done, pathHeight, pathWidth }) => {
           </View>
         ) : (
           <View style={StyleSheet.absoluteFill}>
-            <Image style={styles.marker} ref={markerSmallRef} source={require("../../assets/images/path_marker_small.png")} />
-            <Image style={styles.marker} ref={markerBigRef} source={require("../../assets/images/path_marker_big.png")} />
+            <Image style={styles.marker} ref={markerSmallRef} source={markerImage} />
+            <Image style={styles.marker} ref={markerBigRef} source={markerImage} />
           </View>          
         )}
       </View>
