@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -90,7 +90,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   );
 };
 
-const PathSegment = ({ current = false, done = false, pathHeight, pathWidth }) => {
+const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth }) => {
   
   const markerImage = done ? require("../../assets/images/path_marker_big.png") : require("../../assets/images/path_marker_small.png")
   
@@ -181,7 +181,7 @@ const PathSegment = ({ current = false, done = false, pathHeight, pathWidth }) =
 
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
 
