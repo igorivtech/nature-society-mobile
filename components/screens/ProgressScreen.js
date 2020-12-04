@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -16,9 +16,27 @@ import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment } from "../views/progress/PathSegment";
 
 export const ProgressScreen = ({ navigation, route }) => {
+
+  const scrollView = useRef();
+
   const [user, setUser] = useState(null);
   const [pathHeight, setPathHeight] = useState(0);
   const [pathWidth, setPathWidth] = useState(0);
+
+  useEffect(()=>{
+    if (pathHeight > 0) {
+      scrollView.current.scrollTo({
+        y: pathHeight * 3 + 400,
+        animated: false,
+      })  
+      setTimeout(() => {
+        scrollView.current.scrollTo({
+          y: pathHeight * 3,
+          animated: true,
+        })  
+      }, 600);
+    }
+  }, [pathHeight])
 
   useEffect(() => {
     if (route.params) {
@@ -52,6 +70,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
       <View style={styles.progressScreenContainer}>
         <ScrollView
+          ref={scrollView}
           onLayout={(e) => {
             setPathHeight(e.nativeEvent.layout.height);
             setPathWidth(e.nativeEvent.layout.width);
