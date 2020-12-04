@@ -177,7 +177,7 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
             <Path
               d={line}
               stroke="black"
-              strokeWidth={done ? 1.5 : 1}
+              strokeWidth={done ? 2 : 1}
             />
           )}
         </Svg>
