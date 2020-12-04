@@ -10,7 +10,7 @@ var path = require("svg-path-properties");
 
 const pathPadding = 0;
 const xTranslate = -50;
-const animationPadding = 200;
+const animationPadding = 250;
 
 export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight, pathWidth }) => {
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
@@ -36,19 +36,21 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
 
     const inputRange = pathHeight > 0 ? [
       (index - 1) * pathHeight + animationPadding, 
+      index * pathHeight - 100, 
       index * pathHeight, 
+      index * pathHeight + 100, 
       (index + 1) * pathHeight - animationPadding
-    ] : [0, 0, 0]
+    ] : [0, 0, 0, 0, 0]
 
     const opacity = scrollY.interpolate({
       inputRange,
-      outputRange: [0, 1, 0],
+      outputRange: [0, 1, 1, 1, 0],
       extrapolate: 'clamp'
     })
 
     const scale = scrollY.interpolate({
       inputRange,
-      outputRange: [0.4, 1, 0.4],
+      outputRange: [0.4, 1, 1, 1, 0.4],
       extrapolate: 'clamp'
     })
 

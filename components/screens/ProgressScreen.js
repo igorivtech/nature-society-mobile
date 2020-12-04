@@ -73,6 +73,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
       <View style={styles.progressScreenContainer}>
         <Animated.ScrollView
+          bounces={false}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: scrollY}}}],
