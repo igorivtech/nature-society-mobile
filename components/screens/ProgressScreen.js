@@ -150,15 +150,16 @@ const PathSegment = ({ current = false, done = false, pathHeight, pathWidth }) =
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
-      <Svg>
-        {pathHeight > 0 ? (
+      {pathHeight > 0 ? (
+        <Svg>
           <Path
             d={line}
             stroke="black"
-            strokeWidth={current ? 1 : (done ? 2 : 1)}
+            strokeWidth={current ? 1 : (done ? 1.5 : 1)}
+            strokeDashoffset='0.5'
           />
-        ) : null}
-      </Svg>
+        </Svg>
+      ) : null}
       
       <View style={StyleSheet.absoluteFill}>
         {current ? (
