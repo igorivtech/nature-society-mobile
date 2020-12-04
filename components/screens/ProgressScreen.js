@@ -15,6 +15,7 @@ import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { height, width } from "../../values/consts";
 import Svg, { Path } from "react-native-svg";
+var path = require("svg-path-properties");
 
 const pathPadding = 0;
 
@@ -91,6 +92,9 @@ export const ProgressScreen = ({ navigation, route }) => {
 
 const PathSegment = ({ pathHeight, pathWidth }) => {
 
+  const markerRef = useRef();
+  const [markerHeight, setMarkerHeight] = useState(0);
+  const [markerWidth, setMarkerWidth] = useState(0);
 
   const line = `
     M${pathWidth / 2},0
@@ -98,8 +102,18 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
     ${pathPadding},${pathHeight * 0.75}
     ${pathWidth / 2},${pathHeight}
   `
-
-  const markerRef = useRef();
+  const properties = path.svgPathProperties(line);
+  const lineLength = properties.getTotalLength();
+  
+  useEffect(()=>{
+    if (pathHeight > 0) {
+      const {x, y} = properties.getPointAtLength(lineLength * 0.5);
+      markerRef.current.setNativeProps({
+        top: y - markerHeight/2,
+        left: x - markerWidth/2
+      });
+    }
+  }, [pathHeight])
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
@@ -122,8 +136,9 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
            
         ) : null}
       </Svg>
-      <Image style={{
-
+      <Image onLayout={(e)=>{
+        setMarkerHeight(e.nativeEvent.layout.height);
+        setMarkerWidth(e.nativeEvent.layout.width);
       }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
     </View>
   );
