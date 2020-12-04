@@ -109,7 +109,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     return (
       <View style={styles.pathContainer(pathHeight, pathWidth)}>
         {current ? (
-          <Svg>
+          <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
             <Path d={line} stroke="black" strokeWidth={1} />
             <Path
               d={line}
@@ -120,7 +120,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
             />
           </Svg>
         ) : (
-          <Svg>
+          <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
             <Path d={line} stroke="black" strokeWidth={done ? 2 : 1} />
           </Svg>
         )}
