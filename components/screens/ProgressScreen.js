@@ -96,9 +96,7 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
       <Svg>
         {pathHeight > 0 ? (
           <Path
-            d={`M${pathWidth / 2},0 C${pathWidth - 50},${
-              pathHeight * 0.25
-            } ${0},${pathHeight * 0.75} ${pathWidth / 2},${pathHeight}`}
+            d={`M${pathWidth / 2},0 C${pathWidth - pathPadding},${pathHeight * 0.25} ${pathPadding},${pathHeight * 0.75} ${pathWidth / 2},${pathHeight}`}
             stroke="black"
             strokeWidth={1}
           />
