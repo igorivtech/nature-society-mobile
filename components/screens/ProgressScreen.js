@@ -121,7 +121,9 @@ export const ProgressScreen = ({ navigation, route }) => {
 const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth }) => {
     const markerImage = done ? require("../../assets/images/path_marker_big.png") : require("../../assets/images/path_marker_small.png");
 
-    const userProgress = 0.35;
+    const topMarkerPosition = 0.2;
+    const userProgress = 0.5;
+    const bottomMarkerPosition = 0.8;
 
     const markerRef = useRef();
     const markerSmallRef = useRef();
@@ -155,7 +157,7 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
     useEffect(() => {
       if (pathHeight > 0) {
         // small
-        const pSmall = properties.getPointAtLength(lineLength * 0.15);
+        const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
         markerSmallRef.current.setNativeProps({
           top: pSmall.y,
           left: pSmall.x,
@@ -165,7 +167,7 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
           ],
         });
         // big
-        const pBig = properties.getPointAtLength(lineLength * 0.8);
+        const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
         markerBigRef.current.setNativeProps({
           top: pBig.y,
           left: pBig.x,
