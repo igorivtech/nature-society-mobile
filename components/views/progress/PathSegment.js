@@ -26,6 +26,10 @@ const markerWidth = 65;
 
 export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight }) => {
 
+    if (pathHeight === 0) {
+      return <View />;
+    }
+
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
 
     const markerRef = useRef();
@@ -101,10 +105,6 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
         });
       }
     }, [pathHeight]);
-
-    if (pathHeight === 0) {
-      return <View />;
-    }
 
     return (
       <View style={styles.pathContainer(pathHeight, pathWidth)}>
