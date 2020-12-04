@@ -16,6 +16,8 @@ import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment } from "../views/progress/PathSegment";
 
+const array = Array(7).fill(0).map((v, i)=>(i));
+
 export const ProgressScreen = ({ navigation, route }) => {
 
   const scrollView = useRef();
@@ -86,13 +88,9 @@ export const ProgressScreen = ({ navigation, route }) => {
           }}
           style={styles.scrollView}
         >
-          <PathSegment index={0} scrollY={scrollY} done={false} pathHeight={pathHeight} />
-          <PathSegment index={1} scrollY={scrollY} done={false} pathHeight={pathHeight} />
-          <PathSegment index={2} scrollY={scrollY} done={false} pathHeight={pathHeight} />
-          <PathSegment index={3} scrollY={scrollY} current={true} pathHeight={pathHeight} />
-          <PathSegment index={4} scrollY={scrollY} done={true} pathHeight={pathHeight} />
-          <PathSegment index={5} scrollY={scrollY} done={true} pathHeight={pathHeight} />
-          <PathSegment index={6} scrollY={scrollY} done={true} pathHeight={pathHeight} />
+          
+          {array.map((i)=>(<PathSegment key={`${i}`} index={i} scrollY={scrollY} current={i == 3} done={i > 3} pathHeight={pathHeight} />))}
+          
         </Animated.ScrollView>
 
         <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
