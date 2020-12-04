@@ -120,15 +120,6 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
       <Svg>
         {pathHeight > 0 ? (
           <Path
-            children={
-              <View style={{
-                top: 0,
-                right: 0,
-                height: 100,
-                width: 100,
-                backgroundColor: 'red'
-              }} />
-            }
             d={line}
             stroke="black"
             strokeWidth={1}
