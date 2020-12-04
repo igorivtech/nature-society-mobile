@@ -94,7 +94,7 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
   
   const markerImage = done ? require("../../assets/images/path_marker_big.png") : require("../../assets/images/path_marker_small.png")
 
-  const userProgress = 0.5;
+  const userProgress = 0.35;
   
   const markerRef = useRef();
   const markerSmallRef = useRef();
@@ -160,7 +160,7 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
               stroke="black"
               strokeWidth={1}
               strokeDasharray={lineLength}
-              strokeDashoffset={0}
+              strokeDashoffset={-(userProgress) * lineLength}
             />
           )}
         </Svg>
