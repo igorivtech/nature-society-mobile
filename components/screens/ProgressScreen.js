@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
@@ -19,6 +20,7 @@ const pathPadding = 0;
 
 export const ProgressScreen = ({ navigation, route }) => {
   const [user, setUser] = useState(null);
+  const [pathHeight, setPathHeight] = useState(0);
 
   useEffect(() => {
     if (route.params) {
@@ -52,7 +54,9 @@ export const ProgressScreen = ({ navigation, route }) => {
 
       <View style={styles.progressScreenContainer}>
         
-        <PathSegment />
+        <ScrollView onLayout={(e)=>setPathHeight(e.nativeEvent.layout.height)} style={styles.scrollView}>
+          <PathSegment pathHeight={pathHeight} />
+        </ScrollView>
         
         <TouchableOpacity
           onPress={loginLogout}
@@ -73,18 +77,16 @@ export const ProgressScreen = ({ navigation, route }) => {
   );
 };
 
-const PathSegment = ({}) => {
+const PathSegment = ({pathHeight}) => {
   const [pathWidth, setPathWidth] = useState(0);
-  const [pathHeight, setPathHeight] = useState(0);
 
   return (
     <View
       onLayout={(e) => {
         const { height, width } = e.nativeEvent.layout;
-        setPathHeight(height);
         setPathWidth(width);
       }}
-      style={styles.pathContainer}
+      style={styles.pathContainer(pathHeight)}
     >
       <Svg>
         {pathHeight > 0 ? (
@@ -102,10 +104,17 @@ const PathSegment = ({}) => {
 };
 
 const styles = StyleSheet.create({
-  pathContainer: {
+
+  scrollView: {
+    flex: 1,
+    width: '100%',  
+  },
+
+  pathContainer: (height) => ({
+    height,
     flex: 1,
     width: "100%",
-  },
+  }),
 
   bottomButtonContainer: {
     bottom: 16,
