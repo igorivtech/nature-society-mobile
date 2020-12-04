@@ -78,6 +78,8 @@ export const ProgressScreen = ({ navigation, route }) => {
             [{nativeEvent: {contentOffset: {y: scrollY}}}],
             { useNativeDriver: true }    
           )}
+          snapToInterval={pathHeight}
+          decelerationRate="fast"
           ref={scrollView}
           onLayout={(e) => {
             setPathHeight(e.nativeEvent.layout.height);
