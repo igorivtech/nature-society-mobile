@@ -93,6 +93,8 @@ export const ProgressScreen = ({ navigation, route }) => {
 const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth }) => {
   
   const markerImage = done ? require("../../assets/images/path_marker_big.png") : require("../../assets/images/path_marker_small.png")
+
+  const userProgress = 0.5;
   
   const markerRef = useRef();
   const markerSmallRef = useRef();
@@ -111,7 +113,7 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
   
   useEffect(()=>{
     if (pathHeight > 0 && markerHeight > 0 && markerWidth > 0) {
-      const {x, y} = properties.getPointAtLength(lineLength * 0.5);
+      const {x, y} = properties.getPointAtLength(lineLength * userProgress);
       markerRef.current.setNativeProps({
         top: y,
         left: x,
@@ -150,16 +152,29 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
-      {pathHeight > 0 ? (
+      {current ? (
         <Svg>
-          <Path
-            d={line}
-            stroke="black"
-            strokeWidth={current ? 1 : (done ? 1.5 : 1)}
-            strokeDashoffset='0.5'
-          />
+          {pathHeight > 0 && (
+            <Path
+              d={line}
+              stroke="black"
+              strokeWidth={1}
+              strokeDasharray={lineLength}
+              strokeDashoffset={0}
+            />
+          )}
         </Svg>
-      ) : null}
+      ) : (
+        <Svg>
+          {pathHeight > 0 && (
+            <Path
+              d={line}
+              stroke="black"
+              strokeWidth={done ? 1.5 : 1}
+            />
+          )}
+        </Svg>
+      )}
       
       <View style={StyleSheet.absoluteFill}>
         {current ? (
