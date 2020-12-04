@@ -92,7 +92,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 const PathSegment = ({ pathHeight, pathWidth }) => {
 
   return (
-    <View style={styles.pathContainer(pathHeight)}>
+    <View style={styles.pathContainer(pathHeight, pathWidth)}>
       <Svg>
         {pathHeight > 0 ? (
           <Path
@@ -104,7 +104,16 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
             `}
             stroke="black"
             strokeWidth={1}
-          />
+          >
+            <View style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              height: 100,
+              width: 100,
+              backgroundColor: 'red'
+            }} />
+          </Path>
         ) : null}
       </Svg>
     </View>
@@ -117,10 +126,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  pathContainer: (height) => ({
+  pathContainer: (height, width) => ({
     height,
-    flex: 1,
-    width: "100%",
+    width
   }),
 
   bottomButtonContainer: {
