@@ -6,13 +6,13 @@ import {
   Animated,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { height } from "../../../values/consts";
+import { height, width } from "../../../values/consts";
 var path = require("svg-path-properties");
 
 const pathPadding = 0;
-const xTranslate = -50;
 const animationPadding = height * 0.4;
 const animationCenterExtra = 70;
+const pathXCenter = width*0.3
 
 export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight, pathWidth }) => {
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
@@ -27,12 +27,20 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     const [markerHeight, setMarkerHeight] = useState(0);
     const [markerWidth, setMarkerWidth] = useState(0);
 
+  //   const line = `
+  //   M${pathWidth / 2},0
+  //   C${pathWidth - pathPadding},${pathHeight * 0.25}
+  //   ${pathPadding},${pathHeight * 0.75}
+  //   ${pathWidth / 2},${pathHeight}
+  // `;
+
     const line = `
-    M${pathWidth / 2},0
-    C${pathWidth - pathPadding},${pathHeight * 0.25}
-    ${pathPadding},${pathHeight * 0.75}
-    ${pathWidth / 2},${pathHeight}
+    M${pathXCenter},0
+    C${pathXCenter + 100},${pathHeight * 0.25}
+    ${pathXCenter - 100},${pathHeight * 0.75}
+    ${pathXCenter},${pathHeight}
   `;
+
     const properties = path.svgPathProperties(line);
     const lineLength = properties.getTotalLength();
 
@@ -47,12 +55,6 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     const opacity = scrollY.interpolate({
       inputRange,
       outputRange: [0, 1, 1, 1, 0],
-      extrapolate: 'clamp'
-    })
-
-    const scale = scrollY.interpolate({
-      inputRange,
-      outputRange: [0.4, 1, 1, 1, 0.4],
       extrapolate: 'clamp'
     })
 
@@ -102,7 +104,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
     return (
       <View style={styles.pathContainer(pathHeight, pathWidth)}>
         {current ? (
-          <Svg style={styles.pathTranslate}>
+          <Svg>
             <Path d={line} stroke="black" strokeWidth={1} />
             <Path
               d={line}
@@ -113,13 +115,13 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
             />
           </Svg>
         ) : (
-          <Svg style={styles.pathTranslate}>
+          <Svg>
             <Path d={line} stroke="black" strokeWidth={done ? 2 : 1} />
           </Svg>
         )}
 
         {current ? (
-          <View style={{...StyleSheet.absoluteFill, ...styles.pathTranslate}}>
+          <View style={StyleSheet.absoluteFill}>
             <Image
               style={styles.marker}
               onLayout={(e) => {
@@ -133,14 +135,14 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
             <Image style={styles.marker} ref={markerBigRef} source={require("../../../assets/images/path_marker_big.png")} />
           </View>
         ) : (
-          <View style={{...StyleSheet.absoluteFill, ...styles.pathTranslate}}>
+          <View style={StyleSheet.absoluteFill}>
             <Image style={styles.marker} ref={markerSmallRef} source={markerImage} />
             <Image style={styles.marker} ref={markerBigRef} source={markerImage} />
           </View>
         )}
 
         {pathWidth*pathHeight > 0 && (
-          <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, scale)} source={require("../../../assets/images/trees.png")} />
+          <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
         )}
         
       </View>
@@ -151,12 +153,6 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
 // trees - 52 × 82
 
 const styles = StyleSheet.create({
-
-  pathTranslate: {
-    transform: [
-      {translateX: xTranslate}
-    ]
-  },
 
   trees: (pathHeight, pathWidth, opacity, scale) => ({
     position: 'absolute',
