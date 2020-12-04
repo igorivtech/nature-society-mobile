@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
+    overflow: 'visible',
     flex: 1,
     width: "100%",
   },
@@ -230,6 +231,7 @@ const styles = StyleSheet.create({
   },
 
   progressScreenContainer: {
+    overflow: 'hidden',
     paddingVertical: 30,
     borderTopRightRadius: 30,
     flex: 1,
