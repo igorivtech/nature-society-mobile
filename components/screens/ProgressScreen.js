@@ -92,7 +92,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 const PathSegment = ({ pathHeight, pathWidth }) => {
 
 
-  const path = `
+  const line = `
     M${pathWidth / 2},0
     C${pathWidth - pathPadding},${pathHeight * 0.25}
     ${pathPadding},${pathHeight * 0.75}
@@ -115,7 +115,7 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
                 backgroundColor: 'red'
               }} />
             }
-            d={path}
+            d={line}
             stroke="black"
             strokeWidth={1}
           />
