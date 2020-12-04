@@ -124,7 +124,6 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
             stroke="black"
             strokeWidth={1}
           />
-           
         ) : null}
       </Svg>
       <Image onLayout={(e)=>{
