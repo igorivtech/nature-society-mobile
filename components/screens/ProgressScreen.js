@@ -155,7 +155,7 @@ const PathSegment = ({ current = false, done = false, pathHeight, pathWidth }) =
           <Path
             d={line}
             stroke="black"
-            strokeWidth={1}
+            strokeWidth={current ? 1 : (done ? 2 : 1)}
           />
         ) : null}
       </Svg>
