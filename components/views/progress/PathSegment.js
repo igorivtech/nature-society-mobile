@@ -8,6 +8,7 @@ import Svg, { Path } from "react-native-svg";
 var path = require("svg-path-properties");
 
 const pathPadding = 0;
+const xTranslate = -50;
 
 export const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth }) => {
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
@@ -39,7 +40,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
           left: x,
           transform: [
             { translateY: -markerHeight },
-            { translateX: (-markerWidth / 2) + 4 },
+            { translateX: (-markerWidth / 2) + 4  + xTranslate},
           ],
         });
       }
@@ -54,7 +55,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
           left: pSmall.x,
           transform: [
             { translateY: -(current ? 34 : done ? 76 : 34) / 2 },
-            { translateX: -(current ? 34 : done ? 76 : 34) / 2 },
+            { translateX: -(current ? 34 : done ? 76 : 34) / 2 + xTranslate},
           ],
         });
         // big
@@ -64,7 +65,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
           left: pBig.x,
           transform: [
             { translateY: -(current ? 76 : done ? 76 : 34) / 2 },
-            { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
+            { translateX: -(current ? 76 : done ? 76 : 34) / 2 + xTranslate},
           ],
         });
       }
@@ -77,7 +78,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
     return (
       <View style={styles.pathContainer(pathHeight, pathWidth)}>
         {current ? (
-          <Svg>
+          <Svg style={styles.pathTranslate}>
             <Path d={line} stroke="black" strokeWidth={1} />
             <Path
               d={line}
@@ -88,7 +89,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
             />
           </Svg>
         ) : (
-          <Svg>
+          <Svg style={styles.pathTranslate}>
             <Path d={line} stroke="black" strokeWidth={done ? 2 : 1} />
           </Svg>
         )}
@@ -126,6 +127,12 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
 // trees - 52 × 82
 
 const styles = StyleSheet.create({
+
+  pathTranslate: {
+    transform: [
+      {translateX: xTranslate}
+    ]
+  },
 
   trees: (pathHeight, pathWidth) => ({
     position: 'absolute',
