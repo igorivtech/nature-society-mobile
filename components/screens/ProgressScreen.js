@@ -155,13 +155,20 @@ const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth
       {current ? (
         <Svg>
           {pathHeight > 0 && (
-            <Path
-              d={line}
-              stroke="black"
-              strokeWidth={1}
-              strokeDasharray={lineLength}
-              strokeDashoffset={-(userProgress) * lineLength}
-            />
+            <Svg>
+              <Path
+                d={line}
+                stroke="black"
+                strokeWidth={1}
+              />
+              <Path
+                d={line}
+                stroke="black"
+                strokeWidth={2}
+                strokeDasharray={lineLength}
+                strokeDashoffset={-(userProgress) * lineLength + markerHeight/2}
+              />
+            </Svg>
           )}
         </Svg>
       ) : (
