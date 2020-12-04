@@ -7,6 +7,8 @@ import {EXIT_SIZE} from "../screens/ExploreScreen";
 import { height, width } from "../../values/consts";
 import Svg, {Path} from "react-native-svg";
 
+const pathPadding = 0;
+
 export const ProgressScreen = ({navigation, route}) => {
 
   const [user, setUser] = useState(null);
@@ -64,7 +66,7 @@ export const ProgressScreen = ({navigation, route}) => {
           }}>
             {pathHeight > 0 ? (
               <Path 
-              d={`M${pathWidth/2},0 30,${pathHeight*0.25} ${pathWidth-30},${pathHeight*0.75} ${pathWidth/2},${pathHeight}`}
+              d={`M${pathWidth/2},0 C${pathPadding},${pathHeight*0.25} ${pathWidth-pathPadding},${pathHeight*0.75} ${pathWidth/2},${pathHeight}`}
               fill="none"
               stroke="black"
               strokeWidth={2}
