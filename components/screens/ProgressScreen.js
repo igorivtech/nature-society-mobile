@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity, Image } from "react-native";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import {EXIT_SIZE} from "../screens/ExploreScreen";
+import {Svg} from "expo";
 
 export const ProgressScreen = ({navigation, route}) => {
 
@@ -42,7 +43,11 @@ export const ProgressScreen = ({navigation, route}) => {
 
       <View style={styles.progressScreenContainer}>
         <TouchableOpacity onPress={loginLogout} style={styles.bottomButtonContainer}>
-          <Text style={styles.bottomText}>{user ? strings.progressScreen.logout : strings.progressScreen.signup}</Text>
+          {user ? (
+            <Image source={require("../../assets/images/settings_icon.png")} />
+          ) : (
+            <Text style={styles.bottomText}>{strings.progressScreen.signup}</Text>
+          )}
         </TouchableOpacity>
       </View>
 
