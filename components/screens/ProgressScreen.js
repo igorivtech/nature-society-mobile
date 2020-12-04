@@ -107,7 +107,7 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
   
   useEffect(()=>{
     if (pathHeight > 0 && markerHeight > 0 && markerWidth > 0) {
-      const {x, y} = properties.getPointAtLength(lineLength * 0.85);
+      const {x, y} = properties.getPointAtLength(lineLength * 0.25);
       markerRef.current.setNativeProps({
         top: y,
         left: x,
