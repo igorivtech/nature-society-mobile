@@ -62,13 +62,13 @@ export const ProgressScreen = ({ navigation, route }) => {
           }}
           style={styles.scrollView}
         >
-          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment current={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
         </ScrollView>
 
         <TouchableOpacity
@@ -90,7 +90,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   );
 };
 
-const PathSegment = ({ pathHeight, pathWidth }) => {
+const PathSegment = ({ current = false, done, pathHeight, pathWidth }) => {
 
   const markerRef = useRef();
   const markerSmallRef = useRef();
@@ -109,7 +109,6 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
   
   useEffect(()=>{
     if (pathHeight > 0 && markerHeight > 0 && markerWidth > 0) {
-      // marker
       const {x, y} = properties.getPointAtLength(lineLength * 0.5);
       markerRef.current.setNativeProps({
         top: y,
@@ -119,6 +118,11 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
           {translateX: -markerWidth/2}
         ]
       });
+    }
+  }, [pathHeight, markerHeight, markerWidth])
+
+  useEffect(()=>{
+    if (pathHeight > 0) {
       // small
       const pSmall = properties.getPointAtLength(lineLength * 0.15);
       markerSmallRef.current.setNativeProps({
@@ -140,7 +144,7 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
         ]
       });
     }
-  }, [pathHeight, markerHeight, markerWidth])
+  }, [pathHeight])
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
@@ -153,11 +157,14 @@ const PathSegment = ({ pathHeight, pathWidth }) => {
           />
         ) : null}
       </Svg>
-      <Image style={styles.marker} onLayout={(e)=>{
-        setMarkerHeight(e.nativeEvent.layout.height);
-        setMarkerWidth(e.nativeEvent.layout.width);
-      }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
-
+      
+      {current ? (
+        <Image style={styles.marker} onLayout={(e)=>{
+          setMarkerHeight(e.nativeEvent.layout.height);
+          setMarkerWidth(e.nativeEvent.layout.width);
+        }} ref={markerRef} source={require("../../assets/images/path_marker.png")} />
+      ) : null}
+      
       <Image style={styles.marker} ref={markerSmallRef} source={require("../../assets/images/path_marker_small.png")} />
       <Image style={styles.marker} ref={markerBigRef} source={require("../../assets/images/path_marker_big.png")} />
 
