@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Animated,
 } from "react-native";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
@@ -22,6 +23,8 @@ export const ProgressScreen = ({ navigation, route }) => {
   const [user, setUser] = useState(null);
   const [pathHeight, setPathHeight] = useState(0);
   const [pathWidth, setPathWidth] = useState(0);
+
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
     if (pathHeight > 0) {
@@ -69,7 +72,12 @@ export const ProgressScreen = ({ navigation, route }) => {
       <SafeAreaView />
 
       <View style={styles.progressScreenContainer}>
-        <ScrollView
+        <Animated.ScrollView
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y: scrollY}}}],
+            { useNativeDriver: true }    
+          )}
           ref={scrollView}
           onLayout={(e) => {
             setPathHeight(e.nativeEvent.layout.height);
@@ -77,14 +85,14 @@ export const ProgressScreen = ({ navigation, route }) => {
           }}
           style={styles.scrollView}
         >
-          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment current={true} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
-          <PathSegment done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
-        </ScrollView>
+          <PathSegment index={0} scrollY={scrollY} done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment index={1} scrollY={scrollY} done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment index={2} scrollY={scrollY} done={false} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment index={3} scrollY={scrollY} current={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment index={4} scrollY={scrollY} done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment index={5} scrollY={scrollY} done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+          <PathSegment index={6} scrollY={scrollY} done={true} pathHeight={pathHeight} pathWidth={pathWidth} />
+        </Animated.ScrollView>
 
         <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
           {user ? (

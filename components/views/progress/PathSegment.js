@@ -3,14 +3,16 @@ import {
   View,
   StyleSheet,
   Image,
+  Animated,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 var path = require("svg-path-properties");
 
 const pathPadding = 0;
 const xTranslate = -50;
+const animationPadding = 200;
 
-export const PathSegment = memo(({ current = false, done = false, pathHeight, pathWidth }) => {
+export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight, pathWidth }) => {
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
 
     const topMarkerPosition = 0.2;
@@ -31,6 +33,24 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
   `;
     const properties = path.svgPathProperties(line);
     const lineLength = properties.getTotalLength();
+
+    const inputRange = pathHeight > 0 ? [
+      (index - 1) * pathHeight + animationPadding, 
+      index * pathHeight, 
+      (index + 1) * pathHeight - animationPadding
+    ] : [0, 0, 0]
+
+    const opacity = scrollY.interpolate({
+      inputRange,
+      outputRange: [0, 1, 0],
+      extrapolate: 'clamp'
+    })
+
+    const scale = scrollY.interpolate({
+      inputRange,
+      outputRange: [0.4, 1, 0.4],
+      extrapolate: 'clamp'
+    })
 
     useEffect(() => {
       if (pathHeight > 0 && markerHeight > 0 && markerWidth > 0) {
@@ -116,7 +136,7 @@ export const PathSegment = memo(({ current = false, done = false, pathHeight, pa
         )}
 
         {pathWidth*pathHeight > 0 && (
-          <Image style={styles.trees(pathHeight, pathWidth)} source={require("../../../assets/images/trees.png")} />
+          <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, scale)} source={require("../../../assets/images/trees.png")} />
         )}
         
       </View>
@@ -134,10 +154,12 @@ const styles = StyleSheet.create({
     ]
   },
 
-  trees: (pathHeight, pathWidth) => ({
+  trees: (pathHeight, pathWidth, opacity, scale) => ({
     position: 'absolute',
     top: pathHeight/2,
-    left: pathWidth / 2 + 52/2
+    left: pathWidth / 2 + 52/2,
+    opacity,
+    transform: [ {scale} ]
   }),
 
   marker: {
