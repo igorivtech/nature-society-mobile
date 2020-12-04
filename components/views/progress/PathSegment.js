@@ -18,7 +18,7 @@ const pathWidth = width - EXIT_SIZE;
 const pathXCenter = pathWidth*0.3
 //
 const topMarkerPosition = 0.15;
-const userProgress = 0.5;
+const userProgress = 0.575;
 const bottomMarkerPosition = 0.8;
 //
 const markerHeight = 72;
@@ -69,13 +69,13 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
 
     useEffect(() => {
       if (current) {
-        const { x, y } = properties.getPointAtLength(lineLength * userProgress);
+        const { x, y } = properties.getPointAtLength(lineLength * (1-userProgress));
         markerRef.current.setNativeProps({
           top: y,
           left: x,
           transform: [
-            { translateY: -markerHeight },
-            { translateX: (-markerWidth / 2) + 4 },
+            { translateY: -markerHeight + 12 },
+            { translateX: (-markerWidth / 2) },
           ],
         });
       }
@@ -114,7 +114,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
               stroke="black"
               strokeWidth={2}
               strokeDasharray={lineLength}
-              strokeDashoffset={-userProgress * lineLength + markerHeight / 2}
+              strokeDashoffset={-(1-userProgress) * lineLength}
             />
           </Svg>
         ) : (
