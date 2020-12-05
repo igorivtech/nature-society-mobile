@@ -96,7 +96,19 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const updateChanges = () => {
-    goBack();
+    if (name.length === 0 || signupEmail.length === 0) {
+      return;
+    }
+    if (name !== user.name) {
+      user.name = name;
+    }
+    if (signupEmail !== user.email) {
+      user.email = email;
+    }
+    if (image !== null && image.uri !== null && image.uri.length > 0) {
+      user.image = image.uri;
+    }
+    navigation.navigate("Progress", {user})
   }
 
   const logout = () => {
