@@ -18,8 +18,7 @@ const animationCenterExtra = 70;
 //
 const pathWidth = width - EXIT_SIZE;
 const pathXCenter = pathWidth*0.3
-// const pathTWidth = pathWidth/2;
-const pathTWidth = 200;
+const pathTWidth = pathHeight * 0.3;
 //
 const topMarkerPosition = 0.15;
 const userProgress = 0.5;
@@ -28,112 +27,111 @@ const bottomMarkerPosition = 0.8;
 const markerHeight = 72;
 const markerWidth = 65;
 
-export const PathSegment = (({ scrollY, index, item }) => {
+export const PathSegment = ({ scrollY, index, item }) => {
 
-    const {done, current} = item;
+  const {done, current} = item;
 
-    const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
+  const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
 
-    const markerRef = useRef();
-    const markerSmallRef = useRef();
-    const markerBigRef = useRef();
+  const markerRef = useRef();
+  const markerSmallRef = useRef();
+  const markerBigRef = useRef();
 
-    const line = `
+  const line = `
     M${pathTWidth/2},0
-    C${pathTWidth/2 + 100},${pathHeight * 0.25}
-    ${pathTWidth/2 - 100},${pathHeight * 0.75}
+    C${pathTWidth},${pathHeight * 0.25}
+    ${0},${pathHeight * 0.75}
     ${pathTWidth/2},${pathHeight}
   `;
 
-    const properties = path.svgPathProperties(line);
-    const lineLength = properties.getTotalLength();
+  const properties = path.svgPathProperties(line);
+  const lineLength = properties.getTotalLength();
 
-    const inputRange = [
-      (index - 1) * pathHeight + animationPadding, 
-      index * pathHeight - animationCenterExtra, 
-      index * pathHeight, 
-      index * pathHeight + animationCenterExtra, 
-      (index + 1) * pathHeight - animationPadding
-    ]
+  const inputRange = [
+    (index - 1) * pathHeight + animationPadding, 
+    index * pathHeight - animationCenterExtra, 
+    index * pathHeight, 
+    index * pathHeight + animationCenterExtra, 
+    (index + 1) * pathHeight - animationPadding
+  ]
 
-    const opacity = scrollY.interpolate({
-      inputRange,
-      outputRange: [0, 1, 1, 1, 0],
-      extrapolate: 'clamp'
-    })
+  const opacity = scrollY.interpolate({
+    inputRange,
+    outputRange: [0, 1, 1, 1, 0],
+    extrapolate: 'clamp'
+  })
 
-    useEffect(() => {
-      if (current) {
-        const { x, y } = properties.getPointAtLength(lineLength * (1-userProgress));
-        markerRef.current.setNativeProps({
-          top: y,
-          left: x,
-          transform: [
-            { translateY: -markerHeight + 12 },
-            { translateX: (-markerWidth / 2) },
-          ],
-        });
-      }
-      // small
-      const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
-      markerSmallRef.current.setNativeProps({
-        top: pSmall.y,
-        left: pSmall.x,
+  useEffect(() => {
+    if (current) {
+      const { x, y } = properties.getPointAtLength(lineLength * (1-userProgress));
+      markerRef.current.setNativeProps({
+        top: y,
+        left: x,
         transform: [
-          { translateY: -(current ? 34 : done ? 76 : 34) / 2 },
-          { translateX: -(current ? 34 : done ? 76 : 34) / 2 },
+          { translateY: -markerHeight + 12 },
+          { translateX: (-markerWidth / 2) },
         ],
       });
-      // big
-      const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
-      markerBigRef.current.setNativeProps({
-        top: pBig.y,
-        left: pBig.x,
-        transform: [
-          { translateY: -(current ? 76 : done ? 76 : 34) / 2 },
-          { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
-        ],
-      });
-    }, []);
+    }
+    // small
+    const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
+    markerSmallRef.current.setNativeProps({
+      top: pSmall.y,
+      left: pSmall.x,
+      transform: [
+        { translateY: -(current ? 34 : done ? 76 : 34) / 2 },
+        { translateX: -(current ? 34 : done ? 76 : 34) / 2 },
+      ],
+    });
+    // big
+    const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
+    markerBigRef.current.setNativeProps({
+      top: pBig.y,
+      left: pBig.x,
+      transform: [
+        { translateY: -(current ? 76 : done ? 76 : 34) / 2 },
+        { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
+      ],
+    });
+  }, []);
 
-    return (
-      <View style={styles.pathContainer(pathHeight, pathWidth)}>
-        {current ? (
-          <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-            <Path d={line} stroke="black" strokeWidth={1} />
-            <Path
-              d={line}
-              stroke="black"
-              strokeWidth={2}
-              strokeDasharray={lineLength}
-              strokeDashoffset={-(1-userProgress) * lineLength}
-            />
-          </Svg>
-        ) : (
-          <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-            <Path d={line} stroke="black" strokeWidth={done ? 2 : 1} />
-          </Svg>
-        )}
+  return (
+    <View style={styles.pathContainer(pathHeight, pathWidth)}>
+      {current ? (
+        <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
+          <Path d={line} stroke="black" strokeWidth={1} />
+          <Path
+            d={line}
+            stroke="black"
+            strokeWidth={2}
+            strokeDasharray={lineLength}
+            strokeDashoffset={-(1-userProgress) * lineLength}
+          />
+        </Svg>
+      ) : (
+        <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
+          <Path d={line} stroke="black" strokeWidth={done ? 2 : 1} />
+        </Svg>
+      )}
 
-        {current ? (
-          <View style={StyleSheet.absoluteFill}>
-            <Image style={styles.marker} ref={markerRef} source={require("../../../assets/images/path_marker.png")} />
-            <Image style={styles.marker} ref={markerSmallRef} source={require("../../../assets/images/path_marker_small.png")} />
-            <Image style={styles.marker} ref={markerBigRef} source={require("../../../assets/images/path_marker_big.png")} />
-          </View>
-        ) : (
-          <View style={StyleSheet.absoluteFill}>
-            <Image style={styles.marker} ref={markerSmallRef} source={markerImage} />
-            <Image style={styles.marker} ref={markerBigRef} source={markerImage} />
-          </View>
-        )}
+      {current ? (
+        <View style={StyleSheet.absoluteFill}>
+          <Image style={styles.marker} ref={markerRef} source={require("../../../assets/images/path_marker.png")} />
+          <Image style={styles.marker} ref={markerSmallRef} source={require("../../../assets/images/path_marker_small.png")} />
+          <Image style={styles.marker} ref={markerBigRef} source={require("../../../assets/images/path_marker_big.png")} />
+        </View>
+      ) : (
+        <View style={StyleSheet.absoluteFill}>
+          <Image style={styles.marker} ref={markerSmallRef} source={markerImage} />
+          <Image style={styles.marker} ref={markerBigRef} source={markerImage} />
+        </View>
+      )}
 
-        <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
-        
-      </View>
-    );
-  }
-);
+      <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
+      
+    </View>
+  );
+};
 
 // path_marker - 65 × 72
 // trees - 52 × 82
