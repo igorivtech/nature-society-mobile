@@ -9,6 +9,8 @@ import Svg, { Path } from "react-native-svg";
 import { height, width } from "../../../values/consts";
 import { EXIT_SIZE } from "../../screens/ExploreScreen";
 var path = require("svg-path-properties");
+import {pathHeight} from "../../screens/ProgressScreen";
+
 
 const pathPadding = 0;
 const animationPadding = height * 0.4;
@@ -26,24 +28,13 @@ const bottomMarkerPosition = 0.8;
 const markerHeight = 72;
 const markerWidth = 65;
 
-export const PathSegment = memo(({ scrollY, index, current = false, done = false, pathHeight }) => {
-
-    if (pathHeight === 0) {
-      return <View />;
-    }
+export const PathSegment = memo(({ scrollY, index, current = false, done = false }) => {
 
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
 
     const markerRef = useRef();
     const markerSmallRef = useRef();
     const markerBigRef = useRef();
-
-  //   const line = `
-  //   M${pathWidth / 2},0
-  //   C${pathWidth - pathPadding},${pathHeight * 0.25}
-  //   ${pathPadding},${pathHeight * 0.75}
-  //   ${pathWidth / 2},${pathHeight}
-  // `;
 
     const line = `
     M${pathTWidth/2},0
@@ -101,7 +92,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
           { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
         ],
       });
-    }, [pathHeight]);
+    }, []);
 
     return (
       <View style={styles.pathContainer(pathHeight, pathWidth)}>

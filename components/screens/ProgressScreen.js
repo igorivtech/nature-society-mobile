@@ -11,10 +11,14 @@ import {
   Animated,
 } from "react-native";
 import { colors } from "../../values/colors";
+import { height } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment } from "../views/progress/PathSegment";
+import Constants from "expo-constants";
+
+export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
 
 const array = Array(7).fill(0).map((v, i)=>(i));
 
@@ -23,7 +27,6 @@ export const ProgressScreen = ({ navigation, route }) => {
   const scrollView = useRef();
 
   const [user, setUser] = useState(null);
-  const [pathHeight, setPathHeight] = useState(0);
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -83,13 +86,10 @@ export const ProgressScreen = ({ navigation, route }) => {
           // snapToInterval={pathHeight}
           // decelerationRate="fast"
           ref={scrollView}
-          onLayout={(e) => {
-            setPathHeight(e.nativeEvent.layout.height);
-          }}
           style={styles.scrollView}
         >
           
-          {array.map((i)=>(<PathSegment key={`${i}`} index={i} scrollY={scrollY} current={i == 3} done={i > 3} pathHeight={pathHeight} />))}
+          {array.map((i)=>(<PathSegment key={`${i}`} index={i} scrollY={scrollY} current={i == 3} done={i > 3} />))}
           
         </Animated.ScrollView>
 
