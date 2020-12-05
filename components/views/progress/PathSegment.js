@@ -9,9 +9,9 @@ import Svg, { Path } from "react-native-svg";
 import { height, width } from "../../../values/consts";
 import { EXIT_SIZE } from "../../screens/ExploreScreen";
 var path = require("svg-path-properties");
-import {pathHeight} from "../../screens/ProgressScreen";
+import Constants from "expo-constants";
 
-
+export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
 const pathPadding = 0;
 const animationPadding = height * 0.4;
 const animationCenterExtra = 70;

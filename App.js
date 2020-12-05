@@ -21,6 +21,7 @@ import { ProgressScreen } from "./components/screens/ProgressScreen";
 import { ReportScreen } from "./components/screens/ReportScreen";
 import { LoginScreen } from "./components/screens/LoginScreen";
 import { ProfileScreen } from "./components/screens/ProfileScreen";
+import { UserContext } from "./context/context"
 
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
@@ -33,51 +34,19 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <HomeStack.Navigator initialRouteName="Home" headerMode="none">
-        <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
-        <HomeStack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={fadeOptions}
-        />
-        <HomeStack.Screen
-          name="Place"
-          component={PlaceScreen}
-          options={fadeOptions}
-        />
-
-        <HomeStack.Screen
-          name="Explore"
-          component={ExploreScreen}
-          options={slideFromRightOptions}
-        />
-
-        <HomeStack.Screen
-          name="Progress"
-          component={ProgressScreen}
-          options={slideFromLeftOptions}
-        />
-
-        <HomeStack.Screen
-          name="Report"
-          component={ReportScreen}
-          options={fadeOptions}
-        />
-
-        <HomeStack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={fadeOptions}
-        />
-
-        <HomeStack.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={fadeOptions}
-        />
-
-      </HomeStack.Navigator>
-    </NavigationContainer>
+    <UserContext.Provider value={{}}>
+      <NavigationContainer>
+        <HomeStack.Navigator initialRouteName="Home" headerMode="none">
+          <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
+          <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
+          <HomeStack.Screen name="Place" component={PlaceScreen} options={fadeOptions} />
+          <HomeStack.Screen name="Explore" component={ExploreScreen} options={slideFromRightOptions} />
+          <HomeStack.Screen name="Progress" component={ProgressScreen} options={slideFromLeftOptions} />
+          <HomeStack.Screen name="Report" component={ReportScreen} options={fadeOptions} />
+          <HomeStack.Screen name="Login" component={LoginScreen} options={fadeOptions} />
+          <HomeStack.Screen name="Profile" component={ProfileScreen} options={fadeOptions} />
+        </HomeStack.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }

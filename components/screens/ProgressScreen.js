@@ -15,10 +15,7 @@ import { height } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
-import { PathSegment } from "../views/progress/PathSegment";
-import Constants from "expo-constants";
-
-export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
+import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 
 const array = Array(7).fill(0).map((v, i)=>(i));
 
