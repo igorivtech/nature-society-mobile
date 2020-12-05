@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,8 @@ import {
   ScrollView,
   Animated,
 } from "react-native";
+import { UserContext } from "../../context/context";
+import { SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
 import { height } from "../../values/consts";
 import { strings } from "../../values/strings";
@@ -23,7 +25,8 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   const scrollView = useRef();
 
-  const [user, setUser] = useState(null);
+  const {state, dispatch} = useContext(UserContext);
+  const {user} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -45,9 +48,15 @@ export const ProgressScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (route.params) {
       if (route.params.user !== null) {
-        setUser(route.params.user);
+        dispatch({
+          type: SAVE_USER,
+          payload: route.params.user
+        })
       } else if (route.params.logout) {
-        setUser(null);
+        dispatch({
+          type: SAVE_USER,
+          payload: null
+        })
       }
     }
   }, [route]);
