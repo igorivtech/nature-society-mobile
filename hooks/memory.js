@@ -5,7 +5,7 @@ export const ONBOARDING_SHOWN_KEY = "ONBOARDING_SHOWN_KEY";
 
 export const useOnboarding = () => {
   const [loadingOnboarding, setLoading] = useState(true);
-  const [shown, setShown] = useState(false);
+  const [onboardingShown, setShown] = useState(false);
 
   useEffect(()=>{
     read();
@@ -18,5 +18,5 @@ export const useOnboarding = () => {
     });
   }
 
-  return {shown, loadingOnboarding}
+  return {onboardingShown, loadingOnboarding}
 };

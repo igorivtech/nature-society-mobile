@@ -31,7 +31,7 @@ const HomeStack = createSharedElementStackNavigator();
 export default function App() {
 
   const { fontsLoaded } = fontsLoader();
-  const { shown, loadingOnboarding } = useOnboarding();
+  const { onboardingShown, loadingOnboarding } = useOnboarding();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const contextValue = React.useMemo(() => ({
@@ -46,7 +46,7 @@ export default function App() {
   return (
     <UserContext.Provider value={contextValue}>
       <NavigationContainer>
-        <HomeStack.Navigator initialRouteName={shown ? "Home" : "Onboarding"} headerMode="none">
+        <HomeStack.Navigator initialRouteName={onboardingShown ? "Home" : "Onboarding"} headerMode="none">
           <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
           <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
           <HomeStack.Screen name="Place" component={PlaceScreen} options={fadeOptions} />
