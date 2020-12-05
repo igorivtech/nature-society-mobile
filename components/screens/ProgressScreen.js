@@ -62,19 +62,19 @@ export const ProgressScreen = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
-    if (pathHeight > 0) {
+    setTimeout(() => {
       scrollView.current.scrollToOffset({
         offset: pathHeight * 3 + 400,
         animated: false,
-      })  
+      });  
       setTimeout(() => {
         scrollView.current.scrollToOffset({
           offset: pathHeight * 3,
           animated: true,
         })  
       }, 700);
-    }
-  }, [pathHeight])
+    }, 10);
+  }, [])
 
   const goBack = () => {
     navigation.goBack();
