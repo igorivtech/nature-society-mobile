@@ -79,9 +79,6 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
           ],
         });
       }
-    }, [pathHeight]);
-
-    useEffect(() => {
       // small
       const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
       markerSmallRef.current.setNativeProps({
