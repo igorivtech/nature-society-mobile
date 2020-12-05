@@ -1,6 +1,6 @@
-// import { AsyncStorage } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
 import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-community/async-storage";
+
 export const ONBOARDING_SHOWN_KEY = "ONBOARDING_SHOWN_KEY";
 
 export const useOnboarding = () => {
@@ -13,7 +13,7 @@ export const useOnboarding = () => {
 
   const read = () => {
     AsyncStorage.getItem(ONBOARDING_SHOWN_KEY).then((shown) => {
-      setShown(shown ?? false);
+      setShown(shown !== null ? true : false);
       setLoading(false);
     });
   }

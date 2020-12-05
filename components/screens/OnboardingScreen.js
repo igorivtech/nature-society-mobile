@@ -14,6 +14,8 @@ import { textStyles } from "../../values/textStyles";
 import { width, height } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { OnboardingButton, CoolButton } from "../views/onboarding/views";
+import AsyncStorage from "@react-native-community/async-storage";
+import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
 
 const doneDuration = 1600;
 
@@ -60,6 +62,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const finish = () => {
     navigation.navigate("Home");
+    AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, "true");
   };
 
   useEffect(() => {
