@@ -121,11 +121,13 @@ export const LoginScreen = ({ navigation }) => {
 
   const login = () => {
     if (loginVisible) {
-      navigation.navigate("Progress", { user: {
-        name: name.trim() !== "" ? name.trim() : "יעל השכנה",
-        email: loginEmail.trim() !== "" ? loginEmail.trim() : yael.email,
-        image: image ? image.uri : yael.image
-      } });
+      if (loginEmail.trim() && loginPassword.length > 0) {
+        navigation.navigate("Progress", { user: {
+          name: name.trim() !== "" ? name.trim() : yael.name,
+          email: loginEmail.trim(),
+          image: image ? image.uri : yael.image
+        } });
+      }
     } else {
       setLoginVisible(true);
       setSignupVisible(false);
@@ -136,11 +138,13 @@ export const LoginScreen = ({ navigation }) => {
 
   const signup = () => {
     if (signupVisible) {
-      navigation.navigate("Progress", { user: {
-        name: name.trim() !== "" ? name.trim() : "יעל השכנה",
-        email: signupEmail.trim() !== "" ? signupEmail.trim() : yael.email,
-        image: image ? image.uri : yael.image
-      } });
+      if (name.trim() !== "" && signupEmail.trim() && signupPassword.length > 0) {
+        navigation.navigate("Progress", { user: {
+          name: name.trim(),
+          email: signupEmail.trim(),
+          image: image ? image.uri : yael.image
+        } }); 
+      }
     } else {
       setSignupVisible(true);
       setLoginVisible(false);
