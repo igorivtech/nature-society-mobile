@@ -38,7 +38,7 @@ export const ProgressScreen = ({ navigation }) => {
           y: pathHeight * 3,
           animated: true,
         })  
-      }, 600);
+      }, 700);
     }
   }, [pathHeight])
 
