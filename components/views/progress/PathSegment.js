@@ -16,9 +16,11 @@ const animationCenterExtra = 70;
 //
 const pathWidth = width - EXIT_SIZE;
 const pathXCenter = pathWidth*0.3
+// const pathTWidth = pathWidth/2;
+const pathTWidth = 200;
 //
 const topMarkerPosition = 0.15;
-const userProgress = 0.575;
+const userProgress = 0.5;
 const bottomMarkerPosition = 0.8;
 //
 const markerHeight = 72;
@@ -44,10 +46,10 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
   // `;
 
     const line = `
-    M${pathXCenter},0
-    C${pathXCenter + 100},${pathHeight * 0.25}
-    ${pathXCenter - 100},${pathHeight * 0.75}
-    ${pathXCenter},${pathHeight}
+    M${pathTWidth/2},0
+    C${pathTWidth/2 + 100},${pathHeight * 0.25}
+    ${pathTWidth/2 - 100},${pathHeight * 0.75}
+    ${pathTWidth/2},${pathHeight}
   `;
 
     const properties = path.svgPathProperties(line);
