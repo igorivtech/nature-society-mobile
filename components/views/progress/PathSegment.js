@@ -28,7 +28,7 @@ const bottomMarkerPosition = 0.8;
 const markerHeight = 72;
 const markerWidth = 65;
 
-export const PathSegment = memo(({ scrollY, index, item }) => {
+export const PathSegment = (({ scrollY, index, item }) => {
 
     const {done, current} = item;
 

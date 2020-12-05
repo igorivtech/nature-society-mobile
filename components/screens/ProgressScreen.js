@@ -107,9 +107,8 @@ export const ProgressScreen = ({ navigation }) => {
           )}
           ref={scrollView}
           style={styles.scrollView}
-          renderItem={({item, index})=>{
-            return <PathSegment key={`${index}`} index={index} scrollY={scrollY} item={item} />
-          }}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item, index})=><PathSegment index={index} scrollY={scrollY} item={item} />}
          />
         
         <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
