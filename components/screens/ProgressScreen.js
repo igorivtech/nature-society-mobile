@@ -16,7 +16,41 @@ import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 
-const array = Array(7).fill(0).map((v, i)=>(i));
+
+const data = [
+  {
+    done: false,
+    current: false
+  },
+  {
+    done: false,
+    current: false
+  },
+  {
+    done: false,
+    current: false
+  },
+  {
+    done: false,
+    current: true
+  },
+  {
+    done: true,
+    current: false
+  },
+  {
+    done: true,
+    current: false
+  },
+  {
+    done: true,
+    current: false
+  },
+  {
+    done: true,
+    current: false
+  },
+]
 
 export const ProgressScreen = ({ navigation }) => {
 
@@ -29,13 +63,13 @@ export const ProgressScreen = ({ navigation }) => {
 
   useEffect(()=>{
     if (pathHeight > 0) {
-      scrollView.current.scrollTo({
-        y: pathHeight * 3 + 400,
+      scrollView.current.scrollToOffset({
+        offset: pathHeight * 3 + 400,
         animated: false,
       })  
       setTimeout(() => {
-        scrollView.current.scrollTo({
-          y: pathHeight * 3,
+        scrollView.current.scrollToOffset({
+          offset: pathHeight * 3,
           animated: true,
         })  
       }, 700);
@@ -63,23 +97,21 @@ export const ProgressScreen = ({ navigation }) => {
       <SafeAreaView />
 
       <View style={styles.progressScreenContainer}>
-        <Animated.ScrollView
+        <Animated.FlatList
+          data={data}
           bounces={false}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: scrollY}}}],
             { useNativeDriver: true }    
           )}
-          // snapToInterval={pathHeight}
-          // decelerationRate="fast"
           ref={scrollView}
           style={styles.scrollView}
-        >
-          
-          {array.map((i)=>(<PathSegment key={`${i}`} index={i} scrollY={scrollY} current={i === 3} done={i > 3} />))}
-          
-        </Animated.ScrollView>
-
+          renderItem={({item, index})=>{
+            return <PathSegment key={`${index}`} index={index} scrollY={scrollY} item={item} />
+          }}
+         />
+        
         <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
           {user ? (
             <Image source={require("../../assets/images/settings_icon.png")} />

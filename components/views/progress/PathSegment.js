@@ -28,7 +28,9 @@ const bottomMarkerPosition = 0.8;
 const markerHeight = 72;
 const markerWidth = 65;
 
-export const PathSegment = memo(({ scrollY, index, current = false, done = false }) => {
+export const PathSegment = memo(({ scrollY, index, item }) => {
+
+    const {done, current} = item;
 
     const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
 
