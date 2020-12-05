@@ -23,6 +23,7 @@ import { LoginScreen } from "./components/screens/LoginScreen";
 import { ProfileScreen } from "./components/screens/ProfileScreen";
 import { UserContext } from "./context/context"
 import { initialState, reducer } from "./context/userReducer";
+import { useOnboarding } from "./hooks/memory";
 
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
@@ -30,6 +31,7 @@ const HomeStack = createSharedElementStackNavigator();
 export default function App() {
 
   const { fontsLoaded } = fontsLoader();
+  const { shown, loadingOnboarding } = useOnboarding();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const contextValue = React.useMemo(() => ({
@@ -37,14 +39,14 @@ export default function App() {
     dispatch
   }), [state, dispatch]);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || loadingOnboarding) {
     return <AppLoading />;
   }
 
   return (
     <UserContext.Provider value={contextValue}>
       <NavigationContainer>
-        <HomeStack.Navigator initialRouteName="Home" headerMode="none">
+        <HomeStack.Navigator initialRouteName={shown ? "Home" : "Onboarding"} headerMode="none">
           <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
           <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
           <HomeStack.Screen name="Place" component={PlaceScreen} options={fadeOptions} />
