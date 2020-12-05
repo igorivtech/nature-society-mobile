@@ -70,7 +70,7 @@ export const ExploreScreen = ({ navigation }) => {
 
   const textChanged = (value) => {
     setSearchTerm(value);
-    if (value.length == 0) {
+    if (value.length === 0) {
       setFilteredPlaces(places);
     } else {
       const filtered = places.filter((place) => {
@@ -140,7 +140,7 @@ const TextCard = ({ item, showItem, index, searchTerm }) => {
         numberOfLines={1}
         style={styles.smallCardTitle}
         highlightStyle={{fontFamily: fonts.bold}}
-        searchWords={searchTerm.length == 0 ? [] : [searchTerm]}
+        searchWords={searchTerm.length === 0 ? [] : [searchTerm]}
         textToHighlight={item.title}
       />
       <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>

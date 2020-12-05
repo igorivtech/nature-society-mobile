@@ -36,7 +36,7 @@ export const strings = {
     },
     homeScreen: {
         recentVisitor: (male) => {
-            return male != 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
+            return male !== 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
         }
     },
     exploreScreen: {

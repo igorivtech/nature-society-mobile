@@ -76,7 +76,7 @@ export const ProgressScreen = ({ navigation }) => {
           style={styles.scrollView}
         >
           
-          {array.map((i)=>(<PathSegment key={`${i}`} index={i} scrollY={scrollY} current={i == 3} done={i > 3} />))}
+          {array.map((i)=>(<PathSegment key={`${i}`} index={i} scrollY={scrollY} current={i === 3} done={i > 3} />))}
           
         </Animated.ScrollView>
 

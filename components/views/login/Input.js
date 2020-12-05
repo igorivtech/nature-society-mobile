@@ -15,7 +15,7 @@ export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', titl
   const placeholderHeight = useRef();
 
   useEffect(()=>{
-    if (value.length > 0 && textTranslateY._value == 0) {
+    if (value.length > 0 && textTranslateY._value === 0) {
       setTimeout(() => {
         textTranslateY.setValue(-30);
         textTranslateX.setValue((placeholderWidth.current ?? title.length * 7.4) * (1 - TEXT_SCALE)/2);

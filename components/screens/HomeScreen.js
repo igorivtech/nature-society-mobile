@@ -125,7 +125,7 @@ export const HomeScreen = ({ navigation, route }) => {
           bounces={false}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
-            if (index == 0 || index == places.length - 1) {
+            if (index === 0 || index === places.length - 1) {
               return <View style={spacerStyle} />;
             }
             return (

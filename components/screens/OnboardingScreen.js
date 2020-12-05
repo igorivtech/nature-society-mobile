@@ -69,7 +69,7 @@ export const OnboardingScreen = ({ navigation }) => {
     if (currIndex >= 0) {
       fadeText(titles[currIndex]);
     }
-    if (currIndex == 2) {
+    if (currIndex === 2) {
       setDoneVisible(true);
       Animated.timing(doneButtonAlpha, {
         toValue: 0.5,
@@ -89,7 +89,7 @@ export const OnboardingScreen = ({ navigation }) => {
   }, [currIndex]);
 
   const doneOnPress = () => {
-    if (currIndex == -1) {
+    if (currIndex === -1) {
       return;
     }
     setIndex(-1);
@@ -173,19 +173,19 @@ export const OnboardingScreen = ({ navigation }) => {
         >
           <OnboardingButton
             index={2}
-            selected={currIndex == 2}
+            selected={currIndex === 2}
             setIndex={setIndex}
             doneVisible={doneVisible}
           />
           <OnboardingButton
             index={1}
-            selected={currIndex == 1}
+            selected={currIndex === 1}
             setIndex={setIndex}
             doneVisible={doneVisible}
           />
           <OnboardingButton
             index={0}
-            selected={currIndex == 0}
+            selected={currIndex === 0}
             setIndex={setIndex}
             doneVisible={doneVisible}
           />
