@@ -7,13 +7,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
-  ScrollView,
   Animated,
 } from "react-native";
 import { UserContext } from "../../context/context";
-import { SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
-import { height } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
@@ -21,7 +18,7 @@ import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 
 const array = Array(7).fill(0).map((v, i)=>(i));
 
-export const ProgressScreen = ({ navigation, route }) => {
+export const ProgressScreen = ({ navigation }) => {
 
   const scrollView = useRef();
 
@@ -45,22 +42,6 @@ export const ProgressScreen = ({ navigation, route }) => {
     }
   }, [pathHeight])
 
-  useEffect(() => {
-    if (route.params) {
-      if (route.params.user !== null) {
-        dispatch({
-          type: SAVE_USER,
-          payload: route.params.user
-        })
-      } else if (route.params.logout) {
-        dispatch({
-          type: SAVE_USER,
-          payload: null
-        })
-      }
-    }
-  }, [route]);
-
   const goBack = () => {
     navigation.goBack();
   };
@@ -69,7 +50,7 @@ export const ProgressScreen = ({ navigation, route }) => {
     if (user === null) {
       navigation.navigate("Login");
     } else {
-      navigation.navigate("Profile", { user });
+      navigation.navigate("Profile");
     }
   };
 

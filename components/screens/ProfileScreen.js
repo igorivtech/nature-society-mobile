@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,15 +12,18 @@ import {useKeyboard} from '../../hooks/useKeyboard'
 import { ProfileView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
+import { UserContext } from "../../context/context";
+import { SAVE_USER } from "../../context/userReducer";
 
 const scrollZero = {
   y: 0,
   animated: true,
 }
 
-export const ProfileScreen = ({ navigation, route }) => {
+export const ProfileScreen = ({ navigation }) => {
 
-  const {user} = route.params;
+  const {state, dispatch} = useContext(UserContext);
+  const {user} = state;
 
   const [name, setName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
@@ -36,16 +39,18 @@ export const ProfileScreen = ({ navigation, route }) => {
   const scrollRef = useRef();
 
   useEffect(()=>{
-    if (user.name) {
-      setName(user.name);
-    }
-    if (user.email) {
-      setSignupEmail(user.email);
-    }
-    if (user.image) {
-      setImage({
-        uri: user.image
-      })
+    if (user) {
+      if (user.name) {
+        setName(user.name);
+      }
+      if (user.email) {
+        setSignupEmail(user.email);
+      }
+      if (user.image) {
+        setImage({
+          uri: user.image
+        })
+      }
     }
   }, [])
 
@@ -108,11 +113,19 @@ export const ProfileScreen = ({ navigation, route }) => {
     if (image !== null && image.uri !== null && image.uri.length > 0) {
       user.image = image.uri;
     }
-    navigation.navigate("Progress", {user})
+    updateUser(user);
   }
 
   const logout = () => {
-    navigation.navigate("Progress", {logout: true, user: null})
+    updateUser(null);
+  }
+
+  const updateUser = (user) => {
+    dispatch({
+      type: SAVE_USER,
+      payload: user
+    });
+    navigation.navigate("Progress")
   }
 
   const tapClose = (event) => {

@@ -22,7 +22,6 @@ export const reducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
-        fetchingUser: false,
       };
     default:
       return state;

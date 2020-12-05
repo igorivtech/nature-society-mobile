@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,6 +12,8 @@ import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
+import { UserContext } from "../../context/context";
+import { SAVE_USER } from "../../context/userReducer";
 
 const scrollZero = {
   y: 0,
@@ -25,6 +27,8 @@ const yael = {
 }
 
 export const LoginScreen = ({ navigation }) => {
+
+  const {state, dispatch} = useContext(UserContext);
 
   const [loginVisible, setLoginVisible] = useState(true);
   const [signupVisible, setSignupVisible] = useState(false);
@@ -122,11 +126,11 @@ export const LoginScreen = ({ navigation }) => {
   const login = () => {
     if (loginVisible) {
       if (loginEmail.trim() && loginPassword.length > 0) {
-        navigation.navigate("Progress", { user: {
+        saveUser({
           name: name.trim() !== "" ? name.trim() : yael.name,
           email: loginEmail.trim(),
           image: image ? image.uri : yael.image
-        } });
+        });
       }
     } else {
       setLoginVisible(true);
@@ -139,11 +143,11 @@ export const LoginScreen = ({ navigation }) => {
   const signup = () => {
     if (signupVisible) {
       if (name.trim() !== "" && signupEmail.trim() && signupPassword.length > 0) {
-        navigation.navigate("Progress", { user: {
+        saveUser({
           name: name.trim(),
           email: signupEmail.trim(),
           image: image ? image.uri : yael.image
-        } }); 
+        });
       }
     } else {
       setSignupVisible(true);
@@ -151,6 +155,14 @@ export const LoginScreen = ({ navigation }) => {
       setForgotPasswordVisible(false);
       setNewPasswordVisible(false);
     }
+  }
+
+  const saveUser = (user) => {
+    dispatch({
+      type: SAVE_USER,
+      payload: user
+    })
+    navigation.navigate("Progress");
   }
 
   const forgotPassword = () => {
