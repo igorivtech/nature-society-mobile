@@ -79,7 +79,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
           ],
         });
       }
-    }, []);
+    }, [pathHeight]);
 
     useEffect(() => {
       // small
@@ -102,7 +102,7 @@ export const PathSegment = memo(({ scrollY, index, current = false, done = false
           { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
         ],
       });
-    }, []);
+    }, [pathHeight]);
 
     return (
       <View style={styles.pathContainer(pathHeight, pathWidth)}>
