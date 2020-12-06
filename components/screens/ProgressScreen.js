@@ -8,9 +8,11 @@ import {
   TouchableOpacity,
   Image,
   Animated,
+  Easing,
 } from "react-native";
 import { UserContext } from "../../context/context";
 import { colors } from "../../values/colors";
+import { height } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
@@ -24,16 +26,13 @@ export const ProgressScreen = ({ navigation }) => {
   const scrollView = useRef();
 
   const {state, dispatch} = useContext(UserContext);
-  const {user} = state;
+  const {user, notification} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
-    // DEBUG
-    // setTimeout(()=>{
-    //   setPopupVisible(true);
-    // }, 4000)
-  }, [])
+    setPopupVisible(notification != null);
+  }, [notification])
 
   useEffect(()=>{
     if (user) {
@@ -112,7 +111,8 @@ export const ProgressScreen = ({ navigation }) => {
           )}
         </TouchableOpacity>
 
-        <UserHeader />
+        <UserHeader notification={notification} />
+        <Popup />
 
       </View>
 
@@ -120,6 +120,37 @@ export const ProgressScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const Popup = ({notification}) => {
+
+  const scale = useRef(new Animated.Value(0)).current;
+
+  useState(()=>{
+    Animated.timing(scale, {
+      useNativeDriver: true,
+      toValue: notification != null ? 1 : 0,
+      duration: 300,
+      easing: Easing.inOut(Easing.ease)
+    })
+  }, [notification])
+
+  return (
+    <Animated.View style={{
+      transform: [
+        {scale}
+      ],
+      opacity: scale,
+      width: 180,
+      height: 160,
+      backgroundColor: 'cyan',
+      position: 'absolute',
+      right: 30,
+      bottom: height * 0.25
+    }}>
+
+    </Animated.View>
+  )
+}
 
 
 const styles = StyleSheet.create({
