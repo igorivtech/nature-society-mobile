@@ -31,15 +31,15 @@ export const ProgressScreen = ({ navigation }) => {
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  useEffect(()=> {
-    // DEBUG
-    setTimeout(() => {
-      dispatch({
-        type: SAVE_NOTIFICATION,
-        payload: DEFAULT_NOTIFICATION
-      })
-    }, 4000);
-  }, [])
+  // useEffect(()=> {
+  //   // DEBUG
+  //   setTimeout(() => {
+  //     dispatch({
+  //       type: SAVE_NOTIFICATION,
+  //       payload: DEFAULT_NOTIFICATION
+  //     })
+  //   }, 4000);
+  // }, [])
 
   useEffect(()=>{
     setPopupVisible(notification != null);
