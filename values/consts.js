@@ -86,7 +86,8 @@ export const DATA = [
 export const DEFAULT_NOTIFICATION = {
   title: "יחמור פרסי",
   description: 'התרומה שלך לשמירה על הטבע הצילה יחמור פרסי מצוי.',
-  image: require("../assets/images/notification_icon_outline.png"),
+  // image: require("../assets/images/notification_icon_outline.png"),
+  image: require("../assets/images/yahmur_icon.png"),
   points: 10
 }
 
