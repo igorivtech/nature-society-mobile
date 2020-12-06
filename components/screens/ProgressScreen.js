@@ -19,6 +19,7 @@ import { UserHeader } from "../views/progress/views";
 
 export const ProgressScreen = ({ navigation }) => {
 
+  const [popupVisible, setPopupVisible] = useState(false);
   const [data, setData] = useState([]);
   const scrollView = useRef();
 
@@ -26,6 +27,13 @@ export const ProgressScreen = ({ navigation }) => {
   const {user} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  useEffect(()=>{
+    // DEBUG
+    setTimeout(()=>{
+      setPopupVisible(true);
+    }, 4000)
+  }, [])
 
   useEffect(()=>{
     if (user) {
@@ -93,7 +101,7 @@ export const ProgressScreen = ({ navigation }) => {
           ref={scrollView}
           style={styles.scrollView}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index})=><PathSegment index={index} scrollY={scrollY} item={item} />}
+          renderItem={({item, index})=><PathSegment popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />}
          />
         
         <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
