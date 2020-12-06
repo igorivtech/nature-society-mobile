@@ -43,6 +43,8 @@ export const PathSegment = ({ scrollY, index, item }) => {
   const markerRef = useRef();
   const markerSmallRef = useRef();
   const markerBigRef = useRef();
+  const topContainerRef = useRef();
+  const bottomContainerRef = useRef();
 
   const line = `
     M${pathTWidth/2},0
@@ -80,27 +82,31 @@ export const PathSegment = ({ scrollY, index, item }) => {
         ],
       });
     }
-    // small
+    setupTop();
+    setupBottom();
+  }, []);
+
+  const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
+    const translateY = -(current ? 34 : done ? 76 : 34) / 2;
+    const translateX = -(current ? 34 : done ? 76 : 34) / 2;
     markerSmallRef.current.setNativeProps({
       top: pSmall.y,
       left: pSmall.x,
-      transform: [
-        { translateY: -(current ? 34 : done ? 76 : 34) / 2 },
-        { translateX: -(current ? 34 : done ? 76 : 34) / 2 },
-      ],
+      transform: [{ translateY }, { translateX }]
     });
-    // big
+  }
+
+  const setupBottom = () => {
     const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
+    const translateY = -(current ? 76 : done ? 76 : 34) / 2;
+    const translateX = -(current ? 76 : done ? 76 : 34) / 2;
     markerBigRef.current.setNativeProps({
       top: pBig.y,
       left: pBig.x,
-      transform: [
-        { translateY: -(current ? 76 : done ? 76 : 34) / 2 },
-        { translateX: -(current ? 76 : done ? 76 : 34) / 2 },
-      ],
+      transform: [{ translateY }, { translateX }]
     });
-  }, []);
+  }
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
@@ -127,6 +133,8 @@ export const PathSegment = ({ scrollY, index, item }) => {
         )}
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : markerImage} />
         <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : markerImage} />
+        <View style={styles.topContainer} ref={topContainerRef} />
+        <View style={styles.bottomContainer} ref={bottomContainerRef} />
       </View>
       
       <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
@@ -139,6 +147,20 @@ export const PathSegment = ({ scrollY, index, item }) => {
 // trees - 52 × 82
 
 const styles = StyleSheet.create({
+
+  topContainer: {
+    position: 'absolute',
+    height: 44,
+    width: 100,
+    backgroundColor: 'cyan'
+  },
+
+  bottomContainer: {
+    position: 'absolute',
+    height: 44,
+    width: 100,
+    backgroundColor: 'orange'
+  },
 
   trees: (pathHeight, pathWidth, opacity, scale) => ({
     position: 'absolute',
