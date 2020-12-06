@@ -1,4 +1,4 @@
-import { DEFAULT_USER } from "../values/consts";
+import { DEFAULT_NOTIFICATION, DEFAULT_USER } from "../values/consts";
 
 export const SAVE_USER = "SAVE_USER";
 export const SAVE_NOTIFICATION = "SAVE_NOTIFICATION";
@@ -7,7 +7,7 @@ export const initialState = {
   token: null,
   // user: null,
   user: DEFAULT_USER,
-  notification: null
+  notification: DEFAULT_NOTIFICATION
   // fetchingUser: false,
   // pushToken: null,
   // isSignout: false,

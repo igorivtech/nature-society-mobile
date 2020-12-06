@@ -83,6 +83,10 @@ export const DATA = [
   },
 ];
 
+export const DEFAULT_NOTIFICATION = {
+  title: "כותרת",
+  description: 'מידע',
+}
 
 export const DEFAULT_USER = {
   name: "יעל השכנה",

@@ -13,7 +13,7 @@ import {
 import { UserContext } from "../../context/context";
 import { SAVE_NOTIFICATION } from "../../context/userReducer";
 import { colors } from "../../values/colors";
-import { height } from "../../values/consts";
+import { DEFAULT_NOTIFICATION, height } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
@@ -36,10 +36,7 @@ export const ProgressScreen = ({ navigation }) => {
     setTimeout(() => {
       dispatch({
         type: SAVE_NOTIFICATION,
-        payload: {
-          title: "כותרת",
-          description: 'מידע',
-        }
+        payload: DEFAULT_NOTIFICATION
       })
     }, 4000);
   }, [])
@@ -148,7 +145,7 @@ const Popup = () => {
       useNativeDriver: true,
       toValue: show ? 1 : 0,
       duration: show ? 600 : 400,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }).start();
   }, [notification])
 
