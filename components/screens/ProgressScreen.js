@@ -27,11 +27,17 @@ export const ProgressScreen = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
-    setData([]);
-    if (user.achievements) {
-      setData([...user.achievements].reverse());
+    if (user) {
+      if (user.achievements) {
+        setData([...user.achievements].reverse());
+      }
+    } else {
+      setData([{
+        current: true,
+        done: false
+      }])
     }
-  }, [])
+  }, [user])
 
   useEffect(()=>{
     if (data.length > 0) {

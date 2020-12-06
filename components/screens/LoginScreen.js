@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { height, width } from "../../values/consts";
+import { DEFAULT_USER, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 
@@ -160,7 +160,10 @@ export const LoginScreen = ({ navigation }) => {
   const saveUser = (user) => {
     dispatch({
       type: SAVE_USER,
-      payload: user
+      payload: {
+        ...DEFAULT_USER,
+        ...user
+      }
     })
     navigation.navigate("Progress");
   }

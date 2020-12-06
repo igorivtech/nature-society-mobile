@@ -82,3 +82,49 @@ export const DATA = [
       "כל היא שעומדת בבסיס הסביבתנות - תנועה פוליטית' חברתית ופילוסופית רחבה ומגוונת שמטרתה להגן על מרכיב הטבע שנותר בסביבה הטבעית' ובמקרים רבים אף לשקם או להרחיב את חלקו של הטבע בסביבה זו. הגנת הסביבה' בהקשר זה' היא הניסיון לשמר מצב של השפעה אנושית מינימלית על הסביבה הטבעית",
   },
 ];
+
+
+export const DEFAULT_USER = {
+  name: "יעל השכנה",
+  email: "yael@nextdoor",
+  image:
+    "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png",
+  points: 630,
+  numOfReports: 21,
+  lastAchievement: "חקלאית",
+  achievements: [
+    {
+      done: true,
+      current: false
+    },
+    {
+      done: true,
+      current: false
+    },
+    {
+      done: true,
+      current: true
+    },
+    {
+      done: false,
+      current: false
+    },
+    {
+      done: false,
+      current: false
+    },
+    {
+      done: false,
+      current: false
+    },
+    {
+      done: false,
+      current: false
+    },
+    {
+      done: false,
+      current: false
+    },
+  ]
+
+}
