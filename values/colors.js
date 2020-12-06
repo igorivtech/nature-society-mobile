@@ -6,4 +6,5 @@ export const colors = {
   clear: "transparent",
   desertRock: "#F5B345",
   lighterShade: "#737B83",
+  userHeader: '#222222'
 };

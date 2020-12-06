@@ -129,26 +129,47 @@ const UserHeader = ({}) => {
       </View>
 
       <View style={{
-        marginTop: 30
+        marginTop: 24
       }}>
-        <HeaderDetail icon={require("../../assets/images/header_reports_icon.png")} />
-        <HeaderDetail icon={require("../../assets/images/header_points_icon.png")} />
+        <HeaderDetail value={user ? user.numOfReports : 0} title={strings.progressScreen.reportsTitle} icon={require("../../assets/images/header_reports_icon.png")} />
+        <HeaderDetail value={user ? user.points : 0} title={strings.progressScreen.pointsTitle} icon={require("../../assets/images/header_points_icon.png")} />
       </View>
       
     </View>
   )
 }
 
-const HeaderDetail = ({icon}) => {
+const HeaderDetail = ({icon, value, title}) => {
   return (
     <View style={{
-      marginBottom: 12
+      marginBottom: 12,
+      alignItems: 'flex-end'
     }}>
-      <Image style={{
-        height: 19,
-        width: 19,
-        resizeMode: 'contain'
-      }} source={icon} />
+      <View style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+      }}>
+
+        <Text style={{
+          ...textStyles.normalOfSize(24),
+          color: colors.userHeader
+        }}>{value}</Text>
+
+        <Image style={{
+          marginLeft: 4,
+          height: 19,
+          width: 19,
+          resizeMode: 'contain'
+        }} source={icon} />
+      </View>
+
+      <Text style={{
+        marginTop: 4,
+        ...textStyles.normalOfSize(14),
+        color: colors.userHeader
+      }}>{title}</Text>
+      
     </View>
   )
 }
