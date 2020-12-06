@@ -191,10 +191,7 @@ const FloatingLabel = ({item, right}) => {
           <Text style={flStyles.notDoneTitle}>{item.bottomTitle}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={{
-               ...textStyles.normalOfSize(10),
-               color: colors.pathNotDone
-            }}>{user ? (item.points - user.points) : "-"}</Text>
+            <Text style={flStyles.notDoneInnerText}>{user ? (item.points - user.points) : "-"}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>
@@ -207,6 +204,11 @@ const FloatingLabel = ({item, right}) => {
 // trees - 52 × 82
 
 const flStyles = StyleSheet.create({
+
+  notDoneInnerText: {
+    ...textStyles.normalOfSize(10),
+    color: colors.pathNotDone
+  },
 
   notDoneInnerContainer: {
     alignItems: 'center',
