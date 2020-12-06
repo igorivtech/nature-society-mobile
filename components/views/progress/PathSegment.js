@@ -33,9 +33,12 @@ const DONE_WIDTH = 3;
 
 export const PathSegment = ({ scrollY, index, item }) => {
 
+  const smallIcon = require("../../../assets/images/path_marker_small.png");
+  const largeIcon = require("../../../assets/images/path_marker_big.png");
+
   const {done, current} = item;
 
-  const markerImage = done ? require("../../../assets/images/path_marker_big.png") : require("../../../assets/images/path_marker_small.png");
+  const markerImage = done ? largeIcon : smallIcon;
 
   const markerRef = useRef();
   const markerSmallRef = useRef();
@@ -118,19 +121,14 @@ export const PathSegment = ({ scrollY, index, item }) => {
         </Svg>
       )}
 
-      {current ? (
-        <View style={StyleSheet.absoluteFill}>
+      <View style={StyleSheet.absoluteFill}>
+        {current && (
           <Image style={styles.marker} ref={markerRef} source={require("../../../assets/images/path_marker.png")} />
-          <Image style={styles.marker} ref={markerSmallRef} source={require("../../../assets/images/path_marker_small.png")} />
-          <Image style={styles.marker} ref={markerBigRef} source={require("../../../assets/images/path_marker_big.png")} />
-        </View>
-      ) : (
-        <View style={StyleSheet.absoluteFill}>
-          <Image style={styles.marker} ref={markerSmallRef} source={markerImage} />
-          <Image style={styles.marker} ref={markerBigRef} source={markerImage} />
-        </View>
-      )}
-
+        )}
+        <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : markerImage} />
+        <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : markerImage} />
+      </View>
+      
       <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
       
     </View>
