@@ -127,8 +127,28 @@ const UserHeader = ({}) => {
         </View>
         <Image source={require("../../assets/images/flag_icon.png")} />
       </View>
-      
 
+      <View style={{
+        marginTop: 30
+      }}>
+        <HeaderDetail icon={require("../../assets/images/header_reports_icon.png")} />
+        <HeaderDetail icon={require("../../assets/images/header_points_icon.png")} />
+      </View>
+      
+    </View>
+  )
+}
+
+const HeaderDetail = ({icon}) => {
+  return (
+    <View style={{
+      marginBottom: 12
+    }}>
+      <Image style={{
+        height: 19,
+        width: 19,
+        resizeMode: 'contain'
+      }} source={icon} />
     </View>
   )
 }
