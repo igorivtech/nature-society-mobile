@@ -94,56 +94,64 @@ export const DEFAULT_USER = {
   lastAchievement: "חקלאית",
   achievements: [
     {
-      done: true,
+      topDone: true,
+      bottomDone: true,
       current: false,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',
       points: 700
     },
     {
-      done: true,
+      topDone: true,
+      bottomDone: true,
       current: false,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',
       points: 700
     },
     {
-      done: true,
+      topDone: false,
+      bottomDone: true,
       current: true,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',
       points: 700
     },
     {
-      done: false,
+      topDone: false,
+      bottomDone: false,
       current: false,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',
       points: 700
     },
     {
-      done: false,
+      topDone: false,
+      bottomDone: false,
       current: false,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',
       points: 700
     },
     {
-      done: false,
+      topDone: false,
+      bottomDone: false,
       current: false,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',
       points: 700
     },
     {
-      done: false,
+      topDone: false,
+      bottomDone: false,
       current: false,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',
       points: 700
     },
     {
-      done: false,
+      topDone: false,
+      bottomDone: false,
       current: false,
       topTitle: 'בוטנאי',
       bottomTitle: 'חקלאית',

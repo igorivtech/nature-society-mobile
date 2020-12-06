@@ -45,9 +45,10 @@ const BOTTOM_CONTAINER_MARGIN = 12;
 
 export const PathSegment = ({ scrollY, index, item }) => {
 
-  const {done, current} = item;
+  const {topDone, bottomDone, current} = item;
 
-  const markerImage = done ? largeIcon : smallIcon;
+  const topMarkerImage = topDone ? largeIcon : smallIcon;
+  const bottomMarkerImage = bottomDone ? largeIcon : smallIcon;
 
   const markerRef = useRef();
   const markerSmallRef = useRef();
@@ -97,7 +98,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
-    const iconSize = current ? 34 : done ? 76 : 34;
+    const iconSize = current ? 34 : topDone ? 76 : 34;
     const translateY = -iconSize / 2;
     const translateX = -iconSize / 2;
     markerSmallRef.current.setNativeProps({
@@ -117,7 +118,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
 
   const setupBottom = () => {
     const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
-    const iconSize = current ? 76 : done ? 76 : 34;
+    const iconSize = current ? 76 : bottomDone ? 76 : 34;
     const translateY = -iconSize / 2;
     const translateX = -iconSize / 2;
     markerBigRef.current.setNativeProps({
@@ -150,7 +151,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
         </Svg>
       ) : (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke={colors.path} strokeWidth={done ? DONE_WIDTH : PATH_WIDTH} />
+          <Path d={line} stroke={colors.path} strokeWidth={(topDone && bottomDone) ? DONE_WIDTH : PATH_WIDTH} />
         </Svg>
       )}
 
@@ -158,13 +159,13 @@ export const PathSegment = ({ scrollY, index, item }) => {
         {current && (
           <Image style={styles.marker} ref={markerRef} source={require("../../../assets/images/path_marker.png")} />
         )}
-        <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : markerImage} />
-        <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : markerImage} />
+        <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : topMarkerImage} />
+        <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : bottomMarkerImage} />
         <View style={styles.topContainer} ref={topContainerRef}>
-          <FloatingLabel item={item} right={true} />
+          <FloatingLabel item={item} right={true} done={item.topDone} />
         </View>
         <View style={styles.bottomContainer} ref={bottomContainerRef}>
-          <FloatingLabel item={item} right={false} />
+          <FloatingLabel item={item} right={false} done={item.bottomDone} />
         </View>
       </View>
       
@@ -174,14 +175,14 @@ export const PathSegment = ({ scrollY, index, item }) => {
   );
 };
 
-const FloatingLabel = ({item, right}) => {
+const FloatingLabel = ({item, right, done}) => {
 
   const {state} = useContext(UserContext);
   const {user} = state;
 
   return (
     <View style={flStyles.container(right)}>
-      {item.done ? (
+      {done ? (
         <View style={flStyles.doneContainer(right)}>
           <Text style={flStyles.doneText}>{item.bottomTitle}</Text>
           <View style={flStyles.doneBorder} />
