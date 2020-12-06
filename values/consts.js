@@ -97,49 +97,57 @@ export const DEFAULT_USER = {
       done: true,
       current: false,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
     {
       done: true,
       current: false,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
     {
       done: true,
       current: true,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
     {
       done: false,
       current: false,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
     {
       done: false,
       current: false,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
     {
       done: false,
       current: false,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
     {
       done: false,
       current: false,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
     {
       done: false,
       current: false,
       topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית'
+      bottomTitle: 'חקלאית',
+      points: 700
     },
   ]
 

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useContext, useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,6 +13,7 @@ var path = require("svg-path-properties");
 import Constants from "expo-constants";
 import { colors } from "../../../values/colors";
 import { textStyles } from "../../../values/textStyles";
+import { UserContext } from "../../../context/context"
 
 export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
 const pathPadding = 0;
@@ -174,6 +175,10 @@ export const PathSegment = ({ scrollY, index, item }) => {
 };
 
 const FloatingLabel = ({item, right}) => {
+
+  const {state} = useContext(UserContext);
+  const {user} = state;
+
   return (
     <View style={flStyles.container(right)}>
       {item.done ? (
@@ -182,11 +187,16 @@ const FloatingLabel = ({item, right}) => {
           <View style={flStyles.doneBorder} />
         </View>
       ) : (
-        <View style={{
-          alignItems: 'flex-start',
-          backgroundColor: 'yellow'
-        }}>
-          <Text>{item.bottomTitle}</Text>
+        <View style={flStyles.notDoneContainer(right)}>
+          <Text style={flStyles.notDoneTitle}>{item.bottomTitle}</Text>
+          <View style={flStyles.notDoneBorder} />
+          <View style={flStyles.notDoneInnerContainer}>
+            <Text style={{
+               ...textStyles.normalOfSize(10),
+               color: colors.pathNotDone
+            }}>{user ? (item.points - user.points) : "-"}</Text>
+            <Image source={require("../../../assets/images/floating_marker.png")} />
+          </View>
         </View>
       )}
     </View>
@@ -197,6 +207,30 @@ const FloatingLabel = ({item, right}) => {
 // trees - 52 × 82
 
 const flStyles = StyleSheet.create({
+
+  notDoneInnerContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+
+  notDoneBorder: {
+    marginVertical: 2,
+    backgroundColor: colors.lighterShade,
+    height: 1,
+    alignSelf: 'stretch'
+  },
+
+  notDoneTitle: {
+    ...textStyles.normalOfSize(11),
+    color: colors.lighterShade
+  },
+
+  notDoneContainer: (right) => ({
+    alignItems: right ? 'flex-start' : 'flex-end',
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }),
+
   container: (right) => ({
     ...StyleSheet.absoluteFill,
     justifyContent: 'center',
@@ -204,7 +238,8 @@ const flStyles = StyleSheet.create({
   }),
   doneContainer: (right) => ({
     alignItems: right ? 'flex-start' : 'flex-end',
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   }),
   doneText: {
     ...textStyles.boldOfSize(14),

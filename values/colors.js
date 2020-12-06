@@ -7,5 +7,6 @@ export const colors = {
   desertRock: "#F5B345",
   lighterShade: "#737B83",
   userHeader: '#222222',
-  path: "#737B83"
+  path: "#737B83",
+  pathNotDone: "#818181"
 };
