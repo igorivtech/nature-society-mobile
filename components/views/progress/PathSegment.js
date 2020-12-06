@@ -193,7 +193,7 @@ const FloatingLabel = ({item, right, done}) => {
           <Text style={flStyles.notDoneTitle}>{item.bottomTitle}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={flStyles.notDoneInnerText}>{user ? (item.points - user.points) : "-"}</Text>
+            <Text style={flStyles.notDoneInnerText}>{user ? (item.points - user.points) : ""}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>
