@@ -102,6 +102,9 @@ export const ProgressScreen = ({ navigation }) => {
             <Text style={styles.bottomText}>{strings.progressScreen.signup}</Text>
           )}
         </TouchableOpacity>
+
+        <UserHeader />
+
       </View>
 
       <SafeAreaView style={styles.bottomSafeAreaStyle} />
@@ -109,7 +112,45 @@ export const ProgressScreen = ({ navigation }) => {
   );
 };
 
+const UserHeader = ({}) => {
+
+  const {state} = useContext(UserContext);
+  const {user} = state;
+
+  return (
+    <View style={styles.userHeader}>
+
+      <View style={styles.headerNameContainer}>
+        <View style={styles.headerTextsContainer}>
+          <Text style={textStyles.boldOfSize(24)}>{user ? user.name : strings.guest}</Text>
+          <Text style={textStyles.normalOfSize(18)}>{user ? user.lastAchievement : ""}</Text>
+        </View>
+        <Image source={require("../../assets/images/flag_icon.png")} />
+      </View>
+      
+
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
+
+  headerNameContainer: {
+    flexDirection: 'row'
+  },
+
+  headerTextsContainer: {
+    justifyContent: 'space-between',
+    marginRight: 12
+  },
+
+  userHeader: {
+    top: 30,
+    right: 30,
+    position: 'absolute',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between'
+  },
 
   scrollView: {
     // overflow: 'visible',

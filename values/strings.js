@@ -1,4 +1,5 @@
 export const strings = {
+    guest: 'אורח',
     or: 'או',
     email: 'אימייל',
     fullName: 'שם מלא',
