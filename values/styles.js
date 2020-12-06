@@ -4,9 +4,7 @@ import { width, height } from "./consts";
 
 export const styles = StyleSheet.create({
   mapStyle: {
-    position: "absolute",
-    width: width,
-    height: height,
+    ...StyleSheet.absoluteFill
   },
   centerChildren: {
     alignItems: "center",
@@ -32,11 +30,7 @@ export const styles = StyleSheet.create({
   }),
 
   safeAreaContainer: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFill,
     justifyContent: "space-between",
     zIndex: 1,
     // flex: 1,

@@ -16,44 +16,9 @@ import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 
-
-const data = [
-  {
-    done: false,
-    current: false
-  },
-  {
-    done: false,
-    current: false
-  },
-  {
-    done: false,
-    current: false
-  },
-  {
-    done: false,
-    current: true
-  },
-  {
-    done: true,
-    current: false
-  },
-  {
-    done: true,
-    current: false
-  },
-  {
-    done: true,
-    current: false
-  },
-  {
-    done: true,
-    current: false
-  },
-]
-
 export const ProgressScreen = ({ navigation }) => {
 
+  const [data, setData] = useState([]);
   const scrollView = useRef();
 
   const {state, dispatch} = useContext(UserContext);
@@ -62,17 +27,28 @@ export const ProgressScreen = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
-    scrollView.current.scrollToOffset({
-      offset: pathHeight * 3 + 400,
-      animated: false,
-    });  
-    setTimeout(() => {
-      scrollView.current.scrollToOffset({
-        offset: pathHeight * 3,
-        animated: true,
-      })  
-    }, 700);
+    if (user.achievements) {
+      setData(user.achievements);
+    }
   }, [])
+
+  useEffect(()=>{
+    if (data.length > 0) {
+      const currentIndex = data.findIndex(achievement=>achievement.current);
+      setTimeout(()=>{
+        scrollView.current.scrollToOffset({
+          offset: pathHeight * currentIndex + 400,
+          animated: false,
+        });  
+        setTimeout(() => {
+          scrollView.current.scrollToOffset({
+            offset: pathHeight * currentIndex,
+            animated: true,
+          })  
+        }, 700);
+      }, 0)
+    }
+  }, [data])
 
   const goBack = () => {
     navigation.goBack();

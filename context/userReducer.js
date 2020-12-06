@@ -8,6 +8,44 @@ export const initialState = {
     email: "yael@nextdoor",
     image:
       "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png",
+    points: 630,
+    numOfReports: 21,
+    lastAchievement: "חקלאית",
+    achievements: [
+      {
+        done: false,
+        current: false
+      },
+      {
+        done: false,
+        current: false
+      },
+      {
+        done: false,
+        current: false
+      },
+      {
+        done: false,
+        current: true
+      },
+      {
+        done: true,
+        current: false
+      },
+      {
+        done: true,
+        current: false
+      },
+      {
+        done: true,
+        current: false
+      },
+      {
+        done: true,
+        current: false
+      },
+    ]
+
   },
   // fetchingUser: false,
   // pushToken: null,
