@@ -32,10 +32,13 @@ export const ProgressScreen = ({ navigation }) => {
         setData([...user.achievements].reverse());
       }
     } else {
-      setData([{
-        current: true,
-        done: false
-      }])
+      setData([])
+      setTimeout(() => {
+        setData([{
+          current: true,
+          done: false
+        }])  
+      }, 0);
     }
   }, [user])
 
