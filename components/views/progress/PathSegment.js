@@ -12,6 +12,7 @@ import { EXIT_SIZE } from "../../screens/ExploreScreen";
 var path = require("svg-path-properties");
 import Constants from "expo-constants";
 import { colors } from "../../../values/colors";
+import { textStyles } from "../../../values/textStyles";
 
 export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
 const pathPadding = 0;
@@ -36,8 +37,8 @@ const smallIcon = require("../../../assets/images/path_marker_small.png");
 const largeIcon = require("../../../assets/images/path_marker_big.png");
 
 const CONTAINER_HEIGHT = 44;
-const TOP_CONTAINER_WIDTH = 100;
-const BOTTOM_CONTAINER_WIDTH = 100;
+const TOP_CONTAINER_WIDTH = 70;
+const BOTTOM_CONTAINER_WIDTH = TOP_CONTAINER_WIDTH;
 const CONTAINER_MARGIN = 8;
 
 export const PathSegment = ({ scrollY, index, item }) => {
@@ -158,10 +159,10 @@ export const PathSegment = ({ scrollY, index, item }) => {
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : markerImage} />
         <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : markerImage} />
         <View style={styles.topContainer} ref={topContainerRef}>
-          <FloatingLabel item={item} />
+          <FloatingLabel item={item} right={true} />
         </View>
         <View style={styles.bottomContainer} ref={bottomContainerRef}>
-          <FloatingLabel item={item} />
+          <FloatingLabel item={item} right={false} />
         </View>
       </View>
       
@@ -171,11 +172,37 @@ export const PathSegment = ({ scrollY, index, item }) => {
   );
 };
 
-const FloatingLabel = ({item}) => {
+const FloatingLabel = ({item, right}) => {
   console.log(item);
   return (
-    <View>
-      <Text>{item.bottomTitle}</Text>
+    <View style={{
+      ...StyleSheet.absoluteFill,
+      justifyContent: 'center',
+      alignItems: right ? 'flex-start' : 'flex-end'
+    }}>
+      {item.done ? (
+        <View style={{
+          alignItems: right ? 'flex-start' : 'flex-end',
+          alignSelf: 'stretch'
+        }}>
+          <Text style={{
+            ...textStyles.boldOfSize(14),
+            color: colors.treeBlues
+          }}>{item.bottomTitle}</Text>
+          <View style={{
+            backgroundColor: colors.treeBlues,
+            height: 1,
+            alignSelf: 'stretch'
+          }} />
+        </View>
+      ) : (
+        <View style={{
+          alignItems: 'flex-start',
+          backgroundColor: 'yellow'
+        }}>
+          <Text>{item.bottomTitle}</Text>
+        </View>
+      )}
     </View>
   )
 }
@@ -186,20 +213,16 @@ const FloatingLabel = ({item}) => {
 const styles = StyleSheet.create({
 
   topContainer: {
-    position: 'absolute',
+    ...StyleSheet.absoluteFill,
     height: CONTAINER_HEIGHT,
     width: TOP_CONTAINER_WIDTH,
-    backgroundColor: 'cyan',
-    alignItems: 'center',
     justifyContent: 'center'
   },
 
   bottomContainer: {
-    position: 'absolute',
+    ...StyleSheet.absoluteFill,
     height: CONTAINER_HEIGHT,
     width: BOTTOM_CONTAINER_WIDTH,
-    backgroundColor: 'orange',
-    alignItems: 'center',
     justifyContent: 'center'
   },
 
