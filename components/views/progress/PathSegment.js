@@ -37,9 +37,10 @@ const smallIcon = require("../../../assets/images/path_marker_small.png");
 const largeIcon = require("../../../assets/images/path_marker_big.png");
 
 const CONTAINER_HEIGHT = 44;
-const TOP_CONTAINER_WIDTH = 70;
-const BOTTOM_CONTAINER_WIDTH = TOP_CONTAINER_WIDTH;
-const CONTAINER_MARGIN = 8;
+const TOP_CONTAINER_WIDTH = 45;
+const BOTTOM_CONTAINER_WIDTH = 70;
+const TOP_CONTAINER_MARGIN = 14;
+const BOTTOM_CONTAINER_MARGIN = 12;
 
 export const PathSegment = ({ scrollY, index, item }) => {
 
@@ -107,7 +108,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
       top: pSmall.y,
       left: pSmall.x,
       transform: [
-        {translateX: -iconSize/2 - TOP_CONTAINER_WIDTH - CONTAINER_MARGIN},
+        {translateX: -iconSize/2 - TOP_CONTAINER_WIDTH - TOP_CONTAINER_MARGIN},
         {translateY: -CONTAINER_HEIGHT/2}
       ]
     })
@@ -127,7 +128,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
       top: pBig.y,
       left: pBig.x,
       transform: [
-        {translateX: iconSize / 2 + CONTAINER_MARGIN},
+        {translateX: iconSize / 2 + BOTTOM_CONTAINER_MARGIN},
         {translateY: -CONTAINER_HEIGHT/2}
       ]
     })
@@ -173,7 +174,6 @@ export const PathSegment = ({ scrollY, index, item }) => {
 };
 
 const FloatingLabel = ({item, right}) => {
-  console.log(item);
   return (
     <View style={{
       ...StyleSheet.absoluteFill,
