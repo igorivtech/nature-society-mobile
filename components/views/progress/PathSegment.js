@@ -34,6 +34,11 @@ const DONE_WIDTH = 3;
 const smallIcon = require("../../../assets/images/path_marker_small.png");
 const largeIcon = require("../../../assets/images/path_marker_big.png");
 
+const CONTAINER_HEIGHT = 44;
+const TOP_CONTAINER_WIDTH = 100;
+const BOTTOM_CONTAINER_WIDTH = 100;
+const CONTAINER_MARGIN = 8;
+
 export const PathSegment = ({ scrollY, index, item }) => {
 
   const {done, current} = item;
@@ -88,24 +93,42 @@ export const PathSegment = ({ scrollY, index, item }) => {
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
-    const translateY = -(current ? 34 : done ? 76 : 34) / 2;
-    const translateX = -(current ? 34 : done ? 76 : 34) / 2;
+    const iconSize = current ? 34 : done ? 76 : 34;
+    const translateY = -iconSize / 2;
+    const translateX = -iconSize / 2;
     markerSmallRef.current.setNativeProps({
       top: pSmall.y,
       left: pSmall.x,
       transform: [{ translateY }, { translateX }]
     });
+    topContainerRef.current.setNativeProps({
+      top: pSmall.y,
+      left: pSmall.x,
+      transform: [
+        {translateX: -iconSize/2 - TOP_CONTAINER_WIDTH - CONTAINER_MARGIN},
+        {translateY: -CONTAINER_HEIGHT/2}
+      ]
+    })
   }
 
   const setupBottom = () => {
     const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
-    const translateY = -(current ? 76 : done ? 76 : 34) / 2;
-    const translateX = -(current ? 76 : done ? 76 : 34) / 2;
+    const iconSize = current ? 76 : done ? 76 : 34;
+    const translateY = -iconSize / 2;
+    const translateX = -iconSize / 2;
     markerBigRef.current.setNativeProps({
       top: pBig.y,
       left: pBig.x,
       transform: [{ translateY }, { translateX }]
     });
+    bottomContainerRef.current.setNativeProps({
+      top: pBig.y,
+      left: pBig.x,
+      transform: [
+        {translateX: iconSize / 2 + CONTAINER_MARGIN},
+        {translateY: -CONTAINER_HEIGHT/2}
+      ]
+    })
   }
 
   return (
@@ -150,15 +173,15 @@ const styles = StyleSheet.create({
 
   topContainer: {
     position: 'absolute',
-    height: 44,
-    width: 100,
+    height: CONTAINER_HEIGHT,
+    width: TOP_CONTAINER_WIDTH,
     backgroundColor: 'cyan'
   },
 
   bottomContainer: {
     position: 'absolute',
-    height: 44,
-    width: 100,
+    height: CONTAINER_HEIGHT,
+    width: BOTTOM_CONTAINER_WIDTH,
     backgroundColor: 'orange'
   },
 
