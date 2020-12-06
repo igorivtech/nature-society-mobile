@@ -143,10 +143,11 @@ const Popup = () => {
   const scale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    const show = notification != null;
     Animated.timing(scale, {
       useNativeDriver: true,
-      toValue: notification != null ? 1 : 0,
-      duration: 600,
+      toValue: show ? 1 : 0,
+      duration: show ? 600 : 400,
       easing: Easing.inOut(Easing.ease)
     }).start();
   }, [notification])
