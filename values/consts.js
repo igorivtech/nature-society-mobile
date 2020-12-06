@@ -90,7 +90,7 @@ export const DEFAULT_USER = {
   image:
     "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png",
   points: 630,
-  numOfReports: 21,
+  numOfReports: 31,
   lastAchievement: "חקלאית",
   achievements: [
     {
