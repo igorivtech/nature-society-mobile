@@ -137,7 +137,8 @@ const Popup = () => {
   const {state, dispatch} = useContext(UserContext);
   const {user, notification} = state;
 
-  const scale = useRef(new Animated.Value(0)).current;
+  // const scale = useRef(new Animated.Value(0)).current;
+  const scale = useRef(new Animated.Value(notification != null ? 1 : 0)).current;
 
   useEffect(() => {
     const show = notification != null;
