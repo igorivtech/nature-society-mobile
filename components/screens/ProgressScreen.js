@@ -30,9 +30,9 @@ export const ProgressScreen = ({ navigation }) => {
 
   useEffect(()=>{
     // DEBUG
-    setTimeout(()=>{
-      setPopupVisible(true);
-    }, 4000)
+    // setTimeout(()=>{
+    //   setPopupVisible(true);
+    // }, 4000)
   }, [])
 
   useEffect(()=>{
