@@ -45,6 +45,8 @@ const BOTTOM_CONTAINER_MARGIN = 12;
 
 export const PathSegment = ({ scrollY, index, item }) => {
 
+  const rightLabelOpacity = useRef(new Animated.Value(1)).current;
+
   const {topDone, bottomDone, current} = item;
 
   const topMarkerImage = topDone ? largeIcon : smallIcon;
@@ -164,9 +166,9 @@ export const PathSegment = ({ scrollY, index, item }) => {
         <View style={styles.topContainer} ref={topContainerRef}>
           <FloatingLabel item={item} right={true} done={item.topDone} />
         </View>
-        <View style={styles.bottomContainer} ref={bottomContainerRef}>
+        <Animated.View style={styles.bottomContainer(rightLabelOpacity)} ref={bottomContainerRef}>
           <FloatingLabel item={item} right={false} done={item.bottomDone} />
-        </View>
+        </Animated.View>
       </View>
       
       <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
@@ -264,12 +266,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  bottomContainer: {
+  bottomContainer: (opacity) => ({
+    opacity,
     ...StyleSheet.absoluteFill,
     height: CONTAINER_HEIGHT,
     width: BOTTOM_CONTAINER_WIDTH,
     justifyContent: 'center'
-  },
+  }),
 
   trees: (pathHeight, pathWidth, opacity, scale) => ({
     position: 'absolute',
