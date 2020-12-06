@@ -10,6 +10,7 @@ import { height, width } from "../../../values/consts";
 import { EXIT_SIZE } from "../../screens/ExploreScreen";
 var path = require("svg-path-properties");
 import Constants from "expo-constants";
+import { colors } from "../../../values/colors";
 
 export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
 const pathPadding = 0;
@@ -99,10 +100,10 @@ export const PathSegment = ({ scrollY, index, item }) => {
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
       {current ? (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke="black" strokeWidth={1} />
+          <Path d={line} stroke={colors.path} strokeWidth={1} />
           <Path
             d={line}
-            stroke="black"
+            stroke={colors.path}
             strokeWidth={2}
             strokeDasharray={lineLength}
             strokeDashoffset={-(1-userProgress) * lineLength}
@@ -110,7 +111,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
         </Svg>
       ) : (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke="black" strokeWidth={done ? 2 : 1} />
+          <Path d={line} stroke={colors.path} strokeWidth={done ? 2 : 1} />
         </Svg>
       )}
 
