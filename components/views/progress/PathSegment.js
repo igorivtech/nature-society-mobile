@@ -31,10 +31,10 @@ const markerWidth = 65;
 const PATH_WIDTH = 1.5;
 const DONE_WIDTH = 3;
 
-export const PathSegment = ({ scrollY, index, item }) => {
+const smallIcon = require("../../../assets/images/path_marker_small.png");
+const largeIcon = require("../../../assets/images/path_marker_big.png");
 
-  const smallIcon = require("../../../assets/images/path_marker_small.png");
-  const largeIcon = require("../../../assets/images/path_marker_big.png");
+export const PathSegment = ({ scrollY, index, item }) => {
 
   const {done, current} = item;
 
