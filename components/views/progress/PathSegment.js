@@ -175,25 +175,11 @@ export const PathSegment = ({ scrollY, index, item }) => {
 
 const FloatingLabel = ({item, right}) => {
   return (
-    <View style={{
-      ...StyleSheet.absoluteFill,
-      justifyContent: 'center',
-      alignItems: right ? 'flex-start' : 'flex-end'
-    }}>
+    <View style={flStyles.container(right)}>
       {item.done ? (
-        <View style={{
-          alignItems: right ? 'flex-start' : 'flex-end',
-          alignSelf: 'stretch'
-        }}>
-          <Text style={{
-            ...textStyles.boldOfSize(14),
-            color: colors.treeBlues
-          }}>{item.bottomTitle}</Text>
-          <View style={{
-            backgroundColor: colors.treeBlues,
-            height: 1,
-            alignSelf: 'stretch'
-          }} />
+        <View style={flStyles.doneContainer(right)}>
+          <Text style={flStyles.doneText}>{item.bottomTitle}</Text>
+          <View style={flStyles.doneBorder} />
         </View>
       ) : (
         <View style={{
@@ -209,6 +195,27 @@ const FloatingLabel = ({item, right}) => {
 
 // path_marker - 65 × 72
 // trees - 52 × 82
+
+const flStyles = StyleSheet.create({
+  container: (right) => ({
+    ...StyleSheet.absoluteFill,
+    justifyContent: 'center',
+    alignItems: right ? 'flex-start' : 'flex-end'
+  }),
+  doneContainer: (right) => ({
+    alignItems: right ? 'flex-start' : 'flex-end',
+    alignSelf: 'stretch'
+  }),
+  doneText: {
+    ...textStyles.boldOfSize(14),
+    color: colors.treeBlues
+  },
+  doneBorder: {
+    backgroundColor: colors.treeBlues,
+    height: 1,
+    alignSelf: 'stretch'
+  }
+})
 
 const styles = StyleSheet.create({
 
