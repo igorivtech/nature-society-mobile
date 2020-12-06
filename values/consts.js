@@ -84,8 +84,10 @@ export const DATA = [
 ];
 
 export const DEFAULT_NOTIFICATION = {
-  title: "כותרת",
-  description: 'מידע',
+  title: "יחמור פרסי",
+  description: 'התרומה שלך לשמירה על הטבע הצילה יחמור פרסי מצוי.',
+  image: require("../assets/images/notification_icon_outline.png"),
+  points: 10
 }
 
 export const DEFAULT_USER = {

@@ -7,7 +7,7 @@ export const initialState = {
   token: null,
   // user: null,
   user: DEFAULT_USER,
-  notification: DEFAULT_NOTIFICATION
+  notification: null
   // fetchingUser: false,
   // pushToken: null,
   // isSignout: false,

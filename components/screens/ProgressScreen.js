@@ -11,7 +11,7 @@ import {
   Easing,
 } from "react-native";
 import { UserContext } from "../../context/context";
-import { SAVE_NOTIFICATION } from "../../context/userReducer";
+import { SAVE_NOTIFICATION, SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
 import { DEFAULT_NOTIFICATION, height } from "../../values/consts";
 import { strings } from "../../values/strings";
@@ -47,8 +47,10 @@ export const ProgressScreen = ({ navigation }) => {
 
   useEffect(()=>{
     if (user) {
-      if (user.achievements) {
-        setData([...user.achievements].reverse());
+      if (data.length === 0) {
+        if (user.achievements) {
+          setData([...user.achievements].reverse());
+        }
       }
     } else {
       setData([])
@@ -137,8 +139,7 @@ const Popup = () => {
   const {state, dispatch} = useContext(UserContext);
   const {user, notification} = state;
 
-  // const scale = useRef(new Animated.Value(0)).current;
-  const scale = useRef(new Animated.Value(notification != null ? 1 : 0)).current;
+  const scale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const show = notification != null;
@@ -150,6 +151,22 @@ const Popup = () => {
     }).start();
   }, [notification])
 
+  const notificationPressed = () => {
+    const notificationPoints = notification.points;
+    dispatch(({
+      type: SAVE_USER,
+      payload: {
+        ...user,
+        points: user.points + notificationPoints
+      }
+    }))
+    //
+    dispatch(({
+      type: SAVE_NOTIFICATION,
+      payload: null
+    }))
+  }
+
   return (
     <Animated.View style={{
       transform: [
@@ -158,12 +175,73 @@ const Popup = () => {
       opacity: scale,
       width: 180,
       height: 160,
-      backgroundColor: 'cyan',
+      backgroundColor: 'white',
       position: 'absolute',
       right: 30,
       bottom: height * 0.25,
-      ...styles.shadow
+      ...styles.shadow,
+      borderColor: colors.treeBlues,
+      borderWidth: 1,
+      borderRadius: 14,
+      paddingTop: 6,
+      paddingBottom: 12,
+      paddingHorizontal: 12,
+      justifyContent: 'space-between',
+      alignItems: 'stretch'
     }}>
+
+      {notification && (
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end'
+          }}>
+          <Text style={{
+            marginRight: 10,
+            ...textStyles.boldOfSize(16)
+          }}>{notification.title}</Text>
+          <Image source={notification.image} />
+        </View>
+      )}
+
+      {notification && (
+        <Text style={{
+          ...textStyles.normalOfSize(16)
+        }}>{notification.description}</Text>
+      )}
+
+      {notification && (
+        <TouchableOpacity onPress={notificationPressed} style={{
+          borderColor: colors.treeBlues,
+          borderWidth: 1,
+          borderRadius: 5,
+          height: 25,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+            <Text style={{
+              ...textStyles.normalOfSize(24),
+              textAlign: 'center',
+              color: colors.treeBlues,
+              marginRight: 2
+            }}>{`+${notification.points}`}</Text>
+            <Image source={require("../../assets/images/thank_you_icon.png")} />
+          </View>
+          
+          <Text style={{
+            marginLeft: 8,
+            ...textStyles.normalOfSize(16),
+            textAlign: 'center',
+          }}>{strings.progressScreen.thankYou}</Text>
+          
+        </TouchableOpacity>
+      )}
+      
       
     </Animated.View>
   )

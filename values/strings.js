@@ -44,6 +44,7 @@ export const strings = {
         searchPlaceholder: 'חפש'
     },
     progressScreen: {
+        thankYou: 'תודה לך!',
         signup: 'הרשמה',
         logout: 'התנתקות',
         reportsTitle: 'דיווחים מהשטח',
