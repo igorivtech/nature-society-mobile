@@ -95,35 +95,51 @@ export const DEFAULT_USER = {
   achievements: [
     {
       done: true,
-      current: false
+      current: false,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
     {
       done: true,
-      current: false
+      current: false,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
     {
       done: true,
-      current: true
+      current: true,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
     {
       done: false,
-      current: false
+      current: false,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
     {
       done: false,
-      current: false
+      current: false,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
     {
       done: false,
-      current: false
+      current: false,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
     {
       done: false,
-      current: false
+      current: false,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
     {
       done: false,
-      current: false
+      current: false,
+      topTitle: 'בוטנאי',
+      bottomTitle: 'חקלאית'
     },
   ]
 

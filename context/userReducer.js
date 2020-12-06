@@ -1,52 +1,11 @@
+import { DEFAULT_USER } from "../values/consts";
+
 export const SAVE_USER = "SAVE_USER";
 
 export const initialState = {
   token: null,
   // user: null,
-  user: {
-    name: "יעל השכנה",
-    email: "yael@nextdoor",
-    image:
-      "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png",
-    points: 630,
-    numOfReports: 21,
-    lastAchievement: "חקלאית",
-    achievements: [
-      {
-        done: true,
-        current: false
-      },
-      {
-        done: true,
-        current: false
-      },
-      {
-        done: true,
-        current: true
-      },
-      {
-        done: false,
-        current: false
-      },
-      {
-        done: false,
-        current: false
-      },
-      {
-        done: false,
-        current: false
-      },
-      {
-        done: false,
-        current: false
-      },
-      {
-        done: false,
-        current: false
-      },
-    ]
-
-  },
+  user: DEFAULT_USER,
   // fetchingUser: false,
   // pushToken: null,
   // isSignout: false,

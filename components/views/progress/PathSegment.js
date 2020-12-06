@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   Animated,
+  Text,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { height, width } from "../../../values/consts";
@@ -156,8 +157,12 @@ export const PathSegment = ({ scrollY, index, item }) => {
         )}
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : markerImage} />
         <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : markerImage} />
-        <View style={styles.topContainer} ref={topContainerRef} />
-        <View style={styles.bottomContainer} ref={bottomContainerRef} />
+        <View style={styles.topContainer} ref={topContainerRef}>
+          <FloatingLabel item={item} />
+        </View>
+        <View style={styles.bottomContainer} ref={bottomContainerRef}>
+          <FloatingLabel item={item} />
+        </View>
       </View>
       
       <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
@@ -165,6 +170,15 @@ export const PathSegment = ({ scrollY, index, item }) => {
     </View>
   );
 };
+
+const FloatingLabel = ({item}) => {
+  console.log(item);
+  return (
+    <View>
+      <Text>{item.bottomTitle}</Text>
+    </View>
+  )
+}
 
 // path_marker - 65 × 72
 // trees - 52 × 82
@@ -175,14 +189,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: CONTAINER_HEIGHT,
     width: TOP_CONTAINER_WIDTH,
-    backgroundColor: 'cyan'
+    backgroundColor: 'cyan',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   bottomContainer: {
     position: 'absolute',
     height: CONTAINER_HEIGHT,
     width: BOTTOM_CONTAINER_WIDTH,
-    backgroundColor: 'orange'
+    backgroundColor: 'orange',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   trees: (pathHeight, pathWidth, opacity, scale) => ({
