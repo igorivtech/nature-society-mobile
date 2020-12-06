@@ -13,38 +13,38 @@ export const initialState = {
     lastAchievement: "חקלאית",
     achievements: [
       {
-        done: false,
+        done: true,
         current: false
       },
       {
-        done: false,
+        done: true,
         current: false
       },
       {
-        done: false,
-        current: false
-      },
-      {
-        done: false,
+        done: true,
         current: true
       },
       {
-        done: true,
+        done: false,
         current: false
       },
       {
-        done: true,
+        done: false,
         current: false
       },
       {
-        done: true,
+        done: false,
         current: false
       },
       {
-        done: true,
+        done: false,
         current: false
       },
-    ]
+      {
+        done: false,
+        current: false
+      },
+    ].reverse()
 
   },
   // fetchingUser: false,

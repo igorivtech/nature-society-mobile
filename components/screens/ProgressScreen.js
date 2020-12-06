@@ -28,7 +28,11 @@ export const ProgressScreen = ({ navigation }) => {
 
   useEffect(()=>{
     if (user.achievements) {
+      // setData(user.achievements.reverse());
       setData(user.achievements);
+    }
+    return ()=>{
+      setData([]);
     }
   }, [])
 
