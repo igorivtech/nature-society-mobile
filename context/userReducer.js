@@ -44,7 +44,7 @@ export const initialState = {
         done: false,
         current: false
       },
-    ].reverse()
+    ]
 
   },
   // fetchingUser: false,
