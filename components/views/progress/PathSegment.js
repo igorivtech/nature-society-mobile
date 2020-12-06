@@ -13,7 +13,8 @@ var path = require("svg-path-properties");
 import Constants from "expo-constants";
 import { colors } from "../../../values/colors";
 import { textStyles } from "../../../values/textStyles";
-import { UserContext } from "../../../context/context"
+import { UserContext } from "../../../context/context";
+import * as Animatable from "react-native-animatable";
 
 export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
 const pathPadding = 0;
@@ -43,9 +44,7 @@ const BOTTOM_CONTAINER_WIDTH = 70;
 const TOP_CONTAINER_MARGIN = 14;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
-export const PathSegment = ({ scrollY, index, item }) => {
-
-  const rightLabelOpacity = useRef(new Animated.Value(1)).current;
+export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
 
   const {topDone, bottomDone, current} = item;
 
@@ -166,9 +165,9 @@ export const PathSegment = ({ scrollY, index, item }) => {
         <View style={styles.topContainer} ref={topContainerRef}>
           <FloatingLabel item={item} right={true} done={item.topDone} />
         </View>
-        <Animated.View style={styles.bottomContainer(rightLabelOpacity)} ref={bottomContainerRef}>
+        <Animatable.View animation={popupVisible ? "fadeOut" : "fadeIn"} style={styles.bottomContainer} ref={bottomContainerRef}>
           <FloatingLabel item={item} right={false} done={item.bottomDone} />
-        </Animated.View>
+        </Animatable.View>
       </View>
       
       <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
@@ -266,13 +265,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  bottomContainer: (opacity) => ({
-    opacity,
+  bottomContainer: {
     ...StyleSheet.absoluteFill,
     height: CONTAINER_HEIGHT,
     width: BOTTOM_CONTAINER_WIDTH,
     justifyContent: 'center'
-  }),
+  },
 
   trees: (pathHeight, pathWidth, opacity, scale) => ({
     position: 'absolute',
