@@ -183,34 +183,37 @@ const Popup = () => {
 
       {notification && (
         <TouchableOpacity onPress={notificationPressed} style={pStyles.button}>
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'center'
-          }}>
-            <Text style={{
-              ...textStyles.normalOfSize(24),
-              textAlign: 'center',
-              color: colors.treeBlues,
-              marginRight: 2
-            }}>{`+${notification.points}`}</Text>
+          <View style={pStyles.buttonInnerContainer}>
+            <Text style={pStyles.buttonPoints}>{`+${notification.points}`}</Text>
             <Image source={require("../../assets/images/thank_you_icon.png")} />
           </View>
-          
-          <Text style={{
-            marginLeft: 8,
-            ...textStyles.normalOfSize(16),
-            textAlign: 'center',
-          }}>{strings.progressScreen.thankYou}</Text>
-          
+          <Text style={pStyles.buttonTitle}>{strings.progressScreen.thankYou}</Text>
         </TouchableOpacity>
       )}
-      
       
     </Animated.View>
   )
 }
 
 const pStyles = StyleSheet.create({
+
+  buttonInnerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  buttonPoints: {
+    ...textStyles.normalOfSize(24),
+    textAlign: 'center',
+    color: colors.treeBlues,
+    marginRight: 2
+  },
+
+  buttonTitle: {
+    marginLeft: 8,
+    ...textStyles.normalOfSize(16),
+    textAlign: 'center',
+  },
 
   title: {
     marginRight: 10,
