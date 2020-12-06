@@ -168,58 +168,21 @@ const Popup = () => {
   }
 
   return (
-    <Animated.View style={{
-      transform: [
-        {scale}
-      ],
-      opacity: scale,
-      width: 180,
-      height: 160,
-      backgroundColor: 'white',
-      position: 'absolute',
-      right: 30,
-      bottom: height * 0.25,
-      ...styles.shadow,
-      borderColor: colors.treeBlues,
-      borderWidth: 1,
-      borderRadius: 14,
-      paddingTop: 6,
-      paddingBottom: 12,
-      paddingHorizontal: 12,
-      justifyContent: 'space-between',
-      alignItems: 'stretch'
-    }}>
+    <Animated.View style={pStyles.container(scale)}>
 
       {notification && (
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-end'
-          }}>
-          <Text style={{
-            marginRight: 10,
-            ...textStyles.boldOfSize(16)
-          }}>{notification.title}</Text>
+        <View style={pStyles.titleContainer}>
+          <Text style={pStyles.title}>{notification.title}</Text>
           <Image source={notification.image} />
         </View>
       )}
 
       {notification && (
-        <Text style={{
-          ...textStyles.normalOfSize(16)
-        }}>{notification.description}</Text>
+        <Text style={textStyles.normalOfSize(16)}>{notification.description}</Text>
       )}
 
       {notification && (
-        <TouchableOpacity onPress={notificationPressed} style={{
-          borderColor: colors.treeBlues,
-          borderWidth: 1,
-          borderRadius: 5,
-          height: 25,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
+        <TouchableOpacity onPress={notificationPressed} style={pStyles.button}>
           <View style={{
             flexDirection: 'row',
             alignItems: 'center'
@@ -246,6 +209,52 @@ const Popup = () => {
     </Animated.View>
   )
 }
+
+const pStyles = StyleSheet.create({
+
+  title: {
+    marginRight: 10,
+    ...textStyles.boldOfSize(16)
+  },
+
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+
+  button: {
+    borderColor: colors.treeBlues,
+    borderWidth: 1,
+    borderRadius: 5,
+    height: 25,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  container: (scale) => ({
+    transform: [
+      {scale}
+    ],
+    opacity: scale,
+    width: 180,
+    height: 160,
+    backgroundColor: 'white',
+    position: 'absolute',
+    right: 30,
+    bottom: height * 0.25,
+    ...styles.shadow,
+    borderColor: colors.treeBlues,
+    borderWidth: 1,
+    borderRadius: 14,
+    paddingTop: 6,
+    paddingBottom: 12,
+    paddingHorizontal: 12,
+    justifyContent: 'space-between',
+    alignItems: 'stretch'
+  })
+});
 
 
 const styles = StyleSheet.create({
