@@ -46,6 +46,9 @@ const BOTTOM_CONTAINER_MARGIN = 12;
 
 export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
 
+  const {state} = useContext(UserContext);
+  const {user} = state;
+
   const {topDone, bottomDone, current} = item;
 
   const topMarkerImage = topDone ? largeIcon : smallIcon;
@@ -158,7 +161,10 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
 
       <View style={StyleSheet.absoluteFill}>
         {current && (
-          <Image style={styles.marker} ref={markerRef} source={require("../../../assets/images/path_marker.png")} />
+          <View style={styles.markerContainer} ref={markerRef}>
+            <Image style={styles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
+            <Image source={user !== null ? {uri: user.image} : null} style={styles.profilePic} />
+          </View>
         )}
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : topMarkerImage} />
         <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : bottomMarkerImage} />
@@ -257,6 +263,25 @@ const flStyles = StyleSheet.create({
 })
 
 const styles = StyleSheet.create({
+
+  markerIcon: {
+    position: 'absolute'
+  },
+
+  profilePic: {
+    marginTop: 11,
+    backgroundColor: 'white',
+    width: 31.2,
+    height: 31.2,
+    borderRadius: 31.2/2
+  },
+
+  markerContainer: {
+    position: 'absolute',
+    height: 72,
+    width: 65,
+    alignItems: 'center'
+  },
 
   topContainer: {
     ...StyleSheet.absoluteFill,
