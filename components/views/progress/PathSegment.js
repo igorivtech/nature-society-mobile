@@ -38,7 +38,7 @@ const smallIcon = require("../../../assets/images/path_marker_small.png");
 const largeIcon = require("../../../assets/images/path_marker_big.png");
 
 const CONTAINER_HEIGHT = 44;
-const TOP_CONTAINER_WIDTH = 45;
+const TOP_CONTAINER_WIDTH = 55;
 const BOTTOM_CONTAINER_WIDTH = 70;
 const TOP_CONTAINER_MARGIN = 14;
 const BOTTOM_CONTAINER_MARGIN = 12;
