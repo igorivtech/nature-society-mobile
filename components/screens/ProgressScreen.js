@@ -141,38 +141,46 @@ const UserHeader = ({}) => {
 
 const HeaderDetail = ({icon, value, title}) => {
   return (
-    <View style={{
-      marginBottom: 12,
-      alignItems: 'flex-end'
-    }}>
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end'
-      }}>
-
-        <Text style={{
-          ...textStyles.normalOfSize(24),
-          color: colors.userHeader
-        }}>{value}</Text>
-
-        <Image style={{
-          marginLeft: 4,
-          height: 19,
-          width: 19,
-          resizeMode: 'contain'
-        }} source={icon} />
+    <View style={headerDetailsStyles.container}>
+      <View style={headerDetailsStyles.topContainer}>
+        <Text style={headerDetailsStyles.valueText}>{value}</Text>
+        <Image style={headerDetailsStyles.icon} source={icon} />
       </View>
-
-      <Text style={{
-        marginTop: 4,
-        ...textStyles.normalOfSize(14),
-        color: colors.userHeader
-      }}>{title}</Text>
-      
+      <Text style={headerDetailsStyles.bottomText}>{title}</Text>
     </View>
   )
 }
+
+const headerDetailsStyles = StyleSheet.create({
+
+  topContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+
+  container: {
+    marginBottom: 12,
+    alignItems: 'flex-end'
+  },
+
+  valueText: {
+    ...textStyles.normalOfSize(24),
+    color: colors.userHeader
+  },
+
+  icon: {
+    marginLeft: 4,
+    height: 19,
+    width: 19,
+    resizeMode: 'contain'
+  },
+  bottomText: {
+    marginTop: 4,
+    ...textStyles.normalOfSize(14),
+    color: colors.userHeader
+  }
+})
 
 const styles = StyleSheet.create({
 
