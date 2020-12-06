@@ -11,6 +11,7 @@ import {
   Easing,
 } from "react-native";
 import { UserContext } from "../../context/context";
+import { SAVE_NOTIFICATION } from "../../context/userReducer";
 import { colors } from "../../values/colors";
 import { height } from "../../values/consts";
 import { strings } from "../../values/strings";
@@ -29,6 +30,19 @@ export const ProgressScreen = ({ navigation }) => {
   const {user, notification} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  useEffect(()=> {
+    // DEBUG
+    setTimeout(() => {
+      dispatch({
+        type: SAVE_NOTIFICATION,
+        payload: {
+          title: "כותרת",
+          description: 'מידע',
+        }
+      })
+    }, 4000);
+  }, [])
 
   useEffect(()=>{
     setPopupVisible(notification != null);
@@ -111,7 +125,7 @@ export const ProgressScreen = ({ navigation }) => {
           )}
         </TouchableOpacity>
 
-        <UserHeader notification={notification} />
+        <UserHeader />
         <Popup />
 
       </View>
@@ -121,17 +135,20 @@ export const ProgressScreen = ({ navigation }) => {
   );
 };
 
-const Popup = ({notification}) => {
+const Popup = () => {
+
+  const {state, dispatch} = useContext(UserContext);
+  const {user, notification} = state;
 
   const scale = useRef(new Animated.Value(0)).current;
 
-  useState(()=>{
+  useEffect(() => {
     Animated.timing(scale, {
       useNativeDriver: true,
       toValue: notification != null ? 1 : 0,
-      duration: 300,
+      duration: 600,
       easing: Easing.inOut(Easing.ease)
-    })
+    }).start();
   }, [notification])
 
   return (
@@ -145,15 +162,27 @@ const Popup = ({notification}) => {
       backgroundColor: 'cyan',
       position: 'absolute',
       right: 30,
-      bottom: height * 0.25
+      bottom: height * 0.25,
+      ...styles.shadow
     }}>
-
+      
     </Animated.View>
   )
 }
 
 
 const styles = StyleSheet.create({
+
+  shadow: {
+    shadowOffset: {
+      height: -4,
+      width: 0,
+    },
+    shadowColor: "rgba(0, 0, 0, 0.035)",
+    shadowRadius: 12,
+    shadowOpacity: 1,
+  },
+
 
   scrollView: {
     // overflow: 'visible',
