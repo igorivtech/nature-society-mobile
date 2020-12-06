@@ -28,6 +28,7 @@ const bottomMarkerPosition = 0.8;
 const markerHeight = 72;
 const markerWidth = 65;
 //
+const PATH_WIDTH = 1.5;
 const DONE_WIDTH = 3;
 
 export const PathSegment = ({ scrollY, index, item }) => {
@@ -102,7 +103,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
       {current ? (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke={colors.path} strokeWidth={1} />
+          <Path d={line} stroke={colors.path} strokeWidth={PATH_WIDTH} />
           <Path
             d={line}
             stroke={colors.path}
@@ -113,7 +114,7 @@ export const PathSegment = ({ scrollY, index, item }) => {
         </Svg>
       ) : (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke={colors.path} strokeWidth={done ? DONE_WIDTH : 1} />
+          <Path d={line} stroke={colors.path} strokeWidth={done ? DONE_WIDTH : PATH_WIDTH} />
         </Svg>
       )}
 
