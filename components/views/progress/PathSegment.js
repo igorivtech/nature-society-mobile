@@ -28,7 +28,7 @@ const bottomMarkerPosition = 0.8;
 const markerHeight = 72;
 const markerWidth = 65;
 //
-const DONE_WIDTH = 2;
+const DONE_WIDTH = 3;
 
 export const PathSegment = ({ scrollY, index, item }) => {
 
