@@ -27,6 +27,8 @@ const bottomMarkerPosition = 0.8;
 //
 const markerHeight = 72;
 const markerWidth = 65;
+//
+const DONE_WIDTH = 2;
 
 export const PathSegment = ({ scrollY, index, item }) => {
 
@@ -104,14 +106,14 @@ export const PathSegment = ({ scrollY, index, item }) => {
           <Path
             d={line}
             stroke={colors.path}
-            strokeWidth={2}
+            strokeWidth={DONE_WIDTH}
             strokeDasharray={lineLength}
             strokeDashoffset={-(1-userProgress) * lineLength}
           />
         </Svg>
       ) : (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke={colors.path} strokeWidth={done ? 2 : 1} />
+          <Path d={line} stroke={colors.path} strokeWidth={done ? DONE_WIDTH : 1} />
         </Svg>
       )}
 
