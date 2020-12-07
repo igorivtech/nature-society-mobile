@@ -1,5 +1,6 @@
-import React from "react";
-import { View, TouchableOpacity, Image, Text } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View, TouchableOpacity, Image, Text, Animated, StyleSheet, Easing } from "react-native";
+import { colors } from "../../../values/colors";
 import { styles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 
@@ -9,13 +10,47 @@ const images = {
   2: require("../../../assets/images/Progress.png"),
 };
 
-export const HomeButton = ({ index, onPress }) => {
+export const HomeButton = ({ index, onPress, notification }) => {
+
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(()=>{
+    if (index === 2) {
+      Animated.timing(opacity, {
+        useNativeDriver: true,
+        duration: 300,
+        toValue: notification != null ? 1 : 0,
+        timing: Easing.inOut(Easing.ease)
+      }).start();
+    }
+  }, [notification])
+
   return (
     <TouchableOpacity onPress={onPress}>
+      {index === 2 && (
+        <Animated.View style={s.bg(opacity)} />
+      )}
       <Image source={images[index]} />
     </TouchableOpacity>
   );
 };
+
+const ICON_SIZE = 42.5;
+const BG_SIZE = ICON_SIZE + 6;
+
+const s = StyleSheet.create({
+  bg: (opacity) => ({
+    opacity,
+    ...StyleSheet.absoluteFill,
+    backgroundColor: colors.desertRock,
+    height: BG_SIZE,
+    width: BG_SIZE,
+    borderRadius: BG_SIZE/2,
+    selfAlign: 'center',
+    left: 2,
+    top: 0
+  })
+})
 
 export const RecentVisitor = ({ title, details, image, large = false }) => {
   return (

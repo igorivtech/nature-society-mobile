@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   View,
   SafeAreaView,
@@ -8,12 +8,17 @@ import {
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { styles } from "../../values/styles";
-import { height, DATA } from "../../values/consts";
+import { height, DATA, DEFAULT_NOTIFICATION } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
 import { GrowthPoints } from "../views/home/GrowthPoints";
+import { UserContext } from "../../context/context";
+import { SAVE_NOTIFICATION } from "../../context/userReducer";
 
 export const HomeScreen = ({ navigation, route }) => {
+
+  const {state, dispatch} = useContext(UserContext);
+  const {user, notification} = state;
 
   const [places, setPlaces] = useState([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   const [hideList, setHideList] = useState(true);
@@ -23,6 +28,16 @@ export const HomeScreen = ({ navigation, route }) => {
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
   const mapRef = useRef(null);
+
+  // useEffect(()=> {
+  //   // DEBUG
+  //   setTimeout(() => {
+  //     dispatch({
+  //       type: SAVE_NOTIFICATION,
+  //       payload: DEFAULT_NOTIFICATION
+  //     })
+  //   }, 4000);
+  // }, [])
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
@@ -98,7 +113,7 @@ export const HomeScreen = ({ navigation, route }) => {
       />
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.homeTopContainer}>
-          <HomeButton index={2} onPress={progress} />
+          <HomeButton index={2} notification={notification} onPress={progress} />
           <HomeButton index={1} onPress={report} />
           <HomeButton index={0} onPress={explore} />
         </View>
