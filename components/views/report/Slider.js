@@ -97,7 +97,7 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
       Animated.timing(animationProgress, {
         toValue: p,
         duration: DURATION,
-        useNativeDriver: false,
+        useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
       })
     ]).start();
