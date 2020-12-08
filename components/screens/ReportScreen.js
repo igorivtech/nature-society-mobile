@@ -6,6 +6,7 @@ import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
 import { height } from "../../values/consts";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
+import {clamp} from '../../hooks/helpers'
 
 export const ReportScreen = ({navigation}) => {
 
@@ -63,12 +64,7 @@ const Slider = ({initialValue, animationProgress}) => {
   }
 
   const panHandlerEvent = (event) => {
-    let p = currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT);
-    if (p < 0) {
-      p = 0;
-    } else if (p > 1) {
-      p = 1
-    }
+    let p = clamp(0, currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT), 1);
     progress.setValue(p);
     animationProgress.setValue(p);
   }
