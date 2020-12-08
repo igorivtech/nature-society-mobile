@@ -71,15 +71,14 @@ const Slider = ({}) => {
     if (event.nativeEvent.state === State.END) {
       const v = progress._value;
       if (v < 0) {
+        progress.setValue(0);
         currentOffset.current = 0;
       } else if (v > 1) {
+        progress.setValue(1);
         currentOffset.current = 1;
       } else {
         currentOffset.current = v;
-      }
-      
-    } else if (event.nativeEvent.state == State.BEGAN) {
-      
+      } 
     }
   }
 
