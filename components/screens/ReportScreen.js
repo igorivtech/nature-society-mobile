@@ -8,10 +8,8 @@ export const ReportScreen = ({navigation}) => {
   const progress = useRef(new Animated.Value(0)).current;
 
   const animate = () => {
-    const toValue = progress._value == 0 ? 1 : 0
-    console.log({toValue, v: progress._value});
     Animated.timing(progress, {
-      toValue,
+      toValue: progress._value === 0 ? 1 : 0,
       useNativeDriver: false,
       easing: Easing.inOut(Easing.ease),
       duration: 1000
@@ -20,7 +18,7 @@ export const ReportScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} />
+      <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
       <TouchableWithoutFeedback style={StyleSheet.absoluteFill} onPress={animate}>
         <Text style={{
           transform: [{translateY: -100}]
