@@ -51,6 +51,7 @@ const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 
 const Slider = ({animationProgress}) => {
 
+  const currentOffset = useRef(0);
   const progress = useRef(new Animated.Value(0)).current;
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -65,8 +66,6 @@ const Slider = ({animationProgress}) => {
     extrapolate: 'clamp',
     useNativeDriver: true
   })
-
-  const currentOffset = useRef(0);
 
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
@@ -86,44 +85,50 @@ const Slider = ({animationProgress}) => {
   }
 
   return (
-    <View style={{
-      position: 'absolute',
-      right: 16,
-      bottom: 147,
-    }}>
-      <View style={{
-        height: SLIDER_CONTAINER_HEIGHT,
-        width: THUMB_RADIUS*2,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-
-        <View style={{
-          opacity: 0.15,
-          height: SLIDER_HEIGHT,
-          backgroundColor: '#202224',
-          width: 1,
-        }} />
-
+    <View style={sliderStyles.container}>
+      <View style={sliderContainer.sliderContainer}>
+        <View style={sliderStyles.middleLine} />
         <PanGestureHandler onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
-          <Animated.View style={{
-            height: 2*THUMB_RADIUS,
-            width: 2*THUMB_RADIUS,
-            borderRadius: THUMB_RADIUS,
-            backgroundColor: thumbColor,
-            position: 'absolute',
-            bottom: 0,
-            transform: [
-              {translateY: thumbTranslateY}
-            ]
-          }} />
+          <Animated.View style={sliderStyles.thumb(thumbColor, thumbTranslateY)} />
         </PanGestureHandler>
-
       </View>
     </View>
-    
   )
 }
+
+const sliderStyles = StyleSheet.create({
+
+  container: {
+    position: 'absolute',
+    right: 16,
+    bottom: 147,
+  },
+
+  sliderContainer: {
+    height: SLIDER_CONTAINER_HEIGHT,
+    width: THUMB_RADIUS*2,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  middleLine: {
+    opacity: 0.15,
+    height: SLIDER_HEIGHT,
+    backgroundColor: '#202224',
+    width: 1,
+  },
+  thumb: (thumbColor, thumbTranslateY) => ({
+    height: 2*THUMB_RADIUS,
+    width: 2*THUMB_RADIUS,
+    borderRadius: THUMB_RADIUS,
+    backgroundColor: thumbColor,
+    position: 'absolute',
+    bottom: 0,
+    transform: [
+      {translateY: thumbTranslateY}
+    ]
+  })
+})
 
 const styles = StyleSheet.create({
   container: {
