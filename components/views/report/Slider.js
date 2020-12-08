@@ -177,6 +177,10 @@ export const Slider = memo(({animation, titles = ["", "", ""], startUpAnimation 
 
 const sliderStyles = StyleSheet.create({
 
+  container: {
+    height: '50%'
+  },
+
   sliderTextContainer: {
     position: 'absolute',
     right: 16,
@@ -195,11 +199,6 @@ const sliderStyles = StyleSheet.create({
     justifyContent: 'space-between',
     opacity
   }),
-
-  container: {
-    ...StyleSheet.absoluteFill,
-    position: 'absolute',
-  },
 
   sliderContainer: {
     height: SLIDER_CONTAINER_HEIGHT,
