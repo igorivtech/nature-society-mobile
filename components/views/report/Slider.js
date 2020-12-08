@@ -37,6 +37,7 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
   const scale = useRef(new Animated.Value(1)).current;
   const startUpTranslateY = useRef(new Animated.Value(0)).current;
   const lineOpacity = useRef(new Animated.Value(LINE_OPACITY)).current;
+  const textContainerOpacity = useRef(new Animated.Value(1)).current;
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -103,7 +104,7 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
   }
 
   const startThumbAnimation = () => {
-    
+    textContainerOpacity.setValue(0);
     setDragEnabled(false);
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
@@ -123,10 +124,16 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
           duration: 500,
           useNativeDriver: false
         }).start(()=>{
-          Animated.timing(lineOpacity, {
-            toValue: LINE_OPACITY,
-            useNativeDriver: true
-          }).start(()=>{
+          Animated.parallel([
+            Animated.timing(lineOpacity, {
+              toValue: LINE_OPACITY,
+              useNativeDriver: true
+            }),
+            Animated.timing(textContainerOpacity, {
+              toValue: 1,
+              useNativeDriver: true
+            })
+          ]).start(()=>{
             setDragEnabled(true);
           });
         })
@@ -150,11 +157,11 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
 
   return (
     <View style={sliderStyles.container}>
-      <View style={sliderStyles.textContainer}>
+      <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
         <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{titles[2]}</Animated.Text>
         <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{titles[1]}</Animated.Text>
         <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{titles[0]}</Animated.Text>
-      </View>
+      </Animated.View>
       <View style={sliderStyles.sliderContainer}>
         <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
         <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
@@ -175,10 +182,11 @@ const sliderStyles = StyleSheet.create({
     transform: [{translateY}]
   }),
 
-  textContainer: {
+  textContainer: (opacity) => ({
     marginRight: 14,
-    justifyContent: 'space-between'
-  },
+    justifyContent: 'space-between',
+    opacity
+  }),
 
   container: {
     flexDirection: 'row',
@@ -195,14 +203,14 @@ const sliderStyles = StyleSheet.create({
   },
 
   middleLine: (opacity) => ({
-    zIndex: -1,
+    // zIndex: -1,
     opacity,
     height: SLIDER_HEIGHT,
     backgroundColor: '#202224',
     width: 1,
   }),
   thumbContainer: (thumbTranslateY) => ({
-    zIndex: 1,
+    // zIndex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     height: 2*THUMB_RADIUS,
@@ -214,7 +222,7 @@ const sliderStyles = StyleSheet.create({
     ]
   }),
   thumb: (thumbColor, scale, translateY) => ({
-    zIndex: 1,
+    // zIndex: 1,
     height: 2*THUMB_RADIUS,
     width: 2*THUMB_RADIUS,
     borderRadius: THUMB_RADIUS,
