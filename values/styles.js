@@ -50,6 +50,16 @@ export const globalStyles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
+  shadow: {
+    shadowOffset: {
+      height: -4,
+      width: 0,
+    },
+    shadowColor: "rgba(0, 0, 0, 0.035)",
+    shadowRadius: 12,
+    shadowOpacity: 1,
+  },
+
   onboardingMainContainer: {
     top: height / 2 - 60,
     position: "absolute",

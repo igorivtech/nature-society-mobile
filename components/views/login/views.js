@@ -15,6 +15,7 @@ import { Input } from "./Input";
 import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
 import { CARD_RADIUS, width } from "../../../values/consts";
+import { globalStyles } from "../../../values/styles";
 
 const CARD_ANIMATION_DURATION = 400;
 
@@ -424,13 +425,7 @@ const styles = StyleSheet.create({
     width: width - 2 * 30,
     backgroundColor: "white",
     borderRadius: CARD_RADIUS,
-    shadowOffset: {
-      height: -4,
-      width: 0,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.035)",
-    shadowRadius: 12,
-    shadowOpacity: 1,
+    ...globalStyles.shadow
   }),
 
   orText: {

@@ -24,6 +24,10 @@ export const ReportScreen = ({navigation}) => {
       paddingHorizontal: 100
     }}>
       <View style={{
+        ...globalStyles.shadow,
+        borderRadius: 22.5,
+        marginHorizontal: 30,
+        marginVertical: 45,
         backgroundColor: 'white',
         flex: 1,
         alignSelf: 'stretch',

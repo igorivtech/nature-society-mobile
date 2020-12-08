@@ -15,6 +15,7 @@ import { SAVE_NOTIFICATION, SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
 import { DEFAULT_NOTIFICATION, height } from "../../values/consts";
 import { strings } from "../../values/strings";
+import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment, pathHeight } from "../views/progress/PathSegment";
@@ -247,7 +248,7 @@ const pStyles = StyleSheet.create({
     position: 'absolute',
     right: 30,
     bottom: height * 0.25,
-    ...styles.shadow,
+    ...globalStyles.shadow,
     borderColor: colors.treeBlues,
     borderWidth: 1,
     borderRadius: 14,
@@ -261,17 +262,6 @@ const pStyles = StyleSheet.create({
 
 
 const styles = StyleSheet.create({
-
-  shadow: {
-    shadowOffset: {
-      height: -4,
-      width: 0,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.035)",
-    shadowRadius: 12,
-    shadowOpacity: 1,
-  },
-
 
   scrollView: {
     // overflow: 'visible',
