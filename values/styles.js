@@ -58,6 +58,7 @@ export const globalStyles = StyleSheet.create({
     shadowColor: "rgba(0, 0, 0, 0.035)",
     shadowRadius: 12,
     shadowOpacity: 1,
+    elevation: 4
   },
 
   onboardingMainContainer: {
