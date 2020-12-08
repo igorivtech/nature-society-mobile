@@ -83,12 +83,12 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
     startUpTranslateY.setValue(0);
     Animated.timing(startUpTranslateY, {
       delay: 1000,
-      toValue: -50,
+      toValue: -40,
       duration: 400,
       useNativeDriver: false
     }).start(()=>{
       Animated.timing(startUpTranslateY, {
-        toValue: 50,
+        toValue: 60,
         duration: 500,
         useNativeDriver: false
       }).start(()=>{
