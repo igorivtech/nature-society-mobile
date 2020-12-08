@@ -21,7 +21,7 @@ export const ReportScreen = ({navigation}) => {
       <View style={styles.cardContainer}>
         <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
         <Text style={styles.dummyText}>ReportScreen</Text>
-        <Slider animationProgress={progress} />
+        <Slider initialValue={0.5} animationProgress={progress} />
 
       </View>
     </SafeAreaView>
@@ -33,10 +33,15 @@ const SLIDER_HEIGHT = 347;
 const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 
-const Slider = ({animationProgress}) => {
+const Slider = ({initialValue, animationProgress}) => {
 
-  const currentOffset = useRef(0);
-  const progress = useRef(new Animated.Value(0)).current;
+  useEffect(()=>{
+    animationProgress.setValue(initialValue);
+  }, [])
+
+  const currentOffset = useRef(initialValue);
+  const progress = useRef(new Animated.Value(initialValue)).current;
+
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
     outputRange: THUMB_COLORS,
@@ -54,6 +59,7 @@ const Slider = ({animationProgress}) => {
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
       currentOffset.current = progress._value;
+      console.log(progress._value);
     }
   }
 
