@@ -89,7 +89,6 @@ const Slider = ({animationProgress}) => {
       position: 'absolute',
       right: 16,
       bottom: 147,
-      
     }}>
       <View style={{
         height: SLIDER_CONTAINER_HEIGHT,
