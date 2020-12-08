@@ -59,7 +59,6 @@ const Slider = ({initialValue, animationProgress}) => {
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
       currentOffset.current = progress._value;
-      console.log(progress._value);
     }
   }
 
