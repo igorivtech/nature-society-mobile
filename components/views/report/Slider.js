@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { View, StyleSheet, Animated, Easing } from "react-native";
 import {clamp} from '../../../hooks/helpers'
@@ -29,6 +29,7 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
     }
   }, [])
 
+  const [dragEnabled, setDragEnabled] = useState(true);
   const currentOffset = useRef(initialValue);
   const progress = useRef(new Animated.Value(initialValue)).current;
   const scale = useRef(new Animated.Value(1)).current;
@@ -79,6 +80,7 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
   }
 
   const startThumbAnimation = () => {
+    setDragEnabled(false);
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
     Animated.timing(startUpTranslateY, {
@@ -100,7 +102,9 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
           Animated.timing(lineOpacity, {
             toValue: LINE_OPACITY,
             useNativeDriver: true
-          }).start();
+          }).start(()=>{
+            setDragEnabled(true);
+          });
         })
       })
     })
@@ -124,7 +128,7 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
     <View style={sliderStyles.container}>
       <View style={sliderStyles.sliderContainer}>
         <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
-        <PanGestureHandler onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
+        <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
           <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
             <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
           </Animated.View>
