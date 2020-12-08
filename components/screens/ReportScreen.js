@@ -34,6 +34,16 @@ const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 const DURATION = 200;
 
+const clampAnimationValue = (p) => {
+  if (p < 0.33) {
+    return 0;
+  } else if (p < 0.66) {
+    return 0.5;
+  } else {
+    return 1;
+  }
+}
+
 const Slider = ({initialValue, animationProgress}) => {
 
   useEffect(()=>{
@@ -69,14 +79,7 @@ const Slider = ({initialValue, animationProgress}) => {
   }
 
   const clampAnimation = () => {
-    let p = progress._value;
-    if (p < 0.33) {
-      p = 0;
-    } else if (p < 0.66) {
-      p = 0.5;
-    } else {
-      p = 1;
-    }
+    let p = clampAnimationValue(progress._value);
     currentOffset.current = p;
     Animated.parallel([
       Animated.timing(progress, {
