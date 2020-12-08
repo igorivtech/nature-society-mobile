@@ -11,19 +11,6 @@ export const ReportScreen = ({navigation}) => {
 
   const progress = useRef(new Animated.Value(0)).current;
 
-  const animate = () => {
-    const v = progress._value;
-    if (v < 1 && v > 0) {
-      return
-    }
-    Animated.timing(progress, {
-      toValue: v === 0 ? 1 : 0,
-      useNativeDriver: false,
-      easing: Easing.inOut(Easing.ease),
-      duration: 1000
-    }).start();
-  }
-
   const tapClose = () => {
     navigation.goBack();
   }
@@ -33,10 +20,7 @@ export const ReportScreen = ({navigation}) => {
       <TapView onPress={tapClose} />
       <View style={styles.cardContainer}>
         <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
-        <TouchableWithoutFeedback onPress={animate}>
-          <Text style={styles.dummyText}>ReportScreen</Text>
-        </TouchableWithoutFeedback>
-
+        <Text style={styles.dummyText}>ReportScreen</Text>
         <Slider animationProgress={progress} />
 
       </View>
@@ -86,7 +70,7 @@ const Slider = ({animationProgress}) => {
 
   return (
     <View style={sliderStyles.container}>
-      <View style={sliderContainer.sliderContainer}>
+      <View style={sliderStyles.sliderContainer}>
         <View style={sliderStyles.middleLine} />
         <PanGestureHandler onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
           <Animated.View style={sliderStyles.thumb(thumbColor, thumbTranslateY)} />
