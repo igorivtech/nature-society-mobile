@@ -5,6 +5,7 @@ import LottieView from 'lottie-react-native';
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
 import { height } from "../../values/consts";
+import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 export const ReportScreen = ({navigation}) => {
 
@@ -64,6 +65,28 @@ const Slider = ({}) => {
     useNativeDriver: true
   })
 
+  const currentOffset = useRef(0);
+
+  const panHandlerStateChange = (event) => {
+    if (event.nativeEvent.state === State.END) {
+      const v = progress._value;
+      if (v < 0) {
+        currentOffset.current = 0;
+      } else if (v > 1) {
+        currentOffset.current = 1;
+      } else {
+        currentOffset.current = v;
+      }
+      
+    } else if (event.nativeEvent.state == State.BEGAN) {
+      
+    }
+  }
+
+  const panHandlerEvent = (event) => {
+    progress.setValue(currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT));
+  }
+
   return (
     <View style={{
       position: 'absolute',
@@ -86,17 +109,19 @@ const Slider = ({}) => {
           width: 1,
         }} />
 
-        <Animated.View style={{
-          height: 2*THUMB_RADIUS,
-          width: 2*THUMB_RADIUS,
-          borderRadius: THUMB_RADIUS,
-          backgroundColor: thumbColor,
-          position: 'absolute',
-          bottom: 0,
-          transform: [
-            {translateY: thumbTranslateY}
-          ]
-        }} />
+        <PanGestureHandler onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
+          <Animated.View style={{
+            height: 2*THUMB_RADIUS,
+            width: 2*THUMB_RADIUS,
+            borderRadius: THUMB_RADIUS,
+            backgroundColor: thumbColor,
+            position: 'absolute',
+            bottom: 0,
+            transform: [
+              {translateY: thumbTranslateY}
+            ]
+          }} />
+        </PanGestureHandler>
 
       </View>
     </View>
