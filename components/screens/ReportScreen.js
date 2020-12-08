@@ -21,7 +21,7 @@ export const ReportScreen = ({navigation}) => {
       <TapView onPress={tapClose} />
       <View style={styles.cardContainer}>
         <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
-        <Slider initialValue={0.5} animationProgress={progress} />
+        <Slider startUpAnimation={true} initialValue={0.5} animationProgress={progress} />
 
       </View>
     </SafeAreaView>
@@ -44,15 +44,20 @@ const clampAnimationValue = (p) => {
   }
 }
 
-const Slider = ({initialValue, animationProgress}) => {
+const Slider = ({startUpAnimation = false, initialValue, animationProgress}) => {
 
   useEffect(()=>{
     animationProgress.setValue(initialValue);
+    if (startUpAnimation) {
+
+    }
   }, [])
 
   const currentOffset = useRef(initialValue);
   const progress = useRef(new Animated.Value(initialValue)).current;
   const scale = useRef(new Animated.Value(1)).current;
+  const startUpTranslateY = useRef(new Animated.Value(0)).current;
+  const lineOpacity = useRef(new Animated.Value(0.15)).current;
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -114,10 +119,10 @@ const Slider = ({initialValue, animationProgress}) => {
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.sliderContainer}>
-        <View style={sliderStyles.middleLine} />
+        <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
         <PanGestureHandler onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
           <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
-            <Animated.View style={sliderStyles.thumb(thumbColor, scale)} />
+            <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
           </Animated.View>
         </PanGestureHandler>
       </View>
@@ -140,12 +145,12 @@ const sliderStyles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  middleLine: {
-    opacity: 0.15,
+  middleLine: (opacity) => ({
+    opacity,
     height: SLIDER_HEIGHT,
     backgroundColor: '#202224',
     width: 1,
-  },
+  }),
   thumbContainer: (thumbTranslateY) => ({
     alignItems: 'center',
     justifyContent: 'center',
@@ -157,12 +162,12 @@ const sliderStyles = StyleSheet.create({
       {translateY: thumbTranslateY}
     ]
   }),
-  thumb: (thumbColor, scale) => ({
+  thumb: (thumbColor, scale, translateY) => ({
     height: 2*THUMB_RADIUS,
     width: 2*THUMB_RADIUS,
     borderRadius: THUMB_RADIUS,
     backgroundColor: thumbColor,
-    transform: [{scale}]
+    transform: [{scale}, {translateY}]
   })
 })
 
