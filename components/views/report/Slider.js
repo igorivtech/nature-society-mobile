@@ -82,7 +82,7 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
     Animated.timing(startUpTranslateY, {
-      delay: 1000,
+      delay: 1200,
       toValue: -40,
       duration: 400,
       useNativeDriver: false
