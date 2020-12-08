@@ -42,6 +42,7 @@ const Slider = ({initialValue, animationProgress}) => {
 
   const currentOffset = useRef(initialValue);
   const progress = useRef(new Animated.Value(initialValue)).current;
+  const scale = useRef(new Animated.Value(1)).current;
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -60,6 +61,9 @@ const Slider = ({initialValue, animationProgress}) => {
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
       currentOffset.current = progress._value;
+      scaleThumb(1);
+    } else if (event.nativeEvent.state === State.BEGAN) {
+      scaleThumb(0.8);
     }
   }
 
@@ -69,12 +73,22 @@ const Slider = ({initialValue, animationProgress}) => {
     animationProgress.setValue(p);
   }
 
+  const scaleThumb = (toValue) => {
+    Animated.timing(scale, {
+      toValue,
+      duration: 100,
+      useNativeDriver: false
+    }).start();
+  }
+
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.sliderContainer}>
         <View style={sliderStyles.middleLine} />
         <PanGestureHandler onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
-          <Animated.View style={sliderStyles.thumb(thumbColor, thumbTranslateY)} />
+          <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
+            <Animated.View style={sliderStyles.thumb(thumbColor, scale)} />
+          </Animated.View>
         </PanGestureHandler>
       </View>
     </View>
@@ -102,16 +116,23 @@ const sliderStyles = StyleSheet.create({
     backgroundColor: '#202224',
     width: 1,
   },
-  thumb: (thumbColor, thumbTranslateY) => ({
+  thumbContainer: (thumbTranslateY) => ({
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 2*THUMB_RADIUS,
     width: 2*THUMB_RADIUS,
-    borderRadius: THUMB_RADIUS,
-    backgroundColor: thumbColor,
     position: 'absolute',
     bottom: 0,
     transform: [
       {translateY: thumbTranslateY}
     ]
+  }),
+  thumb: (thumbColor, scale) => ({
+    height: 2*THUMB_RADIUS,
+    width: 2*THUMB_RADIUS,
+    borderRadius: THUMB_RADIUS,
+    backgroundColor: thumbColor,
+    transform: [{scale}]
   })
 })
 
