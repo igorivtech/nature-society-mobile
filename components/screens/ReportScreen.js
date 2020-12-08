@@ -5,6 +5,7 @@ import LottieView from 'lottie-react-native';
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
 import { Slider } from "../views/report/Slider";
+import { strings } from "../../values/strings";
 
 export const ReportScreen = ({navigation}) => {
 
@@ -19,8 +20,7 @@ export const ReportScreen = ({navigation}) => {
       <TapView onPress={tapClose} />
       <View style={styles.cardContainer}>
         <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
-        <Slider startUpAnimation={true} initialValue={0.5} animationProgress={progress} />
-
+        <Slider titles={strings.reportScreen.cleanTitles} startUpAnimation={true} initialValue={0.5} animationProgress={progress} />
       </View>
     </SafeAreaView>
   );

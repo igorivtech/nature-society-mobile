@@ -66,5 +66,12 @@ export const strings = {
         emailSentDesc: 'לינק ליצירת סיסמה חדשה נשלח\nאליך לאימייל.',
         chooseNewPasswordTitle: 'בחר סיסמה חדשה',
         chooseNewPasswordTitle: 'החלף סיסמה',
+    },
+    reportScreen: {
+        cleanTitles: [
+            "לא טוב",
+            "סביר",
+            "נפלא"
+        ]
     }
 }

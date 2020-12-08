@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { View, StyleSheet, Animated, Easing } from "react-native";
+import { View, StyleSheet, Animated, Easing, Text } from "react-native";
 import {clamp} from '../../../hooks/helpers'
+import {textStyles} from "../../../values/textStyles"
 
 const THUMB_RADIUS = 22.5 / 2;
 const SLIDER_HEIGHT = 347;
@@ -20,7 +21,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = ({startUpAnimation = false, initialValue, animationProgress}) => {
+export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initialValue, animationProgress}) => {
 
   useEffect(()=>{
     animationProgress.setValue(initialValue);
@@ -48,6 +49,27 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
     outputRange: [0, -SLIDER_HEIGHT],
     extrapolate: 'clamp',
     useNativeDriver: true
+  })
+
+  const topTextOpacity = progress.interpolate({
+    inputRange: [0.5, 1],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+    useNativeDriver: true
+  })
+
+  const centerTextOpacity = progress.interpolate({
+    inputRange: [0.25, 0.5, 0.75],
+    outputRange: [0, 1, 0],
+    extrapolate: 'clamp',
+    useNativeDriver: true
+  })
+
+  const bottomTextOpacity = progress.interpolate({
+    inputRange: [0, 0.5],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+    useNativeDriver: false
   })
 
   const panHandlerStateChange = (event) => {
@@ -80,6 +102,7 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
   }
 
   const startThumbAnimation = () => {
+    
     setDragEnabled(false);
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
@@ -134,13 +157,29 @@ export const Slider = ({startUpAnimation = false, initialValue, animationProgres
           </Animated.View>
         </PanGestureHandler>
       </View>
+      <View style={sliderStyles.textContainer}>
+        <Animated.Text style={sliderStyles.text(topTextOpacity)}>{titles[2]}</Animated.Text>
+        <Animated.Text style={sliderStyles.text(centerTextOpacity)}>{titles[1]}</Animated.Text>
+        <Animated.Text style={sliderStyles.text(bottomTextOpacity)}>{titles[0]}</Animated.Text>
+      </View>
     </View>
   )
 }
 
 const sliderStyles = StyleSheet.create({
 
+  text: (opacity) => ({
+    ...textStyles.normalOfSize(18),
+    opacity
+  }),
+
+  textContainer: {
+    marginRight: 8,
+    justifyContent: 'space-between'
+  },
+
   container: {
+    flexDirection: 'row-reverse',
     position: 'absolute',
     right: 16,
     bottom: 147,
@@ -154,12 +193,14 @@ const sliderStyles = StyleSheet.create({
   },
 
   middleLine: (opacity) => ({
+    zIndex: -1,
     opacity,
     height: SLIDER_HEIGHT,
     backgroundColor: '#202224',
     width: 1,
   }),
   thumbContainer: (thumbTranslateY) => ({
+    zIndex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     height: 2*THUMB_RADIUS,
@@ -171,6 +212,7 @@ const sliderStyles = StyleSheet.create({
     ]
   }),
   thumb: (thumbColor, scale, translateY) => ({
+    zIndex: 1,
     height: 2*THUMB_RADIUS,
     width: 2*THUMB_RADIUS,
     borderRadius: THUMB_RADIUS,
