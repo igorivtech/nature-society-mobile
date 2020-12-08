@@ -6,6 +6,7 @@ import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
 import { Slider } from "../views/report/Slider";
 import { strings } from "../../values/strings";
+import * as Animatable from "react-native-animatable";
 
 export const ReportScreen = ({navigation}) => {
 
@@ -19,7 +20,9 @@ export const ReportScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <TapView onPress={tapClose} />
       <View style={styles.cardContainer}>
-        <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
+        <Animatable.View style={StyleSheet.absoluteFill} duration={1000} delay={700} animation='fadeIn'>
+          <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
+        </Animatable.View>
         <Slider titles={strings.reportScreen.cleanTitles} startUpAnimation={true} initialValue={0.5} animationProgress={progress} />
       </View>
     </SafeAreaView>
