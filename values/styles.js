@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { colors } from "./colors";
 import { width, height } from "./consts";
 
-export const styles = StyleSheet.create({
+export const globalStyles = StyleSheet.create({
   mapStyle: {
     ...StyleSheet.absoluteFill
   },

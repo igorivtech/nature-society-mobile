@@ -9,7 +9,7 @@ import {
   Easing,
 } from "react-native";
 import { strings } from "../../values/strings";
-import { styles } from "../../values/styles";
+import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { width, height } from "../../values/consts";
 import { colors } from "../../values/colors";
@@ -158,16 +158,16 @@ export const OnboardingScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.onboardingContainer}>
+    <View style={globalStyles.onboardingContainer}>
 
-      <TouchableWithoutFeedback onPress={next} style={styles.halfLeft}>
-        <View style={styles.fillParent} />
+      <TouchableWithoutFeedback onPress={next} style={globalStyles.halfLeft}>
+        <View style={globalStyles.fillParent} />
       </TouchableWithoutFeedback>
 
-      <View style={styles.onboardingMainContainer}>
+      <View style={globalStyles.onboardingMainContainer}>
         <Animated.View
           style={{
-            ...styles.onboardingButtonsContainer,
+            ...globalStyles.onboardingButtonsContainer,
             transform: [{ translateY: buttonsYTranslate }],
           }}
         >

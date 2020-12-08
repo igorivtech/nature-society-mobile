@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated, Easing } from "react-native";
-import { styles } from "../../values/styles";
+import { globalStyles } from "../../values/styles";
 import LottieView from 'lottie-react-native';
 
 export const ReportScreen = ({navigation}) => {
@@ -17,7 +17,7 @@ export const ReportScreen = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
       <TouchableWithoutFeedback style={StyleSheet.absoluteFill} onPress={animate}>
         <Text style={{

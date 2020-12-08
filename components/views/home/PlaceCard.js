@@ -11,7 +11,7 @@ import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../../values/colors";
 import { width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
-import { styles } from "../../../values/styles";
+import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 import { RatingView, RecentVisitor } from "./views";
 
@@ -54,7 +54,7 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
   return (
     <View style={cardStyle}>
       <TouchableWithoutFeedback onPress={showPlace}>
-        <Animated.View style={styles.mainCardContainer(translateY)}>
+        <Animated.View style={globalStyles.mainCardContainer(translateY)}>
           <SharedElement
             style={StyleSheet.absoluteFill}
             id={`place.${item.key}.bg`}
@@ -67,8 +67,8 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
             />
           </SharedElement>
 
-          <View style={styles.cardDetailsContainer}>
-            <View style={styles.cardLocationContainer}>
+          <View style={globalStyles.cardDetailsContainer}>
+            <View style={globalStyles.cardLocationContainer}>
               <View>
                 <Text style={textStyles.cardTitle}>{item.title}</Text>
                 <Text style={textStyles.cardDetail}>
@@ -76,7 +76,7 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
                 </Text>
               </View>
               <Image
-                style={styles.cardDetailIcon}
+                style={globalStyles.cardDetailIcon}
                 source={require("../../../assets/images/Marker.png")}
               />
             </View>
@@ -89,14 +89,14 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
               image={item.lastVisitorImage}
             />
 
-            <View style={styles.cardLocationContainer}>
+            <View style={globalStyles.cardLocationContainer}>
               <RatingView
                 image={require("../../../assets/images/HowBusy.png")}
                 rating={item.crowdness}
                 color={colors.grass}
               />
 
-              <View style={styles.spacer(16)} />
+              <View style={globalStyles.spacer(16)} />
 
               <RatingView
                 image={require("../../../assets/images/Heart.png")}
@@ -104,16 +104,16 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
                 color={colors.treeBlues}
               />
 
-              <View style={styles.spacer(2)} />
+              <View style={globalStyles.spacer(2)} />
             </View>
           </View>
 
           <SharedElement
-            style={styles.cardMainImage}
+            style={globalStyles.cardMainImage}
             id={`place.${item.key}.image`}
           >
             <Image
-              style={{ ...styles.cardMainImage, width: "100%" }}
+              style={{ ...globalStyles.cardMainImage, width: "100%" }}
               source={{ uri: item.image }}
             />
           </SharedElement>

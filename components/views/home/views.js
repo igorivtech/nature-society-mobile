@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { View, TouchableOpacity, Image, Text, Animated, StyleSheet, Easing } from "react-native";
 import { colors } from "../../../values/colors";
-import { styles } from "../../../values/styles";
+import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 
 const images = {
@@ -55,7 +55,7 @@ const s = StyleSheet.create({
 export const RecentVisitor = ({ title, details, image, large = false }) => {
   return (
     <View
-      style={{ ...styles.cardLocationContainer, marginLeft: large ? 30 : 0 }}
+      style={{ ...globalStyles.cardLocationContainer, marginLeft: large ? 30 : 0 }}
     >
       <View
         style={{
@@ -65,14 +65,14 @@ export const RecentVisitor = ({ title, details, image, large = false }) => {
         <Text style={textStyles.cardTitle}>{title}</Text>
         <Text style={textStyles.cardDetail}>{details}</Text>
       </View>
-      <Image style={styles.cardVisitorPic(large)} source={{ uri: image }} />
+      <Image style={globalStyles.cardVisitorPic(large)} source={{ uri: image }} />
     </View>
   );
 };
 
 export const RatingView = ({ rating, color, image }) => {
   return (
-    <View style={styles.ratingContainer}>
+    <View style={globalStyles.ratingContainer}>
       <Text style={textStyles.rating(color)}>{rating}</Text>
 
       <Image source={image} />

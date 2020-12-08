@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
-import { styles } from "../../values/styles";
+import { globalStyles } from "../../values/styles";
 import { height, DATA, DEFAULT_NOTIFICATION } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
@@ -104,15 +104,15 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.homeContainer}>
+    <View style={globalStyles.homeContainer}>
       <MapView
         customMapStyle={MAP_STYLE}
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        style={styles.mapStyle}
+        style={globalStyles.mapStyle}
       />
-      <SafeAreaView style={styles.safeAreaContainer}>
-        <View style={styles.homeTopContainer}>
+      <SafeAreaView style={globalStyles.safeAreaContainer}>
+        <View style={globalStyles.homeTopContainer}>
           <HomeButton index={2} notification={notification} onPress={progress} />
           <HomeButton index={1} onPress={report} />
           <HomeButton index={0} onPress={explore} />
@@ -120,8 +120,8 @@ export const HomeScreen = ({ navigation, route }) => {
         <Animated.FlatList
           data={places}
           horizontal
-          style={styles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
-          contentContainerStyle={styles.mainListContainer}
+          style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
+          contentContainerStyle={globalStyles.mainListContainer}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
             { useNativeDriver: true }

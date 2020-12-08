@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Image, Text } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { styles } from "../../../values/styles";
+import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 
 const animation = {
@@ -45,7 +45,7 @@ export const GrowthPoints = () => {
   }, []);
 
   return (
-    <Animatable.View ref={containerRef} style={styles.pointsGrowthContainer}>
+    <Animatable.View ref={containerRef} style={globalStyles.pointsGrowthContainer}>
       <Animatable.Text
         ref={textRef}
         adjustsFontSizeToFit={true}

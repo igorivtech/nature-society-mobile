@@ -10,7 +10,7 @@ import {
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
-import { styles } from "../../values/styles";
+import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 
 import * as Animatable from "react-native-animatable";
@@ -94,7 +94,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             ref={textRef}
             animation="bounceIn"
             delay={600}
-            style={styles.fullWidth}
+            style={globalStyles.fullWidth}
           >
             <Text style={textStyles.boldOfSize(24)}>{place.title}</Text>
 
@@ -137,7 +137,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             animation="fadeInUp"
             delay={500}
             ref={visitorsRef}
-            style={styles.fullWidth}
+            style={globalStyles.fullWidth}
           >
             <Text style={textStyles.normalOfSize(12)}>
               {strings.placeScreen.recentVisitors(place.locked)}
@@ -227,7 +227,7 @@ export const PlaceRating = ({
   small = false
 }) => {
   return (
-    <View style={styles.marginLeft(leftMargin)}>
+    <View style={globalStyles.marginLeft(leftMargin)}>
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
 
       <View style={s.ratingInnerContainer}>
@@ -243,7 +243,7 @@ export const PlaceRating = ({
 const s = StyleSheet.create({
   desc: {
     ...textStyles.normalOfSize(16),
-    ...styles.fullWidth,
+    ...globalStyles.fullWidth,
     lineHeight: 17,
   },
 
@@ -251,7 +251,7 @@ const s = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    ...styles.fullWidth,
+    ...globalStyles.fullWidth,
   },
 
   recentVisitorsContainer: {
