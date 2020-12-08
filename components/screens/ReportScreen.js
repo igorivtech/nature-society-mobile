@@ -33,6 +33,7 @@ const SLIDER_HEIGHT = 347;
 const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 const DURATION = 200;
+const LINE_OPACITY = 0.15;
 
 const clampAnimationValue = (p) => {
   if (p < 0.33) {
@@ -49,7 +50,7 @@ const Slider = ({startUpAnimation = false, initialValue, animationProgress}) => 
   useEffect(()=>{
     animationProgress.setValue(initialValue);
     if (startUpAnimation) {
-
+      startThumbAnimation();
     }
   }, [])
 
@@ -57,7 +58,7 @@ const Slider = ({startUpAnimation = false, initialValue, animationProgress}) => 
   const progress = useRef(new Animated.Value(initialValue)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const startUpTranslateY = useRef(new Animated.Value(0)).current;
-  const lineOpacity = useRef(new Animated.Value(0.15)).current;
+  const lineOpacity = useRef(new Animated.Value(LINE_OPACITY)).current;
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -100,6 +101,34 @@ const Slider = ({startUpAnimation = false, initialValue, animationProgress}) => 
         easing: Easing.inOut(Easing.ease)
       })
     ]).start();
+  }
+
+  const startThumbAnimation = () => {
+    lineOpacity.setValue(0);
+    startUpTranslateY.setValue(0);
+    Animated.timing(startUpTranslateY, {
+      delay: 1000,
+      toValue: -50,
+      duration: 400,
+      useNativeDriver: false
+    }).start(()=>{
+      Animated.timing(startUpTranslateY, {
+        toValue: 50,
+        duration: 500,
+        useNativeDriver: false
+      }).start(()=>{
+        Animated.timing(startUpTranslateY, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: false
+        }).start(()=>{
+          Animated.timing(lineOpacity, {
+            toValue: LINE_OPACITY,
+            useNativeDriver: true
+          }).start();
+        })
+      })
+    })
   }
 
   const panHandlerEvent = (event) => {
