@@ -25,35 +25,39 @@ export const ReportScreen = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{
-      ...globalStyles.container,
-      backgroundColor: colors.grass,
-      paddingHorizontal: 100
-    }}>
+    <SafeAreaView style={styles.container}>
       <TapGestureHandler style={StyleSheet.absoluteFill} onHandlerStateChange={tapClose}>
         <View style={StyleSheet.absoluteFill} />
       </TapGestureHandler>
-      <View style={{
-        ...globalStyles.shadow,
-        borderRadius: 22.5,
-        marginHorizontal: 30,
-        marginVertical: 45,
-        backgroundColor: 'white',
-        flex: 1,
-        alignSelf: 'stretch',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-
+      <View style={styles.cardContainer}>
         <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
         <TouchableWithoutFeedback onPress={animate}>
-          <Text style={{
-            transform: [{translateY: -100}],
-            color: colors.darkWithTone,
-          }}>ReportScreen</Text>
+          <Text style={styles.dummyText}>ReportScreen</Text>
         </TouchableWithoutFeedback>
 
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    ...globalStyles.container,
+    backgroundColor: colors.grass,
+  },
+  dummyText: {
+    transform: [{translateY: -100}],
+    color: colors.darkWithTone,
+  },
+  cardContainer: {
+    ...globalStyles.shadow,
+    borderRadius: 22.5,
+    marginHorizontal: 30,
+    marginVertical: 45,
+    backgroundColor: 'white',
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
