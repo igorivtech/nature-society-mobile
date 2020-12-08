@@ -4,6 +4,7 @@ import { globalStyles } from "../../values/styles";
 import LottieView from 'lottie-react-native';
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
+import { height } from "../../values/consts";
 
 export const ReportScreen = ({navigation}) => {
 
@@ -35,10 +36,71 @@ export const ReportScreen = ({navigation}) => {
           <Text style={styles.dummyText}>ReportScreen</Text>
         </TouchableWithoutFeedback>
 
+        <Slider />
+
       </View>
     </SafeAreaView>
   );
 };
+
+const THUMB_RADIUS = 22.5 / 2;
+const SLIDER_HEIGHT = 347;
+const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
+const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
+
+const Slider = ({}) => {
+
+  const progress = useRef(new Animated.Value(0.5)).current;
+  const thumbColor = progress.interpolate({
+    inputRange: [0, 0.25, 0.5, 0.75, 1],
+    outputRange: THUMB_COLORS,
+    extrapolate: 'clamp',
+  })
+
+  return (
+    <View style={{
+      position: 'absolute',
+      right: 16,
+      bottom: 147,
+      
+    }}>
+      <View style={{
+        height: SLIDER_CONTAINER_HEIGHT,
+        width: THUMB_RADIUS*2,
+        backgroundColor: '#EEE',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+
+        <View style={{
+          opacity: 0.15,
+          height: SLIDER_HEIGHT,
+          backgroundColor: '#202224',
+          width: 1,
+        }} />
+
+        <Animated.View style={{
+          height: 2*THUMB_RADIUS,
+          width: 2*THUMB_RADIUS,
+          borderRadius: THUMB_RADIUS,
+          backgroundColor: thumbColor,
+          position: 'absolute',
+          bottom: 0,
+          transform: [
+            {translateY: progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, -SLIDER_HEIGHT],
+              extrapolate: 'clamp',
+              useNativeDriver: true
+            })}
+          ]
+        }} />
+
+      </View>
+    </View>
+    
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
