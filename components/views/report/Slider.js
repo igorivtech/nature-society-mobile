@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { View, StyleSheet, Animated, Easing, Text } from "react-native";
 import {clamp} from '../../../hooks/helpers'
@@ -23,7 +23,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initialValue, animationProgress}) => {
+export const Slider = memo(({titles = ["", "", ""], startUpAnimation = false, initialValue, animationProgress}) => {
 
   useEffect(()=>{
     animationProgress.setValue(initialValue);
@@ -173,7 +173,7 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
       </View>
     </View>
   )
-}
+});
 
 const sliderStyles = StyleSheet.create({
 
