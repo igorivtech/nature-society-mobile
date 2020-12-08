@@ -71,7 +71,7 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
     inputRange: [0, 0.25],
     outputRange: [1, 0],
     extrapolate: 'clamp',
-    useNativeDriver: false
+    useNativeDriver: true
   })
 
   const panHandlerStateChange = (event) => {
