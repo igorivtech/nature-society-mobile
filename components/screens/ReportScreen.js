@@ -10,8 +10,12 @@ export const ReportScreen = ({navigation}) => {
   const progress = useRef(new Animated.Value(0)).current;
 
   const animate = () => {
+    const v = progress._value;
+    if (v < 1 && v > 0) {
+      return
+    }
     Animated.timing(progress, {
-      toValue: progress._value === 0 ? 1 : 0,
+      toValue: v === 0 ? 1 : 0,
       useNativeDriver: false,
       easing: Easing.inOut(Easing.ease),
       duration: 1000
