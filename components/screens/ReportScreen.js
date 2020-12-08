@@ -37,7 +37,7 @@ export const ReportScreen = ({navigation}) => {
           <Text style={styles.dummyText}>ReportScreen</Text>
         </TouchableWithoutFeedback>
 
-        <Slider />
+        <Slider animationProgress={progress} />
 
       </View>
     </SafeAreaView>
@@ -49,7 +49,7 @@ const SLIDER_HEIGHT = 347;
 const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 
-const Slider = ({}) => {
+const Slider = ({animationProgress}) => {
 
   const progress = useRef(new Animated.Value(0)).current;
   const thumbColor = progress.interpolate({
@@ -69,21 +69,19 @@ const Slider = ({}) => {
 
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
-      const v = progress._value;
-      if (v < 0) {
-        progress.setValue(0);
-        currentOffset.current = 0;
-      } else if (v > 1) {
-        progress.setValue(1);
-        currentOffset.current = 1;
-      } else {
-        currentOffset.current = v;
-      } 
+      currentOffset.current = progress._value;
     }
   }
 
   const panHandlerEvent = (event) => {
-    progress.setValue(currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT));
+    let p = currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT);
+    if (p < 0) {
+      p = 0;
+    } else if (p > 1) {
+      p = 1
+    }
+    progress.setValue(p);
+    animationProgress.setValue(p);
   }
 
   return (
@@ -96,7 +94,6 @@ const Slider = ({}) => {
       <View style={{
         height: SLIDER_CONTAINER_HEIGHT,
         width: THUMB_RADIUS*2,
-        backgroundColor: '#EEE',
         alignItems: 'center',
         justifyContent: 'center'
       }}>
