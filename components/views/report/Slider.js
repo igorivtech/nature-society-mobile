@@ -54,7 +54,7 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
   })
 
   const topTextOpacity = progress.interpolate({
-    inputRange: [0.5, 1],
+    inputRange: [0.75, 1],
     outputRange: [0, 1],
     extrapolate: 'clamp',
     useNativeDriver: true
@@ -68,7 +68,7 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
   })
 
   const bottomTextOpacity = progress.interpolate({
-    inputRange: [0, 0.5],
+    inputRange: [0, 0.25],
     outputRange: [1, 0],
     extrapolate: 'clamp',
     useNativeDriver: false
