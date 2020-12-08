@@ -50,11 +50,18 @@ const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 
 const Slider = ({}) => {
 
-  const progress = useRef(new Animated.Value(0.5)).current;
+  const progress = useRef(new Animated.Value(0)).current;
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
     outputRange: THUMB_COLORS,
     extrapolate: 'clamp',
+  })
+
+  const thumbTranslateY = progress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -SLIDER_HEIGHT],
+    extrapolate: 'clamp',
+    useNativeDriver: true
   })
 
   return (
@@ -87,12 +94,7 @@ const Slider = ({}) => {
           position: 'absolute',
           bottom: 0,
           transform: [
-            {translateY: progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, -SLIDER_HEIGHT],
-              extrapolate: 'clamp',
-              useNativeDriver: true
-            })}
+            {translateY: thumbTranslateY}
           ]
         }} />
 
