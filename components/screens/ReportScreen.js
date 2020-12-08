@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated, Easing, Saf
 import { globalStyles } from "../../values/styles";
 import LottieView from 'lottie-react-native';
 import { colors } from "../../values/colors";
-import { State, TapGestureHandler } from "react-native-gesture-handler";
+import { TapView } from "../views/general";
 
 export const ReportScreen = ({navigation}) => {
 
@@ -22,17 +22,13 @@ export const ReportScreen = ({navigation}) => {
     }).start();
   }
 
-  const tapClose = (event) => {
-    if (event.nativeEvent.state === State.END) {
-      navigation.goBack();
-    }
+  const tapClose = () => {
+    navigation.goBack();
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <TapGestureHandler style={StyleSheet.absoluteFill} onHandlerStateChange={tapClose}>
-        <View style={StyleSheet.absoluteFill} />
-      </TapGestureHandler>
+      <TapView onPress={tapClose} />
       <View style={styles.cardContainer}>
         <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
         <TouchableWithoutFeedback onPress={animate}>
