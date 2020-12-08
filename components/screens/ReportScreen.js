@@ -21,7 +21,6 @@ export const ReportScreen = ({navigation}) => {
       <TapView onPress={tapClose} />
       <View style={styles.cardContainer}>
         <LottieView source={require('../../assets/animations/rainbow.json')} progress={progress} resizeMode='contain' />
-        <Text style={styles.dummyText}>ReportScreen</Text>
         <Slider initialValue={0.5} animationProgress={progress} />
 
       </View>
@@ -33,6 +32,7 @@ const THUMB_RADIUS = 22.5 / 2;
 const SLIDER_HEIGHT = 347;
 const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
+const DURATION = 200;
 
 const Slider = ({initialValue, animationProgress}) => {
 
@@ -62,9 +62,36 @@ const Slider = ({initialValue, animationProgress}) => {
     if (event.nativeEvent.state === State.END) {
       currentOffset.current = progress._value;
       scaleThumb(1);
+      clampAnimation();
     } else if (event.nativeEvent.state === State.BEGAN) {
       scaleThumb(0.8);
     }
+  }
+
+  const clampAnimation = () => {
+    let p = progress._value;
+    if (p < 0.33) {
+      p = 0;
+    } else if (p < 0.66) {
+      p = 0.5;
+    } else {
+      p = 1;
+    }
+    currentOffset.current = p;
+    Animated.parallel([
+      Animated.timing(progress, {
+        toValue: p,
+        duration: DURATION,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(animationProgress, {
+        toValue: p,
+        duration: DURATION,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease)
+      })
+    ]).start();
   }
 
   const panHandlerEvent = (event) => {
