@@ -56,6 +56,7 @@ const Slider = ({animationProgress}) => {
     inputRange: [0, 0.25, 0.5, 0.75, 1],
     outputRange: THUMB_COLORS,
     extrapolate: 'clamp',
+    useNativeDriver: true
   })
 
   const thumbTranslateY = progress.interpolate({
