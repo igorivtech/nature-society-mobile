@@ -149,6 +149,11 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
 
   return (
     <View style={sliderStyles.container}>
+      <View style={sliderStyles.textContainer}>
+        <Animated.Text style={sliderStyles.text(topTextOpacity)}>{titles[2]}</Animated.Text>
+        <Animated.Text style={sliderStyles.text(centerTextOpacity)}>{titles[1]}</Animated.Text>
+        <Animated.Text style={sliderStyles.text(bottomTextOpacity)}>{titles[0]}</Animated.Text>
+      </View>
       <View style={sliderStyles.sliderContainer}>
         <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
         <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
@@ -156,11 +161,6 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
             <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
           </Animated.View>
         </PanGestureHandler>
-      </View>
-      <View style={sliderStyles.textContainer}>
-        <Animated.Text style={sliderStyles.text(topTextOpacity)}>{titles[2]}</Animated.Text>
-        <Animated.Text style={sliderStyles.text(centerTextOpacity)}>{titles[1]}</Animated.Text>
-        <Animated.Text style={sliderStyles.text(bottomTextOpacity)}>{titles[0]}</Animated.Text>
       </View>
     </View>
   )
@@ -179,7 +179,7 @@ const sliderStyles = StyleSheet.create({
   },
 
   container: {
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     position: 'absolute',
     right: 16,
     bottom: 147,
