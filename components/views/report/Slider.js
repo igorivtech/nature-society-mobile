@@ -84,6 +84,12 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
     }
   }
 
+  const panHandlerEvent = (event) => {
+    let p = clamp(0, currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT), 1);
+    progress.setValue(p);
+    animationProgress.setValue(p);
+  }
+
   const clampAnimation = () => {
     let p = clampAnimationValue(progress._value);
     currentOffset.current = p;
@@ -139,12 +145,6 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
         })
       })
     })
-  }
-
-  const panHandlerEvent = (event) => {
-    let p = clamp(0, currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT), 1);
-    progress.setValue(p);
-    animationProgress.setValue(p);
   }
 
   const scaleThumb = (toValue) => {
