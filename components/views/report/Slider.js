@@ -3,6 +3,7 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { View, StyleSheet, Animated, Easing, Text } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
+import { height } from "../../../values/consts";
 
 const THUMB_RADIUS = 22.5 / 2;
 const SLIDER_HEIGHT = 347;
@@ -192,7 +193,7 @@ const sliderStyles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     right: 16,
-    bottom: 147,
+    bottom: height * 0.15,
   },
 
   sliderContainer: {
