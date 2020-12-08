@@ -4,6 +4,8 @@ import { View, StyleSheet, Animated, Easing, Text } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
 import { height } from "../../../values/consts";
+import LottieView from 'lottie-react-native';
+import * as Animatable from "react-native-animatable";
 
 const THUMB_RADIUS = 24.5 / 2;
 const SLIDER_HEIGHT = 347;
@@ -23,10 +25,9 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = memo(({titles = ["", "", ""], startUpAnimation = false, initialValue, animationProgress}) => {
+export const Slider = memo(({animation, titles = ["", "", ""], startUpAnimation = false, initialValue}) => {
 
   useEffect(()=>{
-    animationProgress.setValue(initialValue);
     if (startUpAnimation) {
       startThumbAnimation();
     }
@@ -88,7 +89,6 @@ export const Slider = memo(({titles = ["", "", ""], startUpAnimation = false, in
   const panHandlerEvent = (event) => {
     let p = clamp(0, currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT), 1);
     progress.setValue(p);
-    animationProgress.setValue(p);
   }
 
   const clampAnimation = () => {
@@ -101,12 +101,6 @@ export const Slider = memo(({titles = ["", "", ""], startUpAnimation = false, in
         useNativeDriver: false,
         easing: Easing.inOut(Easing.ease)
       }),
-      Animated.timing(animationProgress, {
-        toValue: p,
-        duration: DURATION,
-        useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease)
-      })
     ]).start();
   }
 
@@ -158,24 +152,37 @@ export const Slider = memo(({titles = ["", "", ""], startUpAnimation = false, in
 
   return (
     <View style={sliderStyles.container}>
-      <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
-        <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{titles[2]}</Animated.Text>
-        <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{titles[1]}</Animated.Text>
-        <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{titles[0]}</Animated.Text>
-      </Animated.View>
-      <View style={sliderStyles.sliderContainer}>
-        <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
-        <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
-          <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
-            <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
-          </Animated.View>
-        </PanGestureHandler>
+      <Animatable.View style={StyleSheet.absoluteFill} duration={1000} delay={600} animation='fadeIn'>
+        <LottieView source={animation} progress={progress} resizeMode='contain' />
+      </Animatable.View>
+      <View style={sliderStyles.sliderTextContainer}>
+        <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
+          <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{titles[2]}</Animated.Text>
+          <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{titles[1]}</Animated.Text>
+          <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{titles[0]}</Animated.Text>
+        </Animated.View>
+        <View style={sliderStyles.sliderContainer}>
+          <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
+          <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
+            <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
+              <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
+            </Animated.View>
+          </PanGestureHandler>
+        </View>
       </View>
+      
     </View>
   )
 });
 
 const sliderStyles = StyleSheet.create({
+
+  sliderTextContainer: {
+    position: 'absolute',
+    right: 16,
+    bottom: height * 0.15,
+    flexDirection: 'row',
+  },
 
   text: (opacity, translateY) => ({
     ...textStyles.normalOfSize(18),
@@ -190,10 +197,8 @@ const sliderStyles = StyleSheet.create({
   }),
 
   container: {
-    flexDirection: 'row',
+    ...StyleSheet.absoluteFill,
     position: 'absolute',
-    right: 16,
-    bottom: height * 0.15,
   },
 
   sliderContainer: {
