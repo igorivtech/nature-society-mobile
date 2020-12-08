@@ -10,6 +10,7 @@ const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 const DURATION = 200;
 const LINE_OPACITY = 0.15;
+const TITLE_TRANSLATE_Y = 4;
 
 const clampAnimationValue = (p) => {
   if (p < 0.33) {
@@ -150,9 +151,9 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.textContainer}>
-        <Animated.Text style={sliderStyles.text(topTextOpacity)}>{titles[2]}</Animated.Text>
-        <Animated.Text style={sliderStyles.text(centerTextOpacity)}>{titles[1]}</Animated.Text>
-        <Animated.Text style={sliderStyles.text(bottomTextOpacity)}>{titles[0]}</Animated.Text>
+        <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{titles[2]}</Animated.Text>
+        <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{titles[1]}</Animated.Text>
+        <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{titles[0]}</Animated.Text>
       </View>
       <View style={sliderStyles.sliderContainer}>
         <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
@@ -168,13 +169,14 @@ export const Slider = ({titles = ["", "", ""], startUpAnimation = false, initial
 
 const sliderStyles = StyleSheet.create({
 
-  text: (opacity) => ({
+  text: (opacity, translateY) => ({
     ...textStyles.normalOfSize(18),
-    opacity
+    opacity,
+    transform: [{translateY}]
   }),
 
   textContainer: {
-    marginRight: 8,
+    marginRight: 14,
     justifyContent: 'space-between'
   },
 
