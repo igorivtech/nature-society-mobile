@@ -199,7 +199,9 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
           easing: Easing.inOut(Easing.ease)
         })
       ]).start(()=>{
-        console.log("finished animation");
+        setTimeout(() => {
+          onPress(); // next please
+        }, 2000);
       });
       //
       setTimeout(() => {
@@ -336,7 +338,7 @@ const sliderStyles = StyleSheet.create({
   },
 
   container: {
-    height: '50%'
+    height: '33.3333333333333%'
   },
 
   sliderTextContainer: {
