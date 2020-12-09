@@ -5,6 +5,7 @@ import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
 import { Slider } from "../views/report/Slider";
 import { strings } from "../../values/strings";
+import { Report } from "../views/report/Report";
 
 
 const clean = {
@@ -74,10 +75,7 @@ export const ReportScreen = ({navigation}) => {
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
           <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
-          <View style={{
-            height: '33.3333333333333%',
-            width: '100%'
-          }} />
+          <Report />
         </Animated.ScrollView>
       </View>
     </SafeAreaView>
