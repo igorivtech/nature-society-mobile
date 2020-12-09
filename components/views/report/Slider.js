@@ -124,14 +124,12 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   const clampAnimation = () => {
     let p = clampAnimationValue(progress._value);
     currentOffset.current = p;
-    Animated.parallel([
-      Animated.timing(progress, {
-        toValue: p,
-        duration: DURATION,
-        useNativeDriver: false,
-        easing: Easing.inOut(Easing.ease)
-      }),
-    ]).start();
+    Animated.timing(progress, {
+      toValue: p,
+      duration: DURATION,
+      useNativeDriver: false,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
   }
 
   const startThumbAnimation = () => {
