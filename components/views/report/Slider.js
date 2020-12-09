@@ -303,7 +303,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
 const PAG_SIZE = 6.5;
 const indices = [0, 1, 2];
 
-const Pagination = ({index}) => {
+export const Pagination = ({index}) => {
   return (
     <View style={pagStyles.container}>
       {indices.map((v)=>{
