@@ -307,7 +307,7 @@ export const Pagination = ({index}) => {
   return (
     <View style={pagStyles.container}>
       {indices.map((v)=>{
-        return <View style={pagStyles.pag(v === index)} />
+        return <View key={v.toString()} style={pagStyles.pag(v === index)} />
       })}
     </View>
   )
