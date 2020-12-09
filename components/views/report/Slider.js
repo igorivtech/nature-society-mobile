@@ -225,8 +225,6 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       //     toValue: 1,
       //   }).start()
       // })
-    } else {
-      onPress();
     }
   }
 
