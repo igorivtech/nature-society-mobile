@@ -69,6 +69,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   const lineOpacity = useRef(new Animated.Value(LINE_OPACITY)).current;
   const textContainerOpacity = useRef(new Animated.Value(1)).current;
   const bottomTopContainersOpacity = useRef(new Animated.Value(1)).current;
+  const indicatorOpacity = useRef(new Animated.Value(1)).current;
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -186,6 +187,12 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       setContinueEnabled(false);
       setDragEnabled(false);
       Animated.parallel([
+        Animated.timing(indicatorOpacity, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 400,
+          easing: Easing.inOut(Easing.ease)
+        }),
         Animated.timing(bottomTopContainersOpacity, {
           toValue: 0,
           useNativeDriver: true,
@@ -274,7 +281,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         <Text style={sliderStyles.title}>{title}</Text>
       </Animated.View>
 
-      <View style={sliderStyles.indicatorContainer}>
+      <Animated.View style={sliderStyles.indicatorContainer(indicatorOpacity)}>
         {goBack ? (
           <View style={{
             backgroundColor: goBack ? "red" : 'cyan',
@@ -283,7 +290,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         ) : (
           <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
         )}
-      </View>
+      </Animated.View>
       
     </View>
   )
@@ -297,14 +304,15 @@ const sliderStyles = StyleSheet.create({
     color: colors.lighterShade
   },
 
-  indicatorContainer: {
+  indicatorContainer: (opacity) => ({
+    opacity,
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     alignItems: 'center',
     paddingTop: 18
-  },
+  }),
 
   continueButton: (opacity) => ({
     opacity
