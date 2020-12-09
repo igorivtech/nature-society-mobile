@@ -38,6 +38,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
     }
   }, [])
 
+  const [continueEnabled, setContinueEnabled] = useState(true);
   const [dragEnabled, setDragEnabled] = useState(true);
   const currentOffset = useRef(initialValue);
   const progress = useRef(new Animated.Value(initialValue)).current;
@@ -157,7 +158,28 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const localOnPress = () => {
-    onPress();
+    if (bottomTopContainersOpacity._value === 1) {
+      setContinueEnabled(false);
+      setDragEnabled(false);
+      Animated.parallel([
+        Animated.timing(bottomTopContainersOpacity, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 400,
+          easing: Easing.inOut(Easing.ease)
+        }),
+        Animated.timing(lineOpacity, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 400,
+          easing: Easing.inOut(Easing.ease)
+        })
+      ]).start(()=>{
+        console.log("finished animation");
+      });
+    } else {
+      onPress();
+    }
   }
 
   const pickLocation = () => {
@@ -187,11 +209,13 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         </View>
       </View>
       
-      <TouchableOpacity onPress={localOnPress}>
-        <Animated.View style={sliderStyles.buttonContainer(bottomTopContainersOpacity)}>
-          <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
-        </Animated.View>
-      </TouchableOpacity>
+      <Animated.View style={sliderStyles.continueButton(bottomTopContainersOpacity)}>
+        <TouchableOpacity disabled={!continueEnabled} onPress={localOnPress}>
+          <Animated.View style={sliderStyles.buttonContainer}>
+            <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
+          </Animated.View>
+        </TouchableOpacity>
+      </Animated.View>
 
       <Animated.View style={sliderStyles.topContainer(bottomTopContainersOpacity)}>
         {location && (
@@ -205,12 +229,15 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         <Text style={sliderStyles.title}>{title}</Text>
       </Animated.View>
       
-      
     </View>
   )
 });
 
 const sliderStyles = StyleSheet.create({
+
+  continueButton: (opacity) => ({
+    opacity
+  }),
 
   title: {
     ...textStyles.normalOfSize(30),
@@ -253,8 +280,7 @@ const sliderStyles = StyleSheet.create({
     color: colors.treeBlues,
   },
 
-  buttonContainer: (opacity) => ({
-    opacity,
+  buttonContainer: {
     borderRadius: 10,
     borderColor: colors.treeBlues,
     height: 45,
@@ -264,7 +290,7 @@ const sliderStyles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 16,
     justifyContent: 'center'
-  }),
+  },
 
   container: {
     height: '50%'
