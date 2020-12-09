@@ -183,49 +183,47 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const localOnPress = () => {
-    if (bottomTopContainersOpacity._value === 1) {
-      if (alreadyAnswered.current) {
-        onPress(); // next please
-      } else {
-        alreadyAnswered.current = true;
-        setContinueEnabled(false);
-        setDragEnabled(false);
-        Animated.parallel(
-          [indicatorOpacity, bottomTopContainersOpacity, lineOpacity].map(v => Animated.timing(v, {
-            toValue: 0,
-            useNativeDriver: true,
-            duration: 400,
-            easing: Easing.inOut(Easing.ease)
-          }))
-        ).start(()=>{
-          setTimeout(() => {
-            onPress(); // next please
-            setTimeout(() => {
-              backToNormal();
-            }, 1000);
-          }, 2000);
-        });
-        //
+    if (alreadyAnswered.current) {
+      onPress(); // next please
+    } else {
+      alreadyAnswered.current = true;
+      setContinueEnabled(false);
+      setDragEnabled(false);
+      Animated.parallel(
+        [indicatorOpacity, bottomTopContainersOpacity, lineOpacity].map(v => Animated.timing(v, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: 400,
+          easing: Easing.inOut(Easing.ease)
+        }))
+      ).start(()=>{
         setTimeout(() => {
-          titlesMap[progress._value](strings.reportScreen.otherPeople(8));  
-        }, 200);
-      }
-      // animate title
-      // const textOpacity = titlesOpacityMap[progress._value];
-      // const setTitle = titlesMap[progress._value];
-      // Animated.timing(textOpacity, {
-      //   duration: 200,
-      //   // useNativeDriver: true,
-      //   toValue: 0,
-      // }).start(()=>{
-      //   setTitle(strings.reportScreen.otherPeople(8));
-      //   Animated.timing(textOpacity, {
-      //     duration: 200,
-      //     // useNativeDriver: true,
-      //     toValue: 1,
-      //   }).start()
-      // })
+          onPress(); // next please
+          setTimeout(() => {
+            backToNormal();
+          }, 1000);
+        }, 2000);
+      });
+      //
+      setTimeout(() => {
+        titlesMap[progress._value](strings.reportScreen.otherPeople(8));  
+      }, 200);
     }
+    // animate title
+    // const textOpacity = titlesOpacityMap[progress._value];
+    // const setTitle = titlesMap[progress._value];
+    // Animated.timing(textOpacity, {
+    //   duration: 200,
+    //   // useNativeDriver: true,
+    //   toValue: 0,
+    // }).start(()=>{
+    //   setTitle(strings.reportScreen.otherPeople(8));
+    //   Animated.timing(textOpacity, {
+    //     duration: 200,
+    //     // useNativeDriver: true,
+    //     toValue: 1,
+    //   }).start()
+    // })
   }
 
   const backToNormal = () => {
