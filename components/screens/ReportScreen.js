@@ -19,6 +19,8 @@ const location = {
 
 export const ReportScreen = ({navigation}) => {
 
+  const scrollViewHeight = useRef(0);
+
   const tapClose = () => {
     navigation.goBack();
   }
@@ -28,10 +30,14 @@ export const ReportScreen = ({navigation}) => {
     console.log("nextSegment");
   }
 
+  const onContainerLayout = (e) => {
+    scrollViewHeight.current = e.nativeEvent.layout.height;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <TapView onPress={tapClose} />
-      <View style={styles.cardContainer}>
+      <View onLayout={onContainerLayout} style={styles.cardContainer}>
         <Animated.ScrollView 
           showsVerticalScrollIndicator={false}
           scrollEnabled={false}
