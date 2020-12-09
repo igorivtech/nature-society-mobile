@@ -16,7 +16,7 @@ const clean = {
 const crowd = {
   title: strings.reportScreen.crowdTitle,
   titles: strings.reportScreen.crowdTitles,
-  animation: require('../../assets/animations/rainbow.json')
+  animation: require('../../assets/animations/lock.json')
 }
 
 const location = {
