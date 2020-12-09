@@ -60,6 +60,8 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
     setBottomText(titles[0]);
   }
 
+  const alreadyAnswered = useRef(false);
+
   const [continueEnabled, setContinueEnabled] = useState(true);
   const [dragEnabled, setDragEnabled] = useState(true);
   const currentOffset = useRef(initialValue);
@@ -182,27 +184,32 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
 
   const localOnPress = () => {
     if (bottomTopContainersOpacity._value === 1) {
-      setContinueEnabled(false);
-      setDragEnabled(false);
-      Animated.parallel(
-        [indicatorOpacity, bottomTopContainersOpacity, lineOpacity].map(v => Animated.timing(v, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 400,
-          easing: Easing.inOut(Easing.ease)
-        }))
-      ).start(()=>{
-        setTimeout(() => {
-          onPress(); // next please
+      if (alreadyAnswered.current) {
+        onPress(); // next please
+      } else {
+        alreadyAnswered.current = true;
+        setContinueEnabled(false);
+        setDragEnabled(false);
+        Animated.parallel(
+          [indicatorOpacity, bottomTopContainersOpacity, lineOpacity].map(v => Animated.timing(v, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 400,
+            easing: Easing.inOut(Easing.ease)
+          }))
+        ).start(()=>{
           setTimeout(() => {
-            backToNormal();
-          }, 1000);
-        }, 2000);
-      });
-      //
-      setTimeout(() => {
-        titlesMap[progress._value](strings.reportScreen.otherPeople(8));  
-      }, 200);
+            onPress(); // next please
+            setTimeout(() => {
+              backToNormal();
+            }, 1000);
+          }, 2000);
+        });
+        //
+        setTimeout(() => {
+          titlesMap[progress._value](strings.reportScreen.otherPeople(8));  
+        }, 200);
+      }
       // animate title
       // const textOpacity = titlesOpacityMap[progress._value];
       // const setTitle = titlesMap[progress._value];
