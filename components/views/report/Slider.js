@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
 import { height } from "../../../values/consts";
@@ -28,7 +28,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = memo(({item, startUpAnimation = false, initialValue = 0.5, onPress}) => {
+export const Slider = memo(({item, location, startUpAnimation = false, initialValue = 0.5, onPress}) => {
 
   const {animation, title, titles} = item;
 
@@ -159,6 +159,10 @@ export const Slider = memo(({item, startUpAnimation = false, initialValue = 0.5,
     onPress();
   }
 
+  const pickLocation = () => {
+    console.log("pickLocation");
+  }
+
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.animationSliderContainer}>
@@ -187,12 +191,49 @@ export const Slider = memo(({item, startUpAnimation = false, initialValue = 0.5,
           <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
         </View>
       </TouchableOpacity>
+
+      <View style={{
+        position: 'absolute',
+        top: 38,
+        left: 30,
+        right: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        {location && (
+          <View style={sliderStyles.locationContainer}>
+            <Text style={sliderStyles.locationText}>{location.name}</Text>
+            <Image source={require("../../../assets/images/location_small_marker.png")} /> 
+          </View>
+        )}
+        <Text style={{
+          ...textStyles.normalOfSize(30),
+          alignSelf: 'stretch'
+        }}>{title}</Text>
+      </View>
+      
       
     </View>
   )
 });
 
 const sliderStyles = StyleSheet.create({
+
+  locationText: {
+    ...textStyles.normalOfSize(18),
+    color: colors.treeBlues
+  },
+
+  locationContainer: {
+    borderBottomColor: colors.treeBlues,
+    borderBottomWidth: 1,
+    alignSelf: 'stretch',
+    marginBottom: 21,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingBottom: 2
+  },
 
   animationSliderContainer: {
     flex: 1,
@@ -223,7 +264,7 @@ const sliderStyles = StyleSheet.create({
   sliderTextContainer: {
     position: 'absolute',
     right: 16,
-    bottom: height * 0.06,
+    bottom: height * 0.04,
     flexDirection: 'row',
   },
 

@@ -13,6 +13,10 @@ const clean = {
   animation: require('../../assets/animations/rainbow.json')
 }
 
+const location = {
+  name: 'בית גוברין'
+}
+
 export const ReportScreen = ({navigation}) => {
 
   const tapClose = () => {
@@ -37,7 +41,7 @@ export const ReportScreen = ({navigation}) => {
           scrollEventThrottle={16}
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
-          <Slider item={clean} onPress={nextSegment} startUpAnimation={true} initialValue={0.5} />
+          <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} />
         </Animated.ScrollView>
       </View>
