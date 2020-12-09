@@ -114,6 +114,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   const startThumbAnimation = () => {
     textContainerOpacity.setValue(0);
     setDragEnabled(false);
+    setContinueEnabled(false);
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
     Animated.timing(startUpTranslateY, {
@@ -143,6 +144,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
             })
           ]).start(()=>{
             setDragEnabled(true);
+            setContinueEnabled(true);
           });
         })
       })
