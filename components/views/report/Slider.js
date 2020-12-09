@@ -271,10 +271,10 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
 
       <Animated.View style={sliderStyles.indicatorContainer(indicatorOpacity)}>
         {goBack ? (
-          <View style={{
-            backgroundColor: goBack ? "red" : 'cyan',
-            width: 20,
-            height: 20}}></View>
+          <TouchableOpacity onPress={goBack} style={sliderStyles.goBackButton}>
+            <Image source={require("../../../assets/images/scroll_back_icon.png")} />
+            <Text style={sliderStyles.goBack}>{strings.reportScreen.goBack}</Text>
+          </TouchableOpacity>
         ) : (
           <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
         )}
@@ -285,6 +285,17 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
 });
 
 const sliderStyles = StyleSheet.create({
+
+  goBackButton: {
+    alignItems: 'center'
+  },
+
+  goBack: {
+    marginTop: 0,
+    ...textStyles.normalOfSize(12),
+    textAlign: 'center',
+    color: colors.lighterShade
+  },
 
   newReport: {
     ...textStyles.normalOfSize(12),
@@ -314,7 +325,7 @@ const sliderStyles = StyleSheet.create({
   topContainer: (opacity) => ({
     opacity,
     position: 'absolute',
-    top: 38,
+    top: 44,
     left: 30,
     right: 30,
     justifyContent: 'center',
