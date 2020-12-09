@@ -186,26 +186,14 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
     if (bottomTopContainersOpacity._value === 1) {
       setContinueEnabled(false);
       setDragEnabled(false);
-      Animated.parallel([
-        Animated.timing(indicatorOpacity, {
+      Animated.parallel(
+        [indicatorOpacity, bottomTopContainersOpacity, lineOpacity].map(v => Animated.timing(v, {
           toValue: 0,
           useNativeDriver: true,
           duration: 400,
           easing: Easing.inOut(Easing.ease)
-        }),
-        Animated.timing(bottomTopContainersOpacity, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 400,
-          easing: Easing.inOut(Easing.ease)
-        }),
-        Animated.timing(lineOpacity, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: 400,
-          easing: Easing.inOut(Easing.ease)
-        })
-      ]).start(()=>{
+        }))
+      ).start(()=>{
         setTimeout(() => {
           onPress(); // next please
         }, 2000);
