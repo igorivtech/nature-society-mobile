@@ -280,6 +280,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
           </TouchableWithoutFeedback>
         )}
         <View style={sliderStyles.titlePaginationContainer}>
+          <Pagination index={goBack ? 1 : 0} />
           <Text style={sliderStyles.title}>{title}</Text>
         </View>
       </Animated.View>
@@ -297,6 +298,35 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       
     </View>
   )
+});
+
+const PAG_SIZE = 6.5;
+const indices = [0, 1, 2];
+
+const Pagination = ({index}) => {
+  return (
+    <View style={pagStyles.container}>
+      {indices.map((v)=>{
+        return <View style={pagStyles.pag(v === index)} />
+      })}
+    </View>
+  )
+}
+
+const pagStyles = StyleSheet.create({
+  pag: (current) => ({
+    marginVertical: 6.5/2,
+    width: PAG_SIZE,
+    height: PAG_SIZE,
+    borderRadius: PAG_SIZE/2,
+    backgroundColor: colors.treeBlues,
+    opacity: current ? 1 : 0.35
+  }),
+  container: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
 });
 
 const sliderStyles = StyleSheet.create({
