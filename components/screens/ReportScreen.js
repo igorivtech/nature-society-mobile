@@ -20,14 +20,23 @@ const location = {
 export const ReportScreen = ({navigation}) => {
 
   const scrollViewHeight = useRef(0);
+  const scrollView = useRef();
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const tapClose = () => {
     navigation.goBack();
   }
-  const scrollY = useRef(new Animated.Value(0)).current;
 
   const nextSegment = () => {
-    console.log("nextSegment");
+    console.log({scrollY});
+    if (scrollY._value <= scrollViewHeight.current*2) {
+      scrollView.current.scrollTo({
+        animated: true,
+        y: scrollY._value+scrollViewHeight.current
+      })
+    } else {
+      // finish
+    }
   }
 
   const onContainerLayout = (e) => {
@@ -39,16 +48,22 @@ export const ReportScreen = ({navigation}) => {
       <TapView onPress={tapClose} />
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
         <Animated.ScrollView 
+          ref={scrollView}
           showsVerticalScrollIndicator={false}
           scrollEnabled={false}
-          onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollY}}}], {
-            useNativeDriver: true
-          })}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            {useNativeDriver: false}
+          )}
           scrollEventThrottle={16}
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} />
+          <View style={{
+            height: '33.3333333333333%',
+            width: '100%'
+          }} />
         </Animated.ScrollView>
       </View>
     </SafeAreaView>
@@ -58,7 +73,7 @@ export const ReportScreen = ({navigation}) => {
 const styles = StyleSheet.create({
 
   scrollViewContent: {
-    height: '200%'
+    height: '300%'
   },
 
   container: {
