@@ -201,10 +201,12 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         alignItems: 'center'
       }}>
         {location && (
-          <View style={sliderStyles.locationContainer}>
-            <Text style={sliderStyles.locationText}>{location.name}</Text>
-            <Image source={require("../../../assets/images/location_small_marker.png")} /> 
-          </View>
+          <TouchableWithoutFeedback onPress={pickLocation}>
+            <View style={sliderStyles.locationContainer}>
+              <Text style={sliderStyles.locationText}>{location.name}</Text>
+              <Image source={require("../../../assets/images/location_small_marker.png")} /> 
+            </View>
+          </TouchableWithoutFeedback>
         )}
         <Text style={{
           ...textStyles.normalOfSize(30),
