@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
-export const Report = () => {
+export const Report = ({goBack}) => {
   return (
     <View
       style={{
@@ -11,7 +11,9 @@ export const Report = () => {
         justifyContent: "center",
       }}
     >
-      <Text>Report</Text>
+      <TouchableOpacity onPress={goBack}>
+        <Text>Report</Text>
+      </TouchableOpacity>
     </View>
   );
 };

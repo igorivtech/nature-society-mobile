@@ -75,7 +75,7 @@ export const ReportScreen = ({navigation}) => {
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
           <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
-          <Report />
+          <Report goBack={previousSegment} />
         </Animated.ScrollView>
       </View>
     </SafeAreaView>
