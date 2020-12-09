@@ -279,7 +279,9 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
             </View>
           </TouchableWithoutFeedback>
         )}
-        <Text style={sliderStyles.title}>{title}</Text>
+        <View style={sliderStyles.titlePaginationContainer}>
+          <Text style={sliderStyles.title}>{title}</Text>
+        </View>
       </Animated.View>
 
       <Animated.View style={sliderStyles.indicatorContainer(indicatorOpacity)}>
@@ -298,6 +300,10 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
 });
 
 const sliderStyles = StyleSheet.create({
+
+  titlePaginationContainer: {
+    alignSelf: 'stretch'
+  },
 
   goBackButton: {
     alignItems: 'center'
