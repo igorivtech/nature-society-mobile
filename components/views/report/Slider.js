@@ -196,6 +196,9 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       ).start(()=>{
         setTimeout(() => {
           onPress(); // next please
+          setTimeout(() => {
+            backToNormal();
+          }, 1000);
         }, 2000);
       });
       //
@@ -221,6 +224,15 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       onPress();
     }
   }
+
+  const backToNormal = () => {
+    resetTitles();
+    setContinueEnabled(true);
+    setDragEnabled(true);
+    [indicatorOpacity, bottomTopContainersOpacity, lineOpacity].forEach(v => {
+      v.setValue(1);
+    });
+  };
 
   const pickLocation = () => {
     console.log("pickLocation");
