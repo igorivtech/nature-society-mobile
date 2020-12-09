@@ -161,7 +161,7 @@ export const Slider = memo(({item, startUpAnimation = false, initialValue = 0.5,
 
   return (
     <View style={sliderStyles.container}>
-      <View style={globalStyles.homeContainer}>
+      <View style={sliderStyles.animationSliderContainer}>
         <Animatable.View style={StyleSheet.absoluteFill} duration={1000} delay={600} animation='fadeIn'>
           <LottieView source={animation} progress={progress} resizeMode='contain' />
         </Animatable.View>
@@ -193,6 +193,10 @@ export const Slider = memo(({item, startUpAnimation = false, initialValue = 0.5,
 });
 
 const sliderStyles = StyleSheet.create({
+
+  animationSliderContainer: {
+    flex: 1,
+  },
 
   buttonText: {
     ...textStyles.normalOfSize(18),
