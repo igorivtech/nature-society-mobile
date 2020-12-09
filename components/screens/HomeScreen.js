@@ -65,10 +65,14 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     const params = route.params
-    if (params != null && params.searchItem != null) {
-      setTimeout(() => {
-        showPlace(params.searchItem);  
-      }, 500);
+    if (params != null) {
+      if (params.searchItem != null) {
+        const s = {...params.searchItem}
+        setTimeout(() => {
+          showPlace(s);  
+        }, 500);
+        params.searchItem = null;
+      }
     }
   }, [route]);
 
