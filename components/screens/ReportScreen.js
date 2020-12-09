@@ -13,6 +13,12 @@ const clean = {
   animation: require('../../assets/animations/rainbow.json')
 }
 
+const crowd = {
+  title: strings.reportScreen.crowdTitle,
+  titles: strings.reportScreen.crowdTitles,
+  animation: require('../../assets/animations/rainbow.json')
+}
+
 const location = {
   name: 'בית גוברין'
 }
@@ -28,7 +34,6 @@ export const ReportScreen = ({navigation}) => {
   }
 
   const nextSegment = () => {
-    console.log({scrollY});
     if (scrollY._value <= scrollViewHeight.current*2) {
       scrollView.current.scrollTo({
         animated: true,
@@ -59,7 +64,7 @@ export const ReportScreen = ({navigation}) => {
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
-          <Slider item={clean} onPress={nextSegment} initialValue={0.5} />
+          <Slider item={crowd} onPress={nextSegment} initialValue={0.5} />
           <View style={{
             height: '33.3333333333333%',
             width: '100%'

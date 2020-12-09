@@ -75,6 +75,12 @@ export const strings = {
             "סביר",
             "נפלא"
         ],
+        crowdTitle: "מה מצב עומס\nהמבקרים במקום?",
+        crowdTitles: [
+            "הומה",
+            "סביר",
+            "ריק מאדם"
+        ],
         otherPeople: (num) => {
             return `${num} מדווחים דומים\nתיארו מצב דומה`
         }
