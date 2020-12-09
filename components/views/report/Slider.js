@@ -28,7 +28,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = memo(({item, location, startUpAnimation = false, initialValue = 0.5, onPress}) => {
+export const Slider = memo(({item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack}) => {
 
   const {animation, title, titles} = item;
 
@@ -273,12 +273,38 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         )}
         <Text style={sliderStyles.title}>{title}</Text>
       </Animated.View>
+
+      <View style={sliderStyles.indicatorContainer}>
+        {goBack ? (
+          <View style={{
+            backgroundColor: goBack ? "red" : 'cyan',
+            width: 20,
+            height: 20}}></View>
+        ) : (
+          <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
+        )}
+      </View>
       
     </View>
   )
 });
 
 const sliderStyles = StyleSheet.create({
+
+  newReport: {
+    ...textStyles.normalOfSize(12),
+    textAlign: 'center',
+    color: colors.lighterShade
+  },
+
+  indicatorContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingTop: 18
+  },
 
   continueButton: (opacity) => ({
     opacity

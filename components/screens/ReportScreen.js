@@ -44,6 +44,15 @@ export const ReportScreen = ({navigation}) => {
     }
   }
 
+  const previousSegment = () => {
+    if (scrollY._value > 0) {
+      scrollView.current.scrollTo({
+        animated: true,
+        y: scrollY._value-scrollViewHeight.current
+      })
+    }
+  }
+
   const onContainerLayout = (e) => {
     scrollViewHeight.current = e.nativeEvent.layout.height;
   }
@@ -64,7 +73,7 @@ export const ReportScreen = ({navigation}) => {
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
-          <Slider item={crowd} onPress={nextSegment} initialValue={0.5} />
+          <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
           <View style={{
             height: '33.3333333333333%',
             width: '100%'
