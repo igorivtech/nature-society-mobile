@@ -14,6 +14,10 @@ export const ReportScreen = ({navigation}) => {
   }
   const scrollY = useRef(new Animated.Value(0)).current;
 
+  const nextSegment = () => {
+    console.log("nextSegment");
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <TapView onPress={tapClose} />
@@ -27,8 +31,8 @@ export const ReportScreen = ({navigation}) => {
           scrollEventThrottle={16}
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
-          <Slider animation={require('../../assets/animations/rainbow.json')} titles={strings.reportScreen.cleanTitles} startUpAnimation={true} initialValue={0.5} />
-          <Slider animation={require('../../assets/animations/rainbow.json')} titles={strings.reportScreen.cleanTitles} startUpAnimation={false} initialValue={0.5} />
+          <Slider animation={require('../../assets/animations/rainbow.json')} onPress={nextSegment} titles={strings.reportScreen.cleanTitles} startUpAnimation={true} initialValue={0.5} />
+          <Slider animation={require('../../assets/animations/rainbow.json')} onPress={nextSegment} titles={strings.reportScreen.cleanTitles} initialValue={0.5} />
         </Animated.ScrollView>
       </View>
     </SafeAreaView>

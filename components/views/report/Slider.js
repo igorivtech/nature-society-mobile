@@ -1,11 +1,14 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { View, StyleSheet, Animated, Easing, Text } from "react-native";
+import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
 import { height } from "../../../values/consts";
 import LottieView from 'lottie-react-native';
 import * as Animatable from "react-native-animatable";
+import { strings } from "../../../values/strings";
+import { colors } from "../../../values/colors";
+import { globalStyles } from "../../../values/styles";
 
 const THUMB_RADIUS = 24.5 / 2;
 const SLIDER_HEIGHT = 347;
@@ -25,7 +28,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = memo(({animation, titles = ["", "", ""], startUpAnimation = false, initialValue}) => {
+export const Slider = memo(({animation, titles = ["", "", ""], startUpAnimation = false, initialValue = 0.5, onPress}) => {
 
   useEffect(()=>{
     if (startUpAnimation) {
@@ -150,32 +153,62 @@ export const Slider = memo(({animation, titles = ["", "", ""], startUpAnimation 
     }).start();
   }
 
+  const localOnPress = () => {
+    onPress();
+  }
+
   return (
     <View style={sliderStyles.container}>
-      <Animatable.View style={StyleSheet.absoluteFill} duration={1000} delay={600} animation='fadeIn'>
-        <LottieView source={animation} progress={progress} resizeMode='contain' />
-      </Animatable.View>
-      <View style={sliderStyles.sliderTextContainer}>
-        <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
-          <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{titles[2]}</Animated.Text>
-          <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{titles[1]}</Animated.Text>
-          <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{titles[0]}</Animated.Text>
-        </Animated.View>
-        <View style={sliderStyles.sliderContainer}>
-          <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
-          <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
-            <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
-              <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
-            </Animated.View>
-          </PanGestureHandler>
+      <View style={globalStyles.homeContainer}>
+        <Animatable.View style={StyleSheet.absoluteFill} duration={1000} delay={600} animation='fadeIn'>
+          <LottieView source={animation} progress={progress} resizeMode='contain' />
+        </Animatable.View>
+        <View style={sliderStyles.sliderTextContainer}>
+          <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
+            <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{titles[2]}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{titles[1]}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{titles[0]}</Animated.Text>
+          </Animated.View>
+          <View style={sliderStyles.sliderContainer}>
+            <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
+            <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
+              <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
+                <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
+              </Animated.View>
+            </PanGestureHandler>
+          </View>
         </View>
       </View>
+      
+      <TouchableOpacity onPress={localOnPress}>
+        <View style={sliderStyles.buttonContainer}>
+          <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
+        </View>
+      </TouchableOpacity>
       
     </View>
   )
 });
 
 const sliderStyles = StyleSheet.create({
+
+  buttonText: {
+    ...textStyles.normalOfSize(18),
+    textAlign: 'center',
+    color: colors.treeBlues,
+  },
+
+  buttonContainer: {
+    borderRadius: 10,
+    borderColor: colors.treeBlues,
+    height: 45,
+    alignSelf: 'stretch',
+    borderWidth: 1,
+    marginBottom: 22,
+    marginHorizontal: 30,
+    marginTop: 16,
+    justifyContent: 'center'
+  },
 
   container: {
     height: '50%'

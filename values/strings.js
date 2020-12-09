@@ -1,4 +1,5 @@
 export const strings = {
+    continue: 'המשך',
     guest: 'אורח',
     or: 'או',
     email: 'אימייל',
