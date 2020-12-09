@@ -38,6 +38,28 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
     }
   }, [])
 
+  const [topText, setTopText] = useState(titles[2]);
+  const [middleText, setMiddleText] = useState(titles[1]);
+  const [bottomText, setBottomText] = useState(titles[0]);
+
+  const titlesMap = {
+    0: setBottomText,
+    0.5: setMiddleText,
+    1: setTopText
+  };
+
+  const titlesOpacityMap = {
+    0: bottomTextOpacity,
+    0.5: centerTextOpacity,
+    1: topTextOpacity
+  };
+
+  const resetTitles = () => {
+    setTopText(titles[2]);
+    setMiddleText(titles[1]);
+    setBottomText(titles[0]);
+  }
+
   const [continueEnabled, setContinueEnabled] = useState(true);
   const [dragEnabled, setDragEnabled] = useState(true);
   const currentOffset = useRef(initialValue);
@@ -179,6 +201,25 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       ]).start(()=>{
         console.log("finished animation");
       });
+      //
+      setTimeout(() => {
+        titlesMap[progress._value](strings.reportScreen.otherPeople(8));  
+      }, 200);
+      // animate title
+      // const textOpacity = titlesOpacityMap[progress._value];
+      // const setTitle = titlesMap[progress._value];
+      // Animated.timing(textOpacity, {
+      //   duration: 200,
+      //   // useNativeDriver: true,
+      //   toValue: 0,
+      // }).start(()=>{
+      //   setTitle(strings.reportScreen.otherPeople(8));
+      //   Animated.timing(textOpacity, {
+      //     duration: 200,
+      //     // useNativeDriver: true,
+      //     toValue: 1,
+      //   }).start()
+      // })
     } else {
       onPress();
     }
@@ -196,9 +237,9 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         </Animatable.View>
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
-            <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{titles[2]}</Animated.Text>
-            <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{titles[1]}</Animated.Text>
-            <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{titles[0]}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{topText}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{middleText}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{bottomText}</Animated.Text>
           </Animated.View>
           <View style={sliderStyles.sliderContainer}>
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />

@@ -74,6 +74,9 @@ export const strings = {
             "לא טוב",
             "סביר",
             "נפלא"
-        ]
+        ],
+        otherPeople: (num) => {
+            return `${num} מדווחים דומים\nתיארו מצב דומה`
+        }
     }
 }
