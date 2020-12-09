@@ -45,6 +45,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   const startUpTranslateY = useRef(new Animated.Value(0)).current;
   const lineOpacity = useRef(new Animated.Value(LINE_OPACITY)).current;
   const textContainerOpacity = useRef(new Animated.Value(1)).current;
+  const bottomTopContainersOpacity = useRef(new Animated.Value(1)).current;
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -187,19 +188,12 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       </View>
       
       <TouchableOpacity onPress={localOnPress}>
-        <View style={sliderStyles.buttonContainer}>
+        <Animated.View style={sliderStyles.buttonContainer(bottomTopContainersOpacity)}>
           <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
-        </View>
+        </Animated.View>
       </TouchableOpacity>
 
-      <View style={{
-        position: 'absolute',
-        top: 38,
-        left: 30,
-        right: 30,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
+      <Animated.View style={sliderStyles.topContainer(bottomTopContainersOpacity)}>
         {location && (
           <TouchableWithoutFeedback onPress={pickLocation}>
             <View style={sliderStyles.locationContainer}>
@@ -208,11 +202,8 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
             </View>
           </TouchableWithoutFeedback>
         )}
-        <Text style={{
-          ...textStyles.normalOfSize(30),
-          alignSelf: 'stretch'
-        }}>{title}</Text>
-      </View>
+        <Text style={sliderStyles.title}>{title}</Text>
+      </Animated.View>
       
       
     </View>
@@ -220,6 +211,21 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
 });
 
 const sliderStyles = StyleSheet.create({
+
+  title: {
+    ...textStyles.normalOfSize(30),
+    alignSelf: 'stretch'
+  },
+
+  topContainer: (opacity) => ({
+    opacity,
+    position: 'absolute',
+    top: 38,
+    left: 30,
+    right: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }),
 
   locationText: {
     ...textStyles.normalOfSize(18),
@@ -247,7 +253,8 @@ const sliderStyles = StyleSheet.create({
     color: colors.treeBlues,
   },
 
-  buttonContainer: {
+  buttonContainer: (opacity) => ({
+    opacity,
     borderRadius: 10,
     borderColor: colors.treeBlues,
     height: 45,
@@ -257,7 +264,7 @@ const sliderStyles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 16,
     justifyContent: 'center'
-  },
+  }),
 
   container: {
     height: '50%'
