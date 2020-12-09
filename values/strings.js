@@ -69,6 +69,7 @@ export const strings = {
         chooseNewPasswordTitle: 'החלף סיסמה',
     },
     reportScreen: {
+        cleanTitle: "מה מצב הניקיון\nוהטבע במקום?",
         cleanTitles: [
             "לא טוב",
             "סביר",

@@ -28,7 +28,9 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = memo(({animation, titles = ["", "", ""], startUpAnimation = false, initialValue = 0.5, onPress}) => {
+export const Slider = memo(({item, startUpAnimation = false, initialValue = 0.5, onPress}) => {
+
+  const {animation, title, titles} = item;
 
   useEffect(()=>{
     if (startUpAnimation) {
@@ -217,7 +219,7 @@ const sliderStyles = StyleSheet.create({
   sliderTextContainer: {
     position: 'absolute',
     right: 16,
-    bottom: height * 0.15,
+    bottom: height * 0.06,
     flexDirection: 'row',
   },
 

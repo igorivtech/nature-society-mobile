@@ -7,6 +7,12 @@ import { Slider } from "../views/report/Slider";
 import { strings } from "../../values/strings";
 
 
+const clean = {
+  title: strings.reportScreen.cleanTitle,
+  titles: strings.reportScreen.cleanTitles,
+  animation: require('../../assets/animations/rainbow.json')
+}
+
 export const ReportScreen = ({navigation}) => {
 
   const tapClose = () => {
@@ -31,8 +37,8 @@ export const ReportScreen = ({navigation}) => {
           scrollEventThrottle={16}
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
-          <Slider animation={require('../../assets/animations/rainbow.json')} onPress={nextSegment} titles={strings.reportScreen.cleanTitles} startUpAnimation={true} initialValue={0.5} />
-          <Slider animation={require('../../assets/animations/rainbow.json')} onPress={nextSegment} titles={strings.reportScreen.cleanTitles} initialValue={0.5} />
+          <Slider item={clean} onPress={nextSegment} startUpAnimation={true} initialValue={0.5} />
+          <Slider item={clean} onPress={nextSegment} initialValue={0.5} />
         </Animated.ScrollView>
       </View>
     </SafeAreaView>
