@@ -65,7 +65,54 @@ export const GoBackButton = ({ goBack }) => {
   );
 };
 
+export const FinishButton = ({points, finishReport}) => {
+  return (
+    <TouchableOpacity onPress={finishReport}>
+    <View style={styles.buttonContainer}>
+      <View style={styles.buttonIconContainer}>
+        <Text style={styles.buttonText}>{`+${points}`}</Text>
+        <Image source={require("../../../assets/images/finish_report_icon.png")} />
+      </View>
+      <Text style={styles.finishText}>{strings.reportScreen.finishButton}</Text>
+    </View>
+  </TouchableOpacity>
+  )
+}
+
+
 const styles = StyleSheet.create({
+
+  finishText: {
+    ...textStyles.normalOfSize(18),
+    color: 'white',
+    textAlign: 'center'
+  },
+
+  buttonIconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  buttonText: {
+    ...textStyles.normalOfSize(24),
+    textAlign: 'center',
+    color: 'white',
+    marginRight: 10
+  },
+
+
+  buttonContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    borderRadius: 10,
+    backgroundColor: colors.treeBlues,
+    height: 45,
+    width: '100%',
+    marginTop: 16,
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+
   goBackButton: {
     alignItems: "center",
     justifyContent: "space-between",

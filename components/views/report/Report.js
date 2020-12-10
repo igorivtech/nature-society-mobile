@@ -3,11 +3,15 @@ import { View, Text, StyleSheet } from "react-native";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { Pagination } from "./Slider";
-import { TakePicView, GoBackButton } from "./views";
+import { TakePicView, GoBackButton, FinishButton } from "./views";
 
 export const Report = ({goBack}) => {
 
   const [image, setImage] = useState(null);
+
+  const finishReport = () => {
+    console.log("finishReport");
+  }
 
   return (
     <View style={styles.container}>
@@ -23,11 +27,13 @@ export const Report = ({goBack}) => {
         <TakePicView image={image} setImage={setImage} />
 
         <DetailsView />
+        <FinishButton finishReport={finishReport} points={30} />
 
       </View>
     </View>
   );
 };
+
 
 const DetailsView = ({}) => {
   return (

@@ -69,6 +69,7 @@ export const strings = {
         chooseNewPasswordTitle: 'החלף סיסמה',
     },
     reportScreen: {
+        finishButton: 'סיום דיווח',
         takePic1: 'הפרטים הבאים אינם חובה',
         takePic2: 'צילום המקום',
         goBack: 'חזרה',
