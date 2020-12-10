@@ -8,9 +8,12 @@ import { TakePicView, GoBackButton, FinishButton } from "./views";
 
 export const Report = ({goBack, image, setImage, finishReport, details, iHelped}) => {
 
+  const firstContainerOpacity = useRef(new Animated.Value(1)).current;
+  const secondContainerOpacity = useRef(new Animated.Value(0)).current;
+
   return (
     <View style={styles.container}>
-      <View style={styles.firstContainer}>
+      <Animated.View style={styles.firstContainer(firstContainerOpacity)}>
         <GoBackButton goBack={goBack} />    
         <View style={styles.titlesContainer}>
           <View style={styles.pagContainer}>
@@ -24,7 +27,7 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
         <DetailsView details={details} iHelped={iHelped} />
         <FinishButton finishReport={finishReport} points={30} />
 
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -58,7 +61,7 @@ const Checkbox = ({detail, large = false}) => {
   const [checked, setChecked] = useState(detail.on);
   useEffect(()=>{
     Animated.timing(scale, {
-      useNativeDriver: false,
+      useNativeDriver: true,
       duration: 200,
       toValue: checked ? 1 : 0,
       timing: Easing.inOut(Easing.ease)
@@ -103,7 +106,7 @@ const detailsStyles = StyleSheet.create({
     transform: [ {scale} ]
   }),
   checkboxContainer: (large) => ({
-    marginLeft: 8,
+    marginLeft: large ? 12 : 8,
     height: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
     width: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
     borderRadius: large ? 10 : 5,
@@ -125,10 +128,11 @@ const styles = StyleSheet.create({
     marginTop: 23
   },
 
-  firstContainer: {
+  firstContainer: (opacity) => ({
+    opacity,
     flex: 1,
     alignItems: 'stretch'
-  },
+  }),
 
   container: {
     height: "33.3333333333333%",
