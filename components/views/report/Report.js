@@ -36,14 +36,22 @@ const DetailsView = ({details, iHelped}) => {
       <View style={detailsStyles.checkboxesContainer}>
         {details.map(detail => <Checkbox key={detail.id} detail={detail} />)}
       </View>
-      <Checkbox large={true} detail={iHelped} />
+      <View style={{
+        alignItems: 'flex-end',
+        marginVertical: 8,
+      }}>
+        <Checkbox large={true} detail={iHelped} />
+      </View>
     </View>
   )
 }
 
 const CHECKBOX_SIZE = 22.5;
+const CHECKBOX_SIZE_LARGE = 44;
 
 const Checkbox = ({detail, large = false}) => {
+
+  const image = large ? require("../../../assets/images/leaf_big.png") : require("../../../assets/images/leaf_small.png")
 
   const scale = useRef(new Animated.Value(0)).current;
 
@@ -63,11 +71,11 @@ const Checkbox = ({detail, large = false}) => {
   }
 
   return (
-    <View style={detailsStyles.itemContainer}>
-      <Text style={textStyles.normalOfSize(16)}>{detail.title}</Text>
+    <View style={detailsStyles.itemContainer(large)}>
+      <Text style={textStyles.normalOfSize(large ? 18 : 16)}>{detail.title}</Text>
       <TouchableOpacity onPress={toggleValue}>
-        <View style={detailsStyles.checkboxContainer}>
-          <Animated.Image style={detailsStyles.leaf(scale)} source={require("../../../assets/images/leaf_small.png")} />
+        <View style={detailsStyles.checkboxContainer(large)}>
+          <Animated.Image style={detailsStyles.leaf(scale)} source={image} />
         </View>
       </TouchableOpacity>
     </View>
@@ -77,32 +85,33 @@ const Checkbox = ({detail, large = false}) => {
 const detailsStyles = StyleSheet.create({
 
   checkboxesContainer: {
+    marginTop: 8,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-end'
   },
 
-  itemContainer: {
+  itemContainer: (large) => ({
     marginVertical: 7,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
     backgroundColor: 'white',
-    width: '50%'
-  },
+    width: large ? '100%' : '50%'
+  }),
   leaf: (scale) => ({
     transform: [ {scale} ]
   }),
-  checkboxContainer: {
+  checkboxContainer: (large) => ({
     marginLeft: 8,
-    height: CHECKBOX_SIZE,
-    width: CHECKBOX_SIZE,
-    borderRadius: 5,
+    height: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
+    width: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
+    borderRadius: large ? 10 : 5,
     borderWidth: 1,
     borderColor: colors.treeBlues,
     justifyContent: 'center',
     alignItems: 'center'
-  },
+  }),
   container: {
     marginVertical: 16,
     flex: 1,
