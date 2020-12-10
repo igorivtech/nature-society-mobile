@@ -126,8 +126,11 @@ const Popup = ({title, popupVisible, setPopupVisible, action}) => {
   }
   
   return (
-    <Modal onRequestClose={()=>setPopupVisible(false)} transparent={true} animationType='fade' visible={popupVisible}>
+    <Modal transparent={true} animationType='fade' visible={popupVisible}>
       <View style={popupStyles.bg}>
+        <TouchableWithoutFeedback style={StyleSheet.absoluteFill} onPress={close}>
+          <View style={StyleSheet.absoluteFill} />
+        </TouchableWithoutFeedback>
         <View style={popupStyles.cardContainer}>
           <Text style={popupStyles.title}>{title}</Text>
           <PopupButton title={strings.reportScreen.popupNo} onPress={close} filled={true} />
