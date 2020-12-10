@@ -34,7 +34,7 @@ const DetailsView = ({details}) => {
     <View style={detailsStyles.container}>
       <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.additionalInfo}</Text>
       <View style={detailsStyles.checkboxesContainer}>
-        {details.map(detail => <Checkbox key={detail.id} detail={detail} details={details} />)}
+        {details.map(detail => <Checkbox key={detail.id} detail={detail} />)}
       </View>
     </View>
   )
@@ -42,7 +42,7 @@ const DetailsView = ({details}) => {
 
 const CHECKBOX_SIZE = 22.5;
 
-const Checkbox = ({detail, details}) => {
+const Checkbox = ({detail}) => {
 
   const scale = useRef(new Animated.Value(0)).current;
 
