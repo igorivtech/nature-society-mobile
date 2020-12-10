@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { View, Text, StyleSheet, Animated, Image, Easing } from "react-native";
+import { View, Text, StyleSheet, Animated, Image, Easing, TouchableOpacity } from "react-native";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { DetailsView } from "./DetailsView";
@@ -38,6 +38,10 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
     });
   }
 
+  const share = () => {
+    console.log("share");
+  }
+
   return (
     <View style={styles.container}>
       <Animated.View style={styles.firstContainer(firstContainerOpacity)}>
@@ -62,12 +66,44 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
           <Text style={styles.pointsText}>{`+${points}`}</Text>
           <Image source={require("../../../assets/images/report_done_icon.png")} />
         </View>
+        <Button title={strings.reportScreen.share} filled={true} onPress={share} />
+        <Button title={strings.reportScreen.done} filled={false} onPress={finishReport} />
       </Animated.View>
     </View>
   );
 };
 
+const Button = ({filled, title, onPress}) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.buttonContainer(filled)}>
+        <Text style={styles.buttonTitle(filled)}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
+
 const styles = StyleSheet.create({
+
+  buttonTitle: (filled) => ({
+    ...textStyles.normalOfSize(18),
+    color: filled ? 'white' : colors.treeBlues,
+    textAlign: 'center'
+  }),
+
+  buttonContainer: (filled) => ({
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    marginTop: 12,
+    backgroundColor: filled ? colors.treeBlues : 'white',
+    height: 45,
+    width: '100%',
+  }),
 
   pointsText: {
     marginRight: 8,
@@ -77,14 +113,14 @@ const styles = StyleSheet.create({
 
   pointsContainer: {
     marginTop: 12,
-    marginBottom: 32,
+    marginBottom: 26,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: "center"
   },
 
   doneImage: {
-    transform: [{translateY: 50}],
+    transform: [{translateY: 120}],
     alignSelf: 'center',
   },
 

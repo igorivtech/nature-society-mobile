@@ -53,8 +53,7 @@ export const ReportScreen = ({navigation}) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const finishReport = () => {
-    console.log("finishReport");
-    console.log({details, iHelped});
+    navigation.goBack();
   }
 
   const tapClose = () => {
