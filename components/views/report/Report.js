@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { View, Text, StyleSheet, Animated } from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Text, StyleSheet, Animated, Image, Easing } from "react-native";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { DetailsView } from "./DetailsView";
@@ -10,6 +10,26 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
 
   const firstContainerOpacity = useRef(new Animated.Value(1)).current;
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
+  const [secondContainerZIndex, setSecondContainerZIndex] = useState(-1);
+
+  const submitReport = () => {
+    Animated.parallel([
+      Animated.timing(firstContainerOpacity, {
+        toValue: 0,
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: false
+      }),
+      Animated.timing(secondContainerOpacity, {
+        toValue: 1,
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: false
+      }),
+    ]).start(()=>{
+      setSecondContainerZIndex(1);
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -25,8 +45,11 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
         <TakePicView image={image} setImage={setImage} />
 
         <DetailsView details={details} iHelped={iHelped} />
-        <FinishButton finishReport={finishReport} points={30} />
+        <FinishButton finishReport={submitReport} points={30} />
 
+      </Animated.View>
+      <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerZIndex)}>
+        <Image source={require("../../../assets/images/report_done_image.png")} />
       </Animated.View>
     </View>
   );
@@ -37,6 +60,15 @@ const styles = StyleSheet.create({
   titlesContainer: {
     marginTop: 23
   },
+
+  secondContainer: (opacity, zIndex) => ({
+    zIndex,
+    ...StyleSheet.absoluteFill,
+    opacity,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }),
 
   firstContainer: (opacity) => ({
     opacity,
