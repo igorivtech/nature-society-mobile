@@ -22,10 +22,24 @@ export const Report = ({goBack}) => {
           <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.takePic2}</Text>
         </View>
         <TakePicView image={image} setImage={setImage} />
+
+        <DetailsView />
+
       </View>
     </View>
   );
 };
+
+const DetailsView = ({}) => {
+  return (
+    <View style={{
+      flex: 1,
+      // backgroundColor: 'cyan'
+    }}>
+
+    </View>
+  )
+}
 
 const TakePicView = ({image, setImage}) => {
 
