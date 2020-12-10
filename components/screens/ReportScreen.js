@@ -7,6 +7,7 @@ import { Slider } from "../views/report/Slider";
 import { strings } from "../../values/strings";
 import { Report } from "../views/report/Report";
 import { textStyles } from "../../values/textStyles";
+import { width } from "../../values/consts";
 
 
 const clean = {
@@ -165,6 +166,9 @@ const popupStyles = StyleSheet.create({
     borderRadius: 24,
     ...globalStyles.shadow,
     paddingHorizontal: 40,
+    width: 314,
+    maxWidth: width - 2 * 30,
+    alignSelf: 'center',
     paddingVertical: 34
   },
 
