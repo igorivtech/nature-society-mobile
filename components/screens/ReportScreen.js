@@ -32,10 +32,17 @@ let details = [
   {id: "4_broken_bins", title: "פחים שבורים", on: false},
 ]
 
+let iHelped = {
+  id: "i_helped",
+  title: "ניקיתי את המקום ועזרתי\nלשמור על הטבע",
+  on: false
+}
+
 export const ReportScreen = ({navigation}) => {
 
   useEffect(()=>{
     details.forEach(d=>d.on=false);
+    iHelped.on = false;
   }, [])
 
   const scrollViewHeight = useRef(0);
@@ -47,7 +54,7 @@ export const ReportScreen = ({navigation}) => {
 
   const finishReport = () => {
     console.log("finishReport");
-    console.log(details);
+    console.log({details, iHelped});
   }
 
   const tapClose = () => {
@@ -95,7 +102,7 @@ export const ReportScreen = ({navigation}) => {
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
           <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
-          <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} />
+          <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
         </Animated.ScrollView>
       </View>
       <Popup popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
