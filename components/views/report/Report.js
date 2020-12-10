@@ -31,19 +31,22 @@ const TakePicView = ({image, setImage}) => {
 
   const [loadingImage, setLoadingImage] = useState(false);
 
-  const selectImage = async () => {
+  const selectImage = () => {
     setLoadingImage(true);
-    let result = await ImagePicker.launchCameraAsync({
+    ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       // allowsEditing: true,
       // aspect: [4, 3],
       quality: 0.75,
+    }).then((result)=>{
+      if (!result.cancelled) {
+        setImage(result);
+      }
+    }).catch((error)=>{
+      console.log({error});
+    }).finally(()=>{
+      setLoadingImage(false);
     });
-    // console.log(result);
-    if (!result.cancelled) {
-      setImage(result);
-    }
-    setLoadingImage(false);
   };
 
   return (
