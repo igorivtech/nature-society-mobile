@@ -69,6 +69,11 @@ export const strings = {
         chooseNewPasswordTitle: 'החלף סיסמה',
     },
     reportScreen: {
+        doneTitle: (user) => {
+            return user != null ? 
+            `תודה ששיתפת אותנו ${user.name},\nעזרת לנו מאוד לשמור על הטבע.` : 
+            "תודה ששיתפת אותנו,\nעזרת לנו מאוד לשמור על הטבע."
+        },
         additionalInfo: 'מידע נוסף שחשוב שנדע',
         finishButton: 'סיום דיווח',
         takePic1: 'הפרטים הבאים אינם חובה',

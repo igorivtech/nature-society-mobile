@@ -1,12 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { View, Text, StyleSheet, Animated, Image, Easing } from "react-native";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { DetailsView } from "./DetailsView";
 import { Pagination } from "./Slider";
 import { TakePicView, GoBackButton, FinishButton } from "./views";
+import {UserContext} from "../../../context/context"
 
 export const Report = ({goBack, image, setImage, finishReport, details, iHelped}) => {
+
+  const {state} = useContext(UserContext);
+  const {user} = state;
 
   const firstContainerOpacity = useRef(new Animated.Value(1)).current;
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
@@ -49,13 +53,21 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
 
       </Animated.View>
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerZIndex)}>
-        <Image source={require("../../../assets/images/report_done_image.png")} />
+        <Image style={styles.doneImage} source={require("../../../assets/images/report_done_image.png")} />
+        <Text style={{
+          ...textStyles.normalOfSize(18)
+        }}>{strings.reportScreen.doneTitle(user)}</Text>
       </Animated.View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+
+  doneImage: {
+    alignSelf: 'center',
+    flexGrow: 1
+  },
 
   titlesContainer: {
     marginTop: 23
@@ -66,8 +78,10 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
     opacity,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
+    paddingVertical: 35,
+    paddingHorizontal: 30
   }),
 
   firstContainer: (opacity) => ({
