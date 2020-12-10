@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, Animated, Easing, TouchableOpacity } from "react-native";
+import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { Pagination } from "./Slider";
@@ -28,17 +29,94 @@ export const Report = ({goBack, image, setImage, finishReport}) => {
   );
 };
 
+let details = [
+  {id: "1_extra_light", title: "עודף תאורה", on: false},
+  {id: "0_full_bins", title: "פחים מלאים", on: false},
+  {id: "3_fires_marks", title: "סימני מדורות", on: false},
+  {id: "2_open_bins", title: "פחים פתוחים", on: false},
+  {id: "4_broken_bins", title: "פחים שבורים", on: false},
+]
+
 
 const DetailsView = ({}) => {
   return (
-    <View style={{
-      flex: 1,
-      backgroundColor: 'cyan'
-    }}>
-
+    <View style={detailsStyles.container}>
+      <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.additionalInfo}</Text>
+      <View style={detailsStyles.checkboxesContainer}>
+        {details.map(detail => <Checkbox detail={detail} details={details} />)}
+      </View>
     </View>
   )
 }
+
+const CHECKBOX_SIZE = 22.5;
+
+const Checkbox = ({detail, details}) => {
+
+  const scale = useRef(new Animated.Value(0)).current;
+
+  const [checked, setChecked] = useState(detail.on);
+  useEffect(()=>{
+    Animated.timing(scale, {
+      useNativeDriver: false,
+      duration: 200,
+      toValue: checked ? 1 : 0,
+      timing: Easing.inOut(Easing.ease)
+    }).start();
+  }, [checked])
+
+  const toggleValue = () => {
+    setChecked(v=>!v);
+    
+  }
+
+  return (
+    <View key={detail.key} style={detailsStyles.itemContainer}>
+      <Text style={textStyles.normalOfSize(16)}>{detail.title}</Text>
+      <TouchableOpacity onPress={toggleValue}>
+        <View style={detailsStyles.checkboxContainer}>
+          <Animated.Image style={detailsStyles.leaf(scale)} source={require("../../../assets/images/leaf_small.png")} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+const detailsStyles = StyleSheet.create({
+
+  checkboxesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end'
+  },
+
+  itemContainer: {
+    marginVertical: 7,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    backgroundColor: 'white',
+    width: '50%'
+  },
+  leaf: (scale) => ({
+    transform: [ {scale} ]
+  }),
+  checkboxContainer: {
+    marginLeft: 8,
+    height: CHECKBOX_SIZE,
+    width: CHECKBOX_SIZE,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  container: {
+    marginVertical: 16,
+    flex: 1,
+    alignItems: 'stretch'
+  }
+})
 
 const styles = StyleSheet.create({
 
