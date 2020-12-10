@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal, TouchableWithoutFeedback, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
