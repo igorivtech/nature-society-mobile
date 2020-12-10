@@ -69,6 +69,7 @@ export const strings = {
         chooseNewPasswordTitle: 'החלף סיסמה',
     },
     reportScreen: {
+        popupTitle: 'יציאה באמצע דיווח תמחק אותו.\nבטוח שתרצה לצאת?',
         share: 'שיתוף',
         done: 'סגירה',
         doneTitle: (user) => {

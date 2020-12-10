@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal, TouchableWithoutFeedback, Text } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
 import { Slider } from "../views/report/Slider";
 import { strings } from "../../values/strings";
 import { Report } from "../views/report/Report";
+import { textStyles } from "../../values/textStyles";
 
 
 const clean = {
@@ -108,24 +109,40 @@ export const ReportScreen = ({navigation}) => {
           <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
         </Animated.ScrollView>
       </View>
-      <Popup action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup title={strings.reportScreen.popupTitle} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
     </SafeAreaView>
   );
 };
 
-const Popup = ({popupVisible, setPopupVisible, action}) => {
+const Popup = ({title, popupVisible, setPopupVisible, action}) => {
 
   const close = () => {
     setPopupVisible(false);
   }
   
   return (
-    <Modal transparent={true} animationType='fade' visible={popupVisible}>
+    <Modal onRequestClose={()=>setPopupVisible(false)} transparent={true} animationType='fade' visible={popupVisible}>
       <View style={{
         ...StyleSheet.absoluteFill,
-        backgroundColor: 'rgba(196, 224, 85, 0.5)'
+        backgroundColor: 'rgba(196, 224, 85, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'stretch'
       }}>
+        <View style={{
+          marginHorizontal: 30,
+          backgroundColor: 'white',
+          borderRadius: 24,
+          ...globalStyles.shadow,
+          paddingHorizontal: 40,
+          paddingVertical: 34
+        }}>
 
+          <Text style={{
+            ...textStyles.normalOfSize(18),
+            color: colors.treeBlues
+          }}>{title}</Text>
+
+        </View>
       </View>
       <TouchableWithoutFeedback onPress={close} style={StyleSheet.absoluteFill}>
         <View style={StyleSheet.absoluteFill} />
