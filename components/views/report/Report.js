@@ -60,7 +60,10 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
 
       </Animated.View>
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerZIndex)}>
-        <Image style={styles.doneImage} source={require("../../../assets/images/report_done_image.png")} />
+        <View style={styles.imageContainer}>
+          <Image resizeMode='contain' style={styles.doneImage} resizeMode='center' source={require("../../../assets/images/report_done_image.png")} />
+        </View>
+        
         <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.doneTitle(user)}</Text>
         <View style={styles.pointsContainer}>
           <Text style={styles.pointsText}>{`+${points}`}</Text>
@@ -85,6 +88,19 @@ const Button = ({filled, title, onPress}) => {
 
 
 const styles = StyleSheet.create({
+
+  imageContainer: {
+    flexGrow: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center',
+  },
+
+
+  doneImage: {
+    resizeMode: 'contain',
+    flex: 1,
+  },
+
 
   buttonTitle: (filled) => ({
     ...textStyles.normalOfSize(18),
@@ -119,11 +135,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
-  doneImage: {
-    transform: [{translateY: 120}],
-    alignSelf: 'center',
-  },
-
   titlesContainer: {
     marginTop: 23
   },
@@ -132,7 +143,6 @@ const styles = StyleSheet.create({
     zIndex,
     ...StyleSheet.absoluteFill,
     opacity,
-    flex: 1,
     alignItems: 'stretch',
     justifyContent: 'flex-end',
     paddingVertical: 35,
