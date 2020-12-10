@@ -90,6 +90,7 @@ export const DetailsView = ({details, iHelped}) => {
     container: {
       marginVertical: 16,
       flex: 1,
-      alignItems: 'stretch'
+      alignItems: 'stretch',
+      justifyContent: 'space-around'
     }
   })

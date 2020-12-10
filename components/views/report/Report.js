@@ -55,9 +55,12 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
         </View>
         <TakePicView image={image} setImage={setImage} />
 
-        <DetailsView details={details} iHelped={iHelped} />
-        <FinishButton finishReport={submitReport} points={points} />
+        <View style={styles.bottomContainer}>
+          <DetailsView details={details} iHelped={iHelped} />
+          <FinishButton finishReport={submitReport} points={points} />
 
+        </View>
+        
       </Animated.View>
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerZIndex)}>
         <View style={styles.imageContainer}>
@@ -88,6 +91,11 @@ const Button = ({filled, title, onPress}) => {
 
 
 const styles = StyleSheet.create({
+
+  bottomContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-around'
+  },
 
   imageContainer: {
     flexGrow: 1, 
@@ -150,6 +158,7 @@ const styles = StyleSheet.create({
   }),
 
   firstContainer: (opacity) => ({
+    flexShrink: 1,
     opacity,
     flex: 1,
     alignItems: 'stretch'

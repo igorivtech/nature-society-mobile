@@ -37,22 +37,24 @@ export const TakePicView = ({ image, setImage }) => {
   };
 
   return (
-    <TouchableOpacity
-      onPress={selectImage}
-      style={cameraStyle.container(image)}
-    >
-      <Image source={require("../../../assets/images/camera_icon.png")} />
+    <View style={styles.outerContainer}>
+      <TouchableOpacity
+        onPress={selectImage}
+        style={cameraStyle.container(image)}
+      >
+        <Image source={require("../../../assets/images/camera_icon.png")} />
 
-      {loadingImage && (
-        <View style={cameraStyle.indicatorContainer}>
-          <ActivityIndicator
-            style={cameraStyle.indicator}
-            color={colors.treeBlues}
-          />
-        </View>
-      )}
-      {image && <Image style={cameraStyle.image} source={{ uri: image.uri }} />}
-    </TouchableOpacity>
+        {loadingImage && (
+          <View style={cameraStyle.indicatorContainer}>
+            <ActivityIndicator
+              style={cameraStyle.indicator}
+              color={colors.treeBlues}
+            />
+          </View>
+        )}
+        {image && <Image style={cameraStyle.image} source={{ uri: image.uri }} />}
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -81,6 +83,10 @@ export const FinishButton = ({points, finishReport}) => {
 
 
 const styles = StyleSheet.create({
+
+  outerContainer: {
+    flexGrow: 1
+  },
 
   finishText: {
     ...textStyles.normalOfSize(18),
@@ -139,11 +145,9 @@ const cameraStyle = StyleSheet.create({
     borderRadius: 15,
   },
   container: (image) => ({
-    width: "100%",
+    ...StyleSheet.absoluteFill,
     borderWidth: image !== null ? 0 : 1,
     borderColor: colors.treeBlues,
-    // aspectRatio: 1,
-    flexGrow: 1,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
