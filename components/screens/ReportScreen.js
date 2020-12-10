@@ -57,7 +57,10 @@ export const ReportScreen = ({navigation}) => {
   }
 
   const tapClose = () => {
-    // setPopupVisible(true);
+    setPopupVisible(true);
+  }
+
+  const closeReport = () => {
     navigation.goBack();
   }
 
@@ -105,21 +108,25 @@ export const ReportScreen = ({navigation}) => {
           <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
         </Animated.ScrollView>
       </View>
-      <Popup popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
     </SafeAreaView>
   );
 };
 
-const Popup = ({popupVisible, setPopupVisible}) => {
+const Popup = ({popupVisible, setPopupVisible, action}) => {
 
   const close = () => {
     setPopupVisible(false);
   }
   
   return (
-    <Modal animationType='fade' style={{
-      backgroundColor: 'white'
-    }} visible={popupVisible}>
+    <Modal transparent={true} animationType='fade' visible={popupVisible}>
+      <View style={{
+        ...StyleSheet.absoluteFill,
+        backgroundColor: 'rgba(196, 224, 85, 0.5)'
+      }}>
+
+      </View>
       <TouchableWithoutFeedback onPress={close} style={StyleSheet.absoluteFill}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
