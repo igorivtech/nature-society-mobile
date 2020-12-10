@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal, TouchableWithoutFeedback } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
@@ -91,11 +91,19 @@ export const ReportScreen = ({navigation}) => {
 };
 
 const Popup = ({popupVisible, setPopupVisible}) => {
+
+  const close = () => {
+    setPopupVisible(false);
+  }
   
   return (
     <Modal animationType='fade' style={{
       backgroundColor: 'white'
-    }} visible={popupVisible}></Modal>
+    }} visible={popupVisible}>
+      <TouchableWithoutFeedback onPress={close} style={StyleSheet.absoluteFill}>
+        <View style={StyleSheet.absoluteFill} />
+      </TouchableWithoutFeedback>
+    </Modal>
   )
 }
 
