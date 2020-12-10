@@ -6,8 +6,11 @@ import { DetailsView } from "./DetailsView";
 import { Pagination } from "./Slider";
 import { TakePicView, GoBackButton, FinishButton } from "./views";
 import {UserContext} from "../../../context/context"
+import { colors } from "../../../values/colors";
 
 export const Report = ({goBack, image, setImage, finishReport, details, iHelped}) => {
+
+  const points = 30;
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -49,14 +52,16 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
         <TakePicView image={image} setImage={setImage} />
 
         <DetailsView details={details} iHelped={iHelped} />
-        <FinishButton finishReport={submitReport} points={30} />
+        <FinishButton finishReport={submitReport} points={points} />
 
       </Animated.View>
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerZIndex)}>
         <Image style={styles.doneImage} source={require("../../../assets/images/report_done_image.png")} />
-        <Text style={{
-          ...textStyles.normalOfSize(18)
-        }}>{strings.reportScreen.doneTitle(user)}</Text>
+        <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.doneTitle(user)}</Text>
+        <View style={styles.pointsContainer}>
+          <Text style={styles.pointsText}>{`+${points}`}</Text>
+          <Image source={require("../../../assets/images/report_done_icon.png")} />
+        </View>
       </Animated.View>
     </View>
   );
@@ -64,9 +69,23 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
 
 const styles = StyleSheet.create({
 
+  pointsText: {
+    marginRight: 8,
+    ...textStyles.normalOfSize(40),
+    color: colors.treeBlues
+  },
+
+  pointsContainer: {
+    marginTop: 12,
+    marginBottom: 32,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: "center"
+  },
+
   doneImage: {
+    transform: [{translateY: 50}],
     alignSelf: 'center',
-    flexGrow: 1
   },
 
   titlesContainer: {
