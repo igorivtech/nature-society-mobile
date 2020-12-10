@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal, TouchableWithoutFeedback, Text } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal, TouchableWithoutFeedback, Text, TouchableOpacity } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
@@ -119,37 +119,79 @@ const Popup = ({title, popupVisible, setPopupVisible, action}) => {
   const close = () => {
     setPopupVisible(false);
   }
+
+  const doAction = () => {
+    setPopupVisible(false);
+    action();
+  }
   
   return (
     <Modal onRequestClose={()=>setPopupVisible(false)} transparent={true} animationType='fade' visible={popupVisible}>
-      <View style={{
-        ...StyleSheet.absoluteFill,
-        backgroundColor: 'rgba(196, 224, 85, 0.5)',
-        justifyContent: 'center',
-        alignItems: 'stretch'
-      }}>
-        <View style={{
-          marginHorizontal: 30,
-          backgroundColor: 'white',
-          borderRadius: 24,
-          ...globalStyles.shadow,
-          paddingHorizontal: 40,
-          paddingVertical: 34
-        }}>
-
-          <Text style={{
-            ...textStyles.normalOfSize(18),
-            color: colors.treeBlues
-          }}>{title}</Text>
-
+      <View style={popupStyles.bg}>
+        <View style={popupStyles.cardContainer}>
+          <Text style={popupStyles.title}>{title}</Text>
+          <PopupButton title={strings.reportScreen.popupNo} onPress={close} filled={true} />
+          <PopupButton title={strings.reportScreen.popupYes} onPress={doAction} filled={false} />
         </View>
       </View>
-      <TouchableWithoutFeedback onPress={close} style={StyleSheet.absoluteFill}>
-        <View style={StyleSheet.absoluteFill} />
-      </TouchableWithoutFeedback>
     </Modal>
   )
 }
+
+const PopupButton = ({filled, title, onPress}) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View style={popupStyles.buttonContainer(filled)}>
+        <Text style={popupStyles.buttonTitle(filled)}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
+const popupStyles = StyleSheet.create({
+
+  title: {
+    marginBottom: 20,
+    ...textStyles.normalOfSize(18),
+    color: colors.treeBlues
+  },
+
+  cardContainer: {
+    marginHorizontal: 30,
+    backgroundColor: 'white',
+    borderRadius: 24,
+    ...globalStyles.shadow,
+    paddingHorizontal: 40,
+    paddingVertical: 34
+  },
+
+  bg: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(196, 224, 85, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'stretch'
+  },
+
+  buttonTitle: (filled) => ({
+    ...textStyles.normalOfSize(18),
+    color: filled ? 'white' : colors.treeBlues,
+    textAlign: 'center'
+  }),
+
+  buttonContainer: (filled) => ({
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    marginTop: 12,
+    backgroundColor: filled ? colors.treeBlues : 'white',
+    height: 45,
+    width: '100%',
+  }),
+})
+
 
 const styles = StyleSheet.create({
 
