@@ -24,21 +24,21 @@ const location = {
   name: 'בית גוברין'
 }
 
-let details = [
-  {id: "1_extra_light", title: "עודף תאורה", on: false},
-  {id: "0_full_bins", title: "פחים מלאים", on: false},
-  {id: "3_fires_marks", title: "סימני מדורות", on: false},
-  {id: "2_open_bins", title: "פחים פתוחים", on: false},
-  {id: "4_broken_bins", title: "פחים שבורים", on: false},
-]
-
-let iHelped = {
-  id: "i_helped",
-  title: "ניקיתי את המקום ועזרתי\nלשמור על הטבע",
-  on: false
-}
-
 export const ReportScreen = ({navigation}) => {
+
+  let details = [
+    {id: "1_extra_light", title: "עודף תאורה", on: false},
+    {id: "0_full_bins", title: "פחים מלאים", on: false},
+    {id: "3_fires_marks", title: "סימני מדורות", on: false},
+    {id: "2_open_bins", title: "פחים פתוחים", on: false},
+    {id: "4_broken_bins", title: "פחים שבורים", on: false},
+  ]
+  
+  let iHelped = {
+    id: "i_helped",
+    title: "ניקיתי את המקום ועזרתי\nלשמור על הטבע",
+    on: false
+  }
 
   useEffect(()=>{
     details.forEach(d=>d.on=false);
@@ -57,7 +57,8 @@ export const ReportScreen = ({navigation}) => {
   }
 
   const tapClose = () => {
-    setPopupVisible(true);
+    // setPopupVisible(true);
+    navigation.goBack();
   }
 
   const nextSegment = () => {
