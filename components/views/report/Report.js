@@ -6,7 +6,7 @@ import { textStyles } from "../../../values/textStyles";
 import { Pagination } from "./Slider";
 import { TakePicView, GoBackButton, FinishButton } from "./views";
 
-export const Report = ({goBack, image, setImage, finishReport, details}) => {
+export const Report = ({goBack, image, setImage, finishReport, details, iHelped}) => {
 
   return (
     <View style={styles.container}>
@@ -21,7 +21,7 @@ export const Report = ({goBack, image, setImage, finishReport, details}) => {
         </View>
         <TakePicView image={image} setImage={setImage} />
 
-        <DetailsView details={details} />
+        <DetailsView details={details} iHelped={iHelped} />
         <FinishButton finishReport={finishReport} points={30} />
 
       </View>
@@ -29,20 +29,21 @@ export const Report = ({goBack, image, setImage, finishReport, details}) => {
   );
 };
 
-const DetailsView = ({details}) => {
+const DetailsView = ({details, iHelped}) => {
   return (
     <View style={detailsStyles.container}>
       <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.additionalInfo}</Text>
       <View style={detailsStyles.checkboxesContainer}>
         {details.map(detail => <Checkbox key={detail.id} detail={detail} />)}
       </View>
+      <Checkbox large={true} detail={iHelped} />
     </View>
   )
 }
 
 const CHECKBOX_SIZE = 22.5;
 
-const Checkbox = ({detail}) => {
+const Checkbox = ({detail, large = false}) => {
 
   const scale = useRef(new Animated.Value(0)).current;
 
