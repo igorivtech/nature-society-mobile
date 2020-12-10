@@ -9,10 +9,7 @@ export const Report = ({goBack}) => {
   return (
     <View style={styles.container}>
       <View style={styles.firstContainer}>
-        <TouchableOpacity onPress={goBack} style={styles.goBackButton}>
-          <Image source={require("../../../assets/images/scroll_back_icon.png")} />
-          <Text style={styles.goBack}>{strings.reportScreen.goBack}</Text>
-        </TouchableOpacity>
+        <GoBackButton goBack={goBack} />    
         <View style={styles.pagContainer}>
           <Pagination index={2} />
         </View>
@@ -20,6 +17,15 @@ export const Report = ({goBack}) => {
     </View>
   );
 };
+
+const GoBackButton = ({goBack}) => {
+  return (
+    <TouchableOpacity onPress={goBack} style={styles.goBackButton}>
+      <Image source={require("../../../assets/images/scroll_back_icon.png")} />
+      <Text style={styles.goBack}>{strings.reportScreen.goBack}</Text>
+    </TouchableOpacity>
+  )
+}
 
 const styles = StyleSheet.create({
 

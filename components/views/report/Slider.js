@@ -349,7 +349,8 @@ const sliderStyles = StyleSheet.create({
   newReport: {
     ...textStyles.normalOfSize(12),
     textAlign: 'center',
-    color: colors.lighterShade
+    color: colors.lighterShade,
+    paddingTop: 6
   },
 
   indicatorContainer: (opacity) => ({
@@ -359,7 +360,7 @@ const sliderStyles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
-    paddingTop: 18
+    paddingTop: 12
   }),
 
   continueButton: (opacity) => ({
