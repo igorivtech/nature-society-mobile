@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, SafeAreaView, ScrollView } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView, ScrollView, Modal } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
@@ -31,13 +31,14 @@ export const ReportScreen = ({navigation}) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const [image, setImage] = useState(null);
+  const [popupVisible, setPopupVisible] = useState(false);
 
   const finishReport = () => {
     console.log("finishReport");
   }
 
   const tapClose = () => {
-    navigation.goBack();
+    setPopupVisible(true);
   }
 
   const nextSegment = () => {
@@ -84,9 +85,19 @@ export const ReportScreen = ({navigation}) => {
           <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} />
         </Animated.ScrollView>
       </View>
+      <Popup popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
     </SafeAreaView>
   );
 };
+
+const Popup = ({popupVisible, setPopupVisible}) => {
+  
+  return (
+    <Modal animationType='fade' style={{
+      backgroundColor: 'white'
+    }} visible={popupVisible}></Modal>
+  )
+}
 
 const styles = StyleSheet.create({
 
