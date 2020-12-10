@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.treeBlues,
     height: 45,
     width: '100%',
-    marginTop: 16,
     justifyContent: 'space-around',
     alignItems: 'center'
   },

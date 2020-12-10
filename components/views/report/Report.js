@@ -33,7 +33,7 @@ const DetailsView = ({}) => {
   return (
     <View style={{
       flex: 1,
-      // backgroundColor: 'cyan'
+      backgroundColor: 'cyan'
     }}>
 
     </View>
