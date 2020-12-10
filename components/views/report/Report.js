@@ -33,7 +33,7 @@ const TakePicView = ({image, setImage}) => {
 
   const selectImage = () => {
     setLoadingImage(true);
-    ImagePicker.launchImageLibraryAsync({
+    ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       // allowsEditing: true,
       // aspect: [4, 3],
