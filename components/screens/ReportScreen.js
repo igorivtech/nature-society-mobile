@@ -20,11 +20,11 @@ const crowd = {
   animation: require('../../assets/animations/lock.json')
 }
 
-const location = {
-  name: 'בית גוברין'
-}
-
 export const ReportScreen = ({navigation}) => {
+
+  const location = {
+    name: 'בית גוברין'
+  }  
 
   let details = [
     {id: "1_extra_light", title: "עודף תאורה", on: false},
