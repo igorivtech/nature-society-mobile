@@ -69,6 +69,8 @@ export const strings = {
         chooseNewPasswordTitle: 'החלף סיסמה',
     },
     reportScreen: {
+        share: 'שיתוף',
+        done: 'סגירה',
         doneTitle: (user) => {
             return user != null ? 
             `תודה ששיתפת אותנו ${user.name},\nעזרת לנו מאוד לשמור על הטבע.` : 
