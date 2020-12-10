@@ -10,8 +10,12 @@ export const Report = ({goBack}) => {
     <View style={styles.container}>
       <View style={styles.firstContainer}>
         <GoBackButton goBack={goBack} />    
-        <View style={styles.pagContainer}>
-          <Pagination index={2} />
+        <View style={styles.titlesContainer}>
+          <View style={styles.pagContainer}>
+            <Pagination index={2} />
+          </View>
+          <Text style={textStyles.normalOfSize(12)}>{strings.reportScreen.takePic1}</Text>
+          <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.takePic2}</Text>
         </View>
       </View>
     </View>
@@ -29,6 +33,10 @@ const GoBackButton = ({goBack}) => {
 
 const styles = StyleSheet.create({
 
+  titlesContainer: {
+    marginTop: 23
+  },
+
   firstContainer: {
     flex: 1
   },
@@ -44,7 +52,6 @@ const styles = StyleSheet.create({
   },
   pagContainer: {
     position: 'absolute',
-    top: 55,
   },
 
   goBackButton: {

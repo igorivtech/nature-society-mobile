@@ -69,6 +69,8 @@ export const strings = {
         chooseNewPasswordTitle: 'החלף סיסמה',
     },
     reportScreen: {
+        takePic1: 'הפרטים הבאים אינם חובה',
+        takePic2: 'צילום המקום',
         goBack: 'חזרה',
         newReport: 'דיווח חדש',
         cleanTitle: "מה מצב הניקיון\nוהטבע במקום?",
