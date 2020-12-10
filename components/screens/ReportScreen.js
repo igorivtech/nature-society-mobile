@@ -173,7 +173,7 @@ const popupStyles = StyleSheet.create({
   },
 
   buttonTitle: (filled) => ({
-    ...textStyles.normalOfSize(18),
+    ...textStyles.boldOfSize(24),
     color: filled ? 'white' : colors.treeBlues,
     textAlign: 'center'
   }),
@@ -182,7 +182,7 @@ const popupStyles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.treeBlues,
     marginTop: 12,
