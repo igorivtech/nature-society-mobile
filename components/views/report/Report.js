@@ -5,13 +5,7 @@ import { textStyles } from "../../../values/textStyles";
 import { Pagination } from "./Slider";
 import { TakePicView, GoBackButton, FinishButton } from "./views";
 
-export const Report = ({goBack}) => {
-
-  const [image, setImage] = useState(null);
-
-  const finishReport = () => {
-    console.log("finishReport");
-  }
+export const Report = ({goBack, image, setImage, finishReport}) => {
 
   return (
     <View style={styles.container}>

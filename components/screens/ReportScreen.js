@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Animated, SafeAreaView, ScrollView } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
@@ -29,6 +29,12 @@ export const ReportScreen = ({navigation}) => {
   const scrollViewHeight = useRef(0);
   const scrollView = useRef();
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  const [image, setImage] = useState(null);
+
+  const finishReport = () => {
+    console.log("finishReport");
+  }
 
   const tapClose = () => {
     navigation.goBack();
@@ -75,7 +81,7 @@ export const ReportScreen = ({navigation}) => {
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
           <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
-          <Report goBack={previousSegment} />
+          <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} />
         </Animated.ScrollView>
       </View>
     </SafeAreaView>
