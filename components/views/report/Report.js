@@ -6,7 +6,7 @@ import { textStyles } from "../../../values/textStyles";
 import { Pagination } from "./Slider";
 import { TakePicView, GoBackButton, FinishButton } from "./views";
 
-export const Report = ({goBack, image, setImage, finishReport}) => {
+export const Report = ({goBack, image, setImage, finishReport, details}) => {
 
   return (
     <View style={styles.container}>
@@ -21,7 +21,7 @@ export const Report = ({goBack, image, setImage, finishReport}) => {
         </View>
         <TakePicView image={image} setImage={setImage} />
 
-        <DetailsView />
+        <DetailsView details={details} />
         <FinishButton finishReport={finishReport} points={30} />
 
       </View>
@@ -29,21 +29,12 @@ export const Report = ({goBack, image, setImage, finishReport}) => {
   );
 };
 
-let details = [
-  {id: "1_extra_light", title: "עודף תאורה", on: false},
-  {id: "0_full_bins", title: "פחים מלאים", on: false},
-  {id: "3_fires_marks", title: "סימני מדורות", on: false},
-  {id: "2_open_bins", title: "פחים פתוחים", on: false},
-  {id: "4_broken_bins", title: "פחים שבורים", on: false},
-]
-
-
-const DetailsView = ({}) => {
+const DetailsView = ({details}) => {
   return (
     <View style={detailsStyles.container}>
       <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.additionalInfo}</Text>
       <View style={detailsStyles.checkboxesContainer}>
-        {details.map(detail => <Checkbox detail={detail} details={details} />)}
+        {details.map(detail => <Checkbox key={detail.id} detail={detail} details={details} />)}
       </View>
     </View>
   )
@@ -67,11 +58,11 @@ const Checkbox = ({detail, details}) => {
 
   const toggleValue = () => {
     setChecked(v=>!v);
-    
+    detail.on = !detail.on;
   }
 
   return (
-    <View key={detail.key} style={detailsStyles.itemContainer}>
+    <View style={detailsStyles.itemContainer}>
       <Text style={textStyles.normalOfSize(16)}>{detail.title}</Text>
       <TouchableOpacity onPress={toggleValue}>
         <View style={detailsStyles.checkboxContainer}>

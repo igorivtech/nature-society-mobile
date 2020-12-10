@@ -24,7 +24,19 @@ const location = {
   name: 'בית גוברין'
 }
 
+let details = [
+  {id: "1_extra_light", title: "עודף תאורה", on: false},
+  {id: "0_full_bins", title: "פחים מלאים", on: false},
+  {id: "3_fires_marks", title: "סימני מדורות", on: false},
+  {id: "2_open_bins", title: "פחים פתוחים", on: false},
+  {id: "4_broken_bins", title: "פחים שבורים", on: false},
+]
+
 export const ReportScreen = ({navigation}) => {
+
+  useEffect(()=>{
+    details.forEach(d=>d.on=false);
+  }, [])
 
   const scrollViewHeight = useRef(0);
   const scrollView = useRef();
@@ -35,6 +47,7 @@ export const ReportScreen = ({navigation}) => {
 
   const finishReport = () => {
     console.log("finishReport");
+    console.log(details);
   }
 
   const tapClose = () => {
@@ -82,7 +95,7 @@ export const ReportScreen = ({navigation}) => {
           style={StyleSheet.absoluteFill}>
           <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
           <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
-          <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} />
+          <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} />
         </Animated.ScrollView>
       </View>
       <Popup popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
