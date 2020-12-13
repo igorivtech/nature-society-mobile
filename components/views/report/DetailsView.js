@@ -21,8 +21,8 @@ export const DetailsView = ({details, iHelped}) => {
     )
   }
   
-  const CHECKBOX_SIZE = 25;
-  const CHECKBOX_SIZE_LARGE = 50;
+  const CHECKBOX_SIZE = 22.5;
+  const CHECKBOX_SIZE_LARGE = 44;
   
   export const Checkbox = ({detail, large = false}) => {
   
@@ -81,7 +81,7 @@ export const DetailsView = ({details, iHelped}) => {
       marginLeft: large ? 12 : 8,
       height: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
       width: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
-      borderRadius: large ? 17 : 8.5,
+      borderRadius: large ? 10 : 5,
       borderWidth: 1,
       borderColor: colors.treeBlues,
       justifyContent: 'center',
