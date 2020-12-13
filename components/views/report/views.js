@@ -6,15 +6,19 @@ import {
   StyleSheet,
   Image,
   ActivityIndicator,
+  Linking,
 } from "react-native";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import * as ImagePicker from "expo-image-picker";
 import { textStyles } from "../../../values/textStyles";
 import * as Permissions from "expo-permissions";
+import { Popup } from "../Popup";
 
 export const TakePicView = ({ image, setImage }) => {
   const [loadingImage, setLoadingImage] = useState(false);
+
+  const [popupVisible, setPopupVisible] = useState(false);
 
   const selectImage = async () => {
     setLoadingImage(true);
@@ -39,8 +43,13 @@ export const TakePicView = ({ image, setImage }) => {
         });
     } else {
       setLoadingImage(false);
+      setPopupVisible(true);
     }
   };
+
+  const askSettings = () => {
+    Linking.openURL('app-settings:');
+  }
 
   return (
     <View style={styles.outerContainer}>
@@ -60,6 +69,7 @@ export const TakePicView = ({ image, setImage }) => {
         )}
         {image && <Image style={cameraStyle.image} source={{ uri: image.uri }} />}
       </TouchableOpacity>
+      <Popup textData={strings.popups.camera} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
     </View>
   );
 };

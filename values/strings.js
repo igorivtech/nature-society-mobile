@@ -9,6 +9,11 @@ export const strings = {
         title: "יציאה באמצע דיווח תמחק אותו.\nבטוח שתרצה לצאת?",
         no: "כן, בוא נצא", // because reverse buttons
         yes: "לא, בוא נמשיך"
+    },
+    camera: {
+        title: 'נא לאשר הרשאות למצלמה בהגדרות',
+        yes: 'קדימה',
+        no: 'בהזדמנות'
     }
   },
   continue: "המשך",
