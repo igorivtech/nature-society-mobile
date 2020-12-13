@@ -195,7 +195,14 @@ export const HomeScreen = ({ navigation, route }) => {
 
         <GrowthPoints />
       </SafeAreaView>
-      <Popup title={strings.homeScreen.locationPermissions} action={askLocationPermissions} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup 
+        yesTitle={strings.homeScreen.locationPermissionsYes}
+        noTitle={strings.homeScreen.locationPermissionsNo}
+        title={strings.homeScreen.locationPermissions} 
+        action={askLocationPermissions} 
+        popupVisible={popupVisible} 
+        setPopupVisible={setPopupVisible} 
+      />
     </View>
   );
 };

@@ -40,7 +40,9 @@ export const strings = {
         recentVisitor: (male) => {
             return male !== 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
         },
-        locationPermissions: 'כדי שנוכל להתאים לך אתרי טיול\nבסביבתך נצטרך גישה למיקום שלך.'
+        locationPermissions: 'כדי שנוכל להתאים לך אתרי טיול\nבסביבתך נצטרך גישה למיקום שלך.',
+        locationPermissionsYes: 'יאללה, מגניב',
+        locationPermissionsNo: 'בהזדמנות'
     },
     exploreScreen: {
         searchPlaceholder: 'חפש'
