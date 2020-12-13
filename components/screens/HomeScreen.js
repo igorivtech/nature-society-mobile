@@ -16,6 +16,8 @@ import { UserContext } from "../../context/context";
 import { SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
 
 const SCREEN_WAIT_DURATION = 400;
+const leftSpacer = { key: "left-spacer" }
+const rightSpacer = { key: "right-spacer" }
 
 export const HomeScreen = ({ navigation, route }) => {
 
@@ -54,12 +56,14 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(()=>{
     if (serverPlaces.length > 0) {
-      setPlaces([{ key: "left-spacer" }, ...serverPlaces, { key: "right-spacer" }]);
+      setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
       selectedPlace.current = serverPlaces[0];
       // setTimeout(() => {
         setHideList(false);
         animateToItem(serverPlaces[0]);
       // }, 1000);
+    } else {
+      // somthing i guess?
     }
   }, [serverPlaces])
 
