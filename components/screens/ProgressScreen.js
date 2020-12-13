@@ -319,6 +319,7 @@ const styles = StyleSheet.create({
   progressScreenContainer: {
     // overflow: 'hidden',
     paddingVertical: 30,
+    paddingBottom: 15,
     borderTopRightRadius: 30,
     flex: 1,
     backgroundColor: "white",
