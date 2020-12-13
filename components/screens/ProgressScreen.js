@@ -139,6 +139,20 @@ const imageType = {
   'user': require("../../assets/images/notification_icon_outline.png")
 }
 
+const userHeaderName = (fullName) => {
+  const parts = fullName.split(' ');
+  if (parts.length === 1) {
+    return parts[0];
+  } else {
+    const firstChar = parts[parts.length - 1].substring(0, 1).trim();
+    if (firstChar.length === 0) {
+      return `${parts[0]}.`
+    } else {
+      return `${parts[0]} ${firstChar}.`
+    }
+  }
+}
+
 const Popup = () => {
 
   const {state, dispatch} = useContext(UserContext);
@@ -200,11 +214,19 @@ const Popup = () => {
 const NotificationHeader = ({notification}) => {
   return (
     <View style={pStyles.titleContainer}>
-      <Text style={pStyles.title}>{notification.title}</Text>
+      <View>
+        {notification.type == 'user' ? (
+          <View>
+            <Text style={pStyles.title}>{userHeaderName(notification.user.name)}</Text>
+          </View>
+        ) : (
+          <Text style={pStyles.title}>{notification.title}</Text>
+        )}
+      </View>
       {notification.type == 'user' ? (
         <View>
           <Image source={imageType[notification.type]} />
-          <Image style={pStyles.userPic} source={{uri: notification.userPic}} />
+          <Image style={pStyles.userPic} source={{uri: notification.user.pic}} />
         </View>
       ) : (
         <Image source={imageType[notification.type]} />

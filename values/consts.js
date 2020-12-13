@@ -110,8 +110,12 @@ export const DEFAULT_NOTIFICATION = {
   title: "יחמור פרסי",
   description: 'התרומה שלך לשמירה על הטבע הצילה יחמור פרסי מצוי.',
   points: 10,
-  type: 'animal_y', // 'animal_y', 'tip', 'user'
-  userPic: 'https://roneringa.com/wp-content/uploads/2016/06/Scribe-300x300.jpg'
+  type: 'user', // 'animal_y', 'tip', 'user'
+  user: {
+    pic: 'https://roneringa.com/wp-content/uploads/2016/06/Scribe-300x300.jpg',
+    name: 'דורון שלום',
+    points: 19
+  }
 }
 
 export const DEFAULT_USER = {
