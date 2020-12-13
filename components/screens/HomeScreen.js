@@ -14,6 +14,8 @@ import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/h
 import { GrowthPoints } from "../views/home/GrowthPoints";
 import { UserContext } from "../../context/context";
 import { SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
+import { Popup } from "../views/Popup";
+import { strings } from "../../values/strings";
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" }
@@ -32,26 +34,30 @@ export const HomeScreen = ({ navigation, route }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
-  const mapRef = useRef(null);
+  const [popupVisible, setPopupVisible] = useState(false);
 
-  // useEffect(()=> {
-  //   // DEBUG
-  //   setTimeout(() => {
-  //     dispatch({
-  //       type: SAVE_NOTIFICATION,
-  //       payload: DEFAULT_NOTIFICATION
-  //     })
-  //   }, 4000);
-  // }, [])
+  const mapRef = useRef(null);
 
   // STARTUP POINT
   useEffect(()=>{
+    // places
     setTimeout(()=>{
       dispatch({
         type: SAVE_PLACES,
         payload: DEFAULT_PLACES
       })
     }, 1000);
+    // notification - DEBUG
+    // setTimeout(() => {
+    //   dispatch({
+    //     type: SAVE_NOTIFICATION,
+    //     payload: DEFAULT_NOTIFICATION
+    //   })
+    // }, 2000);
+    // permissions popup
+    setTimeout(()=>{
+      setPopupVisible(true);
+    }, 4000)
   }, [])
 
   useEffect(()=>{
@@ -134,6 +140,10 @@ export const HomeScreen = ({ navigation, route }) => {
     navigation.navigate("Place", { place });
   };
 
+  const askLocationPermissions = () => {
+    console.log("askLocationPermissions");
+  };
+
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
@@ -185,6 +195,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
         <GrowthPoints />
       </SafeAreaView>
+      <Popup title={strings.homeScreen.locationPermissions} action={askLocationPermissions} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
     </View>
   );
 };

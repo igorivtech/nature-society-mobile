@@ -39,7 +39,8 @@ export const strings = {
     homeScreen: {
         recentVisitor: (male) => {
             return male !== 0 ? "ביקר לאחרונה" : "ביקרה לאחרונה"
-        }
+        },
+        locationPermissions: 'כדי שנוכל להתאים לך אתרי טיול\nבסביבתך נצטרך גישה למיקום שלך.'
     },
     exploreScreen: {
         searchPlaceholder: 'חפש'
