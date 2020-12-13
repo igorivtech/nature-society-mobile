@@ -21,11 +21,9 @@ const crowd = {
   animation: require('../../assets/animations/lock.json')
 }
 
-export const ReportScreen = ({navigation}) => {
+export const ReportScreen = ({navigation, route}) => {
 
-  const location = {
-    name: 'בית גוברין'
-  }  
+  const {location} = route.params;
 
   let details = [
     {id: "1_extra_light", title: "עודף תאורה", on: false},
