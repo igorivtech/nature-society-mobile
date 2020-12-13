@@ -147,7 +147,12 @@ const ModalSearch = ({visible, setSearchVisible, selectItem}) => {
   }, [keyboardHeight]);
 
   const closeSearch = () => {
-    setSearchVisible(false);
+    if (searchTerm.length > 0) {
+      setSearchTerm('');
+      setPlaces(DATA);
+    } else {
+      setSearchVisible(false);
+    }
   }
 
   const textChanged = (value) => {
