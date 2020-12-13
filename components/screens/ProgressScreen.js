@@ -135,6 +135,12 @@ export const ProgressScreen = ({ navigation }) => {
   );
 };
 
+const imageType = {
+  'tip': require("../../assets/images/tip_notification_icon.png"),
+  'animal_y': require("../../assets/images/yahmur_icon.png"),
+  'user': require("../../assets/images/notification_icon_outline.png")
+}
+
 const Popup = () => {
 
   const {state, dispatch} = useContext(UserContext);
@@ -174,7 +180,7 @@ const Popup = () => {
       {notification && (
         <View style={pStyles.titleContainer}>
           <Text style={pStyles.title}>{notification.title}</Text>
-          <Image source={notification.image} />
+          <Image source={imageType[notification.type]} />
         </View>
       )}
 
