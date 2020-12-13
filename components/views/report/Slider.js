@@ -135,7 +135,8 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const startThumbAnimation = () => {
-    textContainerOpacity.setValue(0);
+    // textContainerOpacity.setValue(1);
+    setMiddleText(strings.reportScreen.scrollHint);
     setDragEnabled(false);
     setContinueEnabled(false);
     lineOpacity.setValue(0);
@@ -161,13 +162,20 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
               toValue: LINE_OPACITY,
               useNativeDriver: true
             }),
-            Animated.timing(textContainerOpacity, {
-              toValue: 1,
-              useNativeDriver: true
-            })
           ]).start(()=>{
-            setDragEnabled(true);
-            setContinueEnabled(true);
+            Animated.timing(textContainerOpacity, {
+              toValue: 0,
+              useNativeDriver: true
+            }).start(()=>{
+              resetTitles();
+              Animated.timing(textContainerOpacity, {
+                toValue: 1,
+                useNativeDriver: true
+              }).start(()=>{
+                setDragEnabled(true);
+                setContinueEnabled(true);
+              })
+            })
           });
         })
       })
