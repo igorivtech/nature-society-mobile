@@ -16,6 +16,17 @@ const animation = {
   },
 };
 
+const enterAnimation = {
+  0: {
+    opacity: 0,
+    transform: [{ translateX: 130 / 2 }, { scale: 0 }],
+  },
+  1: {
+    opacity: 1,
+    transform: [{ translateX: 0 }, { scale: 1 }],
+  },
+};
+
 const opacity = (on) => ({
   0: {
     opacity: on ? 0 : 1,
@@ -34,19 +45,32 @@ export const GrowthPoints = () => {
   useEffect(()=>{
     if (user) {
       if (user.points !== points) {
-        setTimeout(() => {
-          textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
-            setPoints(user.points);
-            textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
-              setTimeout(() => {
-                containerRef.current.animate(animation, 800);
-              }, 2500);
+        if (points === 0) { // first time
+          setTimeout(() => {
+            textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
+              setPoints(user.points);
+              textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
+                disappear(2500);
+              });
             });
-          });
-        }, 2000);
+          }, 2000);
+        } else {
+          setPoints(user.points);
+          setTimeout(() => {
+            containerRef.current.animate(enterAnimation, 800).then(()=>{
+              disappear(4000);
+            });
+          }, 2500);
+        }
       }
     }
   }, [user]);
+
+  const disappear = (delay) => {
+    setTimeout(() => {
+      containerRef.current.animate(animation, 800);
+    }, delay);
+  }
 
   const [points, setPoints] = useState(0);
   const containerRef = useRef();
