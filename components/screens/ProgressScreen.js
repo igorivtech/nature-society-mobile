@@ -178,10 +178,7 @@ const Popup = () => {
     <Animated.View style={pStyles.container(scale)}>
 
       {notification && (
-        <View style={pStyles.titleContainer}>
-          <Text style={pStyles.title}>{notification.title}</Text>
-          <Image source={imageType[notification.type]} />
-        </View>
+        <NotificationHeader notification={notification} />
       )}
 
       {notification && (
@@ -202,7 +199,33 @@ const Popup = () => {
   )
 }
 
+const NotificationHeader = ({notification}) => {
+  return (
+    <View style={pStyles.titleContainer}>
+      <Text style={pStyles.title}>{notification.title}</Text>
+      {notification.type == 'user' ? (
+        <View>
+          <Image source={imageType[notification.type]} />
+          <Image style={pStyles.userPic} source={{uri: notification.userPic}} />
+        </View>
+      ) : (
+        <Image source={imageType[notification.type]} />
+      )}
+    </View>
+  )
+}
+
 const pStyles = StyleSheet.create({
+
+  userPic: {
+    height: 33,
+    width: 33,
+    borderRadius: 33/2,
+    top: 2,
+    left: 2,
+    backgroundColor: 'white',
+    position: 'absolute'
+  },
 
   buttonInnerContainer: {
     flexDirection: 'row',
