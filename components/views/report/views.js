@@ -11,29 +11,35 @@ import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import * as ImagePicker from "expo-image-picker";
 import { textStyles } from "../../../values/textStyles";
+import * as Permissions from "expo-permissions";
 
 export const TakePicView = ({ image, setImage }) => {
   const [loadingImage, setLoadingImage] = useState(false);
 
-  const selectImage = () => {
+  const selectImage = async () => {
     setLoadingImage(true);
-    ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // allowsEditing: true,
-      // aspect: [4, 3],
-      quality: 0.75,
-    })
-      .then((result) => {
-        if (!result.cancelled) {
-          setImage(result);
-        }
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA);
+    if (status === 'granted') {
+      ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        // allowsEditing: true,
+        // aspect: [4, 3],
+        quality: 0.75,
       })
-      .catch((error) => {
-        console.log({ error });
-      })
-      .finally(() => {
-        setLoadingImage(false);
-      });
+        .then((result) => {
+          if (!result.cancelled) {
+            setImage(result);
+          }
+        })
+        .catch((error) => {
+          console.log({ error });
+        })
+        .finally(() => {
+          setLoadingImage(false);
+        });
+    } else {
+      setLoadingImage(false);
+    }
   };
 
   return (
