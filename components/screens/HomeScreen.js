@@ -56,10 +56,10 @@ export const HomeScreen = ({ navigation, route }) => {
     if (serverPlaces.length > 0) {
       setPlaces([{ key: "left-spacer" }, ...serverPlaces, { key: "right-spacer" }]);
       selectedPlace.current = serverPlaces[0];
-      setTimeout(() => {
+      // setTimeout(() => {
         setHideList(false);
         animateToItem(serverPlaces[0]);
-      }, 1000);
+      // }, 1000);
     }
   }, [serverPlaces])
 
