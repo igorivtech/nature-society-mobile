@@ -23,6 +23,8 @@ export const DEFAULT_PLACES = [
     position: {
       longitude: 23,
       latitude: 52,
+      latitudeDelta: 0.1663,
+      longitudeDelta: 0.2001,
     },
     title: "בריכת נמרוד",
     distance: 34,
@@ -42,6 +44,8 @@ export const DEFAULT_PLACES = [
     position: {
       longitude: 3,
       latitude: 5,
+      latitudeDelta: 0.1663,
+      longitudeDelta: 0.2001,
     },
     title: "מעיין דניאל",
     distance: 34,
@@ -61,6 +65,8 @@ export const DEFAULT_PLACES = [
     position: {
       longitude: 13,
       latitude: 12,
+      latitudeDelta: 0.1663,
+      longitudeDelta: 0.2001,
     },
     title: "בריכת המשושים",
     distance: 34,
@@ -80,6 +86,8 @@ export const DEFAULT_PLACES = [
     position: {
       longitude: 3,
       latitude: 52,
+      latitudeDelta: 0.1663,
+      longitudeDelta: 0.2001,
     },
     title: "גן העצמאות",
     distance: 34,

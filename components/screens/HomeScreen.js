@@ -139,9 +139,7 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const animateToItem = (item) => {
-    mapRef.current.animateCamera({
-      center: item.position,
-    }, 1000);
+    mapRef.current.animateToRegion(item.position, 1000);
   };
 
   const showPlace = (place) => {
