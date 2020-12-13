@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Image,
   ActivityIndicator,
-  Linking,
 } from "react-native";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
@@ -14,6 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import { textStyles } from "../../../values/textStyles";
 import * as Permissions from "expo-permissions";
 import { Popup } from "../Popup";
+import { askSettings } from "../../../hooks/usePermissions";
 
 export const TakePicView = ({ image, setImage }) => {
   const [loadingImage, setLoadingImage] = useState(false);
@@ -46,10 +46,6 @@ export const TakePicView = ({ image, setImage }) => {
       setPopupVisible(true);
     }
   };
-
-  const askSettings = () => {
-    Linking.openURL('app-settings:');
-  }
 
   return (
     <View style={styles.outerContainer}>

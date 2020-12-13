@@ -14,6 +14,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
+import * as Permissions from "expo-permissions";
+import { Popup } from "../views/Popup";
+import { strings } from "../../values/strings";
+import { askSettings } from "../../hooks/usePermissions";
 
 const scrollZero = {
   y: 0,
@@ -35,6 +39,8 @@ export const ProfileScreen = ({ navigation }) => {
   const [keyboardHeight] = useKeyboard();
   const [paddingBottom, setPaddingBottom] = useState(0);
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
+
+  const [popupVisible, setPopupVisible] = useState(false);
 
   const scrollRef = useRef();
 
@@ -71,17 +77,29 @@ export const ProfileScreen = ({ navigation }) => {
 
   const selectImage = async () => {
     setLoadingImage(true);
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // allowsEditing: true,
-      // aspect: [4, 3],
-      quality: 0.75,
-    });
-    // console.log(result);
-    if (!result.cancelled) {
-      setImage(result);
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        // allowsEditing: true,
+        // aspect: [4, 3],
+        quality: 0.75,
+      })
+        .then((result) => {
+          if (!result.cancelled) {
+            setImage(result);
+          }
+        })
+        .catch((error) => {
+          console.log({ error });
+        })
+        .finally(() => {
+          setLoadingImage(false);
+        });
+    } else {
+      setPopupVisible(true);
+      setLoadingImage(false);
     }
-    setLoadingImage(false);
   };
 
   const onSafeAreaLayout = (event) => {
@@ -163,6 +181,7 @@ export const ProfileScreen = ({ navigation }) => {
 
         </View>
       </ScrollView>
+      <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
     </SafeAreaView>
   );
 };

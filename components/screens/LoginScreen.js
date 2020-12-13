@@ -15,6 +15,9 @@ import { DEFAULT_USER, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
+import { Popup } from "../views/Popup";
+import { strings } from "../../values/strings";
+import { askSettings } from "../../hooks/usePermissions";
 
 const scrollZero = {
   y: 0,
@@ -53,6 +56,8 @@ export const LoginScreen = ({ navigation }) => {
   const [paddingBottom, setPaddingBottom] = useState(0);
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
 
+  const [popupVisible, setPopupVisible] = useState(false);
+
   const scrollRef = useRef();
 
   useEffect(() => {
@@ -74,18 +79,25 @@ export const LoginScreen = ({ navigation }) => {
     setLoadingImage(true);
     const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status === 'granted') {
-      let result = await ImagePicker.launchImageLibraryAsync({
+      ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,
         // aspect: [4, 3],
         quality: 0.75,
-      });
-      // console.log(result);
-      if (!result.cancelled) {
-        setImage(result);
-      }
-      setLoadingImage(false);
+      })
+        .then((result) => {
+          if (!result.cancelled) {
+            setImage(result);
+          }
+        })
+        .catch((error) => {
+          console.log({ error });
+        })
+        .finally(() => {
+          setLoadingImage(false);
+        });
     } else {
+      setPopupVisible(true);
       setLoadingImage(false);
     }
   };
@@ -269,6 +281,7 @@ export const LoginScreen = ({ navigation }) => {
 
         </View>
       </ScrollView>
+      <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
     </SafeAreaView>
   );
 };
