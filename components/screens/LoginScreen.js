@@ -14,6 +14,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { DEFAULT_USER, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
+import * as Permissions from "expo-permissions";
 
 const scrollZero = {
   y: 0,
@@ -71,17 +72,22 @@ export const LoginScreen = ({ navigation }) => {
 
   const selectImage = async () => {
     setLoadingImage(true);
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // allowsEditing: true,
-      // aspect: [4, 3],
-      quality: 0.75,
-    });
-    // console.log(result);
-    if (!result.cancelled) {
-      setImage(result);
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        // allowsEditing: true,
+        // aspect: [4, 3],
+        quality: 0.75,
+      });
+      // console.log(result);
+      if (!result.cancelled) {
+        setImage(result);
+      }
+      setLoadingImage(false);
+    } else {
+      setLoadingImage(false);
     }
-    setLoadingImage(false);
   };
 
   const onSafeAreaLayout = (event) => {
