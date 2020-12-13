@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Image, Text } from "react-native";
 import * as Animatable from "react-native-animatable";
+import { UserContext } from "../../../context/context";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 
@@ -27,22 +28,29 @@ const opacity = (on) => ({
 const TEXT_DURATION = 600;
 
 export const GrowthPoints = () => {
+  const {state} = useContext(UserContext);
+  const {user} = state;
+
+  useEffect(()=>{
+    if (user) {
+      if (user.points !== points) {
+        setTimeout(() => {
+          textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
+            setPoints(user.points);
+            textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
+              setTimeout(() => {
+                containerRef.current.animate(animation, 800);
+              }, 2500);
+            });
+          });
+        }, 2000);
+      }
+    }
+  }, [user]);
+
   const [points, setPoints] = useState(0);
   const containerRef = useRef();
   const textRef = useRef();
-
-  useEffect(() => {
-    setTimeout(() => {
-      textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
-        setPoints(100);
-        textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
-          setTimeout(() => {
-            containerRef.current.animate(animation, 800);
-          }, 2500);
-        });
-      });
-    }, 2000);
-  }, []);
 
   return (
     <Animatable.View ref={containerRef} style={globalStyles.pointsGrowthContainer}>
