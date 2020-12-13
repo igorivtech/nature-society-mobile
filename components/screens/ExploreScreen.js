@@ -22,6 +22,7 @@ import { PlaceRating } from "./PlaceScreen";
 import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
+import { statusBarHeight } from "../../values/consts";
 
 export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -95,8 +96,6 @@ export const ExploreScreen = ({ navigation }) => {
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
-
-      <SafeAreaView />
 
       <View style={styles.searchScreenContainer}>
         <SearchBar
@@ -357,6 +356,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     marginLeft: EXIT_SIZE,
+    marginTop: statusBarHeight,
     alignItems: "center",
   },
 

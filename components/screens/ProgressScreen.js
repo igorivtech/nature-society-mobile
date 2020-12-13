@@ -13,7 +13,7 @@ import {
 import { UserContext } from "../../context/context";
 import { SAVE_NOTIFICATION, SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
-import { DEFAULT_NOTIFICATION, height } from "../../values/consts";
+import { DEFAULT_NOTIFICATION, height, statusBarHeight } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
@@ -99,8 +99,6 @@ export const ProgressScreen = ({ navigation }) => {
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
-
-      <SafeAreaView />
 
       <View style={styles.progressScreenContainer}>
         <Animated.FlatList
@@ -325,6 +323,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     marginRight: EXIT_SIZE,
+    marginTop: statusBarHeight,
     alignItems: "center",
   },
   container: {
