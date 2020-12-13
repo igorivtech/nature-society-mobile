@@ -132,7 +132,7 @@ export const ExploreScreen = ({ navigation }) => {
   );
 };
 
-const TextCard = ({ item, showItem, index, searchTerm }) => {
+export const TextCard = ({ item, showItem, index, searchTerm }) => {
   return (
     <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
       <Highlighter
@@ -148,13 +148,22 @@ const TextCard = ({ item, showItem, index, searchTerm }) => {
   )
 }
 
-const SearchBar = ({
+export const SearchBar = ({
   searchTerm,
   searchOn,
   setSearchOn,
   closeSearch,
   textChanged,
+  modal = false
 }) => {
+
+  const onFocus = () => {
+    if (modal) {
+      return;
+    }
+    setSearchOn(true)
+  };
+
   return (
     <View style={styles.searchContainer(searchOn)}>
       {searchOn ? (
@@ -166,7 +175,7 @@ const SearchBar = ({
       ) : null}
 
       <TextInput
-        onFocus={() => setSearchOn(true)}
+        onFocus={onFocus}
         onChangeText={textChanged}
         value={searchTerm}
         selectionColor={colors.desertRock}

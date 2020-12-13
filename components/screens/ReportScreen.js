@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, SafeAreaView } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView, Modal } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
@@ -7,7 +7,9 @@ import { Slider } from "../views/report/Slider";
 import { strings } from "../../values/strings";
 import { Report } from "../views/report/Report";
 import { Popup } from "../views/Popup";
-
+import { SearchBar, TextCard } from "../screens/ExploreScreen";
+import { useKeyboard } from "../../hooks/useKeyboard";
+import { DATA } from "../../values/consts";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -25,6 +27,7 @@ export const ReportScreen = ({navigation, route}) => {
 
   const {location} = route.params;
   const [selectedLocation, setLocation] = useState(null);
+  const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(()=>{
     setLocation(location);
@@ -92,6 +95,13 @@ export const ReportScreen = ({navigation, route}) => {
     scrollViewHeight.current = e.nativeEvent.layout.height;
   }
 
+
+  const selectItem = (v) => {
+    setLocation(v);
+    setSearchVisible(false);
+  }
+
+
   return (
     <SafeAreaView style={styles.container}>
       <TapView onPress={tapClose} />
@@ -107,17 +117,78 @@ export const ReportScreen = ({navigation, route}) => {
           scrollEventThrottle={16}
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
-          <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} />
+          <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
           <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
           <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
         </Animated.ScrollView>
       </View>
       <Popup title={strings.reportScreen.popupTitle} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <ModalSearch selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
     </SafeAreaView>
   );
 };
 
+const ModalSearch = ({visible, setSearchVisible, selectItem}) => {
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const [places, setPlaces] = useState([]);
+
+  useEffect(() => {
+    setPlaces(DATA);
+  }, []);
+
+
+  const [keyboardHeight] = useKeyboard();
+  const [keyboardBottomPadding, setKeyboardBottomPadding] = useState(40);
+
+  useEffect(() => {
+    setKeyboardBottomPadding(40 + keyboardHeight);
+  }, [keyboardHeight]);
+
+  const closeSearch = () => {
+    setSearchVisible(false);
+  }
+
+  const textChanged = (v) => {
+    setSearchTerm(v);
+  };
+
+  return (
+    <Modal visible={visible} animationType='fade'>
+      <SafeAreaView>
+        <SearchBar
+            modal={true}
+            searchTerm={searchTerm}
+            searchOn={true}
+            closeSearch={closeSearch}
+            textChanged={textChanged}
+          />
+        <Animated.FlatList
+          // scrollIndicatorInsets={styles.scrollInsets}
+          style={styles.searchList}
+          contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
+          data={places}
+          keyExtractor={(item) => item.key}
+          renderItem={({ item, index }) => <TextCard showItem={selectItem} item={item} index={index} searchTerm={searchTerm} />}
+        />
+      </SafeAreaView>
+    </Modal>
+  )
+}
+
 const styles = StyleSheet.create({
+
+  searchList: {
+    // backgroundColor: 'red'
+    // flewGrow/: 1
+  },
+
+  flatListContainer: (keyboardBottomPadding) => ({
+    paddingVertical: 34,
+    paddingHorizontal: 40,
+    paddingBottom: keyboardBottomPadding,
+  }),
 
   scrollViewContent: {
     height: '300%'

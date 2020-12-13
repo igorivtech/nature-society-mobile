@@ -28,7 +28,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = memo(({item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack}) => {
+export const Slider = memo(({item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
   const {animation, title, titles} = item;
 
@@ -236,7 +236,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   };
 
   const pickLocation = () => {
-    console.log("pickLocation");
+    setSearchVisible(true);
   }
 
   return (
