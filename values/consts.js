@@ -20,7 +20,10 @@ export const DEFAULT_PLACES = [
   {
     locked: false,
     key: "1",
-    location: [23, 52],
+    position: {
+      longitude: 23,
+      latitude: 52,
+    },
     title: "בריכת נמרוד",
     distance: 34,
     lastVisitorName: "איגור",
@@ -36,7 +39,10 @@ export const DEFAULT_PLACES = [
   {
     locked: true,
     key: "2",
-    location: [3, 5],
+    position: {
+      longitude: 3,
+      latitude: 5,
+    },
     title: "מעיין דניאל",
     distance: 34,
     lastVisitorName: "איגור",
@@ -52,7 +58,10 @@ export const DEFAULT_PLACES = [
   {
     locked: false,
     key: "3",
-    location: [13, 12],
+    position: {
+      longitude: 13,
+      latitude: 12,
+    },
     title: "בריכת המשושים",
     distance: 34,
     lastVisitorName: "איגור",
@@ -68,7 +77,10 @@ export const DEFAULT_PLACES = [
   {
     locked: true,
     key: "4",
-    location: [3, 52],
+    position: {
+      longitude: 3,
+      latitude: 52,
+    },
     title: "גן העצמאות",
     distance: 34,
     lastVisitorName: "איגור",

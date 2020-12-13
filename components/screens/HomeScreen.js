@@ -140,10 +140,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const animateToItem = (item) => {
     mapRef.current.animateCamera({
-      center: {
-        latitude: item.location[0],
-        longitude: item.location[1],
-      },
+      center: item.position,
     }, 1000);
   };
 
