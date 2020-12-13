@@ -55,10 +55,16 @@ export const GrowthPoints = () => {
             });
           }, 2000);
         } else {
-          setPoints(user.points);
           setTimeout(() => {
             containerRef.current.animate(enterAnimation, 800).then(()=>{
-              disappear(4000);
+              setTimeout(() => {
+                textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
+                  setPoints(user.points);
+                  textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
+                    disappear(3500);
+                  });
+                });
+              }, 1000);
             });
           }, 2500);
         }
