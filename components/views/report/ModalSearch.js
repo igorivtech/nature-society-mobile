@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Animated, SafeAreaView, Modal } from "react-native";
 import { globalStyles } from "../../../values/styles";
 import { SearchBar, TextCard } from "../../screens/ExploreScreen";
 import { useKeyboard } from "../../../hooks/useKeyboard";
-import { DATA } from "../../../values/consts";
+import { UserContext } from "../../../context/context";
 
 export const ModalSearch = ({ visible, setSearchVisible, selectItem }) => {
+
+  const {state} = useContext(UserContext);
+  const {serverPlaces} = state;
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    setPlaces(DATA);
+    setPlaces(serverPlaces);
   }, []);
 
   const [keyboardHeight] = useKeyboard();
@@ -24,7 +28,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem }) => {
   const closeSearch = () => {
     if (searchTerm.length > 0) {
       setSearchTerm("");
-      setPlaces(DATA);
+      setPlaces(serverPlaces);
     } else {
       setSearchVisible(false);
     }
@@ -33,9 +37,9 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem }) => {
   const textChanged = (value) => {
     setSearchTerm(value);
     if (value.length === 0) {
-      setPlaces(DATA);
+      setPlaces(serverPlaces);
     } else {
-      const filtered = DATA.filter((place) => {
+      const filtered = serverPlaces.filter((place) => {
         const s1 = place.title.toLowerCase();
         const s2 = value.toLowerCase();
         return s1.indexOf(s2) > -1;

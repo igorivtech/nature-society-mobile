@@ -8,19 +8,21 @@ import {
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { globalStyles } from "../../values/styles";
-import { height, DATA, DEFAULT_NOTIFICATION } from "../../values/consts";
+import { height, DEFAULT_NOTIFICATION, DEFAULT_PLACES } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
 import { GrowthPoints } from "../views/home/GrowthPoints";
 import { UserContext } from "../../context/context";
-import { SAVE_NOTIFICATION } from "../../context/userReducer";
+import { SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
+
+const SCREEN_WAIT_DURATION = 400;
 
 export const HomeScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
-  const {user, notification} = state;
+  const {user, notification, serverPlaces} = state;
 
-  const [places, setPlaces] = useState([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
+  const [places, setPlaces] = useState([]);
   const [hideList, setHideList] = useState(true);
   const firstTime = useRef(true);
   const selectedPlace = useRef();
@@ -40,9 +42,37 @@ export const HomeScreen = ({ navigation, route }) => {
   //   }, 4000);
   // }, [])
 
+  // STARTUP POINT
   useEffect(()=>{
-    selectedPlace.current = DATA[0];
+    setTimeout(()=>{
+      dispatch({
+        type: SAVE_PLACES,
+        payload: DEFAULT_PLACES
+      })
+    }, 1000);
   }, [])
+
+  useEffect(()=>{
+    if (serverPlaces.length > 0) {
+      setPlaces([{ key: "left-spacer" }, ...serverPlaces, { key: "right-spacer" }]);
+      selectedPlace.current = serverPlaces[0];
+      setTimeout(() => {
+        setHideList(false);
+        animateToItem(serverPlaces[0]);
+      }, 1000);
+    }
+  }, [serverPlaces])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (firstTime.current) {
+        firstTime.current = false;
+      } else {
+        setHideList(false);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
@@ -52,21 +82,6 @@ export const HomeScreen = ({ navigation, route }) => {
       useNativeDriver: true,
     }).start();
   }, [hideList]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      if (firstTime.current) {
-        setTimeout(() => {
-          setHideList(false);
-          animateToItem(DATA[0]);
-          firstTime.current = false;
-        }, 1000);
-      } else {
-        setHideList(false);
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
 
   useEffect(() => {
     const params = route.params
@@ -85,7 +100,7 @@ export const HomeScreen = ({ navigation, route }) => {
     setHideList(true);
     setTimeout(() => {
       navigation.navigate("Progress");
-    }, 400);
+    }, SCREEN_WAIT_DURATION);
   };
 
   const report = () => {
@@ -99,7 +114,7 @@ export const HomeScreen = ({ navigation, route }) => {
     setHideList(true);
     setTimeout(() => {
       navigation.navigate("Explore");
-    }, 400);
+    }, SCREEN_WAIT_DURATION);
   };
 
   const animateToItem = (item) => {
@@ -141,8 +156,8 @@ export const HomeScreen = ({ navigation, route }) => {
           scrollEventThrottle={16}
           onMomentumScrollEnd={(e) => {
             const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH;
-            selectedPlace.current = DATA[index];
-            animateToItem(DATA[index]);
+            selectedPlace.current = serverPlaces[index];
+            animateToItem(serverPlaces[index]);
           }}
           keyExtractor={(item) => item.key}
           snapToInterval={ITEM_WIDTH}

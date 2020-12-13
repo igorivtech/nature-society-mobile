@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import { useEffect } from "react";
 import {
   View,
@@ -16,12 +16,12 @@ import {
 } from "react-native";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { colors } from "../../values/colors";
-import { DATA, NAV_CLOSE_TAP_SIZE, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { PlaceRating } from "./PlaceScreen";
 import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
+import { UserContext } from "../../context/context";
 
 export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -30,6 +30,10 @@ const INNER_BORDER_RADIUS = BORDER_RADIUS - CARD_PADDING;
 export const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation }) => {
+
+  const {state} = useContext(UserContext);
+  const {serverPlaces} = state;
+
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
 
@@ -50,8 +54,8 @@ export const ExploreScreen = ({ navigation }) => {
   }, [searchOn])
 
   useEffect(() => {
-    setPlaces(DATA);
-    setFilteredPlaces(DATA);
+    setPlaces(serverPlaces);
+    setFilteredPlaces(serverPlaces);
   }, []);
 
   useEffect(() => {

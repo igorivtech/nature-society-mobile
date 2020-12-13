@@ -16,7 +16,7 @@ export const recentVisitors = [
 ]
 
 
-export const DATA = [
+export const DEFAULT_PLACES = [
   {
     locked: false,
     key: "1",
