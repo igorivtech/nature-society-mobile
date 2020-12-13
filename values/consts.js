@@ -114,7 +114,8 @@ export const DEFAULT_NOTIFICATION = {
   user: {
     pic: 'https://roneringa.com/wp-content/uploads/2016/06/Scribe-300x300.jpg',
     name: 'דורון שלום',
-    points: 19
+    points: 19,
+    role: 'לקט'
   }
 }
 

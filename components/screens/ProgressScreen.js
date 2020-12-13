@@ -216,8 +216,13 @@ const NotificationHeader = ({notification}) => {
     <View style={pStyles.titleContainer}>
       <View>
         {notification.type == 'user' ? (
-          <View>
+          <View style={pStyles.uContainer}>
             <Text style={pStyles.title}>{userHeaderName(notification.user.name)}</Text>
+            <View style={pStyles.userContainer}>
+              <Text style={pStyles.userPoints}>{notification.user.points}</Text>
+              <Image source={require("../../assets/images/user_notification_marker.png")} />
+              <Text style={pStyles.userRole}>{notification.user.role}</Text>
+            </View>
           </View>
         ) : (
           <Text style={pStyles.title}>{notification.title}</Text>
@@ -236,6 +241,29 @@ const NotificationHeader = ({notification}) => {
 }
 
 const pStyles = StyleSheet.create({
+
+  uContainer: {
+    alignItems: 'flex-end'
+  },
+
+  userContainer: {
+    marginTop: 2,
+    marginRight: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+
+  userPoints: {
+    ...textStyles.normalOfSize(12),
+    color: '#222',
+    marginRight: 2,
+  },
+
+  userRole: {
+    marginLeft: 8,
+    ...textStyles.normalOfSize(12)
+  },
 
   userPic: {
     height: 33,
