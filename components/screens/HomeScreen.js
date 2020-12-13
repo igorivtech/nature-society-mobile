@@ -16,6 +16,7 @@ import { UserContext } from "../../context/context";
 import { SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
+import { useLocationPermissions } from "../../hooks/usePermissions";
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" }
@@ -25,6 +26,8 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
   const {user, notification, serverPlaces} = state;
+
+  const {askLocation, locationPermission} = useLocationPermissions();
 
   const [places, setPlaces] = useState([]);
   const [hideList, setHideList] = useState(true);
@@ -53,12 +56,17 @@ export const HomeScreen = ({ navigation, route }) => {
     //     type: SAVE_NOTIFICATION,
     //     payload: DEFAULT_NOTIFICATION
     //   })
-    // }, 2000);
-    // permissions popup
-    setTimeout(()=>{
-      setPopupVisible(true);
-    }, 4000)
+    // }, 2000);    
   }, [])
+
+  useEffect(()=>{
+    // permissions popup
+    if (locationPermission != null && !locationPermission.granted) {
+      setTimeout(()=>{
+        setPopupVisible(true);
+      }, 4000)
+    }
+  }, [locationPermission])
 
   useEffect(()=>{
     if (serverPlaces.length > 0) {
@@ -141,7 +149,7 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const askLocationPermissions = () => {
-    console.log("askLocationPermissions");
+    askLocation();
   };
 
   return (
