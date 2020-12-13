@@ -17,6 +17,10 @@ export const globalStyles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  baseContainer: {
+    flex: 1
+  },
+
   homeContainer: {
     flex: 1,
   },

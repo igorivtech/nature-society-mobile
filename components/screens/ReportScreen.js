@@ -166,7 +166,7 @@ const ModalSearch = ({visible, setSearchVisible, selectItem}) => {
 
   return (
     <Modal visible={visible} animationType='fade'>
-      <SafeAreaView>
+      <SafeAreaView style={globalStyles.baseContainer}>
         <SearchBar
             modal={true}
             searchTerm={searchTerm}
@@ -188,11 +188,6 @@ const ModalSearch = ({visible, setSearchVisible, selectItem}) => {
 }
 
 const styles = StyleSheet.create({
-
-  searchList: {
-    // backgroundColor: 'red'
-    // flewGrow/: 1
-  },
 
   flatListContainer: (keyboardBottomPadding) => ({
     paddingVertical: 34,
