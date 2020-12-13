@@ -150,8 +150,18 @@ const ModalSearch = ({visible, setSearchVisible, selectItem}) => {
     setSearchVisible(false);
   }
 
-  const textChanged = (v) => {
-    setSearchTerm(v);
+  const textChanged = (value) => {
+    setSearchTerm(value);
+    if (value.length === 0) {
+      setPlaces(DATA);
+    } else {
+      const filtered = DATA.filter((place) => {
+        const s1 = place.title.toLowerCase();
+        const s2 = value.toLowerCase();
+        return s1.indexOf(s2) > -1;
+      })
+      setPlaces(filtered);
+    }
   };
 
   return (
