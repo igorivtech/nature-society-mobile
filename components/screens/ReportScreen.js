@@ -24,6 +24,11 @@ const crowd = {
 export const ReportScreen = ({navigation, route}) => {
 
   const {location} = route.params;
+  const [selectedLocation, setLocation] = useState(null);
+
+  useEffect(()=>{
+    setLocation(location);
+  }, []);
 
   let details = [
     {id: "1_extra_light", title: "עודף תאורה", on: false},
@@ -102,7 +107,7 @@ export const ReportScreen = ({navigation, route}) => {
           scrollEventThrottle={16}
           contentContainerStyle={styles.scrollViewContent}
           style={StyleSheet.absoluteFill}>
-          <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={location} startUpAnimation={true} />
+          <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} />
           <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
           <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
         </Animated.ScrollView>
