@@ -120,7 +120,7 @@ export const ReportScreen = ({navigation, route}) => {
           <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
         </Animated.ScrollView>
       </View>
-      <Popup title={strings.reportScreen.popupTitle} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
+      <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
       <ModalSearch selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
     </SafeAreaView>
   );

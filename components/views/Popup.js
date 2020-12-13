@@ -17,7 +17,7 @@ import { textStyles } from "../../values/textStyles";
 
 const DURATION = 300;
 
-export const Popup = ({ title, popupVisible, setPopupVisible, action, reverseActions = false, yesTitle, noTitle }) => {
+export const Popup = ({ textData, popupVisible, setPopupVisible, action, reverseActions = false }) => {
   const close = () => {
     setPopupVisible(false);
   };
@@ -57,14 +57,14 @@ export const Popup = ({ title, popupVisible, setPopupVisible, action, reverseAct
           <View style={StyleSheet.absoluteFill} />
         </TouchableWithoutFeedback>
         <Animated.View style={popupStyles.cardContainer(scale, opacity)}>
-          <Text style={popupStyles.title}>{title}</Text>
+          <Text style={popupStyles.title}>{textData.title}</Text>
           <PopupButton
-            title={yesTitle ?? strings.reportScreen.popupNo}
+            title={textData.yes}
             onPress={reverseActions ? close : doAction}
             filled={true}
           />
           <PopupButton
-            title={noTitle ?? strings.reportScreen.popupYes}
+            title={textData.no}
             onPress={reverseActions ? doAction : close}
             filled={false}
           />
