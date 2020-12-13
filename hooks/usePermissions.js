@@ -22,38 +22,3 @@ export const useLocationPermissions = () => {
     locationPermission: permission,
   };
 };
-
-export const useCameraPermissions = () => {
-  const [permission, askPermission, getPermission] = Permissions.usePermissions(Permissions.CAMERA, {});
-
-  useEffect(() => {
-    console.log({ permission });
-  }, [permission]);
-
-  const askCamera = () => {
-    askPermission();
-  };
-
-  return {
-    askCamera,
-    cameraPermission: permission,
-  };
-};
-
-export const useGalleryPermissions = () => {
-    const [permission, askPermission, getPermission] = Permissions.usePermissions(Permissions.CAMERA_ROLL, {});
-  
-    useEffect(() => {
-      console.log({ permission });
-    }, [permission]);
-  
-    const askGallery = () => {
-      askPermission();
-    };
-  
-    return {
-      askGallery,
-      galleryPermission: permission,
-    };
-  };
-  
