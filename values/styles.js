@@ -88,6 +88,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   homeTopContainer: {
+    alignItems: 'center',
     flexDirection: "row",
     paddingHorizontal: 64,
     justifyContent: "space-between",

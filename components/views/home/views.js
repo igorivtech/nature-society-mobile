@@ -26,7 +26,7 @@ export const HomeButton = ({ index, onPress, notification }) => {
   }, [notification])
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity style={globalStyles.centerChildren} onPress={onPress}>
       {index === 2 && (
         <Animated.View style={s.bg(opacity)} />
       )}
@@ -40,6 +40,7 @@ const BG_SIZE = ICON_SIZE + 6;
 
 const s = StyleSheet.create({
   bg: (opacity) => ({
+    position: 'absolute',
     opacity,
     ...StyleSheet.absoluteFill,
     backgroundColor: colors.desertRock,
