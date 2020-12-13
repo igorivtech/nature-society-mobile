@@ -82,6 +82,13 @@ export const globalStyles = StyleSheet.create({
     right: width / 2,
   },
 
+  halfLeftInner: {
+    height: '100%',
+    width: '50%',
+    position: 'absolute',
+    left: 0
+  },
+
   fillParent: {
     height: "100%",
     width: "100%",

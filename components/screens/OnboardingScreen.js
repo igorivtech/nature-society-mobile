@@ -161,7 +161,7 @@ export const OnboardingScreen = ({ navigation }) => {
     <View style={globalStyles.onboardingContainer}>
 
       <TouchableWithoutFeedback onPress={next} style={globalStyles.halfLeft}>
-        <View style={globalStyles.fillParent} />
+        <View style={globalStyles.halfLeftInner} />
       </TouchableWithoutFeedback>
 
       <View style={globalStyles.onboardingMainContainer}>
