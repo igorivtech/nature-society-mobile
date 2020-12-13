@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
   },
 
   searchScreenContainer: {
-    paddingVertical: 30,
+    paddingTop: 30,
     borderTopLeftRadius: 30,
     flex: 1,
     backgroundColor: "white",
