@@ -1,16 +1,20 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-  View,
-  SafeAreaView,
-  Animated,
-  Easing,
-} from "react-native";
+import { View, SafeAreaView, Animated, Easing } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { globalStyles } from "../../values/styles";
-import { height, DEFAULT_NOTIFICATION, DEFAULT_PLACES } from "../../values/consts";
+import {
+  height,
+  DEFAULT_NOTIFICATION,
+  DEFAULT_PLACES,
+} from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
-import { CARD_TRANSLATE_Y, ITEM_WIDTH, PlaceCard, spacerStyle } from '../views/home/PlaceCard'
+import {
+  CARD_TRANSLATE_Y,
+  ITEM_WIDTH,
+  PlaceCard,
+  spacerStyle,
+} from "../views/home/PlaceCard";
 import { GrowthPoints } from "../views/home/GrowthPoints";
 import { UserContext } from "../../context/context";
 import { SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
@@ -19,15 +23,14 @@ import { strings } from "../../values/strings";
 import { useLocationPermissions } from "../../hooks/usePermissions";
 
 const SCREEN_WAIT_DURATION = 400;
-const leftSpacer = { key: "left-spacer" }
-const rightSpacer = { key: "right-spacer" }
+const leftSpacer = { key: "left-spacer" };
+const rightSpacer = { key: "right-spacer" };
 
 export const HomeScreen = ({ navigation, route }) => {
+  const { state, dispatch } = useContext(UserContext);
+  const { user, notification, serverPlaces } = state;
 
-  const {state, dispatch} = useContext(UserContext);
-  const {user, notification, serverPlaces} = state;
-
-  const {askLocation, locationPermission} = useLocationPermissions();
+  const { askLocation, locationPermission } = useLocationPermissions();
 
   const [places, setPlaces] = useState([]);
   const [hideList, setHideList] = useState(true);
@@ -42,13 +45,13 @@ export const HomeScreen = ({ navigation, route }) => {
   const mapRef = useRef(null);
 
   // STARTUP POINT
-  useEffect(()=>{
+  useEffect(() => {
     // places
-    setTimeout(()=>{
+    setTimeout(() => {
       dispatch({
         type: SAVE_PLACES,
-        payload: DEFAULT_PLACES
-      })
+        payload: DEFAULT_PLACES,
+      });
     }, 1000);
     // notification - DEBUG
     // setTimeout(() => {
@@ -56,33 +59,33 @@ export const HomeScreen = ({ navigation, route }) => {
     //     type: SAVE_NOTIFICATION,
     //     payload: DEFAULT_NOTIFICATION
     //   })
-    // }, 2000);    
-  }, [])
+    // }, 2000);
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     // permissions popup
     if (locationPermission != null && !locationPermission.granted) {
-      setTimeout(()=>{
+      setTimeout(() => {
         setPopupVisible(true);
-      }, 4000)
+      }, 4000);
     }
-  }, [locationPermission])
+  }, [locationPermission]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (serverPlaces.length > 0) {
       setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
       selectedPlace.current = serverPlaces[0];
       // setTimeout(() => {
-        setHideList(false);
-        animateToItem(serverPlaces[0]);
+      setHideList(false);
+      animateToItem(serverPlaces[0]);
       // }, 1000);
     } else {
       // somthing i guess?
     }
-  }, [serverPlaces])
+  }, [serverPlaces]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       if (firstTime.current) {
         firstTime.current = false;
       } else {
@@ -102,12 +105,12 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [hideList]);
 
   useEffect(() => {
-    const params = route.params
+    const params = route.params;
     if (params != null) {
       if (params.searchItem != null) {
-        const s = {...params.searchItem}
+        const s = { ...params.searchItem };
         setTimeout(() => {
-          showPlace(s);  
+          showPlace(s);
         }, 500);
         params.searchItem = null;
       }
@@ -124,7 +127,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const report = () => {
     if (selectedPlace?.current) {
       const location = selectedPlace?.current;
-      navigation.navigate("Report", {location});
+      navigation.navigate("Report", { location });
     }
   };
 
@@ -160,12 +163,14 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       />
-      <SafeAreaView style={globalStyles.safeAreaContainer}>
+      <SafeAreaView>
         <View style={globalStyles.homeTopContainer}>
           <HomeButton index={2} notification={notification} onPress={progress} />
           <HomeButton index={1} onPress={report} />
           <HomeButton index={0} onPress={explore} />
         </View>
+      </SafeAreaView>
+      <SafeAreaView>
         <Animated.FlatList
           data={places}
           horizontal
@@ -200,16 +205,14 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
-
-        <GrowthPoints />
       </SafeAreaView>
-      <Popup 
+      <GrowthPoints />
+      <Popup
         textData={strings.popups.locationPermissions}
-        action={askLocationPermissions} 
-        popupVisible={popupVisible} 
-        setPopupVisible={setPopupVisible} 
+        action={askLocationPermissions}
+        popupVisible={popupVisible}
+        setPopupVisible={setPopupVisible}
       />
     </View>
   );
 };
-

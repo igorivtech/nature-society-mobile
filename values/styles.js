@@ -23,6 +23,7 @@ export const globalStyles = StyleSheet.create({
 
   homeContainer: {
     flex: 1,
+    justifyContent: 'space-between'
   },
 
   fullWidth: {
