@@ -69,6 +69,7 @@ export const strings = {
         chooseNewPasswordTitle: 'החלף סיסמה',
     },
     reportScreen: {
+        scrollHint: 'גרירה למטה ולמעלה\nכדי לבחור ציון',
         popupNo: 'לא, בוא נמשיך',
         popupYes: 'כן, בוא נצא',
         popupTitle: 'יציאה באמצע דיווח תמחק אותו.\nבטוח שתרצה לצאת?',
