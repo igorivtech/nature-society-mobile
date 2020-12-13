@@ -23,6 +23,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [places, setPlaces] = useState([{ key: "left-spacer" }, ...DATA, { key: "right-spacer" }]);
   const [hideList, setHideList] = useState(true);
   const firstTime = useRef(true);
+  const selectedPlace = useRef();
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
@@ -38,6 +39,10 @@ export const HomeScreen = ({ navigation, route }) => {
   //     })
   //   }, 4000);
   // }, [])
+
+  useEffect(()=>{
+    selectedPlace.current = DATA[0];
+  }, [])
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
@@ -84,7 +89,10 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const report = () => {
-    navigation.navigate("Report");
+    if (selectedPlace?.current) {
+      const location = selectedPlace?.current;
+      navigation.navigate("Report", {location});
+    }
   };
 
   const explore = () => {
@@ -133,6 +141,7 @@ export const HomeScreen = ({ navigation, route }) => {
           scrollEventThrottle={16}
           onMomentumScrollEnd={(e) => {
             const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH;
+            selectedPlace.current = DATA[index];
             animateToItem(DATA[index]);
           }}
           keyExtractor={(item) => item.key}
