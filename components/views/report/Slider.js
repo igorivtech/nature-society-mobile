@@ -48,12 +48,6 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
     1: setTopText
   };
 
-  const titlesOpacityMap = {
-    0: bottomTextOpacity,
-    0.5: centerTextOpacity,
-    1: topTextOpacity
-  };
-
   const resetTitles = () => {
     setTopText(titles[2]);
     setMiddleText(titles[1]);
@@ -212,35 +206,31 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
           }, 1000);
         }, 2000);
       });
-      //
-      setTimeout(() => {
-        titlesMap[progress._value](strings.reportScreen.otherPeople(8));  
-      }, 200);
+      // animating title? - yes, animating title.
+      const setTitle = titlesMap[progress._value];
+      Animated.timing(textContainerOpacity, {
+        toValue: 0,
+        useNativeDriver: true
+      }).start(()=>{
+        setTitle(strings.reportScreen.otherPeople(8));
+        Animated.timing(textContainerOpacity, {
+          toValue: 1,
+          useNativeDriver: true
+        }).start(()=>{
+          
+        })
+      })
     }
-    // animate title
-    // const textOpacity = titlesOpacityMap[progress._value];
-    // const setTitle = titlesMap[progress._value];
-    // Animated.timing(textOpacity, {
-    //   duration: 200,
-    //   // useNativeDriver: true,
-    //   toValue: 0,
-    // }).start(()=>{
-    //   setTitle(strings.reportScreen.otherPeople(8));
-    //   Animated.timing(textOpacity, {
-    //     duration: 200,
-    //     // useNativeDriver: true,
-    //     toValue: 1,
-    //   }).start()
-    // })
   }
 
   const backToNormal = () => {
     resetTitles();
     setContinueEnabled(true);
     setDragEnabled(true);
-    [indicatorOpacity, bottomTopContainersOpacity, lineOpacity].forEach(v => {
+    [indicatorOpacity, bottomTopContainersOpacity].forEach(v => {
       v.setValue(1);
     });
+    lineOpacity.setValue(LINE_OPACITY);
   };
 
   const pickLocation = () => {
