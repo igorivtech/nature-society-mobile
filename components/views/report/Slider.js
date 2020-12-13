@@ -38,6 +38,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
     }
   }, [])
 
+  const [titleTranslateY, setTitleTranslateY] = useState(TITLE_TRANSLATE_Y);
   const [topText, setTopText] = useState(titles[2]);
   const [middleText, setMiddleText] = useState(titles[1]);
   const [bottomText, setBottomText] = useState(titles[0]);
@@ -212,6 +213,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         toValue: 0,
         useNativeDriver: true
       }).start(()=>{
+        setTitleTranslateY(0);
         setTitle(strings.reportScreen.otherPeople(8));
         Animated.timing(textContainerOpacity, {
           toValue: 1,
@@ -224,6 +226,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const backToNormal = () => {
+    setTitleTranslateY(TITLE_TRANSLATE_Y);
     resetTitles();
     setContinueEnabled(true);
     setDragEnabled(true);
@@ -245,9 +248,9 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
         </Animatable.View>
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
-            <Animated.Text style={sliderStyles.text(topTextOpacity, TITLE_TRANSLATE_Y)}>{topText}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(topTextOpacity, titleTranslateY)}>{topText}</Animated.Text>
             <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{middleText}</Animated.Text>
-            <Animated.Text style={sliderStyles.text(bottomTextOpacity, -TITLE_TRANSLATE_Y)}>{bottomText}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(bottomTextOpacity, -titleTranslateY)}>{bottomText}</Animated.Text>
           </Animated.View>
           <View style={sliderStyles.sliderContainer}>
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
