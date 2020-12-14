@@ -235,7 +235,7 @@ export const PlaceRating = ({
     <View style={globalStyles.marginLeft(leftMargin)}>
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
 
-      <TouchableOpacity disabled={unlockPlace == null} onPress={unlockPlace}>
+      <TouchableOpacity disabled={!locked || unlockPlace == null} onPress={unlockPlace}>
         <View style={s.ratingInnerContainer}>
           <Text style={{ ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 }}>
             {rating}
