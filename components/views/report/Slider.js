@@ -211,7 +211,8 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       // animation opacity? - yes, probably animation opacity.
       Animated.timing(animationOpacity, {
         useNativeDriver: true,
-        toValue: 0.35
+        toValue: 0.35,
+        easing: Easing.inOut(Easing.ease)
       }).start();
       // animating title? - yes, animating title.
       const setTitle = titlesMap[progress._value];
