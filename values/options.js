@@ -127,7 +127,8 @@ export const slideFromBottomOptions = () => ({
             inputRange: [0, 1],
             outputRange: [height, 0]
           })}
-        ]
+        ],
+        opacity: progress
       },
     };
   },
