@@ -1,4 +1,5 @@
 export const strings = {
+  showInfo: 'הצג\nמידע',
   popups: {
     locationPermissions: {
       title: "כדי שנוכל להתאים לך אתרי טיול\nבסביבתך נצטרך גישה למיקום שלך.",

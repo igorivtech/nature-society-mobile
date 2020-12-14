@@ -115,6 +115,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={s.ratingContainer}
           >
             <PlaceRating
+              pointsToUnlock={place.pointsToUnlock}
               unlockPlace={unlockPlace}
               locked={place.locked}
               title={strings.placeScreen.crowdnessTitle}
@@ -229,26 +230,72 @@ export const PlaceRating = ({
   rating,
   leftMargin = 0,
   small = false,
-  unlockPlace
+  unlockPlace,
+  pointsToUnlock = null
 }) => {
   return (
     <View style={globalStyles.marginLeft(leftMargin)}>
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
 
-      <TouchableOpacity disabled={!locked || unlockPlace == null} onPress={unlockPlace}>
-        <View style={s.ratingInnerContainer}>
-          <Text style={{ ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 }}>
+      
+      <View style={s.ratingInnerContainer}>
+        {locked ? (
+          <TouchableOpacity disabled={!locked || unlockPlace == null} onPress={unlockPlace}>
+            <View style={s.buyContainer(small)}>
+              {pointsToUnlock && (
+                <Text style={s.buyPoints}>{pointsToUnlock}</Text>
+              )}
+              <Image source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
+              {!small && (
+                <Text style={s.buyTitle}>{strings.showInfo}</Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <Text style={s.ratingStyle(small, color)}>
             {rating}
           </Text>
-          <Image source={locked ? (small ? require("../../assets/images/place_locked_icon_small.png") : require("../../assets/images/place_locked_icon_large.png")) : image} />
-        </View>
-      </TouchableOpacity>
+        )}
+        
+        <Image source={locked ? (small ? require("../../assets/images/place_locked_icon_small.png") : require("../../assets/images/place_locked_icon_large.png")) : image} />
+      </View>
+      
       
     </View>
   );
 };
 
 const s = StyleSheet.create({
+
+  ratingStyle: (small, color) => ({
+    ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 
+  }),
+
+  buyTitle: {
+    ...textStyles.boldOfSize(14),
+    color: colors.treeBlues,
+    marginLeft: 12,
+  },
+
+  buyPoints: {
+    marginHorizontal: 4,
+    ...textStyles.normalOfSize(18),
+    textAlign: 'center',
+    color: colors.treeBlues,
+  },
+
+  buyContainer: (small) => ({
+    marginRight: 12,
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    borderRadius: small ? 11 : 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    flexDirection: 'row'
+  }),
+
   desc: {
     ...textStyles.normalOfSize(16),
     ...globalStyles.fullWidth,
@@ -280,6 +327,7 @@ const s = StyleSheet.create({
   ratingInnerContainer: {
     alignSelf: 'flex-end',
     marginTop: 4,
+    alignItems: 'center',
     flexDirection: "row",
   },
 

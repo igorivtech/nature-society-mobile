@@ -49,6 +49,7 @@ export const DEFAULT_PLACES = [
   },
   {
     locked: true,
+    pointsToUnlock: 10,
     key: "2",
     position: {
       longitude: 3,
@@ -91,6 +92,7 @@ export const DEFAULT_PLACES = [
   },
   {
     locked: true,
+    pointsToUnlock: 10,
     key: "4",
     position: {
       longitude: 3,

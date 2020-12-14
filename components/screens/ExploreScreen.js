@@ -220,6 +220,7 @@ const SearchCard = ({ item, showItem, index }) => {
 
         <View style={styles.ratingContainer}>
           <PlaceRating
+            pointsToUnlock={item.pointsToUnlock}
             small
             locked={item.locked}
             title={strings.placeScreen.crowdnessTitle}
