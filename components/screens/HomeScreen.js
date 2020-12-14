@@ -38,6 +38,8 @@ export const HomeScreen = ({ navigation, route }) => {
   const firstTime = useRef(true);
   const selectedPlace = useRef();
 
+  let animationTimeout = null;
+  const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
@@ -63,11 +65,24 @@ export const HomeScreen = ({ navigation, route }) => {
     // }, 2000);
   }, []);
 
+  // SCROLL X LISTENER
   useEffect(()=>{
-    scrollX.addListener((value)=>{
-      console.log(value); // scrollX
+    scrollX.removeAllListeners();
+    scrollX.addListener(({value}) => {
+      const i = Math.round(value/ITEM_WIDTH);
+      if (animationTimeout !== null) {
+        clearTimeout(animationTimeout);
+      }
+      animationTimeout = setTimeout(()=>{
+        if (index !== i) {
+          setIndex(i);
+          const item = serverPlaces[i];
+          selectedPlace.current = item;
+          mapRef.current.animateToRegion(item.position, 1000);
+        }
+      }, 10);
     })
-  }, [])
+  }, [serverPlaces, index]);
 
   useEffect(() => {
     // permissions popup
@@ -184,11 +199,6 @@ export const HomeScreen = ({ navigation, route }) => {
             {useNativeDriver: true}
           )}
           scrollEventThrottle={16}
-          onMomentumScrollEnd={(e) => {
-            const index = e.nativeEvent.contentOffset.x / ITEM_WIDTH;
-            selectedPlace.current = serverPlaces[index];
-            animateToItem(serverPlaces[index]);
-          }}
           keyExtractor={(item) => item.key}
           snapToInterval={ITEM_WIDTH}
           decelerationRate={0}
