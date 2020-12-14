@@ -64,24 +64,6 @@ export const HomeScreen = ({ navigation, route }) => {
     // }, 2000);
   }, []);
 
-  // SCROLL X LISTENER
-  useEffect(()=>{
-    scrollX.removeAllListeners();
-    scrollX.addListener(({value}) => {
-      const i = Math.round(value/ITEM_WIDTH);
-      if (animationTimeout !== null) {
-        clearTimeout(animationTimeout);
-      }
-      animationTimeout = setTimeout(()=>{
-        const item = serverPlaces[i];
-        if (item.key !== selectedPlace?.current.key) {
-          selectedPlace.current = item;
-          mapRef.current.animateToRegion(item.position, 1000);
-        }
-      }, 10);
-    })
-  }, [serverPlaces]);
-
   useEffect(() => {
     // permissions popup
     if (locationPermission != null && !locationPermission.granted) {
@@ -98,11 +80,29 @@ export const HomeScreen = ({ navigation, route }) => {
       // setTimeout(() => {
       setHideList(false);
       animateToItem(serverPlaces[0]);
+      setupCardListener();
       // }, 1000);
     } else {
       // somthing i guess?
     }
   }, [serverPlaces]);
+
+  const setupCardListener = () => {
+    scrollX.removeAllListeners();
+    scrollX.addListener(({value}) => {
+      const i = Math.round(value/ITEM_WIDTH);
+      if (animationTimeout !== null) {
+        clearTimeout(animationTimeout);
+      }
+      animationTimeout = setTimeout(()=>{
+        const item = serverPlaces[i];
+        if (item.key !== selectedPlace?.current.key) {
+          selectedPlace.current = item;
+          mapRef.current.animateToRegion(item.position, 1000);
+        }
+      }, 10);
+    })
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
