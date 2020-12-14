@@ -5,10 +5,8 @@ import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
 import { height } from "../../../values/consts";
 import LottieView from 'lottie-react-native';
-import * as Animatable from "react-native-animatable";
 import { strings } from "../../../values/strings";
 import { colors } from "../../../values/colors";
-import { globalStyles } from "../../../values/styles";
 
 const THUMB_RADIUS = 24.5 / 2;
 const SLIDER_HEIGHT = Math.min(347, (height-45*2)*0.5);
@@ -17,6 +15,7 @@ const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
 const DURATION = 200;
 const LINE_OPACITY = 0.15;
 const TITLE_TRANSLATE_Y = 4;
+const ANIMATION_OPACITY = 0.35;
 
 const clampAnimationValue = (p) => {
   if (p < 0.33) {
@@ -137,6 +136,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
     setContinueEnabled(false);
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
+    animationOpacity.setValue(ANIMATION_OPACITY);
     Animated.timing(startUpTranslateY, {
       delay: 1200,
       toValue: -40,
@@ -156,7 +156,13 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
           Animated.parallel([
             Animated.timing(lineOpacity, {
               toValue: LINE_OPACITY,
-              useNativeDriver: true
+              useNativeDriver: true,
+              easing: Easing.inOut(Easing.ease)
+            }),
+            Animated.timing(animationOpacity, {
+              toValue: 1,
+              useNativeDriver: true,
+              easing: Easing.inOut(Easing.ease)
             }),
           ]).start(()=>{
             Animated.timing(textContainerOpacity, {
@@ -211,7 +217,8 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       // animation opacity? - yes, probably animation opacity.
       Animated.timing(animationOpacity, {
         useNativeDriver: true,
-        toValue: 0.35,
+        toValue: ANIMATION_OPACITY,
+        duration: 400,
         easing: Easing.inOut(Easing.ease)
       }).start();
       // animating title? - yes, animating title.
@@ -251,9 +258,9 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.animationSliderContainer}>
-        <Animatable.View opacity={animationOpacity} style={sliderStyles.animation(animationOpacity)} duration={1000} delay={600} animation='fadeIn'>
+        <Animated.View opacity={animationOpacity} style={sliderStyles.animation(animationOpacity)}>
           <LottieView source={animation} progress={progress} resizeMode='contain' />
-        </Animatable.View>
+        </Animated.View>
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
             <Animated.Text style={sliderStyles.text(topTextOpacity, titleTranslateY)}>{topText}</Animated.Text>
