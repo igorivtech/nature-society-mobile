@@ -71,6 +71,10 @@ export const PlaceScreen = ({ navigation, route }) => {
     }
   };
 
+  const unlockPlace = () => {
+    console.log("unlockPlace");
+  }
+
   return (
     <View style={s.container}>
       <TouchableWithoutFeedback onPress={goBack} style={s.tap}>
@@ -111,6 +115,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={s.ratingContainer}
           >
             <PlaceRating
+              unlockPlace={unlockPlace}
               locked={place.locked}
               title={strings.placeScreen.crowdnessTitle}
               image={require("../../assets/images/HowBusyOrange.png")}
@@ -119,7 +124,6 @@ export const PlaceScreen = ({ navigation, route }) => {
             />
 
             <PlaceRating
-              locked={place.locked}
               leftMargin={40}
               title={strings.placeScreen.cleannessTitle(place.locked)}
               image={require("../../assets/images/HeartL.png")}
@@ -224,18 +228,22 @@ export const PlaceRating = ({
   color,
   rating,
   leftMargin = 0,
-  small = false
+  small = false,
+  unlockPlace
 }) => {
   return (
     <View style={globalStyles.marginLeft(leftMargin)}>
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
 
-      <View style={s.ratingInnerContainer}>
-        <Text style={{ ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 }}>
-          {rating}
-        </Text>
-        <Image source={image} />
-      </View>
+      <TouchableOpacity disabled={unlockPlace == null} onPress={unlockPlace}>
+        <View style={s.ratingInnerContainer}>
+          <Text style={{ ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 }}>
+            {rating}
+          </Text>
+          <Image source={locked ? (small ? require("../../assets/images/place_locked_icon_small.png") : require("../../assets/images/place_locked_icon_large.png")) : image} />
+        </View>
+      </TouchableOpacity>
+      
     </View>
   );
 };

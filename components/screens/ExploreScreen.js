@@ -230,7 +230,6 @@ const SearchCard = ({ item, showItem, index }) => {
 
           <PlaceRating
             small
-            locked={item.locked}
             leftMargin={40}
             title={strings.placeScreen.cleannessTitle(item.locked)}
             image={require("../../assets/images/Heart.png")}
