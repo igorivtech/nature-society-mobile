@@ -5,6 +5,7 @@ import { AppLoading } from "expo";
 import { fontsLoader } from "./values/fonts";
 import {
   fadeOptions,
+  slideFromBottomOptions,
   slideFromLeftOptions,
   slideFromRightOptions,
 } from "./values/options";
@@ -52,7 +53,7 @@ export default function App() {
           <HomeStack.Screen name="Place" component={PlaceScreen} options={fadeOptions} />
           <HomeStack.Screen name="Explore" component={ExploreScreen} options={slideFromRightOptions} />
           <HomeStack.Screen name="Progress" component={ProgressScreen} options={slideFromLeftOptions} />
-          <HomeStack.Screen name="Report" component={ReportScreen} options={fadeOptions} />
+          <HomeStack.Screen name="Report" component={ReportScreen} options={slideFromBottomOptions} />
           <HomeStack.Screen name="Login" component={LoginScreen} options={fadeOptions} />
           <HomeStack.Screen name="Profile" component={ProfileScreen} options={fadeOptions} />
         </HomeStack.Navigator>
