@@ -67,7 +67,8 @@ export const ReportScreen = ({navigation, route}) => {
       type: SAVE_USER,
       payload: {
         ...user,
-        points: user.points + 30
+        points: user.points + 30,
+        numOfReports: user.numOfReports + 1
       }
     })
     navigation.goBack();
