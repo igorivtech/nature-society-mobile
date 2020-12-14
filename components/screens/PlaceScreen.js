@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useState } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
+import { Popup } from "../views/Popup"
 
 import * as Animatable from "react-native-animatable";
 import { RecentVisitor } from "../views/home/views";
@@ -36,6 +37,8 @@ export const PlaceScreen = ({ navigation, route }) => {
   const {serverPlaces, user} = state;
 
   const { place } = route.params;
+
+  const [popupVisible, setPopupVisible] = useState(false);
 
   const textRef = useRef();
   const ratingRef = useRef();
@@ -97,8 +100,12 @@ export const PlaceScreen = ({ navigation, route }) => {
         }
       })
     } else {
-      alert("not enough points")
+      setPopupVisible(true);
     }
+  }
+
+  const playMore = () => {
+    console.log("playMore");
   }
 
   return (
@@ -221,6 +228,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           </Animatable.View>
         </View>
       </FlingGestureHandler>
+      <Popup textData={strings.popups.cantBuy} single popupVisible={popupVisible} setPopupVisible={setPopupVisible} action={playMore} />
     </View>
   );
 };

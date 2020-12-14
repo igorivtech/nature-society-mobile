@@ -1,6 +1,10 @@
 export const strings = {
   showInfo: 'הצג\nמידע',
   popups: {
+    cantBuy: {
+      title: 'אין מספיק נקודות טבע.\nשחקו עוד באפליקציה כדי לצבור עוד.',
+      yes: 'אחלה'
+    },
     locationPermissions: {
       title: "כדי שנוכל להתאים לך אתרי טיול\nבסביבתך נצטרך גישה למיקום שלך.",
       yes: "יאללה, מגניב",

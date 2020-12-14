@@ -17,7 +17,7 @@ import { textStyles } from "../../values/textStyles";
 
 const DURATION = 300;
 
-export const Popup = ({ textData, popupVisible, setPopupVisible, action, reverseActions = false }) => {
+export const Popup = ({ textData, popupVisible, setPopupVisible, action, reverseActions = false, single = false }) => {
   const close = () => {
     setPopupVisible(false);
   };
@@ -63,11 +63,14 @@ export const Popup = ({ textData, popupVisible, setPopupVisible, action, reverse
             onPress={reverseActions ? close : doAction}
             filled={true}
           />
-          <PopupButton
-            title={textData.no}
-            onPress={reverseActions ? doAction : close}
-            filled={false}
-          />
+
+          {!single && (
+            <PopupButton
+              title={textData.no}
+              onPress={reverseActions ? doAction : close}
+              filled={false}
+            />
+          )}
         </Animated.View>
       </View>
     </Modal>
