@@ -83,6 +83,10 @@ export const ReportScreen = ({navigation, route}) => {
     navigation.goBack();
   }
 
+  useEffect(()=>{
+    scrollY.addListener(({value})=>{});
+  }, [])
+
   const nextSegment = () => {
     if (scrollY._value <= scrollViewHeight.current*2) {
       scrollView.current.scrollTo({
@@ -124,8 +128,8 @@ export const ReportScreen = ({navigation, route}) => {
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
             onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-              {useNativeDriver: false}
+              [{nativeEvent: {contentOffset: {y: scrollY}}}],
+              {useNativeDriver: true}
             )}
             scrollEventThrottle={16}
             contentContainerStyle={styles.scrollViewContent}
