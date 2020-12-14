@@ -67,6 +67,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   const textContainerOpacity = useRef(new Animated.Value(1)).current;
   const bottomTopContainersOpacity = useRef(new Animated.Value(1)).current;
   const indicatorOpacity = useRef(new Animated.Value(1)).current;
+  const animationOpacity = useRef(new Animated.Value(1)).current;
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -207,6 +208,11 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
           }, 1000);
         }, 2000);
       });
+      // animation opacity? - yes, probably animation opacity.
+      Animated.timing(animationOpacity, {
+        useNativeDriver: true,
+        toValue: 0.35
+      }).start();
       // animating title? - yes, animating title.
       const setTitle = titlesMap[progress._value];
       Animated.timing(textContainerOpacity, {
@@ -226,6 +232,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const backToNormal = () => {
+    animationOpacity.setValue(1);
     setTitleTranslateY(TITLE_TRANSLATE_Y);
     resetTitles();
     setContinueEnabled(true);
@@ -243,7 +250,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.animationSliderContainer}>
-        <Animatable.View style={StyleSheet.absoluteFill} duration={1000} delay={600} animation='fadeIn'>
+        <Animatable.View style={sliderStyles.animation(animationOpacity)} duration={1000} delay={600} animation='fadeIn'>
           <LottieView source={animation} progress={progress} resizeMode='contain' />
         </Animatable.View>
         <View style={sliderStyles.sliderTextContainer}>
@@ -331,6 +338,12 @@ const pagStyles = StyleSheet.create({
 });
 
 const sliderStyles = StyleSheet.create({
+
+
+  animation: (opacity) => ({
+    ...StyleSheet.absoluteFill,
+    opacity
+  }),
 
   titlePaginationContainer: {
     alignSelf: 'stretch'
