@@ -22,6 +22,7 @@ import { SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { useLocationPermissions } from "../../hooks/usePermissions";
+import { useIsFocused } from '@react-navigation/native';
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" };
@@ -45,6 +46,8 @@ export const HomeScreen = ({ navigation, route }) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const mapRef = useRef(null);
+
+  const isFocused = useIsFocused();
 
   // STARTUP POINT
   useEffect(() => {
@@ -76,10 +79,12 @@ export const HomeScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (serverPlaces.length > 0) {
       setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
-      selectedPlace.current = serverPlaces[0];
       // setTimeout(() => {
-      setHideList(false);
-      animateToItem(serverPlaces[0]);
+      if (isFocused) {
+        setHideList(false);
+        selectedPlace.current = serverPlaces[0];
+        animateToItem(serverPlaces[0]);
+      }
       setupCardListener();
       // }, 1000);
     } else {

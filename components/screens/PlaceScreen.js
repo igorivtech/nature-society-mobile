@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -25,10 +25,16 @@ import {
   FlingGestureHandler,
   State,
 } from "react-native-gesture-handler";
+import {UserContext} from "../../context/context"
+import {SAVE_PLACES} from "../../context/userReducer";
 
 const fadeOutDuration = 100;
 
 export const PlaceScreen = ({ navigation, route }) => {
+
+  const {state, dispatch} = useContext(UserContext);
+  const {serverPlaces} = state;
+
   const { place } = route.params;
 
   const textRef = useRef();
@@ -72,7 +78,16 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const unlockPlace = () => {
-    console.log("unlockPlace");
+    let places = [...serverPlaces];
+    places.forEach((p, index) => {
+      if (p.key === place.key) {
+        places[index].locked = false;
+      }
+    });
+    dispatch({
+      type: SAVE_PLACES,
+      payload: places
+    });
   }
 
   return (
