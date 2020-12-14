@@ -26,14 +26,14 @@ import {
   State,
 } from "react-native-gesture-handler";
 import {UserContext} from "../../context/context"
-import {SAVE_PLACES} from "../../context/userReducer";
+import {SAVE_PLACES, SAVE_USER} from "../../context/userReducer";
 
 const fadeOutDuration = 100;
 
 export const PlaceScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
-  const {serverPlaces} = state;
+  const {serverPlaces, user} = state;
 
   const { place } = route.params;
 
@@ -78,16 +78,27 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const unlockPlace = () => {
-    let places = [...serverPlaces];
-    places.forEach((p, index) => {
-      if (p.key === place.key) {
-        places[index].locked = false;
-      }
-    });
-    dispatch({
-      type: SAVE_PLACES,
-      payload: places
-    });
+    if (user.points >= place.pointsToUnlock) {
+      let places = [...serverPlaces];
+      places.forEach((p, index) => {
+        if (p.key === place.key) {
+          places[index].locked = false;
+        }
+      });
+      dispatch({
+        type: SAVE_PLACES,
+        payload: places
+      });
+      dispatch({
+        type: SAVE_USER,
+        payload: {
+          ...user,
+          points: user.points - place.pointsToUnlock
+        }
+      })
+    } else {
+      alert("not enough points")
+    }
   }
 
   return (
