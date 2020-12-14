@@ -62,6 +62,12 @@ export const HomeScreen = ({ navigation, route }) => {
     // }, 2000);
   }, []);
 
+  useEffect(()=>{
+    scrollX.addListener((value)=>{
+      console.log(value); // scrollX
+    })
+  }, [])
+
   useEffect(() => {
     // permissions popup
     if (locationPermission != null && !locationPermission.granted) {
@@ -172,8 +178,8 @@ export const HomeScreen = ({ navigation, route }) => {
           style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
           contentContainerStyle={globalStyles.mainListContainer}
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            { useNativeDriver: true }
+            [{nativeEvent: {contentOffset: {x: scrollX}}}],
+            {useNativeDriver: true}
           )}
           scrollEventThrottle={16}
           onMomentumScrollEnd={(e) => {
