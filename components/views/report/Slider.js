@@ -258,7 +258,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.animationSliderContainer}>
-        <Animated.View opacity={animationOpacity} style={sliderStyles.animation(animationOpacity)}>
+        <Animated.View style={sliderStyles.animation(animationOpacity)}>
           <LottieView source={animation} progress={progress} resizeMode='contain' />
         </Animated.View>
         <View style={sliderStyles.sliderTextContainer}>
