@@ -75,9 +75,10 @@ export const RatingView = ({ rating, color, image, locked = false, item }) => {
   return (
     <View style={globalStyles.ratingContainer}>
       {locked ? (
-        <View>
-          
-        </View>
+        <View style={ratingStyles.buyContainer(true)}>
+          <Text style={ratingStyles.buyPoints}>{item.pointsToUnlock}</Text>
+          <Image source={require("../../../assets/images/buy_it_small.png")} />
+      </View>
       ): (
         <Text style={textStyles.rating(color)}>{rating}</Text>
       )}
@@ -86,3 +87,24 @@ export const RatingView = ({ rating, color, image, locked = false, item }) => {
     </View>
   );
 };
+const ratingStyles = StyleSheet.create({
+
+  buyPoints: {
+    marginHorizontal: 4,
+    ...textStyles.normalOfSize(14),
+    textAlign: 'center',
+    color: colors.treeBlues,
+  },
+
+  buyContainer: (small) => ({
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    borderRadius: small ? 11 : 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    flexDirection: 'row'
+  }),
+})
