@@ -71,12 +71,18 @@ export const RecentVisitor = ({ title, details, image, large = false }) => {
   );
 };
 
-export const RatingView = ({ rating, color, image }) => {
+export const RatingView = ({ rating, color, image, locked = false, item }) => {
   return (
     <View style={globalStyles.ratingContainer}>
-      <Text style={textStyles.rating(color)}>{rating}</Text>
+      {locked ? (
+        <View>
+          
+        </View>
+      ): (
+        <Text style={textStyles.rating(color)}>{rating}</Text>
+      )}
 
-      <Image source={image} />
+      <Image source={locked ? require("../../../assets/images/place_locked_icon_small.png") : image} />
     </View>
   );
 };

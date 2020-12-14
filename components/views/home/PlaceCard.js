@@ -91,6 +91,8 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
 
             <View style={globalStyles.cardLocationContainer}>
               <RatingView
+                locked={item.locked}
+                item={item}
                 image={require("../../../assets/images/HowBusy.png")}
                 rating={item.crowdness}
                 color={colors.grass}
