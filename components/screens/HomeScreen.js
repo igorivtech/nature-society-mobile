@@ -7,6 +7,7 @@ import {
   height,
   DEFAULT_NOTIFICATION,
   DEFAULT_PLACES,
+  INITIAL_REGION,
 } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import {
@@ -159,6 +160,7 @@ export const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
+        initialRegion={INITIAL_REGION}
         customMapStyle={MAP_STYLE}
         ref={mapRef}
         provider={PROVIDER_GOOGLE}

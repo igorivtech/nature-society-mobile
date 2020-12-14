@@ -18,6 +18,12 @@ export const recentVisitors = [
   {name: "יואב", role: "צייד", image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"},
 ]
 
+export const INITIAL_REGION = {
+  longitude: 34.9916,
+  latitude: 31.4561,
+  latitudeDelta: 4,
+  longitudeDelta: 2,
+}
 
 export const DEFAULT_PLACES = [
   {
