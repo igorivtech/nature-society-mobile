@@ -32,6 +32,7 @@ export const DetailsView = ({details, iHelped}) => {
   
     const [checked, setChecked] = useState(detail.on);
     useEffect(()=>{
+      detail.on = checked;
       Animated.timing(scale, {
         useNativeDriver: true,
         duration: 200,
@@ -42,7 +43,6 @@ export const DetailsView = ({details, iHelped}) => {
   
     const toggleValue = () => {
       setChecked(v=>!v);
-      detail.on = !detail.on;
     }
   
     return (
