@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { View, StyleSheet, Animated, SafeAreaView, Modal } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
@@ -8,6 +8,8 @@ import { strings } from "../../values/strings";
 import { Report } from "../views/report/Report";
 import { Popup } from "../views/Popup";
 import { ModalSearch } from "../views/report/ModalSearch"
+import { UserContext } from "../../context/context";
+import { SAVE_USER } from "../../context/userReducer";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -22,6 +24,9 @@ const crowd = {
 }
 
 export const ReportScreen = ({navigation, route}) => {
+
+  const {state, dispatch} = useContext(UserContext);
+  const {user} = state;
 
   const {location} = route.params;
   const [selectedLocation, setLocation] = useState(null);
@@ -58,6 +63,13 @@ export const ReportScreen = ({navigation, route}) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const finishReport = () => {
+    dispatch({
+      type: SAVE_USER,
+      payload: {
+        ...user,
+        points: user.points + 30
+      }
+    })
     navigation.goBack();
   }
 
