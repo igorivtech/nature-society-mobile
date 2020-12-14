@@ -10,6 +10,7 @@ import { Popup } from "../views/Popup";
 import { ModalSearch } from "../views/report/ModalSearch"
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
+import * as Animatable from "react-native-animatable";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -117,21 +118,23 @@ export const ReportScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <TapView onPress={tapClose} />
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
-        <Animated.ScrollView 
-          ref={scrollView}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={false}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            {useNativeDriver: false}
-          )}
-          scrollEventThrottle={16}
-          contentContainerStyle={styles.scrollViewContent}
-          style={StyleSheet.absoluteFill}>
-          <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
-          <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
-          <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
-        </Animated.ScrollView>
+        <Animatable.View animation='fadeIn' delay={200} style={StyleSheet.absoluteFill}>
+          <Animated.ScrollView 
+            ref={scrollView}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={false}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+              {useNativeDriver: false}
+            )}
+            scrollEventThrottle={16}
+            contentContainerStyle={styles.scrollViewContent}
+            style={StyleSheet.absoluteFill}>
+            <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
+            <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
+            <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
+          </Animated.ScrollView>
+        </Animatable.View>
       </View>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
       <ModalSearch selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
