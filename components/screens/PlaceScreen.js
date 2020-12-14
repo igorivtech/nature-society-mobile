@@ -118,7 +118,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               pointsToUnlock={place.pointsToUnlock}
               unlockPlace={unlockPlace}
               locked={place.locked}
-              title={strings.placeScreen.crowdnessTitle}
+              title={strings.placeScreen.crowdnessTitle(false)}
               image={require("../../assets/images/HowBusyOrange.png")}
               color={colors.desertRock}
               rating={place.crowdness}

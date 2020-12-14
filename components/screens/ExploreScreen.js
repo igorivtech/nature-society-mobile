@@ -223,7 +223,7 @@ const SearchCard = ({ item, showItem, index }) => {
             pointsToUnlock={item.pointsToUnlock}
             small
             locked={item.locked}
-            title={strings.placeScreen.crowdnessTitle}
+            title={strings.placeScreen.crowdnessTitle(true)}
             image={require("../../assets/images/HowBusy.png")}
             color={colors.desertRock}
             rating={item.crowdness}
