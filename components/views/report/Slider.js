@@ -7,6 +7,7 @@ import { height } from "../../../values/consts";
 import LottieView from 'lottie-react-native';
 import { strings } from "../../../values/strings";
 import { colors } from "../../../values/colors";
+import useIsMounted from 'ismounted';
 
 const THUMB_RADIUS = 24.5 / 2;
 const SLIDER_HEIGHT = Math.min(347, (height-45*2)*0.5);
@@ -31,6 +32,8 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
 
   const {animation, title, titles} = item;
 
+  const isMounted = useIsMounted();
+
   useEffect(()=>{
     if (startUpAnimation) {
       startThumbAnimation();
@@ -49,6 +52,9 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   };
 
   const resetTitles = () => {
+    if (!isMounted) {
+      return;
+    }
     setTopText(titles[2]);
     setMiddleText(titles[1]);
     setBottomText(titles[0]);
@@ -130,6 +136,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const startThumbAnimation = () => {
+    if (!isMounted) {return}
     // textContainerOpacity.setValue(1);
     setMiddleText(strings.reportScreen.scrollHint);
     setDragEnabled(false);
@@ -143,16 +150,19 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
       duration: 400,
       useNativeDriver: false
     }).start(()=>{
+      if (!isMounted) {return}
       Animated.timing(startUpTranslateY, {
         toValue: 60,
         duration: 500,
         useNativeDriver: false
       }).start(()=>{
+        if (!isMounted) {return}
         Animated.timing(startUpTranslateY, {
           toValue: 0,
           duration: 500,
           useNativeDriver: false
         }).start(()=>{
+          if (!isMounted) {return}
           Animated.parallel([
             Animated.timing(lineOpacity, {
               toValue: LINE_OPACITY,
@@ -165,15 +175,18 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
               easing: Easing.inOut(Easing.ease)
             }),
           ]).start(()=>{
+            if (!isMounted) {return}
             Animated.timing(textContainerOpacity, {
               toValue: 0,
               useNativeDriver: true
             }).start(()=>{
+              if (!isMounted) {return}
               resetTitles();
               Animated.timing(textContainerOpacity, {
                 toValue: 1,
                 useNativeDriver: true
               }).start(()=>{
+                if (!isMounted) {return}
                 setDragEnabled(true);
                 setContinueEnabled(true);
               })
@@ -240,6 +253,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const backToNormal = () => {
+    if (!isMounted) {return}
     animationOpacity.setValue(1);
     setTitleTranslateY(TITLE_TRANSLATE_Y);
     resetTitles();
