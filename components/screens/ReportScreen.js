@@ -122,7 +122,7 @@ export const ReportScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <TapView onPress={tapClose} />
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
-        <Animatable.View animation='fadeIn' delay={200} style={StyleSheet.absoluteFill}>
+        <Animatable.View animation='fadeIn' delay={400} style={StyleSheet.absoluteFill}>
           <Animated.ScrollView 
             ref={scrollView}
             showsVerticalScrollIndicator={false}
