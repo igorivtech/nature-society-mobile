@@ -10,7 +10,7 @@ export const useLocationPermissions = () => {
   const [permission, askPermission, getPermission] = Permissions.usePermissions(Permissions.LOCATION, {});
 
   useEffect(() => {
-    console.log({ permission });
+    // console.log({ permission });
   }, [permission]);
 
   const askLocation = () => {
