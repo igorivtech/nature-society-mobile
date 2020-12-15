@@ -38,12 +38,12 @@ const opacity = (on) => ({
 
 const TEXT_DURATION = 600;
 
-export const GrowthPoints = ({isFocused}) => {
+export const GrowthPoints = ({isFocused, popupVisible}) => {
   const {state} = useContext(UserContext);
   const {user} = state;
 
   useEffect(()=>{
-    if (!isFocused) {
+    if (!isFocused || popupVisible) {
       return;
     }
     if (user) {
@@ -73,7 +73,7 @@ export const GrowthPoints = ({isFocused}) => {
         }
       }
     }
-  }, [user, isFocused]);
+  }, [user, isFocused, popupVisible]);
 
   const disappear = (delay) => {
     setTimeout(() => {
