@@ -18,6 +18,7 @@ import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
+import { Auth } from 'aws-amplify';
 
 const scrollZero = {
   y: 0,
@@ -144,10 +145,15 @@ export const LoginScreen = ({ navigation }) => {
   const login = () => {
     if (loginVisible) {
       if (loginEmail.trim() && loginPassword.length > 0) {
-        saveUser({
-          name: name.trim() !== "" ? name.trim() : yael.name,
-          email: loginEmail.trim(),
-          image: image ? image.uri : yael.image
+        Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
+          console.log({user});
+          saveUser({
+            name: name.trim() !== "" ? name.trim() : yael.name,
+            email: loginEmail.trim(),
+            image: image ? image.uri : yael.image
+          });
+        }).catch((error)=>{
+          console.error(error);
         });
       }
     } else {
@@ -161,11 +167,24 @@ export const LoginScreen = ({ navigation }) => {
   const signup = () => {
     if (signupVisible) {
       if (name.trim() !== "" && signupEmail.trim() && signupPassword.length > 0) {
-        saveUser({
-          name: name.trim(),
-          email: signupEmail.trim(),
-          image: image ? image.uri : yael.image
-        });
+        Auth.signUp({
+          username: signupEmail.trim(),
+          password: signupPassword,
+          attributes: {
+            email: signupEmail.trim(),
+            name: name.trim(),
+            // image
+          }
+        }).then((user)=>{
+          console.log({user});
+          saveUser({
+            name: name.trim(),
+            email: signupEmail.trim(),
+            image: image ? image.uri : yael.image
+          });
+        }).catch((error)=>{
+          console.error(error);
+        })
       }
     } else {
       setSignupVisible(true);

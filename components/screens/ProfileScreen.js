@@ -18,6 +18,7 @@ import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
+import { Auth } from 'aws-amplify';
 
 const scrollZero = {
   y: 0,
@@ -135,7 +136,12 @@ export const ProfileScreen = ({ navigation }) => {
   }
 
   const logout = () => {
-    updateUser(null);
+    Auth.signOut().then(()=>{
+      updateUser(null);
+    }).catch((error)=>{
+      console.error(error);
+      updateUser(null);
+    });
   }
 
   const updateUser = (user) => {
