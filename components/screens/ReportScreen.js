@@ -26,17 +26,6 @@ const crowd = {
 
 export const ReportScreen = ({navigation, route}) => {
 
-  const {state, dispatch} = useContext(UserContext);
-  const {user} = state;
-
-  const {location} = route.params;
-  const [selectedLocation, setLocation] = useState(null);
-  const [searchVisible, setSearchVisible] = useState(false);
-
-  useEffect(()=>{
-    setLocation(location);
-  }, []);
-
   let details = [
     {id: "1_extra_light", title: "עודף תאורה", on: false},
     {id: "0_full_bins", title: "פחים מלאים", on: false},
@@ -51,10 +40,19 @@ export const ReportScreen = ({navigation, route}) => {
     on: false
   }
 
+  const {state, dispatch} = useContext(UserContext);
+  const {user} = state;
+
+  const {location} = route.params;
+  const [selectedLocation, setLocation] = useState(null);
+  const [searchVisible, setSearchVisible] = useState(false);
+
   useEffect(()=>{
+    setLocation(location);
     details.forEach(d=>d.on=false);
     iHelped.on = false;
-  }, [])
+    scrollY.addListener(({value})=>{});
+  }, []);
 
   const scrollViewHeight = useRef(0);
   const scrollView = useRef();
@@ -83,18 +81,12 @@ export const ReportScreen = ({navigation, route}) => {
     navigation.goBack();
   }
 
-  useEffect(()=>{
-    scrollY.addListener(({value})=>{});
-  }, [])
-
   const nextSegment = () => {
     if (scrollY._value <= scrollViewHeight.current*2) {
       scrollView.current.scrollTo({
         animated: true,
         y: scrollY._value+scrollViewHeight.current
       })
-    } else {
-      // finish
     }
   }
 
@@ -111,12 +103,10 @@ export const ReportScreen = ({navigation, route}) => {
     scrollViewHeight.current = e.nativeEvent.layout.height;
   }
 
-
   const selectItem = (v) => {
     setLocation(v);
     setSearchVisible(false);
   }
-
 
   return (
     <SafeAreaView style={styles.container}>

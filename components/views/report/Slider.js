@@ -120,12 +120,12 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const panHandlerEvent = (event) => {
-    let p = clamp(0, currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT), 1);
+    const p = clamp(0, currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT), 1);
     progress.setValue(p);
   }
 
   const clampAnimation = () => {
-    let p = clampAnimationValue(progress._value);
+    const p = clampAnimationValue(progress._value);
     currentOffset.current = p;
     Animated.timing(progress, {
       toValue: p,
