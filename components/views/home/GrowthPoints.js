@@ -38,11 +38,14 @@ const opacity = (on) => ({
 
 const TEXT_DURATION = 600;
 
-export const GrowthPoints = () => {
+export const GrowthPoints = ({isFocused}) => {
   const {state} = useContext(UserContext);
   const {user} = state;
 
   useEffect(()=>{
+    if (!isFocused) {
+      return;
+    }
     if (user) {
       if (user.points !== points) {
         if (points === 0) { // first time
@@ -70,7 +73,7 @@ export const GrowthPoints = () => {
         }
       }
     }
-  }, [user]);
+  }, [user, isFocused]);
 
   const disappear = (delay) => {
     setTimeout(() => {
