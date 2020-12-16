@@ -167,10 +167,7 @@ export const LoginScreen = ({ navigation }) => {
         });
       }
     } else {
-      setLoginVisible(true);
-      setSignupVisible(false);
-      setForgotPasswordVisible(false);
-      setNewPasswordVisible(false);
+      showLogin();
     }
   }
 
@@ -207,11 +204,22 @@ export const LoginScreen = ({ navigation }) => {
         })
       }
     } else {
-      setSignupVisible(true);
-      setLoginVisible(false);
-      setForgotPasswordVisible(false);
-      setNewPasswordVisible(false);
+      showSignup();
     }
+  }
+
+  const showLogin = () => {
+    setLoginVisible(true);
+    setSignupVisible(false);
+    setForgotPasswordVisible(false);
+    setNewPasswordVisible(false);
+  }
+
+  const showSignup = () => {
+    setSignupVisible(true);
+    setLoginVisible(false);
+    setForgotPasswordVisible(false);
+    setNewPasswordVisible(false);
   }
 
   const saveUser = (user) => {
