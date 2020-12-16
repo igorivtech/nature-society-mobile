@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_USER, height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, DEFAULT_USER, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
@@ -19,6 +19,7 @@ import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
+import { uploadImage } from "../../hooks/aws";
 
 const scrollZero = {
   y: 0,
@@ -84,7 +85,7 @@ export const LoginScreen = ({ navigation }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,
         // aspect: [4, 3],
-        quality: 0.75,
+        quality: DEFAULT_IMAGE_QUALITY,
       })
         .then((result) => {
           if (!result.cancelled) {
@@ -146,12 +147,21 @@ export const LoginScreen = ({ navigation }) => {
     if (loginVisible) {
       if (loginEmail.trim() && loginPassword.length > 0) {
         Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
-          console.log({user});
-          saveUser({
-            name: name.trim() !== "" ? name.trim() : yael.name,
-            email: loginEmail.trim(),
-            image: image ? image.uri : yael.image
-          });
+          Auth.currentAuthenticatedUser({
+            bypassCache: true,
+          })
+            .then((cognitoUser) => {
+              console.log("LOGGED IN");
+              console.log({cognitoUser});
+              saveUser({
+                name: name.trim() !== "" ? name.trim() : yael.name,
+                email: loginEmail.trim(),
+                image: image ? image.uri : yael.image
+              });
+            })
+            .catch((err) => {
+              console.log(err) || console.log(null);
+            });
         }).catch((error)=>{
           console.error(error);
         });
@@ -164,26 +174,36 @@ export const LoginScreen = ({ navigation }) => {
     }
   }
 
+  // const res = await Auth.currentSession();
+  // let accessToken = res.getAccessToken();
+  // let jwt = accessToken.getJwtToken();
+
   const signup = () => {
     if (signupVisible) {
       if (name.trim() !== "" && signupEmail.trim() && signupPassword.length > 0) {
-        Auth.signUp({
-          username: signupEmail.trim(),
-          password: signupPassword,
-          attributes: {
-            email: signupEmail.trim(),
+        uploadImage(image, (fileName) => {
+          let attributes = {
             name: name.trim(),
-            // image
+            "custom:points": "0",
+            "custom:numOfReports": "0"
           }
-        }).then((user)=>{
-          console.log({user});
-          saveUser({
-            name: name.trim(),
-            email: signupEmail.trim(),
-            image: image ? image.uri : yael.image
-          });
-        }).catch((error)=>{
-          console.error(error);
+          if (fileName) {
+            attributes.picture = fileName;
+          }
+          Auth.signUp({
+            username: signupEmail.trim(),
+            password: signupPassword,
+            attributes
+          }).then(({user})=>{
+            saveUser({
+              name: name.trim(),
+              email: signupEmail.trim(),
+              image: image ? image.uri : 'https://m.media-amazon.com/images/M/MV5BMjM2OTkyNTY3N15BMl5BanBnXkFtZTgwNzgzNDc2NjE@._V1_CR132,0,761,428_AL_UY268_CR82,0,477,268_AL_.jpg'
+            });
+          }).catch((error)=>{
+            console.log("USER ERROR");
+            console.error(error);
+          })
         })
       }
     } else {
