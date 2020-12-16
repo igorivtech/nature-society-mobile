@@ -2,7 +2,7 @@ export const strings = {
   showInfo: 'הצג\nמידע',
   popups: {
     cantBuy: {
-      title: 'אין מספיק נקודות טבע.\nשחקו עוד באפליקציה כדי לצבור עוד.',
+      title: 'אין מספיק נקודות טבע.\nשחקו עוד באפליקציה כדי לצבור עוד נקודות.',
       yes: 'אחלה'
     },
     locationPermissions: {
