@@ -31,7 +31,8 @@ export const resizeImage = async (response) => {
   const resizedImage = await ImageManipulator.manipulateAsync(
     response.uri,
     [{ resize: { width: newWidth, height: newHeight } }],
-    { compress: 0.7, format: "jpeg" }
+    { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
   );
+  resizedImage.type = "image";
   return resizedImage;
 };
