@@ -127,6 +127,8 @@ export const DEFAULT_NOTIFICATION = {
   }
 }
 
+export const DEFAULT_IMAGE_QUALITY = 0.5;
+
 export const DEFAULT_USER = {
   name: "יעל השכנה",
   email: "yael@nextdoor",

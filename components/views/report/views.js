@@ -14,6 +14,7 @@ import { textStyles } from "../../../values/textStyles";
 import * as Permissions from "expo-permissions";
 import { Popup } from "../Popup";
 import { askSettings } from "../../../hooks/usePermissions";
+import { DEFAULT_IMAGE_QUALITY } from "../../../values/consts";
 
 export const TakePicView = ({ image, setImage }) => {
   const [loadingImage, setLoadingImage] = useState(false);
@@ -28,7 +29,7 @@ export const TakePicView = ({ image, setImage }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,
         // aspect: [4, 3],
-        quality: 0.75,
+        quality: DEFAULT_IMAGE_QUALITY,
       })
         .then((result) => {
           if (!result.cancelled) {

@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { ProfileView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
@@ -84,7 +84,7 @@ export const ProfileScreen = ({ navigation }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,
         // aspect: [4, 3],
-        quality: 0.75,
+        quality: DEFAULT_IMAGE_QUALITY,
       })
         .then((result) => {
           if (!result.cancelled) {
