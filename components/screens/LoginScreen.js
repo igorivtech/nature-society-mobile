@@ -20,6 +20,7 @@ import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { uploadImage } from "../../hooks/aws";
+import { resizeImage } from "../../hooks/helpers";
 
 const scrollZero = {
   y: 0,
@@ -87,9 +88,10 @@ export const LoginScreen = ({ navigation }) => {
         // aspect: [4, 3],
         quality: DEFAULT_IMAGE_QUALITY,
       })
-        .then((result) => {
+        .then(async (result) => {
           if (!result.cancelled) {
-            setImage(result);
+            const resized = await resizeImage(result);
+            setImage(resized);
           }
         })
         .catch((error) => {
