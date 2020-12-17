@@ -83,15 +83,14 @@ export const ExploreScreen = ({ navigation }) => {
     }
   };
 
-  const debounce = useCallback(
-    _.debounce((searchVal) => {
+  const debounce = useCallback(_.debounce((searchVal) => {
     const filtered = places.filter((place) => {
       const s1 = place.title.toLowerCase();
       const s2 = searchVal.toLowerCase();
       return s1.indexOf(s2) > -1;
     })
     setFilteredPlaces(filtered);
-  }, 1000), [places]);
+  }, 500), [places]);
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
