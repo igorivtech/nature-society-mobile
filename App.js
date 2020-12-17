@@ -40,7 +40,7 @@ export default function App() {
 
   useEffect(()=>{
     Auth.currentAuthenticatedUser({
-      bypassCache: true,
+      // bypassCache: true,
     })
       .then((cognitoUser) => {
         console.log("LOGGED IN");
