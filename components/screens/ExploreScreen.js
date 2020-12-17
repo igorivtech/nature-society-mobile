@@ -65,6 +65,7 @@ export const ExploreScreen = ({ navigation }) => {
   }, [keyboardHeight]);
 
   const closeSearch = () => {
+    debounce.cancel();
     setSearchTerm("");
     setSearchOn(false);
     Keyboard.dismiss();
