@@ -7,7 +7,7 @@ export const SAVE_PLACES = "SAVE_PLACES";
 export const initialState = {
   token: null,
   // user: null,
-  user: DEFAULT_USER,
+  user: null,
   notification: null,
   serverPlaces: [],
   // fetchingUser: false,

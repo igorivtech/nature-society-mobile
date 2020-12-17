@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 //
 import { AppLoading } from "expo";
 import { fontsLoader } from "./values/fonts";

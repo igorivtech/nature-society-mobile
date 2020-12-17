@@ -295,6 +295,7 @@ export const SignupView = memo(
 
 export const ProfileView = memo(
   ({
+    loading,
     visible,
     name,
     onNameChanged,
@@ -345,6 +346,7 @@ export const ProfileView = memo(
           </View>
 
           <CoolButton
+            loading={loading}
             textStyle={{
               ...textStyles.boldOfSize(24),
               color: "white",

@@ -63,7 +63,6 @@ export const CoolButton = ({ textStyle = {}, title, onPress, loading = false }) 
       easing: Easing.inOut(Easing.ease),
       toValue: loading ? 0.5 : 1
     }).start();
-    console.log({loading});
   }, [loading]);
   
   return (

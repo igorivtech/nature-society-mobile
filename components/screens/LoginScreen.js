@@ -154,7 +154,6 @@ export const LoginScreen = ({ navigation }) => {
         setLoadingLogin(true);
         Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
           console.log("LOGGED IN");
-          console.log({cognitoUser});
           saveUser({
             name: name.trim() !== "" ? name.trim() : yael.name,
             email: loginEmail.trim(),

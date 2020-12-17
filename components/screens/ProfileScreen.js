@@ -19,6 +19,7 @@ import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
+import { uploadImage } from "../../hooks/aws";
 
 const scrollZero = {
   y: 0,
@@ -26,6 +27,8 @@ const scrollZero = {
 }
 
 export const ProfileScreen = ({ navigation }) => {
+
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   const {state, dispatch} = useContext(UserContext);
   const {user} = state;
@@ -119,20 +122,42 @@ export const ProfileScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const updateChanges = () => {
-    if (name.length === 0 || signupEmail.length === 0) {
-      return;
+  const updateChanges = async () => {
+    let attributes = {
+
     }
     if (name !== user.name) {
       user.name = name;
+      attributes.name = name;
     }
     if (signupEmail !== user.email) {
       user.email = email;
+      attributes.email = email;
     }
     if (image !== null && image.uri !== null && image.uri.length > 0) {
       user.image = image.uri;
     }
-    updateUser(user);
+    //
+    setLoadingUpdate(true);
+    uploadImage(image, async (fileName) => {
+      if (fileName) {
+        attributes.picture = fileName;
+      }
+      if (attributes.length === 0) {
+        return;
+      }
+      try {
+        let cognitoUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+        console.log({result});
+        setLoadingUpdate(false);
+        updateUser(user);
+      } catch (error) {
+        console.error(error);
+      }
+    })
   }
 
   const logout = () => {
@@ -173,6 +198,7 @@ export const ProfileScreen = ({ navigation }) => {
           </TapGestureHandler>
 
           <ProfileView
+            loading={loadingUpdate}
             image={image}
             loadingImage={loadingImage}
             selectImage={selectImage}
