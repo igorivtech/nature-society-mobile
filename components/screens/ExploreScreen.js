@@ -23,6 +23,7 @@ import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
 import { statusBarHeight } from "../../values/consts";
+import _ from "lodash";
 
 export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -78,14 +79,19 @@ export const ExploreScreen = ({ navigation }) => {
     if (value.length === 0) {
       setFilteredPlaces(places);
     } else {
-      const filtered = places.filter((place) => {
-        const s1 = place.title.toLowerCase();
-        const s2 = value.toLowerCase();
-        return s1.indexOf(s2) > -1;
-      })
-      setFilteredPlaces(filtered);
+      debounce(value);
     }
   };
+
+  const debounce = useCallback(
+    _.debounce((searchVal) => {
+    const filtered = places.filter((place) => {
+      const s1 = place.title.toLowerCase();
+      const s2 = searchVal.toLowerCase();
+      return s1.indexOf(s2) > -1;
+    })
+    setFilteredPlaces(filtered);
+  }, 1000), [places]);
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
