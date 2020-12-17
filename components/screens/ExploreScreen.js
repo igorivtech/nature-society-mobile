@@ -76,6 +76,7 @@ export const ExploreScreen = ({ navigation }) => {
 
   const textChanged = (value) => {
     setSearchTerm(value);
+    debounce.cancel()
     if (value.length === 0) {
       setFilteredPlaces(places);
     } else {
