@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, Pressable, Animated, Easing, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, Animated, Easing, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
@@ -53,24 +53,53 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
   );
 };
 
-export const CoolButton = ({ textStyle = {}, title, onPress }) => {
+export const CoolButton = ({ textStyle = {}, title, onPress, loading = false }) => {
+
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(()=>{
+    Animated.timing(opacity, {
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease),
+      toValue: loading ? 0.5 : 1
+    }).start();
+    console.log({loading});
+  }, [loading]);
   
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View
-        style={{
-          backgroundColor: colors.treeBlues,
-          height: 44,
-          width: 222,
-          borderRadius: 12,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+    <TouchableOpacity disabled={loading} onPress={onPress}>
+      <Animated.View
+        style={coolStyles.container(opacity)}
       >
-        <Text style={{...textStyles.onboardingCoolButton, ...textStyle}}>
-          {title}
-        </Text>
-      </View>
+        <View>
+          <View style={coolStyles.indicatorContainer}>
+            <ActivityIndicator animating={loading} style={coolStyles.indicator} color='white'  />
+          </View>
+          <Text style={{...textStyles.onboardingCoolButton, ...textStyle}}>
+            {title}
+          </Text>
+        </View>
+      </Animated.View>
     </TouchableOpacity>
   );
 };
+
+const coolStyles = StyleSheet.create({
+  container: (opacity) => ({
+    opacity,
+    backgroundColor: colors.treeBlues,
+    height: 44,
+    width: 222,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  }),
+  indicatorContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    alignItems: 'center',
+  },
+  indicator: {
+    transform: [{translateX: -24}]
+  }
+})

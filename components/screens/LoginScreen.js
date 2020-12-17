@@ -37,6 +37,9 @@ export const LoginScreen = ({ navigation }) => {
 
   const {state, dispatch} = useContext(UserContext);
 
+  const [loadingLogin, setLoadingLogin] = useState(false);
+  const [loadingSignup, setLoadingSignup] = useState(false);
+
   const [loginVisible, setLoginVisible] = useState(true);
   const [signupVisible, setSignupVisible] = useState(false);
   const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
@@ -148,6 +151,7 @@ export const LoginScreen = ({ navigation }) => {
   const login = () => {
     if (loginVisible) {
       if (loginEmail.trim() && loginPassword.length > 0) {
+        setLoadingLogin(true);
         Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
           Auth.currentAuthenticatedUser({
             bypassCache: true,
@@ -163,8 +167,11 @@ export const LoginScreen = ({ navigation }) => {
             })
             .catch((err) => {
               console.log(err) || console.log(null);
+            }).finally(()=>{
+              setLoadingLogin(false);
             });
         }).catch((error)=>{
+          setLoadingLogin(false);
           console.error(error);
         });
       }
@@ -180,6 +187,7 @@ export const LoginScreen = ({ navigation }) => {
   const signup = () => {
     if (signupVisible) {
       if (name.trim() !== "" && signupEmail.trim() && signupPassword.length > 0) {
+        setLoadingSignup(true);
         uploadImage(image, (fileName) => {
           let attributes = {
             name: name.trim(),
@@ -202,6 +210,8 @@ export const LoginScreen = ({ navigation }) => {
           }).catch((error)=>{
             console.log("USER ERROR");
             console.error(error);
+          }).finally(()=>{
+            setLoadingSignup(false);
           })
         })
       }
@@ -288,6 +298,7 @@ export const LoginScreen = ({ navigation }) => {
           </TapGestureHandler>
 
           <LoginView
+            loading={loadingLogin}
             visible={loginVisible}
             email={loginEmail}
             onEmailChanged={onLoginEmailChanged}
@@ -298,6 +309,7 @@ export const LoginScreen = ({ navigation }) => {
             signup={signup}
           />
           <SignupView
+            loading={loadingSignup}
             image={image}
             loadingImage={loadingImage}
             selectImage={selectImage}

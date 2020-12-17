@@ -52,6 +52,7 @@ export const LoginView = memo(
     forgotPassword,
     login,
     signup,
+    loading
   }) => {
 
     const {opacity, scale} = useVisible(visible, 1);
@@ -78,6 +79,7 @@ export const LoginView = memo(
           />
 
           <CoolButton
+            loading={loading}
             textStyle={{
               ...textStyles.boldOfSize(24),
               color: "white",
@@ -224,6 +226,7 @@ export const SignupView = memo(
     selectImage,
     image,
     loadingImage,
+    loading
   }) => {
 
     const {opacity, scale} = useVisible(visible, 0);
@@ -271,6 +274,7 @@ export const SignupView = memo(
           </View>
 
           <CoolButton
+            loading={loading}
             textStyle={{
               ...textStyles.boldOfSize(24),
               color: "white",
