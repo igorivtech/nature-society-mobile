@@ -153,23 +153,13 @@ export const LoginScreen = ({ navigation }) => {
       if (loginEmail.trim() && loginPassword.length > 0) {
         setLoadingLogin(true);
         Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
-          Auth.currentAuthenticatedUser({
-            bypassCache: true,
-          })
-            .then((cognitoUser) => {
-              console.log("LOGGED IN");
-              console.log({cognitoUser});
-              saveUser({
-                name: name.trim() !== "" ? name.trim() : yael.name,
-                email: loginEmail.trim(),
-                image: image ? image.uri : yael.image
-              });
-            })
-            .catch((err) => {
-              console.log(err) || console.log(null);
-            }).finally(()=>{
-              setLoadingLogin(false);
-            });
+          console.log("LOGGED IN");
+          console.log({cognitoUser});
+          saveUser({
+            name: name.trim() !== "" ? name.trim() : yael.name,
+            email: loginEmail.trim(),
+            image: image ? image.uri : yael.image
+          });
         }).catch((error)=>{
           setLoadingLogin(false);
           console.error(error);

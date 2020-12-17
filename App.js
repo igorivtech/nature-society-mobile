@@ -25,7 +25,7 @@ import { ProfileScreen } from "./components/screens/ProfileScreen";
 import { UserContext } from "./context/context"
 import { initialState, reducer } from "./context/userReducer";
 import { useOnboarding } from "./hooks/memory";
-import Amplify from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
 
 Amplify.configure(awsconfig);
@@ -37,6 +37,20 @@ export default function App() {
   const { fontsLoaded } = fontsLoader();
   const { onboardingShown, loadingOnboarding } = useOnboarding();
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(()=>{
+    Auth.currentAuthenticatedUser({
+      bypassCache: true,
+    })
+      .then((cognitoUser) => {
+        console.log("LOGGED IN");
+        console.log({cognitoUser});
+      })
+      .catch((err) => {
+        console.log(err) || console.log(null);
+      }).finally(()=>{
+      });
+  }, [])
 
   const contextValue = React.useMemo(() => ({
     state,
