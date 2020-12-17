@@ -53,6 +53,7 @@ export const LoginScreen = ({ navigation }) => {
   const [signupPassword, setSignupPassword] = useState("");
   const [restoreEmail, setRestoreEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [code, onCodeChanged] = useState('');
 
   const [image, setImage] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
@@ -258,8 +259,14 @@ export const LoginScreen = ({ navigation }) => {
 
   const restorePassword = () => {
     if (restoreEmail.length > 0) {
-      setEmailSentVisible(true);
-      setForgotPasswordVisible(false);
+      Auth.forgotPassword(restoreEmail)
+        .then(data => {
+          setEmailSentVisible(true);
+          setForgotPasswordVisible(false);
+        })
+        .catch(err => console.error(err));
+    } else {
+      console.log("no email");
     }
   }
 
@@ -269,10 +276,16 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const changePassword = () => {
-    if (newPassword.length > 0) {
-      setLoginEmail(restoreEmail);
-      setLoginPassword(newPassword);
-      login();
+    if (newPassword.length >= 8 && code.length > 0) {
+      Auth.forgotPasswordSubmit(restoreEmail, code, newPassword)
+        .then(() => {
+          setLoginEmail(restoreEmail);
+          setLoginPassword(newPassword);
+          login();
+        })
+        .catch(err => console.error(err));
+    } else {
+      console.log("password or code error");
     }
   }
 
@@ -323,6 +336,8 @@ export const LoginScreen = ({ navigation }) => {
           <EmailSentView visible={emailSentVisible} gotIt={gotIt} />
           
           <NewPasswordView 
+            code={code}
+            onCodeChanged={onCodeChanged}
             visible={newPasswordVisible}
             newPassword={newPassword}
             onNewPasswordChanged={onNewPasswordChanged}

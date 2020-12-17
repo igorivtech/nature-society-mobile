@@ -1,4 +1,5 @@
 export const strings = {
+  code: 'קוד',
   showInfo: 'הצג\nמידע',
   popups: {
     cantBuy: {

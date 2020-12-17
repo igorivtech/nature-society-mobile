@@ -173,6 +173,8 @@ export const EmailSentView = memo(
 export const NewPasswordView = memo(
   ({
     visible,
+    code,
+    onCodeChanged,
     newPassword,
     onNewPasswordChanged,
     changePassword
@@ -186,7 +188,13 @@ export const NewPasswordView = memo(
           <Text style={styles.loginTitle}>{strings.loginScreen.chooseNewPasswordTitle}</Text>
 
           <Input
-            extraMargin={true}
+            autoCapitalize="none"
+            title={strings.code}
+            onChange={onCodeChanged}
+            value={code}
+          />
+
+          <Input
             autoCapitalize="none"
             title={strings.password}
             onChange={onNewPasswordChanged}
