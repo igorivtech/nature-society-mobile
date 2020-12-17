@@ -58,6 +58,9 @@ export const ExploreScreen = ({ navigation }) => {
   useEffect(() => {
     setPlaces(serverPlaces);
     setFilteredPlaces(serverPlaces);
+    return () => {
+      debounce.cancel();
+    };
   }, []);
 
   useEffect(() => {
