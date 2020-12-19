@@ -93,7 +93,7 @@ export const HomeScreen = ({ navigation, route }) => {
       if (isFocused) {
         setHideList(false);
         selectedPlace.current = serverPlaces[0];
-        animateToItem(serverPlaces[0]);
+        // animateToItem(serverPlaces[0]);
       }
       setupCardListener();
       // }, 1000);
