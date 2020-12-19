@@ -26,7 +26,7 @@ const pathXCenter = pathWidth*0.3
 const pathTWidth = pathHeight * 0.3;
 //
 const topMarkerPosition = 0.15;
-const userProgress = 0.5;
+let userProgress = 0.5;
 const bottomMarkerPosition = 0.8;
 //
 const markerHeight = 72;
@@ -83,6 +83,15 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
     outputRange: [0, 1, 1, 1, 0],
     extrapolate: 'clamp'
   })
+
+  if (current) {
+    // userProgress = 0.5
+    if (!bottomDone) {
+      userProgress = 0.2;
+    } else if (!topDone) {
+      userProgress = 1 - (0.25 + 0.5 * (item.topPoints - user.points)/item.topPoints);
+    }
+  }
 
   useEffect(() => {
     if (current) {
