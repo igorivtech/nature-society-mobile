@@ -161,7 +161,7 @@ export const LoginScreen = ({ navigation }) => {
           handleError(error);
         }).finally(()=>setLoadingLogin(false));
       } else {
-        if (loginPassword < PASSWORD_MIN_LENGTH) {
+        if (loginPassword.length < PASSWORD_MIN_LENGTH) {
           handleError(errors.shortPassword);
         }
       }
@@ -192,15 +192,9 @@ export const LoginScreen = ({ navigation }) => {
             password: signupPassword,
             attributes
           }).then((cognitoUser)=>{
-            let localUser = {
-              name: name.trim(),
-              email: signupEmail.trim()
-            }
-            if (image) {
-              localUser.image = image.uri
-            }
+            console.log({attributes});
             console.log(cognitoUser);
-            saveUser(cognitoToUser(cognitoUser));
+            // saveUser(cognitoToUser(cognitoUser));
           }).catch((error)=>{
             handleError(error);
           }).finally(()=>{
@@ -234,10 +228,7 @@ export const LoginScreen = ({ navigation }) => {
   const saveUser = (user) => {
     dispatch({
       type: SAVE_USER,
-      payload: {
-        ...DEFAULT_USER,
-        ...user
-      }
+      payload: user
     })
     navigation.navigate("Progress");
   }
