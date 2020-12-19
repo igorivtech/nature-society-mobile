@@ -187,7 +187,6 @@ export const HomeScreen = ({ navigation, route }) => {
     const radius = 111.045 * region.latitudeDelta;
     // if (location != null) {
       const pp = await getPlaces(region, radius);
-      console.log({length: pp.length});
       dispatch({
         type: SAVE_PLACES,
         payload: pp,
