@@ -39,6 +39,8 @@ export const LoginScreen = ({ navigation }) => {
 
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [loadingSignup, setLoadingSignup] = useState(false);
+  const [loadingRestorePassword, setLoadingRestorePassword] = useState(false);
+  const [loadingChangePassword, setLoadingChangePassword] = useState(false);
 
   const [loginVisible, setLoginVisible] = useState(true);
   const [signupVisible, setSignupVisible] = useState(false);
@@ -259,12 +261,14 @@ export const LoginScreen = ({ navigation }) => {
 
   const restorePassword = () => {
     if (restoreEmail.length > 0) {
+      setLoadingRestorePassword(true);
       Auth.forgotPassword(restoreEmail)
         .then(data => {
           setEmailSentVisible(true);
           setForgotPasswordVisible(false);
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(()=>setLoadingRestorePassword(false));
     } else {
       console.log("no email");
     }
@@ -277,13 +281,15 @@ export const LoginScreen = ({ navigation }) => {
 
   const changePassword = () => {
     if (newPassword.length >= 8 && code.length > 0) {
+      setLoadingChangePassword(true);
       Auth.forgotPasswordSubmit(restoreEmail, code, newPassword)
         .then(() => {
           setLoginEmail(restoreEmail);
           setLoginPassword(newPassword);
           login();
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(()=>setLoadingChangePassword(false));
     } else {
       console.log("password or code error");
     }
@@ -327,6 +333,7 @@ export const LoginScreen = ({ navigation }) => {
           />
 
           <ForgotPasswordView 
+            loading={loadingRestorePassword}
             visible={forgotPasswordVisible}
             email={restoreEmail}
             onEmailChanged={setRestoreEmail}
@@ -335,7 +342,8 @@ export const LoginScreen = ({ navigation }) => {
 
           <EmailSentView visible={emailSentVisible} gotIt={gotIt} />
           
-          <NewPasswordView 
+          <NewPasswordView
+            loading={loadingChangePassword}
             code={code}
             onCodeChanged={onCodeChanged}
             visible={newPasswordVisible}

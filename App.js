@@ -27,6 +27,7 @@ import { initialState, reducer } from "./context/userReducer";
 import { useOnboarding } from "./hooks/memory";
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { useUser } from "./hooks/useUser";
 
 Amplify.configure(awsconfig);
 enableScreens();
@@ -37,27 +38,14 @@ export default function App() {
   const { fontsLoaded } = fontsLoader();
   const { onboardingShown, loadingOnboarding } = useOnboarding();
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  useEffect(()=>{
-    Auth.currentAuthenticatedUser({
-      // bypassCache: true,
-    })
-      .then((cognitoUser) => {
-        console.log("LOGGED IN");
-        console.log({cognitoUser});
-      })
-      .catch((err) => {
-        console.log(err) || console.log(null);
-      }).finally(()=>{
-      });
-  }, [])
+  const {loadingUser} = useUser(dispatch);
 
   const contextValue = React.useMemo(() => ({
     state,
     dispatch
   }), [state, dispatch]);
 
-  if (!fontsLoaded || loadingOnboarding) {
+  if (!fontsLoaded || loadingOnboarding || loadingUser) {
     return <AppLoading />;
   }
 
