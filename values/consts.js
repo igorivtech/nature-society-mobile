@@ -140,6 +140,73 @@ export const DEFAULT_NOTIFICATION = {
 
 export const DEFAULT_IMAGE_QUALITY = 0.5;
 
+export const DEFAULT_ACHIEVEMENTS = [
+  {
+    topDone: true,
+    bottomDone: true,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: true,
+    bottomDone: true,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: true,
+    current: true,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+]
+
 export const DEFAULT_USER = {
   name: "יעל השכנה",
   email: "yael@nextdoor",
@@ -148,71 +215,5 @@ export const DEFAULT_USER = {
   points: 630,
   numOfReports: 31,
   lastAchievement: "חקלאית",
-  achievements: [
-    {
-      topDone: true,
-      bottomDone: true,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-    {
-      topDone: true,
-      bottomDone: true,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-    {
-      topDone: false,
-      bottomDone: true,
-      current: true,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-    {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-    {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-    {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-    {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-    {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
-    },
-  ]
-
+  achievements: DEFAULT_ACHIEVEMENTS
 }
