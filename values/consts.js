@@ -146,6 +146,21 @@ export const DEFAULT_NOTIFICATION = {
 
 export const DEFAULT_IMAGE_QUALITY = 0.5;
 
+export const SERVER_ACHIEVEMENTS = [
+  {title: "חדש", points: 0},
+  {title: "חדשה", points: 100},
+  {title: "שניים", points: 200},
+  {title: "שלושה", points: 300},
+  {title: "מלפפון", points: 400},
+  {title: "עגבניה", points: 500},
+  {title: "מלון", points: 600},
+  {title: "ירח", points: 700},
+  {title: "חתול", points: 800},
+  {title: "מנגינה", points: 900},
+  {title: "טחינה", points: 1000},
+  {title: "פיצה", points: 1100},
+]
+
 export const DEFAULT_ACHIEVEMENTS = [
   {
     topDone: true,
