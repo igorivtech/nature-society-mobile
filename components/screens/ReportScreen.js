@@ -82,7 +82,7 @@ export const ReportScreen = ({navigation, route}) => {
           type: SAVE_USER,
           payload: cognitoToUser(updatedCognitoUser)
         })
-        navigation.goBack();
+        navigation.navigate("Home");
       } else {
         console.error("cant update user");
       }
