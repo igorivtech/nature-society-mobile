@@ -19,7 +19,7 @@ import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
-import { uploadImage } from "../../hooks/aws";
+import { useUploadImage } from "../../hooks/aws";
 import { resizeImage, validateEmail } from "../../hooks/helpers";
 import { cognitoToUser } from "../../hooks/useUser";
 
@@ -68,6 +68,8 @@ export const LoginScreen = ({ navigation }) => {
 
   const [popupVisible, setPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
+
+  const {uploadImage} = useUploadImage();
 
   const scrollRef = useRef();
 

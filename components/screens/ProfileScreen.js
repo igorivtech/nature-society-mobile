@@ -19,7 +19,7 @@ import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
-import { uploadImage } from "../../hooks/aws";
+import { useUploadImage } from "../../hooks/aws";
 import { cognitoToUser } from "../../hooks/useUser";
 import { objectLength } from "../../hooks/helpers";
 
@@ -52,6 +52,8 @@ export const ProfileScreen = ({ navigation }) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const scrollRef = useRef();
+
+  const { uploadImage } = useUploadImage();
 
   useEffect(()=>{
     if (user) {
