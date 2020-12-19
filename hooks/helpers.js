@@ -52,7 +52,7 @@ export const calcPlaceDelta = ({southWest, northEast}) => {
     const northeastLat = northEast.latitude;
     const southwestLat = southWest.latitude;
     const latitudeDelta = northeastLat - southwestLat;
-    const longitudeDelta = latDelta * ASPECT_RATIO;
+    const longitudeDelta = latitudeDelta * ASPECT_RATIO;
     return {latitudeDelta, longitudeDelta}
 }
 
@@ -84,3 +84,113 @@ export const calcCustomAchievements = (serverAchievements, userPoints) => {
   }
   return output
 }
+
+export const convertServerPlaces = (serverPlaces) => {
+
+  let res = [...serverPlaces];
+
+  res.forEach((place, i) => {
+    res[i].key = place._id;
+    const {longitudeDelta, latitudeDelta} = calcPlaceDelta({
+      southWest: place.southwest[0],
+      northEast: place.northeast[0]
+    })
+    res[i].position = {
+      longitude: place.location.coordinates[0],
+      latitude: place.location.coordinates[1],
+      latitudeDelta,
+      longitudeDelta,
+    }
+    if (place.title.trim() === "") {
+      res[i].title = "אין שם";
+    }
+    res[i].locked = true;
+    res[i].distance = Math.round((place.dis / 1000) * 100) / 100;
+    res[i].pointsToUnlock = 10;
+    //
+    if (place.cleanesss === 0) {
+      res[i].cleanness = 3.5
+    }
+    if (place.cleanesss === 0) {
+      res[i].crowdness = 4.5
+    }
+    //
+    res[i].lastVisitorName = "איגור";
+    res[i].lastVisitorGender = 0;
+    res[i].lastVisitorImage = "https://www.w3schools.com/w3images/avatar6.png";
+  })
+
+  return res
+}
+
+// {
+//   image:
+//     "https://www.rei.com/dam/catskills_060117_003_hero_lg.jpg",
+//   lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
+//   description:
+//     "כל היא שעומדת בבסיס הסביבתנות - תנועה פוליטית' חברתית ופילוסופית רחבה ומגוונת שמטרתה להגן על מרכיב הטבע שנותר בסביבה הטבעית' ובמקרים רבים אף לשקם או להרחיב את חלקו של הטבע בסביבה זו. הגנת הסביבה' בהקשר זה' היא הניסיון לשמר מצב של השפעה אנושית מינימלית על הסביבה הטבעית",
+// },
+
+// Object {
+//   "_id": "5fde3850eb3a77cdb6579e4e",
+//   "cleanesss": 0,
+//   "crowdness": 0,
+//   "description": "מקום ממש טוב",
+//   "dis": 8865.925634581798,
+//   "image": "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+//   "lastVisitors": Array [
+//     Object {
+//       "lastVisitorImage": "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
+//       "lastVisitorName": "נא בא",
+//       "lastVisitorRank": 400,
+//     },
+//     Object {
+//       "lastVisitorImage": "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
+//       "lastVisitorName": "בן אדם",
+//       "lastVisitorRank": 900,
+//     },
+//     Object {
+//       "lastVisitorImage": "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
+//       "lastVisitorName": "בת אדם",
+//       "lastVisitorRank": 100,
+//     },
+//   ],
+//   "location": Object {
+//     "coordinates": Array [
+//       35.3995774218733,
+//       31.509952863146665,
+//     ],
+//     "type": "Point",
+//   },
+//   "northeast": Array [
+//     Object {
+//       "latitude": 31.512768978305747,
+//       "longitude": 35.40287565291429,
+//     },
+//   ],
+//   "similarReports": Array [
+//     Object {
+//       "1": 23,
+//     },
+//     Object {
+//       "2": 83,
+//     },
+//     Object {
+//       "3": 41,
+//     },
+//     Object {
+//       "4": 53,
+//     },
+//     Object {
+//       "5": 32,
+//     },
+//   ],
+//   "southwest": Array [
+//     Object {
+//       "latitude": 31.50713674798758,
+//       "longitude": 35.39627919083232,
+//     },
+//   ],
+//   "title": " ",
+//   "type": " ",
+// },
