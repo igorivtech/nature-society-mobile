@@ -314,6 +314,7 @@ export const ProfileView = memo(
     selectImage,
     image,
     loadingImage,
+    setLoadingImage
   }) => {
 
     const {opacity, scale} = useVisible(visible, 0);
@@ -346,7 +347,7 @@ export const ProfileView = memo(
               ) : (
                 <Image source={require("../../../assets/images/upload_icon.png")} />
               )}
-              {image ? (<Image style={styles.profilePic} source={{ uri: image.uri }} />) : null}
+              {image ? (<Image onLoad={()=>setLoadingImage(false)} style={styles.profilePic} source={{ uri: image.uri }} />) : null}
             </TouchableOpacity>
             <Text style={styles.profilePicTitle}>
               {strings.loginScreen.profilePic}

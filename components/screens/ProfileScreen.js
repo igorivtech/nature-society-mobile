@@ -218,6 +218,7 @@ export const ProfileScreen = ({ navigation }) => {
             loading={loadingUpdate}
             image={image}
             loadingImage={loadingImage}
+            setLoadingImage={setLoadingImage}
             selectImage={selectImage}
             visible={true}
             name={name}
