@@ -1,4 +1,5 @@
 import * as ImageManipulator from "expo-image-manipulator";
+import { height, width } from "../values/consts";
 
 export const clamp = (min, value, max) => {
   if (value < min) {
@@ -44,4 +45,13 @@ export const objectLength = (object) => {
 export const validateEmail = (email) => {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+}
+
+export const calcPlaceDelta = ({southWest, northEast}) => {
+    const ASPECT_RATIO = width / height;
+    const northeastLat = northEast.latitude;
+    const southwestLat = southWest.latitude;
+    const latitudeDelta = northeastLat - southwestLat;
+    const longitudeDelta = latDelta * ASPECT_RATIO;
+    return {latitudeDelta, longitudeDelta}
 }
