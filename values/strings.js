@@ -11,6 +11,10 @@ export const strings = {
       "UsernameExistsException": {
         title: 'אימייל כבר קיים במערכת',
         yes: 'אישור'  
+      },
+      "UserNotFoundException": {
+        title: 'אימייל לא קיים במערכת',
+        yes: 'אישור'  
       }
     },
     cantBuy: {

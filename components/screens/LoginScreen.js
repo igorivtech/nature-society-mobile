@@ -277,7 +277,13 @@ export const LoginScreen = ({ navigation }) => {
           setEmailSentVisible(true);
           setForgotPasswordVisible(false);
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+          if (err) {
+            setErrorData(strings.popups.loginError[err.code]);
+            setErrorPopupVisible(true);  
+          }
+          console.error(err)
+        })
         .finally(()=>setLoadingRestorePassword(false));
     } else {
       console.log("no email");
