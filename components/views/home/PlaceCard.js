@@ -69,8 +69,8 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
 
           <View style={globalStyles.cardDetailsContainer}>
             <View style={globalStyles.cardLocationContainer}>
-              <View>
-                <Text style={textStyles.cardTitle}>{item.title}</Text>
+              <View style={styles.titleContainer}>
+                <Text numberOfLines={1} adjustsFontSizeToFit={true} style={textStyles.cardTitle}>{item.title}</Text>
                 <Text style={textStyles.cardDetail}>
                   {strings.distanceFromYou(item.distance)}
                 </Text>
@@ -124,3 +124,9 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  titleContainer: {
+    flexShrink: 1
+  }
+})
