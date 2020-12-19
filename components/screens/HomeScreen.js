@@ -24,6 +24,7 @@ import { strings } from "../../values/strings";
 import { useLocationPermissions } from "../../hooks/usePermissions";
 import { useIsFocused } from '@react-navigation/native';
 import { PlaceMarker } from "../views/home/PlaceMarker";
+import * as Location from 'expo-location';
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" };
@@ -36,29 +37,37 @@ export const HomeScreen = ({ navigation, route }) => {
   const { askLocation, locationPermission } = useLocationPermissions();
 
   const [places, setPlaces] = useState([]);
+  let animationTimeout = null;
   const [hideList, setHideList] = useState(true);
+  const [popupVisible, setPopupVisible] = useState(false);
+
+  const isFocused = useIsFocused();
   const firstTime = useRef(true);
   const selectedPlace = useRef();
+  const [location, setLocation] = useState(null);
+  const mapRef = useRef(null);
 
-  let animationTimeout = null;
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
-  const [popupVisible, setPopupVisible] = useState(false);
-
-  const mapRef = useRef(null);
-
-  const isFocused = useIsFocused();
-
   // STARTUP POINT
   useEffect(() => {
-    // places
-    setTimeout(() => {
-      dispatch({
-        type: SAVE_PLACES,
-        payload: DEFAULT_PLACES,
-      });
-    }, 1000);
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      // places
+      setTimeout(() => {
+        dispatch({
+          type: SAVE_PLACES,
+          payload: DEFAULT_PLACES,
+        });
+      }, 1000);
+    })();
     // notification - DEBUG
     // setTimeout(() => {
     //   dispatch({
@@ -178,7 +187,6 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const onRegionChangeComplete = (region) => {
     const radius = 111.045 * region.latitudeDelta;
-    console.log({radius});
   }
 
   return (
