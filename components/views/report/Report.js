@@ -7,8 +7,9 @@ import { Pagination } from "./Slider";
 import { TakePicView, GoBackButton, FinishButton } from "./views";
 import {UserContext} from "../../../context/context"
 import { colors } from "../../../values/colors";
+import { useEffect } from "react";
 
-export const Report = ({goBack, image, setImage, finishReport, details, iHelped}) => {
+export const Report = ({goBack, image, setImage, finishReport, details, iHelped, loadingSendReport}) => {
 
   const points = 30;
 
@@ -73,16 +74,19 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped}
           <Image source={require("../../../assets/images/report_done_icon.png")} />
         </View>
         <Button title={strings.reportScreen.share} filled={true} onPress={share} />
-        <Button title={strings.reportScreen.done} filled={false} onPress={finishReport} />
+        <Button title={strings.reportScreen.done} filled={false} onPress={finishReport} loading={loadingSendReport} />
       </Animated.View>
     </View>
   );
 };
 
-const Button = ({filled, title, onPress}) => {
+const Button = ({filled, title, onPress, loading = false}) => {
+  useEffect(()=>{
+
+  }, [loading])
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={styles.buttonContainer(filled)}>
+      <View style={styles.buttonContainer(filled, loading)}>
         <Text style={styles.buttonTitle(filled)}>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -116,13 +120,14 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }),
 
-  buttonContainer: (filled) => ({
+  buttonContainer: (filled, loading) => ({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
     borderWidth: 1,
     borderColor: colors.treeBlues,
+    opacity: loading ? 0.5 : 1,
     marginTop: 12,
     backgroundColor: filled ? colors.treeBlues : 'white',
     height: 45,

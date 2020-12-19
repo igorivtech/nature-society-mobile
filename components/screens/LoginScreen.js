@@ -21,7 +21,7 @@ import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
 import { resizeImage, validateEmail } from "../../hooks/helpers";
-import { cognitoToUser } from "../../hooks/useUser";
+import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, cognitoToUser } from "../../hooks/useUser";
 
 const PASSWORD_MIN_LENGTH = 8;
 const DEFAULT_POINTS = 630;
@@ -187,9 +187,9 @@ export const LoginScreen = ({ navigation }) => {
         uploadImage(image, (fileName) => {
           let attributes = {
             name: name.trim(),
-            "custom:points": `${DEFAULT_POINTS}`,
-            "custom:numOfReports": `${DEFAULT_NUM_OF_REPORTS}`
           }
+          attributes[ATTRIBUTE_POINTS] = `${DEFAULT_POINTS}`;
+          attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${DEFAULT_NUM_OF_REPORTS}`;
           if (fileName) {
             attributes.picture = fileName;
           }

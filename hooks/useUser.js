@@ -3,6 +3,9 @@ import Amplify, { Auth } from "aws-amplify";
 import { SAVE_TOKEN, SAVE_USER } from "../context/userReducer";
 import { DEFAULT_ACHIEVEMENTS } from "../values/consts";
 
+export const ATTRIBUTE_POINTS = "custom:points";
+export const ATTRIBUTE_NUM_OF_REPORTS = "custom:numOfReports";
+
 export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(false);
   useEffect(() => {
@@ -35,8 +38,8 @@ export const cognitoToUser = (cognitoUser) => {
   const user = {
     name: attributes.name,
     email: attributes.email,
-    points: parseInt(attributes["custom:points"]),
-    numOfReports: parseInt(attributes["custom:numOfReports"]),
+    points: parseInt(attributes[ATTRIBUTE_POINTS]),
+    numOfReports: parseInt(attributes[ATTRIBUTE_NUM_OF_REPORTS]),
     achievements: DEFAULT_ACHIEVEMENTS,
     lastAchievement: "חקלאי",
   };
