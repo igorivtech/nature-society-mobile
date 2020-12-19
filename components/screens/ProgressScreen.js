@@ -32,6 +32,7 @@ export const ProgressScreen = ({ navigation }) => {
   const {user, notification, serverAchievements} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
+  const alreadyAnimatedPath = useRef(false);
 
   // useEffect(()=> {
   //   // DEBUG
@@ -57,18 +58,28 @@ export const ProgressScreen = ({ navigation }) => {
   useEffect(()=>{
     if (data.length > 0) {
       const currentIndex = data.findIndex(achievement=>achievement.current);
-      setTimeout(()=>{
-        scrollView.current.scrollToOffset({
-          offset: pathHeight * currentIndex + 400,
-          animated: false,
-        });  
+      if (alreadyAnimatedPath.current) {
         setTimeout(() => {
           scrollView.current.scrollToOffset({
             offset: pathHeight * currentIndex,
             animated: true,
           })  
         }, 700);
-      }, 0)
+      } else {
+        alreadyAnimatedPath.current = true;
+        setTimeout(()=>{
+          scrollView.current.scrollToOffset({
+            offset: pathHeight * currentIndex + 400,
+            animated: false,
+          });  
+          setTimeout(() => {
+            scrollView.current.scrollToOffset({
+              offset: pathHeight * currentIndex,
+              animated: true,
+            })  
+          }, 700);
+        }, 0)
+      }
     }
   }, [data])
 
