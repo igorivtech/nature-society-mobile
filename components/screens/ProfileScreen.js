@@ -128,17 +128,12 @@ export const ProfileScreen = ({ navigation }) => {
   };
 
   const updateChanges = async () => {
-    let attributes = {
-
-    }
+    let attributes = {}
     if (name !== user.name) {
       attributes.name = name;
     }
     if (signupEmail !== user.email) {
       attributes.email = email;
-    }
-    if (image !== null && image.uri !== null && image.uri.length > 0) {
-      // user.image = image.uri;
     }
     //
     setLoadingUpdate(true);
