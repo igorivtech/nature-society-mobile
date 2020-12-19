@@ -25,6 +25,7 @@ import { useLocationPermissions } from "../../hooks/usePermissions";
 import { useIsFocused } from '@react-navigation/native';
 import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
+import { useServer } from "../../hooks/useServer";
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" };
@@ -50,6 +51,8 @@ export const HomeScreen = ({ navigation, route }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
+  const {getPlaces} = useServer();
+
   // STARTUP POINT
   useEffect(() => {
     (async () => {
@@ -60,13 +63,6 @@ export const HomeScreen = ({ navigation, route }) => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      // places
-      setTimeout(() => {
-        dispatch({
-          type: SAVE_PLACES,
-          payload: DEFAULT_PLACES,
-        });
-      }, 1000);
     })();
     // notification - DEBUG
     // setTimeout(() => {
@@ -185,8 +181,17 @@ export const HomeScreen = ({ navigation, route }) => {
     askLocation();
   };
 
-  const onRegionChangeComplete = (region) => {
+  const onRegionChangeComplete = async (region) => {
     const radius = 111.045 * region.latitudeDelta;
+    if (location != null) {
+      const pp = await getPlaces(location.coords, radius);
+      dispatch({
+        type: SAVE_PLACES,
+        payload: pp,
+      });
+    } else {
+      console.log("current location is null");
+    }
   }
 
   return (
