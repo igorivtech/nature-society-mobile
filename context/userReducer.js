@@ -1,4 +1,4 @@
-import { DEFAULT_NOTIFICATION, DEFAULT_USER } from "../values/consts";
+import { DEFAULT_NOTIFICATION } from "../values/consts";
 
 export const SAVE_TOKEN = "SAVE_TOKEN";
 export const SAVE_USER = "SAVE_USER";

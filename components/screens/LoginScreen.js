@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_IMAGE_QUALITY, DEFAULT_NUM_OF_REPORTS, DEFAULT_POINTS, DEFAULT_USER, errors, height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, errors, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
@@ -24,6 +24,8 @@ import { resizeImage } from "../../hooks/helpers";
 import { cognitoToUser } from "../../hooks/useUser";
 
 const PASSWORD_MIN_LENGTH = 8;
+const DEFAULT_POINTS = 630;
+const DEFAULT_NUM_OF_REPORTS = 31;
 
 const scrollZero = {
   y: 0,

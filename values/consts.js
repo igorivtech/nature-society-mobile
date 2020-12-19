@@ -206,17 +206,3 @@ export const DEFAULT_ACHIEVEMENTS = [
     points: 700
   },
 ]
-
-export const DEFAULT_USER = {
-  name: "יעל השכנה",
-  email: "yael@nextdoor",
-  image:
-    "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png",
-  points: 630,
-  numOfReports: 31,
-  lastAchievement: "חקלאית",
-  achievements: DEFAULT_ACHIEVEMENTS
-}
-
-export const DEFAULT_POINTS = 630;
-export const DEFAULT_NUM_OF_REPORTS = 31;
