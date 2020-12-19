@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { View, SafeAreaView, Animated, Easing } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { View, SafeAreaView, Animated, Easing, Image } from "react-native";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { globalStyles } from "../../values/styles";
 import {
@@ -183,7 +183,15 @@ export const HomeScreen = ({ navigation, route }) => {
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
-      />
+      >
+        {serverPlaces && serverPlaces.map((p, index) => {
+          return (
+            <Marker key={index} coordinate={p.position}>
+              <Image source={p.cleanness > 3 ? require("../../assets/images/marker_good.png") : require("../../assets/images/marker_bad.png")} />
+            </Marker>
+          )
+        })}
+      </MapView>
       <SafeAreaView>
         <View style={globalStyles.homeTopContainer}>
           <HomeButton index={2} notification={notification} onPress={progress} />

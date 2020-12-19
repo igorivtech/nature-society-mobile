@@ -56,7 +56,7 @@ export const DEFAULT_PLACES = [
     distance: 34,
     lastVisitorName: "איגור",
     lastVisitorGender: 0,
-    cleanness: 4.4,
+    cleanness: 2.4,
     crowdness: 3.6,
     image:
       "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
