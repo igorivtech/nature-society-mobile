@@ -156,10 +156,11 @@ export const LoginScreen = ({ navigation }) => {
         setLoadingLogin(true);
         Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
           console.log("LOGGED IN");
+          console.log({user});
           saveUser({
-            name: name.trim() !== "" ? name.trim() : yael.name,
+            // name: name.trim()
             email: loginEmail.trim(),
-            image: image ? image.uri : yael.image
+            image: image ? image.uri : ""
           });
         }).catch((error)=>{
           handleError(error);

@@ -28,6 +28,9 @@ const scrollZero = {
 
 export const ProfileScreen = ({ navigation }) => {
 
+  const [errorData, setErrorData] = useState(strings.popups.empty);
+  const [errorPopupVisible, setErrorPopupVisible] = useState(false);
+
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   const {state, dispatch} = useContext(UserContext);
@@ -151,11 +154,11 @@ export const ProfileScreen = ({ navigation }) => {
         });
         let result = await Auth.updateUserAttributes(cognitoUser, attributes);
         console.log({result});
-        setLoadingUpdate(false);
         updateUser(user);
       } catch (error) {
+        handleError(error);
+      } finally {
         setLoadingUpdate(false);
-        console.error(error);
       }
     })
   }
@@ -187,6 +190,14 @@ export const ProfileScreen = ({ navigation }) => {
     }
   }
 
+  const handleError = (error) => {
+    if (error) {
+      setErrorData(strings.popups.loginError(error.code));
+      setErrorPopupVisible(true);
+    }
+    console.error(error);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
@@ -214,6 +225,7 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </ScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>
   );
 };
