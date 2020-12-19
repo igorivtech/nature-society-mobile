@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { View, Text, StyleSheet, Animated, Image, Easing, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Animated, Image, Easing, TouchableOpacity, ActivityIndicator } from "react-native";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { DetailsView } from "./DetailsView";
@@ -92,7 +92,12 @@ const Button = ({filled, title, onPress, loading = false}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Animated.View style={styles.buttonContainer(filled, loading)}>
-        <Text style={styles.buttonTitle(filled)}>{title}</Text>
+        <View>
+          <View style={styles.indicatorContainer}>
+            <ActivityIndicator animating={loading} style={styles.indicator} color={colors.treeBlues} />
+          </View>
+          <Text style={styles.buttonTitle(filled)}>{title}</Text>
+        </View>
       </Animated.View>
     </TouchableOpacity>
   )
@@ -100,6 +105,16 @@ const Button = ({filled, title, onPress, loading = false}) => {
 
 
 const styles = StyleSheet.create({
+
+  indicatorContainer: {
+    ...StyleSheet.absoluteFill, 
+    flexDirection: 'row', 
+    alignItems: 'center'
+  },
+
+  indicator: {
+    transform: [{translateX: -24}]
+  },
 
   bottomContainer: {
     flexGrow: 1,
