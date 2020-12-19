@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import { View, SafeAreaView, Animated, Easing, Image } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
@@ -23,6 +23,7 @@ import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { useLocationPermissions } from "../../hooks/usePermissions";
 import { useIsFocused } from '@react-navigation/native';
+import { PlaceMarker } from "../views/home/PlaceMarker";
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" };
@@ -184,13 +185,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => {
-          return (
-            <Marker key={index} coordinate={p.position}>
-              <Image source={p.cleanness > 3 ? require("../../assets/images/marker_good.png") : require("../../assets/images/marker_bad.png")} />
-            </Marker>
-          )
-        })}
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker key={index} place={p} />)}
       </MapView>
       <SafeAreaView>
         <View style={globalStyles.homeTopContainer}>
