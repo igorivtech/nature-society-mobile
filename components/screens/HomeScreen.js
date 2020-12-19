@@ -199,6 +199,7 @@ export const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
+        onRegionChange={()=>setHideList(true)}
         onRegionChangeComplete={onRegionChangeComplete}
         initialRegion={INITIAL_REGION}
         customMapStyle={MAP_STYLE}
