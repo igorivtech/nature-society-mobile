@@ -120,7 +120,9 @@ export const HomeScreen = ({ navigation, route }) => {
       if (firstTime.current) {
         firstTime.current = false;
       } else {
-        setHideList(false);
+        if (serverPlaces.length > 0) {
+          setHideList(false);
+        }
       }
     });
     return unsubscribe;
