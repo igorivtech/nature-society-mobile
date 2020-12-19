@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_IMAGE_QUALITY, DEFAULT_USER, errors, height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, DEFAULT_NUM_OF_REPORTS, DEFAULT_POINTS, DEFAULT_USER, errors, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
@@ -186,8 +186,8 @@ export const LoginScreen = ({ navigation }) => {
         uploadImage(image, (fileName) => {
           let attributes = {
             name: name.trim(),
-            "custom:points": "0",
-            "custom:numOfReports": "0"
+            "custom:points": `${DEFAULT_POINTS}`,
+            "custom:numOfReports": `${DEFAULT_NUM_OF_REPORTS}`
           }
           if (fileName) {
             attributes.picture = fileName;

@@ -217,3 +217,6 @@ export const DEFAULT_USER = {
   lastAchievement: "חקלאית",
   achievements: DEFAULT_ACHIEVEMENTS
 }
+
+export const DEFAULT_POINTS = 630;
+export const DEFAULT_NUM_OF_REPORTS = 31;
