@@ -400,14 +400,14 @@ const s = StyleSheet.create({
   },
 });
 
-PlaceScreen.sharedElements = (route, otherRoute, showing) => {
-  const { place } = route.params;
-  return [
-    {
-      id: `place.${place.key}.bg`,
-    },
-    {
-      id: `place.${place.key}.image`,
-    },
-  ];
-};
+// PlaceScreen.sharedElements = (route, otherRoute, showing) => {
+//   const { place } = route.params;
+//   return [
+//     {
+//       id: `place.${place.key}.bg`,
+//     },
+//     {
+//       id: `place.${place.key}.image`,
+//     },
+//   ];
+// };
