@@ -62,6 +62,7 @@ export const ProfileScreen = ({ navigation }) => {
         setSignupEmail(user.email);
       }
       if (user.image) {
+        setLoadingImage(true);
         setImage({
           uri: user.image
         })
