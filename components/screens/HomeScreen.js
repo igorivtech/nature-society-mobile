@@ -79,12 +79,12 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     // permissions popup
-    if (locationPermission != null && !locationPermission.granted) {
+    if (locationPermission != null && !locationPermission.granted && isFocused) {
       setTimeout(() => {
         setPopupVisible(true);
       }, 4000);
     }
-  }, [locationPermission]);
+  }, [locationPermission, isFocused]);
 
   useEffect(() => {
     if (serverPlaces.length > 0) {
