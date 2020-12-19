@@ -1,3 +1,30 @@
+const errors = {
+  "UsernameExistsException": {
+    title: 'אימייל כבר קיים במערכת.',
+    yes: 'אישור'  
+  },
+  "UserNotFoundException": {
+    title: 'משתמש לא קיים במערכת.',
+    yes: 'אישור'  
+  },
+  "short_password": {
+    title: 'הסיסמה צריכה להיות לפחות באורך 8 תווים.',
+    yes: 'אישור'  
+  },
+  "enter_code": {
+    title: 'אנא הזינו את הקוד שנשלח אליכם באימייל.',
+    yes: 'אישור'  
+  },
+  "CodeMismatchException": {
+    title: 'הקוד שהוזן שגוי.',
+    yes: 'אישור'
+  },
+  "NotAuthorizedException": {
+    title: 'שם משתמש או סיסמה שגויים.',
+    yes: 'אישור'
+  }
+}
+
 export const strings = {
   code: 'קוד',
   showInfo: 'הצג\nמידע',
@@ -7,14 +34,10 @@ export const strings = {
       yes: "",
       no: ""
     },
-    loginError: {
-      "UsernameExistsException": {
-        title: 'אימייל כבר קיים במערכת',
-        yes: 'אישור'  
-      },
-      "UserNotFoundException": {
-        title: 'אימייל לא קיים במערכת',
-        yes: 'אישור'  
+    loginError: (code) => {
+      return errors[code] ?? {
+        title: 'אירעה שגיאה, אנה נסו שוב.',
+        yes: 'אישור'
       }
     },
     cantBuy: {

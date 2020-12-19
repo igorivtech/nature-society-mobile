@@ -166,9 +166,12 @@ export const LoginScreen = ({ navigation }) => {
             image: image ? image.uri : yael.image
           });
         }).catch((error)=>{
-          setLoadingLogin(false);
+          if (error) {
+            setErrorData(strings.popups.loginError(error.code));
+            setErrorPopupVisible(true);
+          }
           console.error(error);
-        });
+        }).finally(()=>setLoadingLogin(false));
       }
     } else {
       showLogin();
@@ -208,7 +211,7 @@ export const LoginScreen = ({ navigation }) => {
             saveUser(localUser);
           }).catch((error)=>{
             if (error) {
-              setErrorData(strings.popups.loginError[error.code]);
+              setErrorData(strings.popups.loginError(error.code));
               setErrorPopupVisible(true);
             }
             console.error(error);
@@ -279,7 +282,7 @@ export const LoginScreen = ({ navigation }) => {
         })
         .catch(err => {
           if (err) {
-            setErrorData(strings.popups.loginError[err.code]);
+            setErrorData(strings.popups.loginError(err.code));
             setErrorPopupVisible(true);  
           }
           console.error(err)
@@ -304,10 +307,22 @@ export const LoginScreen = ({ navigation }) => {
           setLoginPassword(newPassword);
           login();
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+          console.error(err)
+          if (err) {
+            setErrorData(strings.popups.loginError(err.code));
+            setErrorPopupVisible(true);
+          }
+        })
         .finally(()=>setLoadingChangePassword(false));
     } else {
-      console.log("password or code error");
+      if (newPassword.length < 8) {
+        setErrorData(strings.popups.loginError("short_password"));
+        setErrorPopupVisible(true);
+      } else if (code.length === 0) {
+        setErrorData(strings.popups.loginError("enter_code"));
+        setErrorPopupVisible(true);
+      }
     }
   }
 
