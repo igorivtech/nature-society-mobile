@@ -155,7 +155,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const login = () => {
     if (loginVisible) {
-      if (loginEmail.trim() && loginPassword.length >= PASSWORD_MIN_LENGTH) {
+      if (validateEmail(loginEmail) && loginPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingLogin(true);
         Auth.signIn(loginEmail.trim(), loginPassword).then((cognitoUser)=>{
           saveUser(cognitoToUser(cognitoUser));
