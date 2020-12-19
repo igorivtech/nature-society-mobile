@@ -26,6 +26,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
+import _ from "lodash";
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" };
@@ -186,15 +187,24 @@ export const HomeScreen = ({ navigation, route }) => {
   const onRegionChangeComplete = async (region) => {
     const radius = 111.045 * region.latitudeDelta;
     // if (location != null) {
-      const pp = await getPlaces(region, radius);
-      dispatch({
-        type: SAVE_PLACES,
-        payload: pp,
-      });
+      debounce.cancel()
+      debounce(region, radius);
     // } else {
     //   console.log("current location is null");
     // }
   }
+
+  const debounce = useCallback(_.debounce(async(region, radius) => {
+    const pp = await getPlaces(region, radius);
+    dispatch({
+      type: SAVE_PLACES,
+      payload: pp,
+    });
+  }, 500), []);
+
+  const showItem = (item) => {
+    navigation.navigate("Home", { searchItem: item });
+  };
 
   return (
     <View style={globalStyles.homeContainer}>
