@@ -184,7 +184,7 @@ export const LoginScreen = ({ navigation }) => {
     if (signupVisible) {
       if (name.trim() !== "" && validateEmail(signupEmail) && signupPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingSignup(true);
-        uploadImage(image, (fileName) => {
+        uploadImage(image, async (fileName) => {
           let attributes = {
             name: name.trim(),
           }
@@ -193,19 +193,19 @@ export const LoginScreen = ({ navigation }) => {
           if (fileName) {
             attributes.picture = fileName;
           }
-          Auth.signUp({
-            username: signupEmail.trim(),
-            password: signupPassword,
-            attributes
-          }).then((cognitoUser)=>{
-            console.log({attributes});
-            console.log(cognitoUser);
-            // saveUser(cognitoToUser(cognitoUser));
-          }).catch((error)=>{
+          try {
+            await Auth.signUp({
+              username: signupEmail.trim(),
+              password: signupPassword,
+              attributes
+            });
+            const authUser = await Auth.signIn(signupEmail.trim(), signupPassword);
+            saveUser(cognitoToUser(authUser));
+          } catch (error) {
             handleError(error);
-          }).finally(()=>{
+          } finally {
             setLoadingSignup(false);
-          })
+          }
         })
       } else {
         if (name.trim() === "") {
