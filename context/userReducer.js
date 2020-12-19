@@ -1,5 +1,6 @@
 import { DEFAULT_NOTIFICATION, DEFAULT_USER } from "../values/consts";
 
+export const SAVE_TOKEN = "SAVE_TOKEN";
 export const SAVE_USER = "SAVE_USER";
 export const SAVE_NOTIFICATION = "SAVE_NOTIFICATION";
 export const SAVE_PLACES = "SAVE_PLACES";
@@ -34,6 +35,11 @@ export const reducer = (state, action) => {
         ...state,
         serverPlaces: action.payload
       };
+    case SAVE_TOKEN:
+      return {
+        ...state,
+        token: action.payload
+      }
     default:
       return state;
   }

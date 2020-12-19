@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Amplify, { Auth } from "aws-amplify";
-import { SAVE_USER } from "../context/userReducer";
+import { SAVE_TOKEN, SAVE_USER } from "../context/userReducer";
 import { DEFAULT_ACHIEVEMENTS } from "../values/consts";
 
 export const useUser = (dispatch) => {
@@ -12,9 +12,13 @@ export const useUser = (dispatch) => {
     })
       .then((cognitoUser) => {
         dispatch({
-            type: SAVE_USER,
-            payload: cognitoToUser(cognitoUser)
-        })
+          type: SAVE_TOKEN,
+          payload: getToken(cognitoUser),
+        });
+        dispatch({
+          type: SAVE_USER,
+          payload: cognitoToUser(cognitoUser),
+        });
       })
       .catch((err) => {
         console.log(err) || console.log(null);
@@ -35,8 +39,20 @@ export const cognitoToUser = (cognitoUser) => {
     points: parseInt(attributes["custom:points"]),
     numOfReports: parseInt(attributes["custom:numOfReports"]),
     achievements: DEFAULT_ACHIEVEMENTS,
-    lastAchievement: "חקלאי"
+    lastAchievement: "חקלאי",
   };
+};
+
+const getToken = (cognitoUser) => {
+  const { signInUserSession } = cognitoUser;
+  if (
+    signInUserSession &&
+    signInUserSession.accessToken &&
+    signInUserSession.accessToken.jwtToken
+  ) {
+    return signInUserSession.accessToken.jwtToken;
+  }
+  return null;
 };
 
 // signInUserSession, accessToken, jwtToken
