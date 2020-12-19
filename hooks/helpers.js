@@ -40,3 +40,7 @@ export const resizeImage = async (response) => {
 export const objectLength = (object) => {
   return Object.keys(object).length;
 }
+
+export const validateEmail = (email) => {
+  return true;
+}

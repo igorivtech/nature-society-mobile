@@ -26,6 +26,14 @@ const errors = {
   "NetworkError": {
     title: 'נראה שיש בעיה עם החיבור לאינטרנט.',
     yes: 'אישור'
+  },
+  "enter_name": {
+    title: 'אנא מלאו שם מלא.',
+    yes: 'אישור'
+  },
+  "invalid_email": {
+    title: 'כתובת אימייל לא תקינה.',
+    yes: 'אישור'
   }
 }
 

@@ -31,6 +31,12 @@ export const errors = {
   },
   enterCode: {
     code: "enter_code"
+  },
+  enterName: {
+    code: "enter_name"
+  },
+  invalidEmail: {
+    code: "invalid_email"
   }
 }
 

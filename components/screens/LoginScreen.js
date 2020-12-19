@@ -20,7 +20,7 @@ import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { uploadImage } from "../../hooks/aws";
-import { resizeImage } from "../../hooks/helpers";
+import { resizeImage, validateEmail } from "../../hooks/helpers";
 import { cognitoToUser } from "../../hooks/useUser";
 
 const PASSWORD_MIN_LENGTH = 8;
@@ -163,7 +163,9 @@ export const LoginScreen = ({ navigation }) => {
           handleError(error);
         }).finally(()=>setLoadingLogin(false));
       } else {
-        if (loginPassword.length < PASSWORD_MIN_LENGTH) {
+        if (!validateEmail(loginEmail)) {
+          handleError(errors.invalidEmail);
+        } else if (loginPassword.length < PASSWORD_MIN_LENGTH) {
           handleError(errors.shortPassword);
         }
       }
@@ -178,7 +180,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const signup = () => {
     if (signupVisible) {
-      if (name.trim() !== "" && signupEmail.trim() && signupPassword.length >= PASSWORD_MIN_LENGTH) {
+      if (name.trim() !== "" && validateEmail(signupEmail) && signupPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingSignup(true);
         uploadImage(image, (fileName) => {
           let attributes = {
@@ -204,7 +206,11 @@ export const LoginScreen = ({ navigation }) => {
           })
         })
       } else {
-        if (signupPassword.length < PASSWORD_MIN_LENGTH) {
+        if (name.trim() === "") {
+          handleError(errors.enterName);
+        } else if (!validateEmail(signupEmail)) {
+          handleError(errors.invalidEmail);
+        } else if (signupPassword.length < PASSWORD_MIN_LENGTH) {
           handleError(errors.shortPassword);
         }
       }
