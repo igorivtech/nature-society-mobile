@@ -35,7 +35,7 @@ export const cognitoToUser = (cognitoUser) => {
   return {
     name: attributes.name,
     email: attributes.email,
-    // image
+    // image: baseUrl + attributes["picture"]
     points: parseInt(attributes["custom:points"]),
     numOfReports: parseInt(attributes["custom:numOfReports"]),
     achievements: DEFAULT_ACHIEVEMENTS,
