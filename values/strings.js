@@ -22,6 +22,10 @@ const errors = {
   "NotAuthorizedException": {
     title: 'שם משתמש או סיסמה שגויים.',
     yes: 'אישור'
+  },
+  "NetworkError": {
+    title: 'נראה שיש בעיה עם החיבור לאינטרנט.',
+    yes: 'אישור'
   }
 }
 
