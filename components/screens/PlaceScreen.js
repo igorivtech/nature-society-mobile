@@ -55,7 +55,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const report = () => {
-    console.log("report");
+    navigation.navigate("Report", {location: place});
   };
 
   const goBack = () => {
