@@ -20,7 +20,7 @@ export const uploadImage = async (image, callback) => {
     level: "public",
   })
     .then(() => {
-      callback(fileName);
+      callback(`https://naturesocietyd770eeed1aeb4e34ba859038a344c121174124-prod.s3.eu-central-1.amazonaws.com/public/users/${fileName}`);
     })
     .catch((error) => {
       callback();

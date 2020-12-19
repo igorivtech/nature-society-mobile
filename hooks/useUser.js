@@ -32,15 +32,18 @@ export const useUser = (dispatch) => {
 
 export const cognitoToUser = (cognitoUser) => {
   const { attributes } = cognitoUser;
-  return {
+  const user = {
     name: attributes.name,
     email: attributes.email,
-    // image: baseUrl + attributes["picture"]
     points: parseInt(attributes["custom:points"]),
     numOfReports: parseInt(attributes["custom:numOfReports"]),
     achievements: DEFAULT_ACHIEVEMENTS,
     lastAchievement: "חקלאי",
   };
+  if (attributes.picture) {
+    user.image = attributes["picture"];
+  }
+  return user;
 };
 
 const getToken = (cognitoUser) => {
