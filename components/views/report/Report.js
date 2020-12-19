@@ -81,14 +81,19 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
 };
 
 const Button = ({filled, title, onPress, loading = false}) => {
+  const opacity = useRef(new Animated.Value(1)).current;
   useEffect(()=>{
-
+    Animated.timing(opacity, {
+      toValue: loading ? 0.5 : 1,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true
+    }).start();
   }, [loading])
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={styles.buttonContainer(filled, loading)}>
+      <Animated.View style={styles.buttonContainer(filled, loading)}>
         <Text style={styles.buttonTitle(filled)}>{title}</Text>
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   )
 }
