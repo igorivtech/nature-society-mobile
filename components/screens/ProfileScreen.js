@@ -21,6 +21,7 @@ import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { uploadImage } from "../../hooks/aws";
 import { cognitoToUser } from "../../hooks/useUser";
+import { objectLength } from "../../hooks/helpers";
 
 const scrollZero = {
   y: 0,
@@ -145,7 +146,7 @@ export const ProfileScreen = ({ navigation }) => {
       if (fileName) {
         attributes.picture = fileName;
       }
-      if (attributes.length === 0) {
+      if (objectLength(attributes) === 0) {
         setLoadingUpdate(false);
         return;
       }

@@ -36,3 +36,7 @@ export const resizeImage = async (response) => {
   resizedImage.type = "image";
   return resizedImage;
 };
+
+export const objectLength = (object) => {
+  return Object.keys(object).length;
+}
