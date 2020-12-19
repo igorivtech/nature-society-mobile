@@ -37,6 +37,8 @@ export const LoginScreen = ({ navigation }) => {
 
   const {state, dispatch} = useContext(UserContext);
 
+  const [errorData, setErrorData] = useState(strings.popups.empty);
+
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [loadingSignup, setLoadingSignup] = useState(false);
   const [loadingRestorePassword, setLoadingRestorePassword] = useState(false);
@@ -66,6 +68,7 @@ export const LoginScreen = ({ navigation }) => {
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
 
   const [popupVisible, setPopupVisible] = useState(false);
+  const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const scrollRef = useRef();
 
@@ -194,13 +197,20 @@ export const LoginScreen = ({ navigation }) => {
             password: signupPassword,
             attributes
           }).then(({user})=>{
-            saveUser({
+            console.log({user});
+            let localUser = {
               name: name.trim(),
-              email: signupEmail.trim(),
-              image: image ? image.uri : 'https://m.media-amazon.com/images/M/MV5BMjM2OTkyNTY3N15BMl5BanBnXkFtZTgwNzgzNDc2NjE@._V1_CR132,0,761,428_AL_UY268_CR82,0,477,268_AL_.jpg'
-            });
+              email: signupEmail.trim()
+            }
+            if (image) {
+              localUser.image = image.uri
+            }
+            saveUser(localUser);
           }).catch((error)=>{
-            console.log("USER ERROR");
+            if (error) {
+              setErrorData(strings.popups.loginError[error.code]);
+              setErrorPopupVisible(true);
+            }
             console.error(error);
           }).finally(()=>{
             setLoadingSignup(false);
@@ -355,6 +365,7 @@ export const LoginScreen = ({ navigation }) => {
         </View>
       </ScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>
   );
 };

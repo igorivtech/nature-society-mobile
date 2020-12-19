@@ -10,14 +10,14 @@ import {
   Easing,
 } from "react-native";
 import { colors } from "../../values/colors";
-import { width } from "../../values/consts";
+import { emptyFunc, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 
 const DURATION = 300;
 
-export const Popup = ({ textData, popupVisible, setPopupVisible, action, reverseActions = false, single = false }) => {
+export const Popup = ({ textData, popupVisible, setPopupVisible, action = emptyFunc, reverseActions = false, single = false }) => {
   const close = () => {
     setPopupVisible(false);
   };

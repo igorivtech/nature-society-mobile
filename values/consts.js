@@ -25,6 +25,8 @@ export const INITIAL_REGION = {
   longitudeDelta: 2,
 }
 
+export const emptyFunc = () => {}
+
 export const DEFAULT_PLACES = [
   {
     locked: false,

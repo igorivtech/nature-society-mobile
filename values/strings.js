@@ -2,6 +2,17 @@ export const strings = {
   code: 'קוד',
   showInfo: 'הצג\nמידע',
   popups: {
+    empty: {
+      title: "",
+      yes: "",
+      no: ""
+    },
+    loginError: {
+      "UsernameExistsException": {
+        title: 'אימייל כבר קיים במערכת',
+        yes: 'אישור'  
+      }
+    },
     cantBuy: {
       title: 'אין מספיק נקודות טבע.\nשחקו עוד באפליקציה כדי לצבור עוד נקודות.',
       yes: 'אחלה'
