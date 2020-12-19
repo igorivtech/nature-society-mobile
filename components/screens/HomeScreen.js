@@ -185,15 +185,16 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const onRegionChangeComplete = async (region) => {
     const radius = 111.045 * region.latitudeDelta;
-    if (location != null) {
-      const pp = await getPlaces(location.coords, radius);
+    // if (location != null) {
+      const pp = await getPlaces(region, radius);
+      console.log({length: pp.length});
       dispatch({
         type: SAVE_PLACES,
         payload: pp,
       });
-    } else {
-      console.log("current location is null");
-    }
+    // } else {
+    //   console.log("current location is null");
+    // }
   }
 
   return (
