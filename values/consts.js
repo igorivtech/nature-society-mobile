@@ -25,6 +25,15 @@ export const INITIAL_REGION = {
   longitudeDelta: 2,
 }
 
+export const errors = {
+  shortPassword: {
+    code: "short_password"
+  },
+  enterCode: {
+    code: "enter_code"
+  }
+}
+
 export const emptyFunc = () => {}
 
 export const DEFAULT_PLACES = [

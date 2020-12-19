@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_IMAGE_QUALITY, DEFAULT_USER, height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, DEFAULT_USER, errors, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
@@ -162,16 +162,11 @@ export const LoginScreen = ({ navigation }) => {
             image: image ? image.uri : yael.image
           });
         }).catch((error)=>{
-          if (error) {
-            setErrorData(strings.popups.loginError(error.code));
-            setErrorPopupVisible(true);
-          }
-          console.error(error);
+          handleError(error);
         }).finally(()=>setLoadingLogin(false));
       } else {
         if (loginPassword < PASSWORD_MIN_LENGTH) {
-          setErrorData(strings.popups.loginError("short_password"));
-          setErrorPopupVisible(true);
+          handleError(errors.shortPassword);
         }
       }
     } else {
@@ -211,19 +206,14 @@ export const LoginScreen = ({ navigation }) => {
             }
             saveUser(localUser);
           }).catch((error)=>{
-            if (error) {
-              setErrorData(strings.popups.loginError(error.code));
-              setErrorPopupVisible(true);
-            }
-            console.error(error);
+            handleError(error);
           }).finally(()=>{
             setLoadingSignup(false);
           })
         })
       } else {
         if (signupPassword.length < PASSWORD_MIN_LENGTH) {
-          setErrorData(strings.popups.loginError("short_password"));
-          setErrorPopupVisible(true);
+          handleError(errors.shortPassword);
         }
       }
     } else {
@@ -287,11 +277,7 @@ export const LoginScreen = ({ navigation }) => {
           setForgotPasswordVisible(false);
         })
         .catch(err => {
-          if (err) {
-            setErrorData(strings.popups.loginError(err.code));
-            setErrorPopupVisible(true);  
-          }
-          console.error(err)
+          handleError(err);
         })
         .finally(()=>setLoadingRestorePassword(false));
     } else {
@@ -315,21 +301,24 @@ export const LoginScreen = ({ navigation }) => {
         })
         .catch(err => {
           console.error(err)
-          if (err) {
-            setErrorData(strings.popups.loginError(err.code));
-            setErrorPopupVisible(true);
-          }
+          handleError(err);
         })
         .finally(()=>setLoadingChangePassword(false));
     } else {
       if (newPassword.length < PASSWORD_MIN_LENGTH) {
-        setErrorData(strings.popups.loginError("short_password"));
-        setErrorPopupVisible(true);
+        handleError(errors.shortPassword);
       } else if (code.length === 0) {
-        setErrorData(strings.popups.loginError("enter_code"));
-        setErrorPopupVisible(true);
+        handleError(errors.enterCode);
       }
     }
+  }
+
+  const handleError = (error) => {
+    if (error) {
+      setErrorData(strings.popups.loginError(error.code));
+      setErrorPopupVisible(true);
+    }
+    console.error(error);
   }
 
   return (
