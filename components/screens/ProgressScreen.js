@@ -20,6 +20,7 @@ import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 import { UserHeader } from "../views/progress/views";
+import { calcCustomAchievements } from "../../hooks/helpers"
 
 export const ProgressScreen = ({ navigation }) => {
 
@@ -28,7 +29,7 @@ export const ProgressScreen = ({ navigation }) => {
   const scrollView = useRef();
 
   const {state, dispatch} = useContext(UserContext);
-  const {user, notification} = state;
+  const {user, notification, serverAchievements} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -47,22 +48,11 @@ export const ProgressScreen = ({ navigation }) => {
   }, [notification])
 
   useEffect(()=>{
-    if (user) {
-      if (data.length === 0 || data.length === 1) {
-        if (user.achievements) {
-          setData([...user.achievements].reverse());
-        }
-      }
-    } else {
-      setData([])
-      setTimeout(() => {
-        setData([{
-          current: true,
-          done: false
-        }])  
-      }, 0);
+    if (user != null && serverAchievements != null && serverAchievements.length > 0) {
+      const output = calcCustomAchievements(serverAchievements, user.points);
+      setData([...output].reverse());
     }
-  }, [user])
+  }, [serverAchievements, user])
 
   useEffect(()=>{
     if (data.length > 0) {

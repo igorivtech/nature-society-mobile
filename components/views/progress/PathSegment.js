@@ -169,10 +169,10 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : topMarkerImage} />
         <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : bottomMarkerImage} />
         <View style={styles.topContainer} ref={topContainerRef}>
-          <FloatingLabel item={item} right={true} done={item.topDone} />
+          <FloatingLabel title={item.topTitle} points={item.topPoints} item={item} right={true} done={item.topDone} />
         </View>
         <Animatable.View animation={popupVisible ? "fadeOut" : "fadeIn"} style={styles.bottomContainer} ref={bottomContainerRef}>
-          <FloatingLabel item={item} right={false} done={item.bottomDone} />
+          <FloatingLabel title={item.bottomTitle} points={item.bottomPoints} item={item} right={false} done={item.bottomDone} />
         </Animatable.View>
       </View>
       
@@ -182,7 +182,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
   );
 };
 
-const FloatingLabel = ({item, right, done}) => {
+const FloatingLabel = ({item, right, done, points, title}) => {
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -191,15 +191,15 @@ const FloatingLabel = ({item, right, done}) => {
     <View style={flStyles.container(right)}>
       {done ? (
         <View style={flStyles.doneContainer(right)}>
-          <Text style={flStyles.doneText}>{item.bottomTitle}</Text>
+          <Text style={flStyles.doneText}>{title}</Text>
           <View style={flStyles.doneBorder} />
         </View>
       ) : (
         <View style={flStyles.notDoneContainer(right)}>
-          <Text style={flStyles.notDoneTitle}>{item.bottomTitle}</Text>
+          <Text style={flStyles.notDoneTitle}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={flStyles.notDoneInnerText}>{user ? (item.points - user.points) : ""}</Text>
+            <Text style={flStyles.notDoneInnerText}>{user ? (points - user.points) : ""}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>

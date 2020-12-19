@@ -55,3 +55,32 @@ export const calcPlaceDelta = ({southWest, northEast}) => {
     const longitudeDelta = latDelta * ASPECT_RATIO;
     return {latitudeDelta, longitudeDelta}
 }
+
+export const calcCustomAchievements = (serverAchievements, userPoints) => {
+  let output = [];
+  var i;
+  let currentSet = false;
+  for (i = 0; i < serverAchievements.length; i++) { 
+    if (i % 2 == 0) {
+      const bottom = serverAchievements[i];
+      const top = serverAchievements[i+1];
+      let item = {
+        topDone: userPoints >= top.points,
+        bottomDone: userPoints >= bottom.points,
+        current: false,
+        topTitle: top.title,
+        bottomTitle: bottom.title,
+        topPoints: top.points,
+        bottomPoints: bottom.points,
+      }
+      if (!currentSet) {
+        if (!item.topDone || !item.bottomDone) {
+          item.current = true;
+          currentSet = true;
+        }
+      }
+      output = [...output, item];
+    }
+  }
+  return output
+}

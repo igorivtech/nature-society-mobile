@@ -42,7 +42,7 @@ export const reducer = (state, action) => {
         ...state,
         token: action.payload
       }
-    case SAVE_ACHIEVEMENTS: 
+    case SAVE_ACHIEVEMENTS:
       return {
         ...state,
         serverAchievements: action.payload
