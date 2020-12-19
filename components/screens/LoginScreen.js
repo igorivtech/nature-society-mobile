@@ -22,15 +22,11 @@ import { Auth } from 'aws-amplify';
 import { uploadImage } from "../../hooks/aws";
 import { resizeImage } from "../../hooks/helpers";
 
+const PASSWORD_MIN_LENGTH = 8;
+
 const scrollZero = {
   y: 0,
   animated: true,
-}
-
-const yael = {
-  name: "יעל השכנה",
-  email: "yael@nextdoor",
-  image: "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png"
 }
 
 export const LoginScreen = ({ navigation }) => {
@@ -156,7 +152,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const login = () => {
     if (loginVisible) {
-      if (loginEmail.trim() && loginPassword.length > 0) {
+      if (loginEmail.trim() && loginPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingLogin(true);
         Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
           console.log("LOGGED IN");
@@ -172,6 +168,11 @@ export const LoginScreen = ({ navigation }) => {
           }
           console.error(error);
         }).finally(()=>setLoadingLogin(false));
+      } else {
+        if (loginPassword < PASSWORD_MIN_LENGTH) {
+          setErrorData(strings.popups.loginError("short_password"));
+          setErrorPopupVisible(true);
+        }
       }
     } else {
       showLogin();
@@ -184,7 +185,7 @@ export const LoginScreen = ({ navigation }) => {
 
   const signup = () => {
     if (signupVisible) {
-      if (name.trim() !== "" && signupEmail.trim() && signupPassword.length > 0) {
+      if (name.trim() !== "" && signupEmail.trim() && signupPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingSignup(true);
         uploadImage(image, (fileName) => {
           let attributes = {
@@ -219,6 +220,11 @@ export const LoginScreen = ({ navigation }) => {
             setLoadingSignup(false);
           })
         })
+      } else {
+        if (signupPassword.length < PASSWORD_MIN_LENGTH) {
+          setErrorData(strings.popups.loginError("short_password"));
+          setErrorPopupVisible(true);
+        }
       }
     } else {
       showSignup();
@@ -299,7 +305,7 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const changePassword = () => {
-    if (newPassword.length >= 8 && code.length > 0) {
+    if (newPassword.length >= PASSWORD_MIN_LENGTH && code.length > 0) {
       setLoadingChangePassword(true);
       Auth.forgotPasswordSubmit(restoreEmail, code, newPassword)
         .then(() => {
@@ -316,7 +322,7 @@ export const LoginScreen = ({ navigation }) => {
         })
         .finally(()=>setLoadingChangePassword(false));
     } else {
-      if (newPassword.length < 8) {
+      if (newPassword.length < PASSWORD_MIN_LENGTH) {
         setErrorData(strings.popups.loginError("short_password"));
         setErrorPopupVisible(true);
       } else if (code.length === 0) {
