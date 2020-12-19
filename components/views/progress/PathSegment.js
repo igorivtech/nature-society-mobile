@@ -85,9 +85,8 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
   })
 
   if (current) {
-    // userProgress = 0.5
     if (!bottomDone) {
-      userProgress = 0.2;
+      userProgress = 0.1;
     } else if (!topDone) {
       userProgress = 1 - (0.25 + 0.5 * (item.topPoints - user.points)/item.topPoints);
     }
@@ -107,7 +106,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
     }
     setupTop();
     setupBottom();
-  }, []);
+  });
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
@@ -178,10 +177,10 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : topMarkerImage} />
         <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : bottomMarkerImage} />
         <View style={styles.topContainer} ref={topContainerRef}>
-          <FloatingLabel title={item.topTitle} points={item.topPoints} item={item} right={true} done={item.topDone} />
+          <FloatingLabel title={item.topTitle} points={item.topPoints} right={true} done={item.topDone} />
         </View>
         <Animatable.View animation={popupVisible ? "fadeOut" : "fadeIn"} style={styles.bottomContainer} ref={bottomContainerRef}>
-          <FloatingLabel title={item.bottomTitle} points={item.bottomPoints} item={item} right={false} done={item.bottomDone} />
+          <FloatingLabel title={item.bottomTitle} points={item.bottomPoints} right={false} done={item.bottomDone} />
         </Animatable.View>
       </View>
       
@@ -191,7 +190,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
   );
 };
 
-const FloatingLabel = ({item, right, done, points, title}) => {
+const FloatingLabel = ({right, done, points, title}) => {
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -286,6 +285,7 @@ const styles = StyleSheet.create({
   },
 
   markerContainer: {
+    zIndex: 2,
     position: 'absolute',
     height: 72,
     width: 65,
