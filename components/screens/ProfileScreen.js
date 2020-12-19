@@ -20,6 +20,7 @@ import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { uploadImage } from "../../hooks/aws";
+import { cognitoToUser } from "../../hooks/useUser";
 
 const scrollZero = {
   y: 0,
@@ -153,8 +154,14 @@ export const ProfileScreen = ({ navigation }) => {
           bypassCache: true,
         });
         let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-        console.log({result});
-        updateUser(user);
+        if (result === 'SUCCESS') {
+          let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+            bypassCache: true,
+          });
+          updateUser(cognitoToUser(updatedCognitoUser));
+        } else {
+          console.error("cant update details");
+        }
       } catch (error) {
         handleError(error);
       } finally {

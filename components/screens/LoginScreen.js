@@ -21,6 +21,7 @@ import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { uploadImage } from "../../hooks/aws";
 import { resizeImage } from "../../hooks/helpers";
+import { cognitoToUser } from "../../hooks/useUser";
 
 const PASSWORD_MIN_LENGTH = 8;
 
@@ -154,14 +155,8 @@ export const LoginScreen = ({ navigation }) => {
     if (loginVisible) {
       if (loginEmail.trim() && loginPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingLogin(true);
-        Auth.signIn(loginEmail.trim(), loginPassword).then(({user})=>{
-          console.log("LOGGED IN");
-          console.log({user});
-          saveUser({
-            // name: name.trim()
-            email: loginEmail.trim(),
-            image: image ? image.uri : ""
-          });
+        Auth.signIn(loginEmail.trim(), loginPassword).then((cognitoUser)=>{
+          saveUser(cognitoToUser(cognitoUser));
         }).catch((error)=>{
           handleError(error);
         }).finally(()=>setLoadingLogin(false));
@@ -196,8 +191,7 @@ export const LoginScreen = ({ navigation }) => {
             username: signupEmail.trim(),
             password: signupPassword,
             attributes
-          }).then(({user})=>{
-            console.log({user});
+          }).then((cognitoUser)=>{
             let localUser = {
               name: name.trim(),
               email: signupEmail.trim()
@@ -205,7 +199,8 @@ export const LoginScreen = ({ navigation }) => {
             if (image) {
               localUser.image = image.uri
             }
-            saveUser(localUser);
+            console.log(cognitoUser);
+            saveUser(cognitoToUser(cognitoUser));
           }).catch((error)=>{
             handleError(error);
           }).finally(()=>{
