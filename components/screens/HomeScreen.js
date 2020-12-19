@@ -176,9 +176,15 @@ export const HomeScreen = ({ navigation, route }) => {
     askLocation();
   };
 
+  const onRegionChangeComplete = (region) => {
+    const radius = 111.045 * region.latitudeDelta;
+    console.log({radius});
+  }
+
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
+        onRegionChangeComplete={onRegionChangeComplete}
         initialRegion={INITIAL_REGION}
         customMapStyle={MAP_STYLE}
         ref={mapRef}
