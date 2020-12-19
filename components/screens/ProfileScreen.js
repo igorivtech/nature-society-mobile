@@ -127,15 +127,13 @@ export const ProfileScreen = ({ navigation }) => {
 
     }
     if (name !== user.name) {
-      user.name = name;
       attributes.name = name;
     }
     if (signupEmail !== user.email) {
-      user.email = email;
       attributes.email = email;
     }
     if (image !== null && image.uri !== null && image.uri.length > 0) {
-      user.image = image.uri;
+      // user.image = image.uri;
     }
     //
     setLoadingUpdate(true);
@@ -144,6 +142,7 @@ export const ProfileScreen = ({ navigation }) => {
         attributes.picture = fileName;
       }
       if (attributes.length === 0) {
+        setLoadingUpdate(false);
         return;
       }
       try {
@@ -155,6 +154,7 @@ export const ProfileScreen = ({ navigation }) => {
         setLoadingUpdate(false);
         updateUser(user);
       } catch (error) {
+        setLoadingUpdate(false);
         console.error(error);
       }
     })
