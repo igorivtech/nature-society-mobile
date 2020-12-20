@@ -19,14 +19,20 @@ const TITLE_TRANSLATE_Y = 4;
 const ANIMATION_OPACITY = 0.35;
 
 const clampAnimationValue = (p) => {
-  if (p < 0.33) {
+  if (p < 0.2) {
     return 0;
-  } else if (p < 0.66) {
+  } else if (p < 0.4) {
+    return 0.25;
+  } else if (p < 0.6) {
     return 0.5;
-  } else {
+  } else if (p < 0.8) {
+    return 0.75;
+  } else if (p <= 1) {
     return 1;
   }
 }
+
+const TITLES_DELTA = 1/6;
 
 export const Slider = memo(({valueRef, item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
@@ -42,12 +48,16 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
 
   const [titleTranslateY, setTitleTranslateY] = useState(TITLE_TRANSLATE_Y);
   const [topText, setTopText] = useState(titles[2]);
+  const [middlePlusText, setMiddlePlusText] = useState(titles[1]);
   const [middleText, setMiddleText] = useState(titles[1]);
+  const [middleMinusText, setMiddleMinusText] = useState(titles[1]);
   const [bottomText, setBottomText] = useState(titles[0]);
 
   const titlesMap = {
     0: setBottomText,
+    0.25: setMiddleMinusText,
     0.5: setMiddleText,
+    0.75: setMiddlePlusText,
     1: setTopText
   };
 
@@ -56,7 +66,9 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
       return;
     }
     setTopText(titles[2]);
+    setMiddlePlusText(titles[1]);
     setMiddleText(titles[1]);
+    setMiddleMinusText(titles[1]);
     setBottomText(titles[0]);
   }
 
@@ -89,21 +101,35 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
   })
 
   const topTextOpacity = progress.interpolate({
-    inputRange: [0.75, 1],
+    inputRange: [1-TITLES_DELTA, 1],
     outputRange: [0, 1],
     extrapolate: 'clamp',
     useNativeDriver: true
   })
 
+  const centerPlusTextOpacity = progress.interpolate({
+    inputRange: [0.75-TITLES_DELTA, 0.75, 0.75+TITLES_DELTA],
+    outputRange: [0, 1, 0],
+    extrapolate: 'clamp',
+    useNativeDriver: true
+  })
+
   const centerTextOpacity = progress.interpolate({
-    inputRange: [0.25, 0.5, 0.75],
+    inputRange: [0.5-TITLES_DELTA, 0.5, 0.5+TITLES_DELTA],
+    outputRange: [0, 1, 0],
+    extrapolate: 'clamp',
+    useNativeDriver: true
+  })
+
+  const centerMinusTextOpacity = progress.interpolate({
+    inputRange: [0.25-TITLES_DELTA, 0.25, 0.25+TITLES_DELTA],
     outputRange: [0, 1, 0],
     extrapolate: 'clamp',
     useNativeDriver: true
   })
 
   const bottomTextOpacity = progress.interpolate({
-    inputRange: [0, 0.25],
+    inputRange: [0, 0+TITLES_DELTA],
     outputRange: [1, 0],
     extrapolate: 'clamp',
     useNativeDriver: true
@@ -279,7 +305,9 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
             <Animated.Text style={sliderStyles.text(topTextOpacity, titleTranslateY)}>{topText}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(centerPlusTextOpacity, titleTranslateY/2)}>{middlePlusText}</Animated.Text>
             <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{middleText}</Animated.Text>
+            <Animated.Text style={sliderStyles.text(centerMinusTextOpacity, -titleTranslateY/2)}>{middleMinusText}</Animated.Text>
             <Animated.Text style={sliderStyles.text(bottomTextOpacity, -titleTranslateY)}>{bottomText}</Animated.Text>
           </Animated.View>
           <View style={sliderStyles.sliderContainer}>
