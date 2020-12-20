@@ -34,7 +34,7 @@ const clampAnimationValue = (p) => {
 
 const TITLES_DELTA = 1/7;
 
-export const Slider = memo(({valueRef, item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
+export const Slider = memo(({valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
   const {animation, title, titles} = item;
 
@@ -331,7 +331,7 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
       </Animated.View>
 
       <Animated.View style={sliderStyles.topContainer(bottomTopContainersOpacity)}>
-        {location && (
+        {showLocation && (
           <TouchableWithoutFeedback onPress={pickLocation}>
             <View style={sliderStyles.locationContainer}>
               <Text style={sliderStyles.locationText}>{location.title}</Text>
