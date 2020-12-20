@@ -56,6 +56,9 @@ export const ReportScreen = ({navigation, route}) => {
   const [selectedLocation, setLocation] = useState(location);
   const [searchVisible, setSearchVisible] = useState(false);
 
+  const [errorData, setErrorData] = useState(strings.popups.empty);
+  const [errorPopupVisible, setErrorPopupVisible] = useState(false);
+
   useEffect(()=>{
     setLocation(location);
     details.forEach(d=>d.on=false);
@@ -119,8 +122,7 @@ export const ReportScreen = ({navigation, route}) => {
         }
       })
     } catch (error) {
-      console.error(error);
-      // handleError(error);
+      handleError(error);
     } finally {
       setLoadingSendReport(false);
     }
@@ -161,6 +163,14 @@ export const ReportScreen = ({navigation, route}) => {
     setSearchVisible(false);
   }
 
+  const handleError = (error) => {
+    if (error) {
+      setErrorData(strings.popups.loginError(error.code));
+      setErrorPopupVisible(true);
+    }
+    console.error(error);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <TapView onPress={tapClose} />
@@ -184,6 +194,7 @@ export const ReportScreen = ({navigation, route}) => {
         </Animatable.View>
       </View>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
+      <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
       <ModalSearch location={location.position} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
     </SafeAreaView>
   );
