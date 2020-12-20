@@ -79,11 +79,13 @@ export const ExploreScreen = ({ navigation, route }) => {
     }
     if (location != null) {
       const p = await getExplorePlaces(location, currentPage.current);
-      if (p.length > 0) {
-        currentPage.current = currentPage.current + 1;
-        setPlaces([...places, ...p]);
-      } else {
-        currentPage.current = -1;
+      if (p) {
+        if (p.length > 0) {
+          currentPage.current = currentPage.current + 1;
+          setPlaces([...places, ...p]);
+        } else {
+          currentPage.current = -1;
+        }
       }
     }
   }
