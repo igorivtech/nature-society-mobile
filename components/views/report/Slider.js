@@ -125,8 +125,8 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
   }
 
   const clampAnimation = () => {
-    valueRef.current = progress._value;
     const p = clampAnimationValue(progress._value);
+    valueRef.current = p;
     currentOffset.current = p;
     Animated.timing(progress, {
       toValue: p,
