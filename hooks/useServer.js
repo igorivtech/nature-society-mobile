@@ -16,7 +16,7 @@ export const useServer = () => {
     try {
       setLoadingMorePlaces(true);
       const response = await fetch(
-        `${BASE_URL}/getAll?lat=${location.latitude}&lng=${location.longitude}&skip=${page}&limit=10&radius=${1000*1000}`,
+        `${BASE_URL}/getAll?lat=${location.latitude}&lng=${location.longitude}&skip=${page}&limit=10`,
         {
           method: "GET",
         }
