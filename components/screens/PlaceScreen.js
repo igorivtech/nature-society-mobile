@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
@@ -46,6 +47,8 @@ export const PlaceScreen = ({ navigation, route }) => {
   const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
   const popupAction = useRef(emptyFunc);
   const [pupupSingle, setPopupSingle] = useState(true);
+
+  const [loadingBuy, setLoadingBuy] = useState(false);
 
   const textRef = useRef();
   const ratingRef = useRef();
@@ -102,25 +105,30 @@ export const PlaceScreen = ({ navigation, route }) => {
       setPopupTextData(strings.popups.signupNow)
       setPopupVisible(true);
     } else if (user.points >= settings.pointsForUnlock) {
-      let attributes = {}
-      let unlockedPlaces = user.unlockedPlaces;
-      unlockedPlaces[place._id] = 1
-      attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(unlockedPlaces);
-      attributes[ATTRIBUTE_POINTS] = `${user.points - settings.pointsForUnlock}`;
-      let cognitoUser = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
-      let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-      if (result === 'SUCCESS') {
-        let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+      try {
+        setLoadingBuy(true);
+        let attributes = {}
+        let unlockedPlaces = user.unlockedPlaces;
+        unlockedPlaces[place._id] = 1
+        attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(unlockedPlaces);
+        attributes[ATTRIBUTE_POINTS] = `${user.points - settings.pointsForUnlock}`;
+        let cognitoUser = await Auth.currentAuthenticatedUser({
           bypassCache: true,
         });
-        dispatch({
-          type: SAVE_USER,
-          payload: cognitoToUser(updatedCognitoUser)
-        })
-      } else {
-        console.error("cant update user");
+        let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+        if (result === 'SUCCESS') {
+          let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+            bypassCache: true,
+          });
+          dispatch({
+            type: SAVE_USER,
+            payload: cognitoToUser(updatedCognitoUser)
+          })
+        }
+      } catch (error) {
+        console.error({error});
+      } finally {
+        setLoadingBuy(false);
       }
     } else {
       popupAction.current = playMore;
@@ -170,6 +178,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={s.ratingContainer}
           >
             <PlaceRating
+              loading={loadingBuy}
               pointsToUnlock={settings.pointsForUnlock}
               unlockPlace={unlockPlace}
               locked={placeLocked(user, place)}
@@ -279,6 +288,7 @@ const PlaceAction = ({ title, icon, onPress }) => {
 };
 
 export const PlaceRating = ({
+  loading = false,
   locked,
   title,
   image,
@@ -296,7 +306,10 @@ export const PlaceRating = ({
       
       <View style={s.ratingInnerContainer}>
         {locked ? (
-          <TouchableOpacity disabled={!locked || unlockPlace == null} onPress={unlockPlace}>
+          <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
+            <View style={s.buyIndicatorContainer}>
+              <ActivityIndicator color={colors.treeBlues} style={s.buyIndicator} animating={loading}/>
+            </View>
             <View style={s.buyContainer(small)}>
               {pointsToUnlock && (
                 <Text style={s.buyPoints}>{pointsToUnlock}</Text>
@@ -322,6 +335,14 @@ export const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  buyIndicator: {
+    transform: [{translateX: -24}]
+  },
+
+  buyIndicatorContainer: {
+    ...StyleSheet.absoluteFill, flexDirection: 'row', alignItems: 'center'
+  },
 
   ratingStyle: (small, color) => ({
     ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 
