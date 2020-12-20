@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { AppState } from "react-native";
+import { useServer } from "./useServer";
 
 export const useUserUsageTime = () => {
   const [appState, setAppState] = useState(AppState.currentState);
   const startTime = useRef();
+
+  const {sendUsageTime} = useServer();
 
   const handleAppStateChange = (nextAppState) => {
     if (nextAppState === "active") {
@@ -16,6 +19,7 @@ export const useUserUsageTime = () => {
         const endTime = new Date();
         const usage = endTime - startTime.current;
         startTime.current = null;
+        sendUsageTime(usage);
       }
     }
     setAppState(nextAppState);

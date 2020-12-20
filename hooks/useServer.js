@@ -94,7 +94,23 @@ export const useServer = () => {
     }
   };
 
-  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces };
+  const sendUsageTime = async (time) => {
+    try {
+      const response = await fetch(`${BASE_URL}/usageTime`, {
+        method: "POST",
+        body: {
+          usageSeconds: time 
+        }
+      });
+      // const data = await response.json();
+      // return data;
+    } catch (error) {
+      // console.log({ error });
+      // return null;
+    }
+  }
+
+  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime };
 };
 
 //
