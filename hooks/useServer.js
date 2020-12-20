@@ -14,7 +14,6 @@ export const useServer = () => {
     }
     try {
       setLoadingSearch(true);
-      console.log({location});
       const response = await fetch(
         `${BASE_URL}/searchByName?lat=${location.latitude}&lng=${location.longitude}&text=${name}`,
         {
@@ -44,7 +43,6 @@ export const useServer = () => {
         }
       );
       const data = await response.json();
-      //   console.log({data});
       loadingPlaces.current = false;
       return convertServerPlaces(data, location);
     } catch (error) {
