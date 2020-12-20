@@ -27,6 +27,7 @@ import { statusBarHeight } from "../../values/consts";
 import _ from "lodash";
 import { useServer } from "../../hooks/useServer";
 import { useIsFocused } from '@react-navigation/native';
+import { placeLocked } from "../../hooks/helpers";
 
 export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -42,7 +43,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   const isFocused = useIsFocused();
 
   const {state} = useContext(UserContext);
-  const {serverPlaces} = state;
+  const {serverPlaces, user} = state;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
@@ -158,7 +159,7 @@ export const ExploreScreen = ({ navigation, route }) => {
                 </View>                
               )
             }}
-            renderItem={({ item, index }) => <SearchCard showItem={showItem} item={item} index={index} />}
+            renderItem={({ item, index }) => <SearchCard user={user} showItem={showItem} item={item} index={index} />}
           />
           <Animated.FlatList
             scrollIndicatorInsets={styles.scrollInsets}
@@ -256,7 +257,7 @@ export const SearchBar = ({
   );
 };
 
-const SearchCard = ({ item, showItem, index }) => {
+const SearchCard = ({ user, item, showItem, index }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={() => showItem(item)}>
       <Image style={styles.cardImage} source={{ uri: item.image }} />
@@ -282,7 +283,7 @@ const SearchCard = ({ item, showItem, index }) => {
           <PlaceRating
             pointsToUnlock={item.pointsToUnlock}
             small
-            locked={item.locked}
+            locked={placeLocked(user, item)}
             title={strings.placeScreen.crowdnessTitle(true)}
             image={require("../../assets/images/HowBusy.png")}
             color={colors.desertRock}
@@ -292,7 +293,7 @@ const SearchCard = ({ item, showItem, index }) => {
           <PlaceRating
             small
             leftMargin={40}
-            title={strings.placeScreen.cleannessTitle(item.locked)}
+            title={strings.placeScreen.cleannessTitle(placeLocked(user, item))}
             image={require("../../assets/images/Heart.png")}
             color={colors.grass}
             rating={item.cleanness}
