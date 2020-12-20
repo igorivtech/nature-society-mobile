@@ -149,17 +149,14 @@ export const ExploreScreen = ({ navigation, route }) => {
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
             data={places}
             keyExtractor={(item) => item.key}
-            renderItem={({ item, index }) => {
-              // if (index < places.length - 1) {
-                return <SearchCard showItem={showItem} item={item} index={index} />
-              // } else {
-              //   return (
-              //     <View style={styles.paginationIndicatorContainer} key={item.key}>
-              //       <ActivityIndicator animating={loadingMorePlaces} color={colors.treeBlues} />
-              //     </View>
-              //   )
-              // }
+            ListFooterComponent={()=>{
+              return (
+                <View style={styles.paginationIndicatorContainer} key='indicator'>
+                  <ActivityIndicator animating={loadingMorePlaces} color={colors.treeBlues} />
+                </View>                
+              )
             }}
+            renderItem={({ item, index }) => <SearchCard showItem={showItem} item={item} index={index} />}
           />
           <Animated.FlatList
             scrollIndicatorInsets={styles.scrollInsets}

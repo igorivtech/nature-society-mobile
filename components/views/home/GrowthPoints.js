@@ -49,6 +49,9 @@ export const GrowthPoints = ({isFocused, popupVisible}) => {
     if (user) {
       if (user.points !== points) {
         if (points === 0) { // first time
+          if (textRef.current == null) {
+            return;
+          }
           setTimeout(() => {
             textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
               setPoints(user.points);
