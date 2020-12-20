@@ -216,15 +216,15 @@ export const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
-          onRegionChange={()=>setHideList(true)}
-          onRegionChangeComplete={onRegionChangeComplete}
-          initialRegion={INITIAL_REGION}
-          customMapStyle={MAP_STYLE}
-          ref={mapRef}
-          provider={PROVIDER_GOOGLE}
-          style={globalStyles.mapStyle}
-        >
-          {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker key={index} place={p} />)}
+        onRegionChange={()=>setHideList(true)}
+        onRegionChangeComplete={onRegionChangeComplete}
+        initialRegion={INITIAL_REGION}
+        customMapStyle={MAP_STYLE}
+        ref={mapRef}
+        provider={PROVIDER_GOOGLE}
+        style={globalStyles.mapStyle}
+      >
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker key={index} place={p} />)}
       </MapView>
       
       <SafeAreaView>
