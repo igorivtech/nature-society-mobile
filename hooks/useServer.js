@@ -94,12 +94,12 @@ export const useServer = () => {
     }
   };
 
-  const sendUsageTime = async (time) => {
+  const sendUsageTime = async (milliseconds) => {
     try {
-      const response = await fetch(`${BASE_URL}/usageTime`, {
+      await fetch(`${BASE_URL}/insertTime`, {
         method: "POST",
         body: {
-          usageSeconds: time 
+          time: milliseconds/1000
         }
       });
       // const data = await response.json();
