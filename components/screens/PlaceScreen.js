@@ -29,13 +29,16 @@ import {
 } from "react-native-gesture-handler";
 import {UserContext} from "../../context/context"
 import {SAVE_PLACES, SAVE_USER} from "../../context/userReducer";
+import { Auth } from "aws-amplify";
+import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser} from '../../hooks/useUser';
+import { placeLocked } from "../../hooks/helpers";
 
 const fadeOutDuration = 100;
 
 export const PlaceScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
-  const {serverPlaces, user} = state;
+  const {serverPlaces, user, settings} = state;
 
   const { place } = route.params;
 
@@ -92,30 +95,33 @@ export const PlaceScreen = ({ navigation, route }) => {
     navigation.navigate("Home", {signupNow: true})
   }
 
-  const unlockPlace = () => {
+  const unlockPlace = async () => {
     if (user === null) {
       popupAction.current = signupNow;
       setPopupSingle(false);
       setPopupTextData(strings.popups.signupNow)
       setPopupVisible(true);
-    } else if (user.points >= place.pointsToUnlock) {
-      let places = [...serverPlaces];
-      places.forEach((p, index) => {
-        if (p.key === place.key) {
-          places[index].locked = false;
-        }
+    } else if (user.points >= settings.pointsForUnlock) {
+      let attributes = {}
+      let unlockedPlaces = user.unlockedPlaces;
+      unlockedPlaces[place._id] = 1
+      attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(unlockedPlaces);
+      attributes[ATTRIBUTE_POINTS] = `${user.points - settings.pointsForUnlock}`;
+      let cognitoUser = await Auth.currentAuthenticatedUser({
+        bypassCache: true,
       });
-      dispatch({
-        type: SAVE_PLACES,
-        payload: places
-      });
-      dispatch({
-        type: SAVE_USER,
-        payload: {
-          ...user,
-          points: user.points - place.pointsToUnlock
-        }
-      })
+      let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+      if (result === 'SUCCESS') {
+        let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        dispatch({
+          type: SAVE_USER,
+          payload: cognitoToUser(updatedCognitoUser)
+        })
+      } else {
+        console.error("cant update user");
+      }
     } else {
       popupAction.current = playMore;
       setPopupSingle(true);
@@ -164,9 +170,9 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={s.ratingContainer}
           >
             <PlaceRating
-              pointsToUnlock={place.pointsToUnlock}
+              pointsToUnlock={settings.pointsForUnlock}
               unlockPlace={unlockPlace}
-              locked={place.locked}
+              locked={placeLocked(user, place)}
               title={strings.placeScreen.crowdnessTitle(false)}
               image={require("../../assets/images/HowBusyOrange.png")}
               color={colors.desertRock}
@@ -175,7 +181,7 @@ export const PlaceScreen = ({ navigation, route }) => {
 
             <PlaceRating
               leftMargin={40}
-              title={strings.placeScreen.cleannessTitle(place.locked)}
+              title={strings.placeScreen.cleannessTitle(placeLocked(user, place))}
               image={require("../../assets/images/HeartL.png")}
               color={colors.grass}
               rating={place.cleanness}
@@ -194,7 +200,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={globalStyles.fullWidth}
           >
             <Text style={textStyles.normalOfSize(12)}>
-              {strings.placeScreen.recentVisitors(place.locked)}
+              {strings.placeScreen.recentVisitors(placeLocked(user, place))}
             </Text>
             <View style={s.recentVisitorsContainer}>
               {recentVisitors.map((visitor, index) => (

@@ -132,6 +132,14 @@ export const convertServerPlaces = (serverPlaces, location) => {
   return res
 }
 
+export const placeLocked = (user, place) => {
+  if (user == null) {
+    return true;
+  }
+  const unlockedPlaces = user.unlockedPlaces;
+  return unlockedPlaces[place._id] == null
+}
+
 // {
 //   image:
 //     "https://www.rei.com/dam/catskills_060117_003_hero_lg.jpg",
