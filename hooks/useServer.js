@@ -1,9 +1,13 @@
 import React, { useRef, useState } from "react";
+import { UserContext } from "../context/context";
 import { convertServerPlaces } from "./helpers";
 
 const BASE_URL = `https://jwfyhvynee.execute-api.us-east-1.amazonaws.com/dev`;
 
 export const useServer = () => {
+
+  const {state} = useContext(UserContext);
+  const {token} = state;
 
   const [loadingSearch, setLoadingSearch] = useState(false);
   const loadingPlaces = useRef(false);
@@ -110,7 +114,27 @@ export const useServer = () => {
     }
   }
 
-  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime };
+  const sendReport = async (data) => {
+    if (!token) {
+      return null;
+    }
+    try {
+      const response = await fetch(`${BASE_URL}/report`, {
+        method: "POST",
+        body: data,
+        headers: {
+          Auth: token
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log({ error });
+      return null;
+    }
+  }
+
+  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport };
 };
 
 //

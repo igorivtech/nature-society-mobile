@@ -13,6 +13,8 @@ import { SAVE_USER } from "../../context/userReducer";
 import * as Animatable from "react-native-animatable";
 import { Auth } from "aws-amplify";
 import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../../hooks/useUser";
+import { useUploadImage } from "../../hooks/aws";
+import { useServer } from "../../hooks/useServer";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -48,6 +50,8 @@ export const ReportScreen = ({navigation, route}) => {
   const {state, dispatch} = useContext(UserContext);
   const {user} = state;
 
+  const {uploadImage} = useUploadImage();
+
   const {location} = route.params;
   const [selectedLocation, setLocation] = useState(null);
   const [searchVisible, setSearchVisible] = useState(false);
@@ -67,30 +71,53 @@ export const ReportScreen = ({navigation, route}) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [loadingSendReport, setLoadingSendReport] = useState(false);
 
+  const {sendReport} = useServer();
+
   const finishReport = async () => {
     const cleanness = cleannessRef.current;
     const crowdness = crowdnessRef.current;
     try {
       setLoadingSendReport(true);
-      let attributes = {}
-      attributes[ATTRIBUTE_POINTS] = `${user.points + 30}`;
-      attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
-      let cognitoUser = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
-      let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-      if (result === 'SUCCESS') {
-        let updatedCognitoUser = await Auth.currentAuthenticatedUser({
-          bypassCache: true,
-        });
-        dispatch({
-          type: SAVE_USER,
-          payload: cognitoToUser(updatedCognitoUser)
-        })
-        navigation.navigate("Home");
-      } else {
-        console.error("cant update user");
-      }
+      uploadImage(image, (url)=>{
+        let data = {
+          cleanness, 
+          crowdness,
+          placeId: location._id,
+          checkboxes: {
+            'i_helped': iHelped.on,
+            '0_full_bins': details["0_full_bins"].on,
+            '1_extra_light': details["1_extra_light"].on,
+            '2_open_bins': details["2_open_bins"].on,
+            '3_fires_marks': details["3_fires_marks"].on,
+            '4_broken_bins': details["4_broken_bins"].on,
+          }
+        }
+        if (url) {
+          data.image = url
+        }
+        const response = await sendReport(data);
+        if (response) {
+          let attributes = {}
+          attributes[ATTRIBUTE_POINTS] = `${user.points + 30}`;
+          attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
+          let cognitoUser = await Auth.currentAuthenticatedUser({
+            bypassCache: true,
+          });
+          let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+          if (result === 'SUCCESS') {
+            let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+              bypassCache: true,
+            });
+            dispatch({
+              type: SAVE_USER,
+              payload: cognitoToUser(updatedCognitoUser)
+            })
+            navigation.navigate("Home");
+          } else {
+            console.error("cant update user");
+          }
+        }
+      })
     } catch (error) {
       console.error(error);
       // handleError(error);
