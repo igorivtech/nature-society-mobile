@@ -42,6 +42,9 @@ export const ReportScreen = ({navigation, route}) => {
     on: false
   }
 
+  const cleannessRef = useRef(0.5);
+  const crowdnessRef = useRef(0.5);
+
   const {state, dispatch} = useContext(UserContext);
   const {user} = state;
 
@@ -145,8 +148,8 @@ export const ReportScreen = ({navigation, route}) => {
             scrollEventThrottle={16}
             contentContainerStyle={styles.scrollViewContent}
             style={StyleSheet.absoluteFill}>
-            <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
-            <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
+            <Slider valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
+            <Slider valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
             <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
           </Animated.ScrollView>
         </Animatable.View>

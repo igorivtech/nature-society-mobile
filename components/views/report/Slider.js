@@ -28,7 +28,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-export const Slider = memo(({item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
+export const Slider = memo(({valueRef, item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
   const {animation, title, titles} = item;
 
@@ -125,6 +125,7 @@ export const Slider = memo(({item, location, startUpAnimation = false, initialVa
   }
 
   const clampAnimation = () => {
+    valueRef.current = progress._value;
     const p = clampAnimationValue(progress._value);
     currentOffset.current = p;
     Animated.timing(progress, {
