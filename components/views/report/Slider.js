@@ -65,9 +65,9 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
     if (!isMounted) {
       return;
     }
-    setTopText(titles[2]);
-    setMiddlePlusText(titles[1]);
-    setMiddleText(titles[1]);
+    setTopText(titles[4]);
+    setMiddlePlusText(titles[3]);
+    setMiddleText(titles[2]);
     setMiddleMinusText(titles[1]);
     setBottomText(titles[0]);
   }
