@@ -14,6 +14,12 @@ export const useServer = () => {
     }
     try {
       setLoadingSearch(true);
+      let url
+      if (location) {
+        url = `${BASE_URL}/searchByName?lat=${location.latitude}&lng=${location.longitude}&text=${name}`;
+      } else {
+        url = `${BASE_URL}/searchByName?text=${name}`;
+      }
       const response = await fetch(
         `${BASE_URL}/searchByName?lat=${location.latitude}&lng=${location.longitude}&text=${name}`,
         {
