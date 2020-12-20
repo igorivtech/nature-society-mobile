@@ -119,7 +119,7 @@ export const useServer = () => {
         method: "POST",
         body: data,
         headers: {
-          Auth: token
+          Authorization: token
         }
       });
       const data = await response.json();
