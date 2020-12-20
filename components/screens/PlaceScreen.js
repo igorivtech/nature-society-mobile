@@ -108,7 +108,7 @@ export const PlaceScreen = ({ navigation, route }) => {
       try {
         setLoadingBuy(true);
         let attributes = {}
-        let unlockedPlaces = user.unlockedPlaces;
+        let unlockedPlaces = {...user.unlockedPlaces};
         unlockedPlaces[place._id] = 1
         attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(unlockedPlaces);
         attributes[ATTRIBUTE_POINTS] = `${user.points - settings.pointsForUnlock}`;
