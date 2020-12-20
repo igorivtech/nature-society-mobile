@@ -55,7 +55,7 @@ export const cognitoToUser = (cognitoUser) => {
     points: parseInt(attributes[ATTRIBUTE_POINTS]),
     numOfReports: parseInt(attributes[ATTRIBUTE_NUM_OF_REPORTS]),
     achievements: DEFAULT_ACHIEVEMENTS,
-    lastAchievement: "חקלאי",
+    unlockedPlaces: JSON.parse(attributes[ATTRIBUTE_UNLOCKED_PLACES]),
   };
   if (attributes.picture) {
     user.image = attributes["picture"];

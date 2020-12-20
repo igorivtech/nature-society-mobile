@@ -21,11 +21,12 @@ import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
 import { resizeImage, validateEmail } from "../../hooks/helpers";
-import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, cognitoToUser } from "../../hooks/useUser";
+import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser } from "../../hooks/useUser";
 
 const PASSWORD_MIN_LENGTH = 8;
 const DEFAULT_POINTS = 630;
 const DEFAULT_NUM_OF_REPORTS = 31;
+const DEFAULT_UNLOCKED_PLACES = {};
 
 const scrollZero = {
   y: 0,
@@ -190,6 +191,7 @@ export const LoginScreen = ({ navigation }) => {
           }
           attributes[ATTRIBUTE_POINTS] = `${DEFAULT_POINTS}`;
           attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${DEFAULT_NUM_OF_REPORTS}`;
+          attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(DEFAULT_UNLOCKED_PLACES);
           if (fileName) {
             attributes.picture = fileName;
           }
