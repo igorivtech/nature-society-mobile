@@ -3,7 +3,7 @@ import { Animated, Image } from "react-native";
 import { Marker } from "react-native-maps";
 import { ITEM_WIDTH } from "./PlaceCard";
 
-export const PlaceMarker = ({place, onPress, scrollX, index}) => {
+export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, index}) => {
     const [trackChanges, setTrackChanges] = useState(true)
 
     const scale = scrollX.interpolate({
@@ -27,7 +27,7 @@ export const PlaceMarker = ({place, onPress, scrollX, index}) => {
     }, [place])
     
     return (
-      <Marker tracksViewChanges={trackChanges} onPress={p} coordinate={place.position}>
+      <Marker tracksViewChanges={trackChanges || globalTracksViewChanges} onPress={p} coordinate={place.position}>
         <Animated.View style={{
             opacity,
             transform: [{scale}]

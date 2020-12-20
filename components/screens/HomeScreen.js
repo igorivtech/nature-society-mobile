@@ -49,6 +49,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [location, setLocation] = useState(null);
   const mapRef = useRef(null);
   const lockAutoSearching = useRef(false);
+  const [globalTracksViewChanges, setGlobalTracksViewChanges] = useState(false);
 
   const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -88,7 +89,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [locationPermission, isFocused]);
 
   useEffect(() => {
-    if (serverPlaces.length > 0) {
+    if (serverPlaces && serverPlaces.length > 0) {
       setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
       // setTimeout(() => {
       if (isFocused) {
@@ -189,6 +190,7 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const onRegionChangeComplete = async (region) => {
+    setGlobalTracksViewChanges(false);
     if (lockAutoSearching.current) {
       return;
     }
@@ -236,6 +238,7 @@ export const HomeScreen = ({ navigation, route }) => {
         onPanDrag={()=>lockAutoSearching.current = false}
         moveOnMarkerPress={false}
         onRegionChange={()=>{
+          setGlobalTracksViewChanges(true);
           if (!lockAutoSearching.current) {
             setHideList(true)
           }
@@ -247,7 +250,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
       </MapView>
       
       <SafeAreaView>
@@ -264,7 +267,10 @@ export const HomeScreen = ({ navigation, route }) => {
           horizontal
           style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
           contentContainerStyle={globalStyles.mainListContainer}
-          onScrollBeginDrag={()=>lockAutoSearching.current = true}
+          onScrollBeginDrag={()=>{
+            lockAutoSearching.current = true;
+            setGlobalTracksViewChanges(true);
+          }}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
             {useNativeDriver: true}
