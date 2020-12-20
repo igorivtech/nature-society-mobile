@@ -85,11 +85,12 @@ export const PlaceCard = ({ user, item, index, scrollX, callback }) => {
             </View>
 
             <RecentVisitor
-              title={item.lastVisitorName}
+              title={item.lastVisitors[0].lastVisitorName}
               details={strings.homeScreen.recentVisitor(
-                item.lastVisitorGender === 0
+                // item.lastVisitorGender === 0
+                true
               )}
-              image={item.lastVisitorImage}
+              image={item.lastVisitors[0].lastVisitorImage}
             />
 
             <View style={globalStyles.cardLocationContainer}>
