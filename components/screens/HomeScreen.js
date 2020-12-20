@@ -213,26 +213,9 @@ export const HomeScreen = ({ navigation, route }) => {
 
   // const lockSearching = useRef(false);
 
-  const onPanDragStart = ()=> {
-    console.log("onPanDragStart");
-  }
-
-  const onPanDragStop = ()=> {
-    console.log("onPanDragStop");
-  }
-
   return (
     <View style={globalStyles.homeContainer}>
-      <View
-        style={StyleSheet.absoluteFill}
-        onMoveShouldSetResponder={() => {
-          console.log(111);
-          onPanDragStart()
-          return true
-        }}
-        onResponderRelease={onPanDragStop}
-      >
-        <MapView
+      <MapView
           onRegionChange={()=>setHideList(true)}
           onRegionChangeComplete={onRegionChangeComplete}
           initialRegion={INITIAL_REGION}
@@ -242,8 +225,7 @@ export const HomeScreen = ({ navigation, route }) => {
           style={globalStyles.mapStyle}
         >
           {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker key={index} place={p} />)}
-        </MapView>
-      </View>
+      </MapView>
       
       <SafeAreaView>
         <View style={globalStyles.homeTopContainer}>
