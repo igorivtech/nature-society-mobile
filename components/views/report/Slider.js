@@ -32,7 +32,7 @@ const clampAnimationValue = (p) => {
   }
 }
 
-const TITLES_DELTA = 1/6;
+const TITLES_DELTA = 1/7;
 
 export const Slider = memo(({valueRef, item, location, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
