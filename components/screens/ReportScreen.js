@@ -152,7 +152,7 @@ export const ReportScreen = ({navigation, route}) => {
         </Animatable.View>
       </View>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
-      <ModalSearch selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
+      <ModalSearch location={location.position} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
     </SafeAreaView>
   );
 };
