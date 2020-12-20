@@ -104,14 +104,12 @@ export const convertServerPlaces = (serverPlaces, location) => {
     if (place.title.trim() === "") {
       res[i].title = "אין שם";
     }
-    res[i].locked = true;
     if (location) {
       const di = distance(place.location.coordinates[1], place.location.coordinates[0], location.latitude, location.longitude);
       res[i].distance = Math.round(Math.round((di) * 100) / 100);
     } else {
       res[i].distance = null;
     }
-    res[i].pointsToUnlock = 10;
     //
     if (place.cleanesss === 0) {
       res[i].cleanness = 3.5
@@ -119,10 +117,6 @@ export const convertServerPlaces = (serverPlaces, location) => {
     if (place.cleanesss === 0) {
       res[i].crowdness = 4.5
     }
-    //
-    res[i].lastVisitorName = "איגור";
-    res[i].lastVisitorGender = 0;
-    res[i].lastVisitorImage = "https://www.w3schools.com/w3images/avatar6.png";
   })
 
   if (location) {
