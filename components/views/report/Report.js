@@ -88,7 +88,7 @@ const Button = ({filled, title, onPress, loading = false}) => {
     }).start();
   }, [loading])
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity disabled={loading} onPress={onPress}>
       <Animated.View style={styles.buttonContainer(filled, loading)}>
         <View>
           <View style={styles.indicatorContainer}>

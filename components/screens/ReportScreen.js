@@ -123,7 +123,6 @@ export const ReportScreen = ({navigation, route}) => {
       })
     } catch (error) {
       handleError(error);
-    } finally {
       setLoadingSendReport(false);
     }
   }
