@@ -11,10 +11,8 @@ import { useEffect } from "react";
 
 export const Report = ({goBack, image, setImage, finishReport, details, iHelped, loadingSendReport}) => {
 
-  const points = 30;
-
   const {state} = useContext(UserContext);
-  const {user} = state;
+  const {user, settings} = state;
 
   const firstContainerOpacity = useRef(new Animated.Value(1)).current;
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
@@ -58,7 +56,7 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
 
         <View style={styles.bottomContainer}>
           <DetailsView details={details} iHelped={iHelped} />
-          <FinishButton finishReport={submitReport} points={points} />
+          <FinishButton finishReport={submitReport} points={settings.reportPoints} />
 
         </View>
         
@@ -70,7 +68,7 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
         
         <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.doneTitle(user)}</Text>
         <View style={styles.pointsContainer}>
-          <Text style={styles.pointsText}>{`+${points}`}</Text>
+          <Text style={styles.pointsText}>{`+${settings.reportPoints}`}</Text>
           <Image source={require("../../../assets/images/report_done_icon.png")} />
         </View>
         <Button title={strings.reportScreen.share} filled={true} onPress={share} />
