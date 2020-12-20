@@ -49,11 +49,10 @@ export const GrowthPoints = ({isFocused, popupVisible}) => {
     if (user) {
       if (user.points !== points) {
         if (points === 0) { // first time
-          if (textRef.current == null) {
-            return;
-          }
           setTimeout(() => {
+            if (textRef.current == null) {return}
             textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
+              if (textRef.current == null) {return}
               setPoints(user.points);
               textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
                 disappear(2500);
@@ -61,13 +60,13 @@ export const GrowthPoints = ({isFocused, popupVisible}) => {
             });
           }, 2000);
         } else {
-          if (containerRef.current == null) {
-            return;
-          }
           setTimeout(() => {
+            if (containerRef.current == null) {return}
             containerRef.current.animate(enterAnimation, 800).then(()=>{
               setTimeout(() => {
+                if (textRef.current == null) {return}
                 textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
+                  if (textRef.current == null) {return}
                   setPoints(user.points);
                   textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
                     disappear(3500);
