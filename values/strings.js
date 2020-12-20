@@ -86,7 +86,7 @@ export const strings = {
   login: "התחברות",
   logout: "התנתקות",
   distanceFromYou: (distance) => {
-    return `${distance} ק״מ ממך`;
+    return `${distance ?? `-`} ק״מ ממך`;
   },
   distanceFromYouAlt: (distance) => {
     let str = "";
