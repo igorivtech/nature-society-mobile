@@ -13,6 +13,7 @@ import {
   FlatList,
   Animated,
   Easing,
+  ActivityIndicator,
 } from "react-native";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { colors } from "../../values/colors";
@@ -121,6 +122,7 @@ export const ExploreScreen = ({ navigation, route }) => {
 
       <View style={styles.searchScreenContainer}>
         <SearchBar
+          loadingSearch={loadingSearch}
           searchTerm={searchTerm}
           searchOn={searchOn}
           setSearchOn={setSearchOn}
@@ -179,8 +181,19 @@ export const SearchBar = ({
   setSearchOn,
   closeSearch,
   textChanged,
-  modal = false
+  modal = false,
+  loadingSearch = false
 }) => {
+
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(()=>{
+    Animated.timing(opacity, {
+      useNativeDriver: true,
+      toValue: loadingSearch ? 1 : 0,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  }, [loadingSearch])
 
   const onFocus = () => {
     if (modal) {
@@ -199,6 +212,10 @@ export const SearchBar = ({
         </TouchableOpacity>
       ) : null}
 
+      <Animated.View style={styles.searchIndicatorContainer(opacity)}>
+        <ActivityIndicator style={styles.indicator} animating={loadingSearch} color={colors.treeBlues} />
+      </Animated.View>
+
       <TextInput
         onFocus={onFocus}
         onChangeText={textChanged}
@@ -207,7 +224,7 @@ export const SearchBar = ({
         placeholderTextColor={colors.treeBlues}
         placeholder={searchOn ? strings.exploreScreen.searchPlaceholder : ""}
         style={styles.searchInput}
-      />
+      />     
 
       <Image
         source={
@@ -268,6 +285,17 @@ const SearchCard = ({ item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  indicator: {
+    transform: [{translateX: 24}]
+  },
+
+  searchIndicatorContainer: (opacity) => ({
+    ...StyleSheet.absoluteFill,
+    flexDirection: 'row',
+    alignItems: 'center',
+    opacity
+  }),
 
   scrollInsets: {
     right: 1
@@ -358,6 +386,7 @@ const styles = StyleSheet.create({
   },
 
   searchInput: {
+    marginLeft: 24,
     paddingHorizontal: 8,
     flexGrow: 1,
     flexShrink: 1,
