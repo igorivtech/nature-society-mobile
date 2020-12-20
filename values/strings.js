@@ -41,6 +41,11 @@ export const strings = {
   code: 'קוד',
   showInfo: 'הצג\nמידע',
   popups: {
+    signupNow: {
+      title: 'כדי להשתמש בנקודות צמיחה צריך להירשם למצב הטבע.\n\nשנעשה את זה עכשיו?',
+      yes: 'אני בעניין',
+      no: 'אחר כך'
+    },
     empty: {
       title: "",
       yes: "",

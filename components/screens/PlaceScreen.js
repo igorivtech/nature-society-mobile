@@ -17,6 +17,7 @@ import { Popup } from "../views/Popup"
 import * as Animatable from "react-native-animatable";
 import { RecentVisitor } from "../views/home/views";
 import {
+  emptyFunc,
   height,
   NAV_CLOSE_TAP_SIZE,
   recentVisitors,
@@ -39,6 +40,9 @@ export const PlaceScreen = ({ navigation, route }) => {
   const { place } = route.params;
 
   const [popupVisible, setPopupVisible] = useState(false);
+  const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
+  const [popupAction, setPopupAction] = useState(emptyFunc);
+  const [pupupSingle, setPopupSingle] = useState(true);
 
   const textRef = useRef();
   const ratingRef = useRef();
@@ -80,8 +84,21 @@ export const PlaceScreen = ({ navigation, route }) => {
     }
   };
 
+  const playMore = () => {
+    console.log("playMore");
+  }
+
+  const signupNow = () => {
+    console.log("signupNow");
+  }
+
   const unlockPlace = () => {
-    if (user.points >= place.pointsToUnlock) {
+    if (user === null) {
+      setPopupSingle(false);
+      setPopupAction(signupNow);
+      setPopupTextData(strings.popups.signupNow)
+      setPopupVisible(true);
+    } else if (user.points >= place.pointsToUnlock) {
       let places = [...serverPlaces];
       places.forEach((p, index) => {
         if (p.key === place.key) {
@@ -100,12 +117,11 @@ export const PlaceScreen = ({ navigation, route }) => {
         }
       })
     } else {
+      setPopupSingle(true);
+      setPopupAction(playMore);
+      setPopupTextData(strings.popups.cantBuy)
       setPopupVisible(true);
     }
-  }
-
-  const playMore = () => {
-    console.log("playMore");
   }
 
   return (
@@ -228,7 +244,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           </Animatable.View>
         </View>
       </FlingGestureHandler>
-      <Popup textData={strings.popups.cantBuy} single popupVisible={popupVisible} setPopupVisible={setPopupVisible} action={playMore} />
+      <Popup textData={popupTextData} single={pupupSingle} popupVisible={popupVisible} setPopupVisible={setPopupVisible} action={popupAction} />
     </View>
   );
 };
