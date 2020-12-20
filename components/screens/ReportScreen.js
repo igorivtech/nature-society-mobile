@@ -178,7 +178,7 @@ export const ReportScreen = ({navigation, route}) => {
             contentContainerStyle={styles.scrollViewContent}
             style={StyleSheet.absoluteFill}>
             <Slider valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
-            <Slider valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
+            <Slider valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
             <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
           </Animated.ScrollView>
         </Animatable.View>
