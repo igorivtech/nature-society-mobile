@@ -131,7 +131,7 @@ export const HomeScreen = ({ navigation, route }) => {
       }
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, serverPlaces]);
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
