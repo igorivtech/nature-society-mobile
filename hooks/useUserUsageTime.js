@@ -12,8 +12,8 @@ export const useUserUsageTime = () => {
     }
     if (appState === "active" && nextAppState.match(/inactive|background/)) {
       // App has gone to the background!
-      const endTime = new Date();
       if (startTime?.current) {
+        const endTime = new Date();
         const usage = endTime - startTime.current;
         startTime.current = null;
       }
