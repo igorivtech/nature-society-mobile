@@ -268,7 +268,7 @@ const SearchCard = ({ item, showItem, index }) => {
               {strings.distanceFromYou(item.distance)}
             </Text>  
           )}
-          <View style={{flexGrow: 1}} />
+          <View style={{flexGrow: 1, minWidth: 4}} />
           <View style={styles.titleContainer}>
             <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.boldOfSize(16)}>{item.title}</Text>
 
