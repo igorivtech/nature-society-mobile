@@ -84,7 +84,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
     extrapolate: 'clamp'
   })
 
-  if (current) {
+  if (user && current) {
     if (!bottomDone) {
       userProgress = 0.1;
     } else if (!topDone) {
