@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
-import { View, SafeAreaView, Animated, Easing, Image } from "react-native";
+import { View, SafeAreaView, Animated, Easing, Image, StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { globalStyles } from "../../values/styles";
@@ -63,7 +63,9 @@ export const HomeScreen = ({ navigation, route }) => {
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      if (location) {
+        setLocation(location.coords);
+      }
     })();
     // notification - DEBUG
     // setTimeout(() => {
@@ -195,30 +197,54 @@ export const HomeScreen = ({ navigation, route }) => {
   }
 
   const debounce = useCallback(_.debounce(async(region, radius) => {
-    const pp = await getPlaces(region, radius);
+    // if (lockSearching.current) {
+    //   return;
+    // }
+    const pp = await getPlaces(region, location, radius);
     dispatch({
       type: SAVE_PLACES,
       payload: pp,
     });
-  }, 500), []);
+  }, 500), [location]);
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
   };
 
+  // const lockSearching = useRef(false);
+
+  const onPanDragStart = ()=> {
+    console.log("onPanDragStart");
+  }
+
+  const onPanDragStop = ()=> {
+    console.log("onPanDragStop");
+  }
+
   return (
     <View style={globalStyles.homeContainer}>
-      <MapView
-        onRegionChange={()=>setHideList(true)}
-        onRegionChangeComplete={onRegionChangeComplete}
-        initialRegion={INITIAL_REGION}
-        customMapStyle={MAP_STYLE}
-        ref={mapRef}
-        provider={PROVIDER_GOOGLE}
-        style={globalStyles.mapStyle}
+      <View
+        style={StyleSheet.absoluteFill}
+        onMoveShouldSetResponder={() => {
+          console.log(111);
+          onPanDragStart()
+          return true
+        }}
+        onResponderRelease={onPanDragStop}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker key={index} place={p} />)}
-      </MapView>
+        <MapView
+          onRegionChange={()=>setHideList(true)}
+          onRegionChangeComplete={onRegionChangeComplete}
+          initialRegion={INITIAL_REGION}
+          customMapStyle={MAP_STYLE}
+          ref={mapRef}
+          provider={PROVIDER_GOOGLE}
+          style={globalStyles.mapStyle}
+        >
+          {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker key={index} place={p} />)}
+        </MapView>
+      </View>
+      
       <SafeAreaView>
         <View style={globalStyles.homeTopContainer}>
           <HomeButton index={2} notification={notification} onPress={progress} />
@@ -232,6 +258,7 @@ export const HomeScreen = ({ navigation, route }) => {
           horizontal
           style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
           contentContainerStyle={globalStyles.mainListContainer}
+          // onScrollBeginDrag={()=>lockSearching.current = true}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
             {useNativeDriver: true}

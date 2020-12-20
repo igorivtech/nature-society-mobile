@@ -85,7 +85,7 @@ export const calcCustomAchievements = (serverAchievements, userPoints) => {
   return output
 }
 
-export const convertServerPlaces = (serverPlaces) => {
+export const convertServerPlaces = (serverPlaces, location) => {
 
   let res = [...serverPlaces];
 
@@ -105,7 +105,12 @@ export const convertServerPlaces = (serverPlaces) => {
       res[i].title = "אין שם";
     }
     res[i].locked = true;
-    res[i].distance = Math.round((place.dis / 1000) * 100) / 100;
+    if (location) {
+      const di = distance(place.location.coordinates[1], place.location.coordinates[0], location.latitude, location.longitude);
+      res[i].distance = Math.round((di) * 100) / 100;
+    } else {
+      res[i].distance = `-`; // Math.round((place.dis / 1000) * 100) / 100;
+    }
     res[i].pointsToUnlock = 10;
     //
     if (place.cleanesss === 0) {
@@ -119,6 +124,10 @@ export const convertServerPlaces = (serverPlaces) => {
     res[i].lastVisitorGender = 0;
     res[i].lastVisitorImage = "https://www.w3schools.com/w3images/avatar6.png";
   })
+
+  if (location) {
+    res.sort((p1, p2) => p1.distance > p2.distance);
+  }
 
   return res
 }
