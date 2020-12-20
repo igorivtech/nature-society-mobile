@@ -21,7 +21,7 @@ import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
 import { cognitoToUser } from "../../hooks/useUser";
-import { objectLength } from "../../hooks/helpers";
+import { objectLength, resizeImage } from "../../hooks/helpers";
 
 const scrollZero = {
   y: 0,
@@ -99,7 +99,8 @@ export const ProfileScreen = ({ navigation }) => {
       })
         .then((result) => {
           if (!result.cancelled) {
-            setImage(result);
+            const resized = await resizeImage(result);
+            setImage(resized);
           }
         })
         .catch((error) => {
