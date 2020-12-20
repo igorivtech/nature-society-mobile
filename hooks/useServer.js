@@ -1,13 +1,9 @@
 import React, { useRef, useState } from "react";
-import { UserContext } from "../context/context";
 import { convertServerPlaces } from "./helpers";
 
 const BASE_URL = `https://jwfyhvynee.execute-api.us-east-1.amazonaws.com/dev`;
 
 export const useServer = () => {
-
-  const {state} = useContext(UserContext);
-  const {token} = state;
 
   const [loadingSearch, setLoadingSearch] = useState(false);
   const loadingPlaces = useRef(false);
@@ -114,7 +110,7 @@ export const useServer = () => {
     }
   }
 
-  const sendReport = async (data) => {
+  const sendReport = async (token, data) => {
     if (!token) {
       return null;
     }

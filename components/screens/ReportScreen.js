@@ -48,8 +48,8 @@ export const ReportScreen = ({navigation, route}) => {
   const crowdnessRef = useRef(0.5);
 
   const {state, dispatch} = useContext(UserContext);
-  const {user} = state;
-
+  const {user, token} = state;
+  
   const {uploadImage} = useUploadImage();
 
   const {location} = route.params;
@@ -78,7 +78,7 @@ export const ReportScreen = ({navigation, route}) => {
     const crowdness = crowdnessRef.current;
     try {
       setLoadingSendReport(true);
-      uploadImage(image, (url)=>{
+      uploadImage(image, async (url)=>{
         let data = {
           cleanness, 
           crowdness,
@@ -95,7 +95,7 @@ export const ReportScreen = ({navigation, route}) => {
         if (url) {
           data.image = url
         }
-        const response = await sendReport(data);
+        const response = await sendReport(token, data);
         if (response) {
           let attributes = {}
           attributes[ATTRIBUTE_POINTS] = `${user.points + 30}`;
