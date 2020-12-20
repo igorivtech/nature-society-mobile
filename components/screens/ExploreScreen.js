@@ -218,8 +218,8 @@ const SearchCard = ({ item, showItem, index }) => {
             {strings.distanceFromYou(item.distance)}
           </Text>
 
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={textStyles.boldOfSize(16)}>{item.title}</Text>
+          <View style={{ flexShrink: 1, flexDirection: "row", alignItems: "center" }}>
+            <Text numberOfLines={1} adjustsFontSizeToFit={true} style={textStyles.boldOfSize(16)}>{item.title}</Text>
 
             <Image
               style={styles.translateY(-2)}
