@@ -278,11 +278,10 @@ const SearchCard = ({ item, showItem, index }) => {
 
 const styles = StyleSheet.create({
 
-  cardsList: (searchOn, cardListAlpha) => ({
-    ...StyleSheet.absoluteFill, zIndex: searchOn ? -1 : 1, opacity: cardListAlpha.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, 1]
-    })
+  cardsList: (searchOn, opacity) => ({
+    ...StyleSheet.absoluteFill, 
+    zIndex: searchOn ? -1 : 1, 
+    opacity
   }),
 
   indicator: {
