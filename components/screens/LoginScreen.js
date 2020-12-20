@@ -11,28 +11,37 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_USER, height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, errors, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
+import { Auth } from 'aws-amplify';
+import { useUploadImage } from "../../hooks/aws";
+import { resizeImage, validateEmail } from "../../hooks/helpers";
+import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, cognitoToUser } from "../../hooks/useUser";
+
+const PASSWORD_MIN_LENGTH = 8;
+const DEFAULT_POINTS = 630;
+const DEFAULT_NUM_OF_REPORTS = 31;
 
 const scrollZero = {
   y: 0,
   animated: true,
 }
 
-const yael = {
-  name: "יעל השכנה",
-  email: "yael@nextdoor",
-  image: "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png"
-}
-
 export const LoginScreen = ({ navigation }) => {
 
   const {state, dispatch} = useContext(UserContext);
+
+  const [errorData, setErrorData] = useState(strings.popups.empty);
+
+  const [loadingLogin, setLoadingLogin] = useState(false);
+  const [loadingSignup, setLoadingSignup] = useState(false);
+  const [loadingRestorePassword, setLoadingRestorePassword] = useState(false);
+  const [loadingChangePassword, setLoadingChangePassword] = useState(false);
 
   const [loginVisible, setLoginVisible] = useState(true);
   const [signupVisible, setSignupVisible] = useState(false);
@@ -47,6 +56,7 @@ export const LoginScreen = ({ navigation }) => {
   const [signupPassword, setSignupPassword] = useState("");
   const [restoreEmail, setRestoreEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [code, onCodeChanged] = useState('');
 
   const [image, setImage] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
@@ -57,6 +67,9 @@ export const LoginScreen = ({ navigation }) => {
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
 
   const [popupVisible, setPopupVisible] = useState(false);
+  const [errorPopupVisible, setErrorPopupVisible] = useState(false);
+
+  const {uploadImage} = useUploadImage();
 
   const scrollRef = useRef();
 
@@ -83,11 +96,12 @@ export const LoginScreen = ({ navigation }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,
         // aspect: [4, 3],
-        quality: 0.75,
+        quality: DEFAULT_IMAGE_QUALITY,
       })
-        .then((result) => {
+        .then(async (result) => {
           if (!result.cancelled) {
-            setImage(result);
+            const resized = await resizeImage(result);
+            setImage(resized);
           }
         })
         .catch((error) => {
@@ -143,45 +157,88 @@ export const LoginScreen = ({ navigation }) => {
 
   const login = () => {
     if (loginVisible) {
-      if (loginEmail.trim() && loginPassword.length > 0) {
-        saveUser({
-          name: name.trim() !== "" ? name.trim() : yael.name,
-          email: loginEmail.trim(),
-          image: image ? image.uri : yael.image
-        });
+      if (validateEmail(loginEmail) && loginPassword.length >= PASSWORD_MIN_LENGTH) {
+        setLoadingLogin(true);
+        Auth.signIn(loginEmail.trim(), loginPassword).then((cognitoUser)=>{
+          saveUser(cognitoToUser(cognitoUser));
+        }).catch((error)=>{
+          handleError(error);
+        }).finally(()=>setLoadingLogin(false));
+      } else {
+        if (!validateEmail(loginEmail)) {
+          handleError(errors.invalidEmail);
+        } else if (loginPassword.length < PASSWORD_MIN_LENGTH) {
+          handleError(errors.shortPassword);
+        }
       }
     } else {
-      setLoginVisible(true);
-      setSignupVisible(false);
-      setForgotPasswordVisible(false);
-      setNewPasswordVisible(false);
+      showLogin();
     }
   }
 
+  // const res = await Auth.currentSession();
+  // let accessToken = res.getAccessToken();
+  // let jwt = accessToken.getJwtToken();
+
   const signup = () => {
     if (signupVisible) {
-      if (name.trim() !== "" && signupEmail.trim() && signupPassword.length > 0) {
-        saveUser({
-          name: name.trim(),
-          email: signupEmail.trim(),
-          image: image ? image.uri : yael.image
-        });
+      if (name.trim() !== "" && validateEmail(signupEmail) && signupPassword.length >= PASSWORD_MIN_LENGTH) {
+        setLoadingSignup(true);
+        uploadImage(image, async (fileName) => {
+          let attributes = {
+            name: name.trim(),
+          }
+          attributes[ATTRIBUTE_POINTS] = `${DEFAULT_POINTS}`;
+          attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${DEFAULT_NUM_OF_REPORTS}`;
+          if (fileName) {
+            attributes.picture = fileName;
+          }
+          try {
+            await Auth.signUp({
+              username: signupEmail.trim(),
+              password: signupPassword,
+              attributes
+            });
+            const authUser = await Auth.signIn(signupEmail.trim(), signupPassword);
+            saveUser(cognitoToUser(authUser));
+          } catch (error) {
+            handleError(error);
+          } finally {
+            setLoadingSignup(false);
+          }
+        })
+      } else {
+        if (name.trim() === "") {
+          handleError(errors.enterName);
+        } else if (!validateEmail(signupEmail)) {
+          handleError(errors.invalidEmail);
+        } else if (signupPassword.length < PASSWORD_MIN_LENGTH) {
+          handleError(errors.shortPassword);
+        }
       }
     } else {
-      setSignupVisible(true);
-      setLoginVisible(false);
-      setForgotPasswordVisible(false);
-      setNewPasswordVisible(false);
+      showSignup();
     }
+  }
+
+  const showLogin = () => {
+    setLoginVisible(true);
+    setSignupVisible(false);
+    setForgotPasswordVisible(false);
+    setNewPasswordVisible(false);
+  }
+
+  const showSignup = () => {
+    setSignupVisible(true);
+    setLoginVisible(false);
+    setForgotPasswordVisible(false);
+    setNewPasswordVisible(false);
   }
 
   const saveUser = (user) => {
     dispatch({
       type: SAVE_USER,
-      payload: {
-        ...DEFAULT_USER,
-        ...user
-      }
+      payload: user
     })
     navigation.navigate("Progress");
   }
@@ -210,8 +267,18 @@ export const LoginScreen = ({ navigation }) => {
 
   const restorePassword = () => {
     if (restoreEmail.length > 0) {
-      setEmailSentVisible(true);
-      setForgotPasswordVisible(false);
+      setLoadingRestorePassword(true);
+      Auth.forgotPassword(restoreEmail)
+        .then(data => {
+          setEmailSentVisible(true);
+          setForgotPasswordVisible(false);
+        })
+        .catch(err => {
+          handleError(err);
+        })
+        .finally(()=>setLoadingRestorePassword(false));
+    } else {
+      console.log("no email");
     }
   }
 
@@ -221,11 +288,34 @@ export const LoginScreen = ({ navigation }) => {
   }
 
   const changePassword = () => {
-    if (newPassword.length > 0) {
-      setLoginEmail(restoreEmail);
-      setLoginPassword(newPassword);
-      login();
+    if (newPassword.length >= PASSWORD_MIN_LENGTH && code.length > 0) {
+      setLoadingChangePassword(true);
+      Auth.forgotPasswordSubmit(restoreEmail, code, newPassword)
+        .then(() => {
+          setLoginEmail(restoreEmail);
+          setLoginPassword(newPassword);
+          login();
+        })
+        .catch(err => {
+          console.error(err)
+          handleError(err);
+        })
+        .finally(()=>setLoadingChangePassword(false));
+    } else {
+      if (newPassword.length < PASSWORD_MIN_LENGTH) {
+        handleError(errors.shortPassword);
+      } else if (code.length === 0) {
+        handleError(errors.enterCode);
+      }
     }
+  }
+
+  const handleError = (error) => {
+    if (error) {
+      setErrorData(strings.popups.loginError(error.code));
+      setErrorPopupVisible(true);
+    }
+    console.error(error);
   }
 
   return (
@@ -239,6 +329,7 @@ export const LoginScreen = ({ navigation }) => {
           </TapGestureHandler>
 
           <LoginView
+            loading={loadingLogin}
             visible={loginVisible}
             email={loginEmail}
             onEmailChanged={onLoginEmailChanged}
@@ -249,6 +340,7 @@ export const LoginScreen = ({ navigation }) => {
             signup={signup}
           />
           <SignupView
+            loading={loadingSignup}
             image={image}
             loadingImage={loadingImage}
             selectImage={selectImage}
@@ -264,6 +356,7 @@ export const LoginScreen = ({ navigation }) => {
           />
 
           <ForgotPasswordView 
+            loading={loadingRestorePassword}
             visible={forgotPasswordVisible}
             email={restoreEmail}
             onEmailChanged={setRestoreEmail}
@@ -272,7 +365,10 @@ export const LoginScreen = ({ navigation }) => {
 
           <EmailSentView visible={emailSentVisible} gotIt={gotIt} />
           
-          <NewPasswordView 
+          <NewPasswordView
+            loading={loadingChangePassword}
+            code={code}
+            onCodeChanged={onCodeChanged}
             visible={newPasswordVisible}
             newPassword={newPassword}
             onNewPasswordChanged={onNewPasswordChanged}
@@ -282,6 +378,7 @@ export const LoginScreen = ({ navigation }) => {
         </View>
       </ScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>
   );
 };

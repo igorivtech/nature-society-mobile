@@ -52,6 +52,7 @@ export const LoginView = memo(
     forgotPassword,
     login,
     signup,
+    loading
   }) => {
 
     const {opacity, scale} = useVisible(visible, 1);
@@ -78,6 +79,7 @@ export const LoginView = memo(
           />
 
           <CoolButton
+            loading={loading}
             textStyle={{
               ...textStyles.boldOfSize(24),
               color: "white",
@@ -171,6 +173,8 @@ export const EmailSentView = memo(
 export const NewPasswordView = memo(
   ({
     visible,
+    code,
+    onCodeChanged,
     newPassword,
     onNewPasswordChanged,
     changePassword
@@ -184,7 +188,13 @@ export const NewPasswordView = memo(
           <Text style={styles.loginTitle}>{strings.loginScreen.chooseNewPasswordTitle}</Text>
 
           <Input
-            extraMargin={true}
+            autoCapitalize="none"
+            title={strings.code}
+            onChange={onCodeChanged}
+            value={code}
+          />
+
+          <Input
             autoCapitalize="none"
             title={strings.password}
             onChange={onNewPasswordChanged}
@@ -224,6 +234,7 @@ export const SignupView = memo(
     selectImage,
     image,
     loadingImage,
+    loading
   }) => {
 
     const {opacity, scale} = useVisible(visible, 0);
@@ -271,6 +282,7 @@ export const SignupView = memo(
           </View>
 
           <CoolButton
+            loading={loading}
             textStyle={{
               ...textStyles.boldOfSize(24),
               color: "white",
@@ -291,6 +303,7 @@ export const SignupView = memo(
 
 export const ProfileView = memo(
   ({
+    loading,
     visible,
     name,
     onNameChanged,
@@ -301,6 +314,7 @@ export const ProfileView = memo(
     selectImage,
     image,
     loadingImage,
+    setLoadingImage
   }) => {
 
     const {opacity, scale} = useVisible(visible, 0);
@@ -333,7 +347,7 @@ export const ProfileView = memo(
               ) : (
                 <Image source={require("../../../assets/images/upload_icon.png")} />
               )}
-              {image ? (<Image style={styles.profilePic} source={{ uri: image.uri }} />) : null}
+              {image ? (<Image onLoad={()=>setLoadingImage(false)} style={styles.profilePic} source={{ uri: image.uri }} />) : null}
             </TouchableOpacity>
             <Text style={styles.profilePicTitle}>
               {strings.loginScreen.profilePic}
@@ -341,6 +355,7 @@ export const ProfileView = memo(
           </View>
 
           <CoolButton
+            loading={loading}
             textStyle={{
               ...textStyles.boldOfSize(24),
               color: "white",
@@ -376,7 +391,7 @@ const styles = StyleSheet.create({
 
   profilePic: {
     position: "absolute",
-    backgroundColor: "white",
+    backgroundColor: colors.clear,
     width: INNER_PIC_SIZE,
     height: INNER_PIC_SIZE,
     overflow: "hidden",

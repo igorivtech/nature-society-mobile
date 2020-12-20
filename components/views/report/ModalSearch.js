@@ -1,11 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { StyleSheet, Animated, SafeAreaView, Modal } from "react-native";
 import { globalStyles } from "../../../values/styles";
 import { SearchBar, TextCard } from "../../screens/ExploreScreen";
 import { useKeyboard } from "../../../hooks/useKeyboard";
 import { UserContext } from "../../../context/context";
+import { useServer } from "../../../hooks/useServer";
+import _ from "lodash";
 
-export const ModalSearch = ({ visible, setSearchVisible, selectItem }) => {
+export const ModalSearch = ({ visible, setSearchVisible, selectItem, location }) => {
+
+  const {searchPlaces, loadingSearch} = useServer();
 
   const {state} = useContext(UserContext);
   const {serverPlaces} = state;
@@ -36,22 +40,24 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem }) => {
 
   const textChanged = (value) => {
     setSearchTerm(value);
+    debounce.cancel()
     if (value.length === 0) {
       setPlaces(serverPlaces);
     } else {
-      const filtered = serverPlaces.filter((place) => {
-        const s1 = place.title.toLowerCase();
-        const s2 = value.toLowerCase();
-        return s1.indexOf(s2) > -1;
-      });
-      setPlaces(filtered);
+      debounce(value);
     }
   };
+
+  const debounce = useCallback(_.debounce(async(searchVal) => {
+    const p = await searchPlaces(searchVal, location);
+    setPlaces(p);
+  }, 500), [location]);
 
   return (
     <Modal visible={visible} animationType="fade">
       <SafeAreaView style={globalStyles.baseContainer}>
         <SearchBar
+          loadingSearch={loadingSearch}
           modal={true}
           searchTerm={searchTerm}
           searchOn={true}

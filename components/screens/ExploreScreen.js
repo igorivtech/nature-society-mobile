@@ -13,6 +13,7 @@ import {
   FlatList,
   Animated,
   Easing,
+  ActivityIndicator,
 } from "react-native";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { colors } from "../../values/colors";
@@ -23,6 +24,9 @@ import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
 import { statusBarHeight } from "../../values/consts";
+import _ from "lodash";
+import { useServer } from "../../hooks/useServer";
+import { useIsFocused } from '@react-navigation/native';
 
 export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -30,13 +34,20 @@ const CARD_ASPECT_RATIO = 1.31;
 const INNER_BORDER_RADIUS = BORDER_RADIUS - CARD_PADDING;
 export const EXIT_SIZE = 26;
 
-export const ExploreScreen = ({ navigation }) => {
+export const ExploreScreen = ({ navigation, route }) => {
+
+  const {location} = route.params;
+  const currentPage = useRef(0);
+
+  const isFocused = useIsFocused();
 
   const {state} = useContext(UserContext);
   const {serverPlaces} = state;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
+
+  const {searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces} = useServer();
 
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -55,15 +66,36 @@ export const ExploreScreen = ({ navigation }) => {
   }, [searchOn])
 
   useEffect(() => {
-    setPlaces(serverPlaces);
+    loadMorePlaces();
     setFilteredPlaces(serverPlaces);
+    return () => {
+      debounce.cancel();
+    };
   }, []);
+
+  const loadMorePlaces = async () => {
+    if (currentPage.current === -1) {
+      return;
+    }
+    if (location != null) {
+      const p = await getExplorePlaces(location, currentPage.current);
+      if (p) {
+        if (p.length > 0) {
+          currentPage.current = currentPage.current + 1;
+          setPlaces([...places, ...p]);
+        } else {
+          currentPage.current = -1;
+        }
+      }
+    }
+  }
 
   useEffect(() => {
     setKeyboardBottomPadding(40 + keyboardHeight);
   }, [keyboardHeight]);
 
   const closeSearch = () => {
+    debounce.cancel();
     setSearchTerm("");
     setSearchOn(false);
     Keyboard.dismiss();
@@ -75,17 +107,20 @@ export const ExploreScreen = ({ navigation }) => {
 
   const textChanged = (value) => {
     setSearchTerm(value);
+    debounce.cancel()
     if (value.length === 0) {
       setFilteredPlaces(places);
     } else {
-      const filtered = places.filter((place) => {
-        const s1 = place.title.toLowerCase();
-        const s2 = value.toLowerCase();
-        return s1.indexOf(s2) > -1;
-      })
-      setFilteredPlaces(filtered);
+      debounce(value);
     }
   };
+
+  const debounce = useCallback(_.debounce(async(searchVal) => {
+    const p = await searchPlaces(searchVal, location);
+    if (isFocused) {
+      setFilteredPlaces(p);
+    }
+  }, 500), [location]);
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
@@ -99,6 +134,7 @@ export const ExploreScreen = ({ navigation }) => {
 
       <View style={styles.searchScreenContainer}>
         <SearchBar
+          loadingSearch={loadingSearch}
           searchTerm={searchTerm}
           searchOn={searchOn}
           setSearchOn={setSearchOn}
@@ -108,14 +144,20 @@ export const ExploreScreen = ({ navigation }) => {
 
         <View style={styles.listsContainer}>
           <Animated.FlatList
+            onEndReached={loadMorePlaces}
+            onEndReachedThreshold={2}
             scrollIndicatorInsets={styles.scrollInsets}
-            style={{...StyleSheet.absoluteFill, zIndex: searchOn ? -1 : 1, opacity: cardListAlpha.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, 1]
-            })}}
+            style={styles.cardsList(searchOn, cardListAlpha)}
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
             data={places}
             keyExtractor={(item) => item.key}
+            ListFooterComponent={()=>{
+              return (
+                <View style={styles.paginationIndicatorContainer} key='indicator'>
+                  <ActivityIndicator animating={loadingMorePlaces} color={colors.treeBlues} />
+                </View>                
+              )
+            }}
             renderItem={({ item, index }) => <SearchCard showItem={showItem} item={item} index={index} />}
           />
           <Animated.FlatList
@@ -140,7 +182,7 @@ export const TextCard = ({ item, showItem, index, searchTerm }) => {
     <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
       <Highlighter
         adjustsFontSizeToFit={true} 
-        numberOfLines={1}
+        numberOfLines={2}
         style={styles.smallCardTitle}
         highlightStyle={{fontFamily: fonts.bold}}
         searchWords={searchTerm.length === 0 ? [] : [searchTerm]}
@@ -157,8 +199,19 @@ export const SearchBar = ({
   setSearchOn,
   closeSearch,
   textChanged,
-  modal = false
+  modal = false,
+  loadingSearch = false
 }) => {
+
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(()=>{
+    Animated.timing(opacity, {
+      useNativeDriver: true,
+      toValue: loadingSearch ? 1 : 0,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  }, [loadingSearch])
 
   const onFocus = () => {
     if (modal) {
@@ -169,6 +222,11 @@ export const SearchBar = ({
 
   return (
     <View style={styles.searchContainer(searchOn)}>
+
+      <Animated.View style={styles.searchIndicatorContainer(opacity)}>
+        <ActivityIndicator style={styles.indicator} animating={loadingSearch} color={colors.treeBlues} />
+      </Animated.View>
+
       {searchOn ? (
         <TouchableOpacity onPress={closeSearch}>
           <Image
@@ -185,7 +243,7 @@ export const SearchBar = ({
         placeholderTextColor={colors.treeBlues}
         placeholder={searchOn ? strings.exploreScreen.searchPlaceholder : ""}
         style={styles.searchInput}
-      />
+      />     
 
       <Image
         source={
@@ -204,12 +262,14 @@ const SearchCard = ({ item, showItem, index }) => {
       <Image style={styles.cardImage} source={{ uri: item.image }} />
       <View style={styles.cardDetailsContainer}>
         <View style={styles.cardLocationContainer}>
-          <Text style={textStyles.normalOfSize(14)}>
-            {strings.distanceFromYou(item.distance)}
-          </Text>
-
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={textStyles.boldOfSize(16)}>{item.title}</Text>
+          {item.distance && (
+            <Text style={textStyles.normalOfSize(14)}>
+              {strings.distanceFromYou(item.distance)}
+            </Text>  
+          )}
+          <View style={{flexGrow: 1, minWidth: 4}} />
+          <View style={styles.titleContainer}>
+            <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.boldOfSize(16)}>{item.title}</Text>
 
             <Image
               style={styles.translateY(-2)}
@@ -244,6 +304,29 @@ const SearchCard = ({ item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  paginationIndicatorContainer: {
+    paddingVertical: 12,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  cardsList: (searchOn, opacity) => ({
+    ...StyleSheet.absoluteFill, 
+    zIndex: searchOn ? -1 : 1, 
+    opacity
+  }),
+
+  indicator: {
+    transform: [{translateX: 24}]
+  },
+
+  searchIndicatorContainer: (opacity) => ({
+    ...StyleSheet.absoluteFill,
+    flexDirection: 'row',
+    alignItems: 'center',
+    opacity
+  }),
 
   scrollInsets: {
     right: 1
@@ -283,11 +366,18 @@ const styles = StyleSheet.create({
     transform: [{ translateY }],
   }),
 
+  titleContainer: { 
+    flexShrink: 1, 
+    flexDirection: "row", 
+    alignItems: "center" 
+  },
+
   cardLocationContainer: {
+    flexShrink: 1,
     alignItems: "center",
     flexDirection: "row",
     marginLeft: 16,
-    justifyContent: "space-between",
+    justifyContent: 'flex-end',
   },
   ratingContainer: {
     flexDirection: "row",
@@ -327,6 +417,7 @@ const styles = StyleSheet.create({
   },
 
   searchInput: {
+    marginLeft: 24,
     paddingHorizontal: 8,
     flexGrow: 1,
     flexShrink: 1,

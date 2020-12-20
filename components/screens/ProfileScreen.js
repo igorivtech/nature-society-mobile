@@ -11,13 +11,17 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { ProfileView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
+import { Auth } from 'aws-amplify';
+import { useUploadImage } from "../../hooks/aws";
+import { cognitoToUser } from "../../hooks/useUser";
+import { objectLength } from "../../hooks/helpers";
 
 const scrollZero = {
   y: 0,
@@ -25,6 +29,11 @@ const scrollZero = {
 }
 
 export const ProfileScreen = ({ navigation }) => {
+
+  const [errorData, setErrorData] = useState(strings.popups.empty);
+  const [errorPopupVisible, setErrorPopupVisible] = useState(false);
+
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   const {state, dispatch} = useContext(UserContext);
   const {user} = state;
@@ -44,6 +53,8 @@ export const ProfileScreen = ({ navigation }) => {
 
   const scrollRef = useRef();
 
+  const { uploadImage } = useUploadImage();
+
   useEffect(()=>{
     if (user) {
       if (user.name) {
@@ -53,6 +64,7 @@ export const ProfileScreen = ({ navigation }) => {
         setSignupEmail(user.email);
       }
       if (user.image) {
+        setLoadingImage(true);
         setImage({
           uri: user.image
         })
@@ -83,7 +95,7 @@ export const ProfileScreen = ({ navigation }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,
         // aspect: [4, 3],
-        quality: 0.75,
+        quality: DEFAULT_IMAGE_QUALITY,
       })
         .then((result) => {
           if (!result.cancelled) {
@@ -118,24 +130,52 @@ export const ProfileScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const updateChanges = () => {
-    if (name.length === 0 || signupEmail.length === 0) {
-      return;
-    }
+  const updateChanges = async () => {
+    let attributes = {}
     if (name !== user.name) {
-      user.name = name;
+      attributes.name = name;
     }
     if (signupEmail !== user.email) {
-      user.email = email;
+      attributes.email = email;
     }
-    if (image !== null && image.uri !== null && image.uri.length > 0) {
-      user.image = image.uri;
-    }
-    updateUser(user);
+    //
+    setLoadingUpdate(true);
+    uploadImage(image, async (fileName) => {
+      if (fileName) {
+        attributes.picture = fileName;
+      }
+      if (objectLength(attributes) === 0) {
+        setLoadingUpdate(false);
+        return;
+      }
+      try {
+        let cognitoUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+        if (result === 'SUCCESS') {
+          let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+            bypassCache: true,
+          });
+          updateUser(cognitoToUser(updatedCognitoUser));
+        } else {
+          console.error("cant update details");
+        }
+      } catch (error) {
+        handleError(error);
+      } finally {
+        setLoadingUpdate(false);
+      }
+    })
   }
 
   const logout = () => {
-    updateUser(null);
+    Auth.signOut().then(()=>{
+      updateUser(null);
+    }).catch((error)=>{
+      console.error(error);
+      updateUser(null);
+    });
   }
 
   const updateUser = (user) => {
@@ -156,6 +196,14 @@ export const ProfileScreen = ({ navigation }) => {
     }
   }
 
+  const handleError = (error) => {
+    if (error) {
+      setErrorData(strings.popups.loginError(error.code));
+      setErrorPopupVisible(true);
+    }
+    console.error(error);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
@@ -167,8 +215,10 @@ export const ProfileScreen = ({ navigation }) => {
           </TapGestureHandler>
 
           <ProfileView
+            loading={loadingUpdate}
             image={image}
             loadingImage={loadingImage}
+            setLoadingImage={setLoadingImage}
             selectImage={selectImage}
             visible={true}
             name={name}
@@ -182,6 +232,7 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </ScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>
   );
 };

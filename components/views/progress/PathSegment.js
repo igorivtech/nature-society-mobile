@@ -26,7 +26,7 @@ const pathXCenter = pathWidth*0.3
 const pathTWidth = pathHeight * 0.3;
 //
 const topMarkerPosition = 0.15;
-const userProgress = 0.5;
+let userProgress = 0.5;
 const bottomMarkerPosition = 0.8;
 //
 const markerHeight = 72;
@@ -84,6 +84,14 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
     extrapolate: 'clamp'
   })
 
+  if (current) {
+    if (!bottomDone) {
+      userProgress = 0.1;
+    } else if (!topDone) {
+      userProgress = 1 - (0.25 + 0.5 * (item.topPoints - user.points)/item.topPoints);
+    }
+  }
+
   useEffect(() => {
     if (current) {
       const { x, y } = properties.getPointAtLength(lineLength * (1-userProgress));
@@ -98,7 +106,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
     }
     setupTop();
     setupBottom();
-  }, []);
+  });
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
@@ -169,10 +177,10 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : topMarkerImage} />
         <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : bottomMarkerImage} />
         <View style={styles.topContainer} ref={topContainerRef}>
-          <FloatingLabel item={item} right={true} done={item.topDone} />
+          <FloatingLabel title={item.topTitle} points={item.topPoints} right={true} done={item.topDone} />
         </View>
         <Animatable.View animation={popupVisible ? "fadeOut" : "fadeIn"} style={styles.bottomContainer} ref={bottomContainerRef}>
-          <FloatingLabel item={item} right={false} done={item.bottomDone} />
+          <FloatingLabel title={item.bottomTitle} points={item.bottomPoints} right={false} done={item.bottomDone} />
         </Animatable.View>
       </View>
       
@@ -182,7 +190,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
   );
 };
 
-const FloatingLabel = ({item, right, done}) => {
+const FloatingLabel = ({right, done, points, title}) => {
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -191,15 +199,15 @@ const FloatingLabel = ({item, right, done}) => {
     <View style={flStyles.container(right)}>
       {done ? (
         <View style={flStyles.doneContainer(right)}>
-          <Text style={flStyles.doneText}>{item.bottomTitle}</Text>
+          <Text style={flStyles.doneText}>{title}</Text>
           <View style={flStyles.doneBorder} />
         </View>
       ) : (
         <View style={flStyles.notDoneContainer(right)}>
-          <Text style={flStyles.notDoneTitle}>{item.bottomTitle}</Text>
+          <Text style={flStyles.notDoneTitle}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={flStyles.notDoneInnerText}>{user ? (item.points - user.points) : ""}</Text>
+            <Text style={flStyles.notDoneInnerText}>{user ? (points - user.points) : ""}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>
@@ -277,6 +285,7 @@ const styles = StyleSheet.create({
   },
 
   markerContainer: {
+    zIndex: 2,
     position: 'absolute',
     height: 72,
     width: 65,

@@ -1,8 +1,59 @@
+const errors = {
+  "UsernameExistsException": {
+    title: 'אימייל כבר קיים במערכת.',
+    yes: 'אישור'  
+  },
+  "UserNotFoundException": {
+    title: 'משתמש לא קיים במערכת.',
+    yes: 'אישור'  
+  },
+  "short_password": {
+    title: 'הסיסמה צריכה להיות לפחות באורך 8 תווים.',
+    yes: 'אישור'  
+  },
+  "enter_code": {
+    title: 'אנא הזינו את הקוד שנשלח אליכם באימייל.',
+    yes: 'אישור'  
+  },
+  "CodeMismatchException": {
+    title: 'הקוד שהוזן שגוי.',
+    yes: 'אישור'
+  },
+  "NotAuthorizedException": {
+    title: 'שם משתמש או סיסמה שגויים.',
+    yes: 'אישור'
+  },
+  "NetworkError": {
+    title: 'נראה שיש בעיה עם החיבור לאינטרנט.',
+    yes: 'אישור'
+  },
+  "enter_name": {
+    title: 'אנא מלאו שם מלא.',
+    yes: 'אישור'
+  },
+  "invalid_email": {
+    title: 'כתובת אימייל לא תקינה.',
+    yes: 'אישור'
+  }
+}
+
 export const strings = {
+  code: 'קוד',
   showInfo: 'הצג\nמידע',
   popups: {
+    empty: {
+      title: "",
+      yes: "",
+      no: ""
+    },
+    loginError: (code) => {
+      return errors[code] ?? {
+        title: 'אירעה שגיאה, אנה נסו שוב.',
+        yes: 'אישור'
+      }
+    },
     cantBuy: {
-      title: 'אין מספיק נקודות טבע.\nשחקו עוד באפליקציה כדי לצבור עוד.',
+      title: 'אין מספיק נקודות טבע.\nשחקו עוד באפליקציה כדי לצבור עוד נקודות.',
       yes: 'אחלה'
     },
     locationPermissions: {
@@ -35,7 +86,7 @@ export const strings = {
   login: "התחברות",
   logout: "התנתקות",
   distanceFromYou: (distance) => {
-    return `${distance} ק״מ ממך`;
+    return `${distance ?? `-`} ק״מ ממך`;
   },
   distanceFromYouAlt: (distance) => {
     let str = "";

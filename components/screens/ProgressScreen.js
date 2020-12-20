@@ -20,6 +20,7 @@ import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 import { UserHeader } from "../views/progress/views";
+import { calcCustomAchievements } from "../../hooks/helpers"
 
 export const ProgressScreen = ({ navigation }) => {
 
@@ -28,9 +29,10 @@ export const ProgressScreen = ({ navigation }) => {
   const scrollView = useRef();
 
   const {state, dispatch} = useContext(UserContext);
-  const {user, notification} = state;
+  const {user, notification, settings} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
+  const alreadyAnimatedPath = useRef(false);
 
   // useEffect(()=> {
   //   // DEBUG
@@ -47,38 +49,37 @@ export const ProgressScreen = ({ navigation }) => {
   }, [notification])
 
   useEffect(()=>{
-    if (user) {
-      if (data.length === 0 || data.length === 1) {
-        if (user.achievements) {
-          setData([...user.achievements].reverse());
-        }
-      }
-    } else {
-      setData([])
-      setTimeout(() => {
-        setData([{
-          current: true,
-          done: false
-        }])  
-      }, 0);
+    if (user != null) {
+      const output = calcCustomAchievements(settings.achievements, user.points);
+      setData([...output].reverse());
     }
-  }, [user])
+  }, [settings, user])
 
   useEffect(()=>{
     if (data.length > 0) {
       const currentIndex = data.findIndex(achievement=>achievement.current);
-      setTimeout(()=>{
-        scrollView.current.scrollToOffset({
-          offset: pathHeight * currentIndex + 400,
-          animated: false,
-        });  
+      if (alreadyAnimatedPath.current) {
         setTimeout(() => {
           scrollView.current.scrollToOffset({
             offset: pathHeight * currentIndex,
             animated: true,
           })  
         }, 700);
-      }, 0)
+      } else {
+        alreadyAnimatedPath.current = true;
+        setTimeout(()=>{
+          scrollView.current.scrollToOffset({
+            offset: pathHeight * currentIndex + 400,
+            animated: false,
+          });  
+          setTimeout(() => {
+            scrollView.current.scrollToOffset({
+              offset: pathHeight * currentIndex,
+              animated: true,
+            })  
+          }, 700);
+        }, 0)
+      }
     }
   }, [data])
 

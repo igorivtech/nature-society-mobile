@@ -132,4 +132,7 @@ export const slideFromBottomOptions = () => ({
       },
     };
   },
+  cardStyle: {
+    backgroundColor: 'transparent',
+  }
 });

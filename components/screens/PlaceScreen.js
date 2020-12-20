@@ -55,7 +55,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const report = () => {
-    console.log("report");
+    navigation.navigate("Report", {location: place});
   };
 
   const goBack = () => {
@@ -400,14 +400,14 @@ const s = StyleSheet.create({
   },
 });
 
-PlaceScreen.sharedElements = (route, otherRoute, showing) => {
-  const { place } = route.params;
-  return [
-    {
-      id: `place.${place.key}.bg`,
-    },
-    {
-      id: `place.${place.key}.image`,
-    },
-  ];
-};
+// PlaceScreen.sharedElements = (route, otherRoute, showing) => {
+//   const { place } = route.params;
+//   return [
+//     {
+//       id: `place.${place.key}.bg`,
+//     },
+//     {
+//       id: `place.${place.key}.image`,
+//     },
+//   ];
+// };

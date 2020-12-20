@@ -25,6 +25,23 @@ export const INITIAL_REGION = {
   longitudeDelta: 2,
 }
 
+export const errors = {
+  shortPassword: {
+    code: "short_password"
+  },
+  enterCode: {
+    code: "enter_code"
+  },
+  enterName: {
+    code: "enter_name"
+  },
+  invalidEmail: {
+    code: "invalid_email"
+  }
+}
+
+export const emptyFunc = () => {}
+
 export const DEFAULT_PLACES = [
   {
     locked: false,
@@ -39,7 +56,7 @@ export const DEFAULT_PLACES = [
     distance: 34,
     lastVisitorName: "איגור",
     lastVisitorGender: 0,
-    cleanness: 4.4,
+    cleanness: 2.4,
     crowdness: 3.6,
     image:
       "https://www.tiuli.com/image/688556e71c5f04e49836a4b756506034.jpg?&width=546&height=400",
@@ -127,79 +144,157 @@ export const DEFAULT_NOTIFICATION = {
   }
 }
 
-export const DEFAULT_USER = {
-  name: "יעל השכנה",
-  email: "yael@nextdoor",
-  image:
-    "https://cdn.iconscout.com/icon/premium/png-256-thumb/woman-avatar-1543937-1371628.png",
-  points: 630,
-  numOfReports: 31,
-  lastAchievement: "חקלאית",
+export const DEFAULT_IMAGE_QUALITY = 0.5;
+
+export const DEFAULT_SETTINGS = {
   achievements: [
     {
-      topDone: true,
-      bottomDone: true,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 0,
+      "title": "חדש",
     },
     {
-      topDone: true,
-      bottomDone: true,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 20,
+      "title": "בוטנאי",
     },
     {
-      topDone: false,
-      bottomDone: true,
-      current: true,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 200,
+      "title": "חקלאי",
     },
     {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 300,
+      "title": "גדול",
     },
     {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 400,
+      "title": "קטן",
     },
     {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 500,
+      "title": "ממש",
     },
     {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 600,
+      "title": "דדה",
     },
     {
-      topDone: false,
-      bottomDone: false,
-      current: false,
-      topTitle: 'בוטנאי',
-      bottomTitle: 'חקלאית',
-      points: 700
+      "score": 700,
+      "title": "בבה",
     },
-  ]
+    {
+      "score": 1000,
+      "title": "לא",
+    },
+    {
+      "score": 1200,
+      "title": "כן",
+    },
+    {
+      "score": 1300,
+      "title": "מחר",
+    },
+    {
+      "score": 1400,
+      "title": "מחרתיים",
+    },
+    {
+      "score": 1600,
+      "title": "אולי",
+    },
+    {
+      "score": 1700,
+      "title": "מתישהו",
+    },
+    {
+      "score": 1800,
+      "title": "איפשהו",
+    },
+    {
+      "score": 2000,
+      "title": "סוף",
+    },
+  ],
+  pointsForUnlock: 10,
+  reportPoints: 30,
+};
 
-}
+export const SERVER_ACHIEVEMENTS = [
+  {title: "חדש", points: 0},
+  {title: "חדשה", points: 100},
+  {title: "שניים", points: 200},
+  {title: "שלושה", points: 300},
+  {title: "מלפפון", points: 400},
+  {title: "עגבניה", points: 500},
+  {title: "מלון", points: 600},
+  {title: "ירח", points: 700},
+  {title: "חתול", points: 800},
+  {title: "מנגינה", points: 900},
+  {title: "טחינה", points: 1000},
+  {title: "פיצה", points: 1100},
+]
+
+export const DEFAULT_ACHIEVEMENTS = [
+  {
+    topDone: true,
+    bottomDone: true,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: true,
+    bottomDone: true,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: true,
+    current: true,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+  {
+    topDone: false,
+    bottomDone: false,
+    current: false,
+    topTitle: 'בוטנאי',
+    bottomTitle: 'חקלאית',
+    points: 700
+  },
+]

@@ -11,6 +11,8 @@ import { ModalSearch } from "../views/report/ModalSearch"
 import { UserContext } from "../../context/context";
 import { SAVE_USER } from "../../context/userReducer";
 import * as Animatable from "react-native-animatable";
+import { Auth } from "aws-amplify";
+import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../../hooks/useUser";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -60,17 +62,36 @@ export const ReportScreen = ({navigation, route}) => {
 
   const [image, setImage] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [loadingSendReport, setLoadingSendReport] = useState(false);
 
-  const finishReport = () => {
-    dispatch({
-      type: SAVE_USER,
-      payload: {
-        ...user,
-        points: user.points + 30,
-        numOfReports: user.numOfReports + 1
+  const finishReport = async () => {
+    try {
+      setLoadingSendReport(true);
+      let attributes = {}
+      attributes[ATTRIBUTE_POINTS] = `${user.points + 30}`;
+      attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
+      let cognitoUser = await Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+      let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+      if (result === 'SUCCESS') {
+        let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        dispatch({
+          type: SAVE_USER,
+          payload: cognitoToUser(updatedCognitoUser)
+        })
+        navigation.navigate("Home");
+      } else {
+        console.error("cant update user");
       }
-    })
-    navigation.goBack();
+    } catch (error) {
+      console.error(error);
+      // handleError(error);
+    } finally {
+      setLoadingSendReport(false);
+    }
   }
 
   const tapClose = () => {
@@ -126,12 +147,12 @@ export const ReportScreen = ({navigation, route}) => {
             style={StyleSheet.absoluteFill}>
             <Slider item={clean} onPress={nextSegment} initialValue={0.5} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
             <Slider item={crowd} onPress={nextSegment} goBack={previousSegment} initialValue={0.5} />
-            <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} />
+            <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
           </Animated.ScrollView>
         </Animatable.View>
       </View>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
-      <ModalSearch selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
+      <ModalSearch location={location.position} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
     </SafeAreaView>
   );
 };

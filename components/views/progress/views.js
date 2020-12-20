@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { UserContext } from "../../../context/context";
 import { colors } from "../../../values/colors";
@@ -8,7 +8,23 @@ import { textStyles } from "../../../values/textStyles";
 export const UserHeader = ({}) => {
 
     const {state} = useContext(UserContext);
-    const {user} = state;
+    const {user, settings} = state;
+
+    const [lastAchievement, setLastAchievement] = useState('');
+
+    useEffect(()=>{
+      if (user) {
+        let last = ''
+        settings.achievements.forEach(achievement => {
+          if (user.points >= achievement.score) {
+            last = achievement.title;
+          }
+        });
+        if (last.length > 0) {
+          setLastAchievement(last)
+        }
+      }
+    }, [user])
   
     return (
       <View style={styles.userHeader}>
@@ -16,7 +32,7 @@ export const UserHeader = ({}) => {
         <View style={styles.headerNameContainer}>
           <View style={styles.headerTextsContainer}>
             <Text style={textStyles.boldOfSize(24)}>{user ? user.name : strings.guest}</Text>
-            <Text style={textStyles.normalOfSize(18)}>{user ? user.lastAchievement : ""}</Text>
+            <Text style={textStyles.normalOfSize(18)}>{lastAchievement}</Text>
           </View>
           <Image source={require("../../../assets/images/flag_icon.png")} />
         </View>

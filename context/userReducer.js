@@ -1,5 +1,7 @@
-import { DEFAULT_NOTIFICATION, DEFAULT_USER } from "../values/consts";
+import { DEFAULT_NOTIFICATION, DEFAULT_SETTINGS } from "../values/consts";
 
+export const SAVE_SETTINGS = "SAVE_SETTINGS";
+export const SAVE_TOKEN = "SAVE_TOKEN";
 export const SAVE_USER = "SAVE_USER";
 export const SAVE_NOTIFICATION = "SAVE_NOTIFICATION";
 export const SAVE_PLACES = "SAVE_PLACES";
@@ -7,9 +9,10 @@ export const SAVE_PLACES = "SAVE_PLACES";
 export const initialState = {
   token: null,
   // user: null,
-  user: DEFAULT_USER,
+  user: null,
   notification: null,
   serverPlaces: [],
+  settings: DEFAULT_SETTINGS
   // fetchingUser: false,
   // pushToken: null,
   // isSignout: false,
@@ -34,6 +37,16 @@ export const reducer = (state, action) => {
         ...state,
         serverPlaces: action.payload
       };
+    case SAVE_TOKEN:
+      return {
+        ...state,
+        token: action.payload
+      }
+    case SAVE_SETTINGS:
+      return {
+        ...state,
+        settings: action.payload
+      }
     default:
       return state;
   }

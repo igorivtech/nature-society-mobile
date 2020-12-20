@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "naturesociety31cda372": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "naturesocietyimages": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
+}
