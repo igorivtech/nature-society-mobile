@@ -102,12 +102,6 @@ export const ExploreScreen = ({ navigation, route }) => {
     if (isFocused) {
       setFilteredPlaces(p);
     }
-    // const filtered = places.filter((place) => {
-    //   const s1 = place.title.toLowerCase();
-    //   const s2 = searchVal.toLowerCase();
-    //   return s1.indexOf(s2) > -1;
-    // })
-    // setFilteredPlaces(filtered);
   }, 500), [location]);
 
   const showItem = (item) => {
