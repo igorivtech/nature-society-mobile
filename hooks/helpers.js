@@ -140,6 +140,21 @@ export const placeLocked = (user, place) => {
   return unlockedPlaces[place._id] == null
 }
 
+const firstNameOnly = (fullName) => {
+  const parts = fullName.split(' ');
+  return parts[0];
+  // if (parts.length === 1) {
+  //   return parts[0];
+  // } else {
+  //   const firstChar = parts[parts.length - 1].substring(0, 1).trim();
+  //   if (firstChar.length === 0) {
+  //     return `${parts[0]}.`
+  //   } else {
+  //     return `${parts[0]} ${firstChar}.`
+  //   }
+  // }
+}
+
 // {
 //   image:
 //     "https://www.rei.com/dam/catskills_060117_003_hero_lg.jpg",
