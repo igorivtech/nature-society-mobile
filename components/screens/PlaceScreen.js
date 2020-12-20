@@ -47,6 +47,8 @@ export const PlaceScreen = ({ navigation, route }) => {
   const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
   const popupAction = useRef(emptyFunc);
   const [pupupSingle, setPopupSingle] = useState(true);
+  const [errorData, setErrorData] = useState(strings.popups.empty);
+  const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const [loadingBuy, setLoadingBuy] = useState(false);
 
@@ -126,7 +128,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           })
         }
       } catch (error) {
-        console.error({error});
+        handleError(error)
       } finally {
         setLoadingBuy(false);
       }
@@ -136,6 +138,14 @@ export const PlaceScreen = ({ navigation, route }) => {
       setPopupTextData(strings.popups.cantBuy)
       setPopupVisible(true);
     }
+  }
+
+  const handleError = (error) => {
+    if (error) {
+      setErrorData(strings.popups.loginError(error.code));
+      setErrorPopupVisible(true);
+    }
+    console.error(error);
   }
 
   return (
@@ -260,6 +270,7 @@ export const PlaceScreen = ({ navigation, route }) => {
         </View>
       </FlingGestureHandler>
       <Popup textData={popupTextData} single={pupupSingle} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={popupAction} />
+      <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </View>
   );
 };
