@@ -28,6 +28,7 @@ import { useOnboarding } from "./hooks/memory";
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { useUser } from "./hooks/useUser";
+import { useUserUsageTime } from "./hooks/useUserUsageTime";
 
 Amplify.configure(awsconfig);
 enableScreens();
@@ -39,6 +40,8 @@ export default function App() {
   const { onboardingShown, loadingOnboarding } = useOnboarding();
   const [state, dispatch] = useReducer(reducer, initialState);
   const {loadingUser} = useUser(dispatch);
+
+  useUserUsageTime();
 
   const contextValue = React.useMemo(() => ({
     state,
