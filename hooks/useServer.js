@@ -110,20 +110,19 @@ export const useServer = () => {
     }
   }
 
-  const sendReport = async (token, data) => {
+  const sendReport = async (token, reportData) => {
     if (!token) {
       return null;
     }
     try {
       const response = await fetch(`${BASE_URL}/newReport`, {
         method: "POST",
-        body: data,
+        body: reportData,
         headers: {
           Authorization: token
         }
       });
-      const data = await response.json();
-      return data;
+      return response;
     } catch (error) {
       console.log({ error });
       return null;

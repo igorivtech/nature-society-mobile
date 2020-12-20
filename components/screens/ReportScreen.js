@@ -48,12 +48,12 @@ export const ReportScreen = ({navigation, route}) => {
   const crowdnessRef = useRef(0.5);
 
   const {state, dispatch} = useContext(UserContext);
-  const {user, token} = state;
+  const {user, token, settings} = state;
   
   const {uploadImage} = useUploadImage();
 
   const {location} = route.params;
-  const [selectedLocation, setLocation] = useState(null);
+  const [selectedLocation, setLocation] = useState(location);
   const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(()=>{
@@ -85,11 +85,11 @@ export const ReportScreen = ({navigation, route}) => {
           placeId: location._id,
           checkboxes: {
             'i_helped': iHelped.on,
-            '0_full_bins': details["0_full_bins"].on,
-            '1_extra_light': details["1_extra_light"].on,
-            '2_open_bins': details["2_open_bins"].on,
-            '3_fires_marks': details["3_fires_marks"].on,
-            '4_broken_bins': details["4_broken_bins"].on,
+            '1_extra_light': details[0].on,
+            '0_full_bins': details[1].on,
+            '3_fires_marks': details[2].on,
+            '2_open_bins': details[3].on,
+            '4_broken_bins': details[4].on,
           }
         }
         if (url) {
@@ -98,7 +98,7 @@ export const ReportScreen = ({navigation, route}) => {
         const response = await sendReport(token, data);
         if (response) {
           let attributes = {}
-          attributes[ATTRIBUTE_POINTS] = `${user.points + 30}`;
+          attributes[ATTRIBUTE_POINTS] = `${user.points + settings.reportPoints}`;
           attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
           let cognitoUser = await Auth.currentAuthenticatedUser({
             bypassCache: true,
