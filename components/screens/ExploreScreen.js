@@ -43,7 +43,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   const isFocused = useIsFocused();
 
   const {state} = useContext(UserContext);
-  const {serverPlaces, user} = state;
+  const {serverPlaces, user, settings} = state;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
@@ -159,7 +159,7 @@ export const ExploreScreen = ({ navigation, route }) => {
                 </View>                
               )
             }}
-            renderItem={({ item, index }) => <SearchCard user={user} showItem={showItem} item={item} index={index} />}
+            renderItem={({ item, index }) => <SearchCard settings={settings} user={user} showItem={showItem} item={item} index={index} />}
           />
           <Animated.FlatList
             scrollIndicatorInsets={styles.scrollInsets}
@@ -257,7 +257,7 @@ export const SearchBar = ({
   );
 };
 
-const SearchCard = ({ user, item, showItem, index }) => {
+const SearchCard = ({ settings, user, item, showItem, index }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={() => showItem(item)}>
       <Image style={styles.cardImage} source={{ uri: item.image }} />
@@ -281,7 +281,7 @@ const SearchCard = ({ user, item, showItem, index }) => {
 
         <View style={styles.ratingContainer}>
           <PlaceRating
-            pointsToUnlock={item.pointsToUnlock}
+            pointsToUnlock={settings.pointsForUnlock}
             small
             locked={placeLocked(user, item)}
             title={strings.placeScreen.crowdnessTitle(true)}

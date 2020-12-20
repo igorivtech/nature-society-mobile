@@ -71,12 +71,12 @@ export const RecentVisitor = ({ title, details, image, large = false }) => {
   );
 };
 
-export const RatingView = ({ rating, color, image, locked = false, item }) => {
+export const RatingView = ({ settings, rating, color, image, locked = false, item }) => {
   return (
     <View style={globalStyles.ratingContainer}>
       {locked ? (
         <View style={ratingStyles.buyContainer(true)}>
-          <Text style={ratingStyles.buyPoints}>{item.pointsToUnlock}</Text>
+          <Text style={ratingStyles.buyPoints}>{settings.pointsForUnlock}</Text>
           <Image source={require("../../../assets/images/buy_it_small.png")} />
       </View>
       ): (

@@ -36,7 +36,7 @@ const cardStyle = {
 // crowdness: 3.6,
 // image:
 
-export const PlaceCard = ({ user, item, index, scrollX, callback }) => {
+export const PlaceCard = ({ settings, user, item, index, scrollX, callback }) => {
   const inputRange = [
     (index - 2) * ITEM_WIDTH,
     (index - 1) * ITEM_WIDTH,
@@ -95,6 +95,7 @@ export const PlaceCard = ({ user, item, index, scrollX, callback }) => {
 
             <View style={globalStyles.cardLocationContainer}>
               <RatingView
+                settings={settings}
                 locked={placeLocked(user, item)}
                 item={item}
                 image={require("../../../assets/images/HowBusy.png")}

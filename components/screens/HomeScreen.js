@@ -34,7 +34,7 @@ const rightSpacer = { key: "right-spacer" };
 
 export const HomeScreen = ({ navigation, route }) => {
   const { state, dispatch } = useContext(UserContext);
-  const { user, notification, serverPlaces } = state;
+  const { user, notification, serverPlaces, settings } = state;
 
   const { askLocation, locationPermission } = useLocationPermissions();
 
@@ -294,6 +294,7 @@ export const HomeScreen = ({ navigation, route }) => {
             }
             return (
               <PlaceCard
+                settings={settings}
                 user={user}
                 callback={showPlace}
                 index={index}
