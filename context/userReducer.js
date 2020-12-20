@@ -5,7 +5,6 @@ export const SAVE_TOKEN = "SAVE_TOKEN";
 export const SAVE_USER = "SAVE_USER";
 export const SAVE_NOTIFICATION = "SAVE_NOTIFICATION";
 export const SAVE_PLACES = "SAVE_PLACES";
-export const SAVE_ACHIEVEMENTS = "SAVE_ACHIEVEMENTS";
 
 export const initialState = {
   token: null,
@@ -13,7 +12,6 @@ export const initialState = {
   user: null,
   notification: null,
   serverPlaces: [],
-  serverAchievements: [],
   settings: DEFAULT_SETTINGS
   // fetchingUser: false,
   // pushToken: null,
@@ -43,11 +41,6 @@ export const reducer = (state, action) => {
       return {
         ...state,
         token: action.payload
-      }
-    case SAVE_ACHIEVEMENTS:
-      return {
-        ...state,
-        serverAchievements: action.payload
       }
     case SAVE_SETTINGS:
       return {
