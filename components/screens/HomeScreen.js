@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
-import { View, SafeAreaView, Animated, Easing, Image, StyleSheet } from "react-native";
+import { View, SafeAreaView, Animated, Easing, Image, StyleSheet, FlatList } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { globalStyles } from "../../values/styles";
@@ -50,6 +50,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const mapRef = useRef(null);
   const lockAutoSearching = useRef(false);
 
+  const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
 
@@ -214,6 +215,19 @@ export const HomeScreen = ({ navigation, route }) => {
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
   };
+  
+  const markerPressed = useCallback((place) => {
+    lockAutoSearching.current = true;
+    selectedPlace.current = place;
+    const index = serverPlaces.findIndex(p=>p.key===place.key);
+    if (index > -1) {
+      cardsListRef.current.scrollToOffset({
+        animated: true,
+        offset: index*ITEM_WIDTH
+      });
+    }
+    animateToItem(place);
+  })
 
   return (
     <View style={globalStyles.homeContainer}>
@@ -232,7 +246,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker key={index} place={p} />)}
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker onPress={markerPressed} key={index} place={p} />)}
       </MapView>
       
       <SafeAreaView>
@@ -244,6 +258,7 @@ export const HomeScreen = ({ navigation, route }) => {
       </SafeAreaView>
       <SafeAreaView>
         <Animated.FlatList
+          ref={cardsListRef}
           data={places}
           horizontal
           style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
