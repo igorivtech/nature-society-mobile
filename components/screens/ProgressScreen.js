@@ -29,7 +29,7 @@ export const ProgressScreen = ({ navigation }) => {
   const scrollView = useRef();
 
   const {state, dispatch} = useContext(UserContext);
-  const {user, notification, serverAchievements} = state;
+  const {user, notification, settings} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const alreadyAnimatedPath = useRef(false);
@@ -49,11 +49,11 @@ export const ProgressScreen = ({ navigation }) => {
   }, [notification])
 
   useEffect(()=>{
-    if (user != null && serverAchievements != null && serverAchievements.length > 0) {
-      const output = calcCustomAchievements(serverAchievements, user.points);
+    if (user != null) {
+      const output = calcCustomAchievements(settings.achievements, user.points);
       setData([...output].reverse());
     }
-  }, [serverAchievements, user])
+  }, [settings, user])
 
   useEffect(()=>{
     if (data.length > 0) {

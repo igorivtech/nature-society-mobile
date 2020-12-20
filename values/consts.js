@@ -147,7 +147,7 @@ export const DEFAULT_NOTIFICATION = {
 export const DEFAULT_IMAGE_QUALITY = 0.5;
 
 export const DEFAULT_SETTINGS = {
-  "achievements": [
+  achievements: [
     {
       "score": 0,
       "title": "חדש",
@@ -213,8 +213,8 @@ export const DEFAULT_SETTINGS = {
       "title": "סוף",
     },
   ],
-  "pointsForUnlock": 10,
-  "reportPoints": 30,
+  pointsForUnlock: 10,
+  reportPoints: 30,
 };
 
 export const SERVER_ACHIEVEMENTS = [

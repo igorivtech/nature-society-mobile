@@ -65,13 +65,13 @@ export const calcCustomAchievements = (serverAchievements, userPoints) => {
       const bottom = serverAchievements[i];
       const top = serverAchievements[i+1];
       let item = {
-        topDone: userPoints >= top.points,
-        bottomDone: userPoints >= bottom.points,
+        topDone: userPoints >= top.score,
+        bottomDone: userPoints >= bottom.score,
         current: false,
         topTitle: top.title,
         bottomTitle: bottom.title,
-        topPoints: top.points,
-        bottomPoints: bottom.points,
+        topPoints: top.score,
+        bottomPoints: bottom.score,
       }
       if (!currentSet) {
         if (!item.topDone || !item.bottomDone) {
