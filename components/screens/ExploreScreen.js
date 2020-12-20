@@ -149,7 +149,17 @@ export const ExploreScreen = ({ navigation, route }) => {
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
             data={places}
             keyExtractor={(item) => item.key}
-            renderItem={({ item, index }) => <SearchCard showItem={showItem} item={item} index={index} />}
+            renderItem={({ item, index }) => {
+              // if (index < places.length - 1) {
+                return <SearchCard showItem={showItem} item={item} index={index} />
+              // } else {
+              //   return (
+              //     <View style={styles.paginationIndicatorContainer} key={item.key}>
+              //       <ActivityIndicator animating={loadingMorePlaces} color={colors.treeBlues} />
+              //     </View>
+              //   )
+              // }
+            }}
           />
           <Animated.FlatList
             scrollIndicatorInsets={styles.scrollInsets}
@@ -295,6 +305,12 @@ const SearchCard = ({ item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  paginationIndicatorContainer: {
+    paddingVertical: 12,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 
   cardsList: (searchOn, opacity) => ({
     ...StyleSheet.absoluteFill, 
