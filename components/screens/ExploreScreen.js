@@ -127,10 +127,7 @@ export const ExploreScreen = ({ navigation, route }) => {
         <View style={styles.listsContainer}>
           <Animated.FlatList
             scrollIndicatorInsets={styles.scrollInsets}
-            style={{...StyleSheet.absoluteFill, zIndex: searchOn ? -1 : 1, opacity: cardListAlpha.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, 1]
-            })}}
+            style={styles.cardsList(searchOn, cardListAlpha)}
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
             data={places}
             keyExtractor={(item) => item.key}
@@ -280,6 +277,13 @@ const SearchCard = ({ item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  cardsList: (searchOn, cardListAlpha) => ({
+    ...StyleSheet.absoluteFill, zIndex: searchOn ? -1 : 1, opacity: cardListAlpha.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1]
+    })
+  }),
 
   indicator: {
     transform: [{translateX: 24}]
