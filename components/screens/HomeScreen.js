@@ -246,7 +246,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker onPress={markerPressed} key={index} place={p} />)}
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
       </MapView>
       
       <SafeAreaView>
