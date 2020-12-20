@@ -156,6 +156,7 @@ export const HomeScreen = ({ navigation, route }) => {
       if (params.signupNow) {
         setHideList(true);
         setTimeout(() => {
+          setHideList(true);
           navigation.navigate("Progress", {signupNow: true});
         }, SCREEN_WAIT_DURATION);
       }

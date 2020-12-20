@@ -21,8 +21,11 @@ import { EXIT_SIZE } from "../screens/ExploreScreen";
 import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 import { UserHeader } from "../views/progress/views";
 import { calcCustomAchievements } from "../../hooks/helpers"
+import { useIsFocused } from "@react-navigation/native";
 
-export const ProgressScreen = ({ navigation }) => {
+export const ProgressScreen = ({ navigation, route }) => {
+
+  const isFocused = useIsFocused();
 
   const [popupVisible, setPopupVisible] = useState(false);
   const [data, setData] = useState([]);
@@ -94,6 +97,19 @@ export const ProgressScreen = ({ navigation }) => {
       navigation.navigate("Profile");
     }
   };
+
+  useEffect(() => {
+    const params = route.params;
+    if (params != null) {
+      if (params.signupNow) {
+        setTimeout(() => {
+          if (isFocused) {
+            loginLogout();
+          }
+        }, 400);
+      }
+    }
+  }, [route]);
 
   return (
     <View style={styles.container}>
