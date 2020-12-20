@@ -204,6 +204,11 @@ export const SearchBar = ({
 
   return (
     <View style={styles.searchContainer(searchOn)}>
+
+      <Animated.View style={styles.searchIndicatorContainer(opacity)}>
+        <ActivityIndicator style={styles.indicator} animating={loadingSearch} color={colors.treeBlues} />
+      </Animated.View>
+
       {searchOn ? (
         <TouchableOpacity onPress={closeSearch}>
           <Image
@@ -211,10 +216,6 @@ export const SearchBar = ({
           />
         </TouchableOpacity>
       ) : null}
-
-      <Animated.View style={styles.searchIndicatorContainer(opacity)}>
-        <ActivityIndicator style={styles.indicator} animating={loadingSearch} color={colors.treeBlues} />
-      </Animated.View>
 
       <TextInput
         onFocus={onFocus}
