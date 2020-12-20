@@ -1,19 +1,29 @@
 import { useEffect, useState } from "react";
 import Amplify, { Auth } from "aws-amplify";
-import { SAVE_ACHIEVEMENTS, SAVE_TOKEN, SAVE_USER } from "../context/userReducer";
+import { SAVE_ACHIEVEMENTS, SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER } from "../context/userReducer";
 import { DEFAULT_ACHIEVEMENTS, SERVER_ACHIEVEMENTS } from "../values/consts";
+import { useServer } from "./useServer";
 
 export const ATTRIBUTE_POINTS = "custom:points";
 export const ATTRIBUTE_NUM_OF_REPORTS = "custom:numOfReports";
 
 export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(false);
+  const {getSettings} = useServer();
   useEffect(() => {
-    setLoadingUser(true);
-    Auth.currentAuthenticatedUser({
-      // bypassCache: true,
-    })
-      .then((cognitoUser) => {
+    (async () => {
+      try {
+        setLoadingUser(true);
+        const cognitoUser = await Auth.currentAuthenticatedUser({
+          // bypassCache: true,
+        })
+        const settings = await getSettings();
+        if (settings) {
+          dispatch({
+            type: SAVE_SETTINGS,
+            payload: settings
+          })
+        }
         dispatch({
           type: SAVE_TOKEN,
           payload: getToken(cognitoUser),
@@ -26,13 +36,12 @@ export const useUser = (dispatch) => {
           type: SAVE_ACHIEVEMENTS,
           payload: SERVER_ACHIEVEMENTS
         })
-      })
-      .catch((err) => {
+      } catch (error) {
         console.log(err) || console.log(null);
-      })
-      .finally(() => {
+      } finally {
         setLoadingUser(false);
-      });
+      }
+    })()
   }, []);
   return { loadingUser };
 };

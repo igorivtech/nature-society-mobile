@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { convertServerPlaces } from "./helpers";
 
+const BASE_URL = `https://jwfyhvynee.execute-api.us-east-1.amazonaws.com/dev`;
+
 export const useServer = () => {
 
   const loadingPlaces = useRef(false);
@@ -12,7 +14,7 @@ export const useServer = () => {
     loadingPlaces.current = true;
     try {
       const response = await fetch(
-        `https://jwfyhvynee.execute-api.us-east-1.amazonaws.com/dev/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=10&radius=${1000 * radius}`,
+        `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=10&radius=${1000 * radius}`,
         {
           method: "GET",
         }
@@ -28,7 +30,23 @@ export const useServer = () => {
     }
   };
 
-  return { getPlaces };
+  const getSettings = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/settings`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log({error});
+      return null;
+    }
+  };
+
+  return { getPlaces, getSettings };
 };
 
 //
