@@ -214,10 +214,12 @@ const SearchCard = ({ item, showItem, index }) => {
       <Image style={styles.cardImage} source={{ uri: item.image }} />
       <View style={styles.cardDetailsContainer}>
         <View style={styles.cardLocationContainer}>
-          <Text style={textStyles.normalOfSize(14)}>
-            {strings.distanceFromYou(item.distance)}
-          </Text>
-
+          {item.distance && (
+            <Text style={textStyles.normalOfSize(14)}>
+              {strings.distanceFromYou(item.distance)}
+            </Text>  
+          )}
+          <View style={{flexGrow: 1}} />
           <View style={styles.titleContainer}>
             <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.boldOfSize(16)}>{item.title}</Text>
 
@@ -304,7 +306,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     marginLeft: 16,
-    justifyContent: "space-between",
+    justifyContent: 'flex-end',
   },
   ratingContainer: {
     flexDirection: "row",

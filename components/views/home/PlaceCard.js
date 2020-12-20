@@ -70,10 +70,12 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
           <View style={globalStyles.cardDetailsContainer}>
             <View style={globalStyles.cardLocationContainer}>
               <View style={styles.titleContainer}>
-                <Text numberOfLines={1} adjustsFontSizeToFit={true} style={textStyles.cardTitle}>{item.title}</Text>
-                <Text style={textStyles.cardDetail}>
-                  {strings.distanceFromYou(item.distance)}
-                </Text>
+                <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.cardTitle}>{item.title}</Text>
+                {item.distance && (
+                  <Text style={textStyles.cardDetail}>
+                    {strings.distanceFromYou(item.distance)}
+                  </Text>
+                )}
               </View>
               <Image
                 style={globalStyles.cardDetailIcon}

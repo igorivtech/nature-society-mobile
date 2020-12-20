@@ -109,7 +109,7 @@ export const convertServerPlaces = (serverPlaces, location) => {
       const di = distance(place.location.coordinates[1], place.location.coordinates[0], location.latitude, location.longitude);
       res[i].distance = Math.round((di) * 100) / 100;
     } else {
-      res[i].distance = `-`; // Math.round((place.dis / 1000) * 100) / 100;
+      res[i].distance = null;
     }
     res[i].pointsToUnlock = 10;
     //
