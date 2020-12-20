@@ -294,6 +294,7 @@ export const HomeScreen = ({ navigation, route }) => {
             }
             return (
               <PlaceCard
+                user={user}
                 callback={showPlace}
                 index={index}
                 item={item}

@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
+import { placeLocked } from "../../../hooks/helpers";
 import { colors } from "../../../values/colors";
 import { width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
@@ -35,7 +36,7 @@ const cardStyle = {
 // crowdness: 3.6,
 // image:
 
-export const PlaceCard = ({ item, index, scrollX, callback }) => {
+export const PlaceCard = ({ user, item, index, scrollX, callback }) => {
   const inputRange = [
     (index - 2) * ITEM_WIDTH,
     (index - 1) * ITEM_WIDTH,
@@ -93,7 +94,7 @@ export const PlaceCard = ({ item, index, scrollX, callback }) => {
 
             <View style={globalStyles.cardLocationContainer}>
               <RatingView
-                locked={item.locked}
+                locked={placeLocked(user, item)}
                 item={item}
                 image={require("../../../assets/images/HowBusy.png")}
                 rating={item.crowdness}
