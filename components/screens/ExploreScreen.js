@@ -150,7 +150,7 @@ export const TextCard = ({ item, showItem, index, searchTerm }) => {
     <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
       <Highlighter
         adjustsFontSizeToFit={true} 
-        numberOfLines={1}
+        numberOfLines={2}
         style={styles.smallCardTitle}
         highlightStyle={{fontFamily: fonts.bold}}
         searchWords={searchTerm.length === 0 ? [] : [searchTerm]}
