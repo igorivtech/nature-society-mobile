@@ -268,6 +268,7 @@ export const Slider = memo(({valueRef, item, location, startUpAnimation = false,
         useNativeDriver: true
       }).start(()=>{
         setTitleTranslateY(0);
+        const otherReporters = location.similarReports[`${1 + Math.round(4*valueRef.current)}`];
         setTitle(strings.reportScreen.otherPeople(8));
         Animated.timing(textContainerOpacity, {
           toValue: 1,
