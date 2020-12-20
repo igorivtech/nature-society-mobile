@@ -192,8 +192,8 @@ export const HomeScreen = ({ navigation, route }) => {
     if (lockAutoSearching.current) {
       return;
     }
-    const radius = 111.045 * region.latitudeDelta;
-    // const radius = 111.045 * region.longitudeDelta;
+    // const radius = 111.045 * region.latitudeDelta;
+    const radius = 111.045 * region.longitudeDelta;
     // if (location != null) {
       debounce.cancel()
       debounce(region, radius);
