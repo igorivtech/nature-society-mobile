@@ -32,7 +32,7 @@ export const TakePicView = ({ image, setImage }) => {
         // aspect: [4, 3],
         quality: DEFAULT_IMAGE_QUALITY,
       })
-        .then((result) => {
+        .then(async(result) => {
           if (!result.cancelled) {
             const resized = await resizeImage(result);
             setImage(resized);
