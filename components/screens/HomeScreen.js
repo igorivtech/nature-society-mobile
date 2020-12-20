@@ -172,7 +172,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const explore = () => {
     setHideList(true);
     setTimeout(() => {
-      navigation.navigate("Explore");
+      navigation.navigate("Explore", {location});
     }, SCREEN_WAIT_DURATION);
   };
 

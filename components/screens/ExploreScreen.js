@@ -24,6 +24,8 @@ import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
 import { statusBarHeight } from "../../values/consts";
 import _ from "lodash";
+import { useServer } from "../../hooks/useServer";
+import { useIsFocused } from '@react-navigation/native';
 
 export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -31,13 +33,19 @@ const CARD_ASPECT_RATIO = 1.31;
 const INNER_BORDER_RADIUS = BORDER_RADIUS - CARD_PADDING;
 export const EXIT_SIZE = 26;
 
-export const ExploreScreen = ({ navigation }) => {
+export const ExploreScreen = ({ navigation, route }) => {
+
+  const {location} = route.params;
+
+  const isFocused = useIsFocused();
 
   const {state} = useContext(UserContext);
   const {serverPlaces} = state;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
+
+  const {searchPlaces, loadingSearch} = useServer();
 
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -88,14 +96,18 @@ export const ExploreScreen = ({ navigation }) => {
     }
   };
 
-  const debounce = useCallback(_.debounce((searchVal) => {
-    const filtered = places.filter((place) => {
-      const s1 = place.title.toLowerCase();
-      const s2 = searchVal.toLowerCase();
-      return s1.indexOf(s2) > -1;
-    })
-    setFilteredPlaces(filtered);
-  }, 500), [places]);
+  const debounce = useCallback(_.debounce(async(searchVal) => {
+    const p = await searchPlaces(searchVal, location);
+    if (isFocused) {
+      setFilteredPlaces(p);
+    }
+    // const filtered = places.filter((place) => {
+    //   const s1 = place.title.toLowerCase();
+    //   const s2 = searchVal.toLowerCase();
+    //   return s1.indexOf(s2) > -1;
+    // })
+    // setFilteredPlaces(filtered);
+  }, 500), [location]);
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
