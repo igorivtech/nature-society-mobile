@@ -221,17 +221,19 @@ export const PlaceScreen = ({ navigation, route }) => {
             <Text style={textStyles.normalOfSize(12)}>
               {strings.placeScreen.recentVisitors(placeLocked(user, place))}
             </Text>
-            <View style={s.recentVisitorsContainer}>
-              {recentVisitors.map((visitor, index) => (
-                <RecentVisitor
-                  key={`${index}`}
-                  large
-                  title={visitor.name}
-                  details={visitor.role}
-                  image={visitor.image}
-                />
-              ))}
-            </View>
+            {place.lastVisitors && (
+              <View style={s.recentVisitorsContainer}>
+                {place.lastVisitors.map((visitor, index) => (
+                  <RecentVisitor
+                    key={`${index}`}
+                    large
+                    title={visitor.lastVisitorName}
+                    details={visitor.lastVisitorRank}
+                    image={visitor.lastVisitorImage}
+                  />
+                ))}
+              </View>
+            )}
           </Animatable.View>
 
           <Animatable.Text
