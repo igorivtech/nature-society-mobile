@@ -47,9 +47,9 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
   }, [])
 
   const [titleTranslateY, setTitleTranslateY] = useState(TITLE_TRANSLATE_Y);
-  const [topText, setTopText] = useState(titles[2]);
-  const [middlePlusText, setMiddlePlusText] = useState(titles[1]);
-  const [middleText, setMiddleText] = useState(titles[1]);
+  const [topText, setTopText] = useState(titles[4]);
+  const [middlePlusText, setMiddlePlusText] = useState(titles[3]);
+  const [middleText, setMiddleText] = useState(titles[2]);
   const [middleMinusText, setMiddleMinusText] = useState(titles[1]);
   const [bottomText, setBottomText] = useState(titles[0]);
 
