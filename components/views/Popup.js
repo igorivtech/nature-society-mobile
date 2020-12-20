@@ -17,14 +17,18 @@ import { textStyles } from "../../values/textStyles";
 
 const DURATION = 300;
 
-export const Popup = ({ textData, popupVisible, setPopupVisible, action = emptyFunc, reverseActions = false, single = false }) => {
+export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, action = emptyFunc, reverseActions = false, single = false }) => {
   const close = () => {
     setPopupVisible(false);
   };
 
   const doAction = () => {
     setPopupVisible(false);
-    action();
+    if (actionRef && actionRef?.current) {
+      actionRef?.current();
+    } else {
+      action();
+    }
   };
 
   useEffect(() => {

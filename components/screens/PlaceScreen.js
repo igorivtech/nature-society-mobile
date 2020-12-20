@@ -41,7 +41,7 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
-  const [popupAction, setPopupAction] = useState(emptyFunc);
+  const popupAction = useRef(emptyFunc);
   const [pupupSingle, setPopupSingle] = useState(true);
 
   const textRef = useRef();
@@ -89,13 +89,13 @@ export const PlaceScreen = ({ navigation, route }) => {
   }
 
   const signupNow = () => {
-    console.log("signupNow");
+    navigation.navigate("Home", {signupNow: true})
   }
 
   const unlockPlace = () => {
     if (user === null) {
+      popupAction.current = signupNow;
       setPopupSingle(false);
-      setPopupAction(signupNow);
       setPopupTextData(strings.popups.signupNow)
       setPopupVisible(true);
     } else if (user.points >= place.pointsToUnlock) {
@@ -117,8 +117,8 @@ export const PlaceScreen = ({ navigation, route }) => {
         }
       })
     } else {
+      popupAction.current = playMore;
       setPopupSingle(true);
-      setPopupAction(playMore);
       setPopupTextData(strings.popups.cantBuy)
       setPopupVisible(true);
     }
@@ -244,7 +244,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           </Animatable.View>
         </View>
       </FlingGestureHandler>
-      <Popup textData={popupTextData} single={pupupSingle} popupVisible={popupVisible} setPopupVisible={setPopupVisible} action={popupAction} />
+      <Popup textData={popupTextData} single={pupupSingle} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={popupAction} />
     </View>
   );
 };

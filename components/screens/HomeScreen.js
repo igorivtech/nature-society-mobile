@@ -153,6 +153,12 @@ export const HomeScreen = ({ navigation, route }) => {
         }, 500);
         params.searchItem = null;
       }
+      if (params.signupNow) {
+        setHideList(true);
+        setTimeout(() => {
+          navigation.navigate("Progress", {signupNow: true});
+        }, SCREEN_WAIT_DURATION);
+      }
     }
   }, [route]);
 
