@@ -107,7 +107,7 @@ export const convertServerPlaces = (serverPlaces, location) => {
     res[i].locked = true;
     if (location) {
       const di = distance(place.location.coordinates[1], place.location.coordinates[0], location.latitude, location.longitude);
-      res[i].distance = Math.round((di) * 100) / 100;
+      res[i].distance = Math.round(Math.round((di) * 100) / 100);
     } else {
       res[i].distance = null;
     }
