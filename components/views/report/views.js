@@ -15,6 +15,7 @@ import * as Permissions from "expo-permissions";
 import { Popup } from "../Popup";
 import { askSettings } from "../../../hooks/usePermissions";
 import { DEFAULT_IMAGE_QUALITY } from "../../../values/consts";
+import { resizeImage } from "../../../hooks/helpers";
 
 export const TakePicView = ({ image, setImage }) => {
   const [loadingImage, setLoadingImage] = useState(false);
@@ -33,7 +34,8 @@ export const TakePicView = ({ image, setImage }) => {
       })
         .then((result) => {
           if (!result.cancelled) {
-            setImage(result);
+            const resized = await resizeImage(result);
+            setImage(resized);
           }
         })
         .catch((error) => {
