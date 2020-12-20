@@ -19,7 +19,7 @@ export const PlaceMarker = ({place, onPress, scrollX, index}) => {
     })
   
     const turnOffTrackChanged = useCallback(()=>{
-      // setTrackChanges(false);
+      setTrackChanges(false);
     }, [setTrackChanges])
 
     const p = useCallback(()=>{
@@ -27,7 +27,7 @@ export const PlaceMarker = ({place, onPress, scrollX, index}) => {
     }, [place])
     
     return (
-      <Marker onPress={p} coordinate={place.position}>
+      <Marker tracksViewChanges={trackChanges} onPress={p} coordinate={place.position}>
         <Animated.View style={{
             opacity,
             transform: [{scale}]
