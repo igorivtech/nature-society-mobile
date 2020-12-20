@@ -68,6 +68,8 @@ export const ReportScreen = ({navigation, route}) => {
   const [loadingSendReport, setLoadingSendReport] = useState(false);
 
   const finishReport = async () => {
+    const cleanness = cleannessRef.current;
+    const crowdness = crowdnessRef.current;
     try {
       setLoadingSendReport(true);
       let attributes = {}
