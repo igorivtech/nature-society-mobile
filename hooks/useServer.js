@@ -115,7 +115,7 @@ export const useServer = () => {
       return null;
     }
     try {
-      const response = await fetch(`${BASE_URL}/report`, {
+      const response = await fetch(`${BASE_URL}/newReport`, {
         method: "POST",
         body: data,
         headers: {
