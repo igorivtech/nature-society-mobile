@@ -61,6 +61,9 @@ export const GrowthPoints = ({isFocused, popupVisible}) => {
             });
           }, 2000);
         } else {
+          if (containerRef.current == null) {
+            return;
+          }
           setTimeout(() => {
             containerRef.current.animate(enterAnimation, 800).then(()=>{
               setTimeout(() => {
