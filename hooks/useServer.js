@@ -7,6 +7,29 @@ export const useServer = () => {
 
   const [loadingSearch, setLoadingSearch] = useState(false);
   const loadingPlaces = useRef(false);
+  const [loadingMorePlaces, setLoadingMorePlaces] = useState(false);
+
+  const getExplorePlaces = async (location, page) => {
+    if (loadingMorePlaces) {
+      return;
+    }
+    try {
+      setLoadingMorePlaces(true);
+      const response = await fetch(
+        `${BASE_URL}/getAll?lat=${location.latitude}&lng=${location.longitude}&skip=${page}&limit=10&radius=${1000*1000}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      return convertServerPlaces(data, location);
+    } catch (error) {
+      console.log({ error });
+      return [];
+    } finally {
+      setLoadingMorePlaces(false);
+    }
+  };
 
   const searchPlaces = async (name, location) => {
     if (loadingSearch) {
@@ -71,7 +94,7 @@ export const useServer = () => {
     }
   };
 
-  return { getPlaces, getSettings, searchPlaces, loadingSearch };
+  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces };
 };
 
 //

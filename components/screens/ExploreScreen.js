@@ -37,6 +37,7 @@ export const EXIT_SIZE = 26;
 export const ExploreScreen = ({ navigation, route }) => {
 
   const {location} = route.params;
+  const currentPage = useRef(0);
 
   const isFocused = useIsFocused();
 
@@ -46,7 +47,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
 
-  const {searchPlaces, loadingSearch} = useServer();
+  const {searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces} = useServer();
 
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -65,12 +66,27 @@ export const ExploreScreen = ({ navigation, route }) => {
   }, [searchOn])
 
   useEffect(() => {
-    setPlaces(serverPlaces);
+    loadMorePlaces();
     setFilteredPlaces(serverPlaces);
     return () => {
       debounce.cancel();
     };
   }, []);
+
+  const loadMorePlaces = async () => {
+    if (currentPage.current === -1) {
+      return;
+    }
+    if (location != null) {
+      const p = await getExplorePlaces(location, currentPage.current);
+      if (p.length > 0) {
+        currentPage.current = currentPage.current + 1;
+        setPlaces([...places, ...p]);
+      } else {
+        currentPage.current = -1;
+      }
+    }
+  }
 
   useEffect(() => {
     setKeyboardBottomPadding(40 + keyboardHeight);
@@ -126,6 +142,8 @@ export const ExploreScreen = ({ navigation, route }) => {
 
         <View style={styles.listsContainer}>
           <Animated.FlatList
+            onEndReached={loadMorePlaces}
+            onEndReachedThreshold={2}
             scrollIndicatorInsets={styles.scrollInsets}
             style={styles.cardsList(searchOn, cardListAlpha)}
             contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
