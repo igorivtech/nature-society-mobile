@@ -48,6 +48,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const selectedPlace = useRef();
   const [location, setLocation] = useState(null);
   const mapRef = useRef(null);
+  const lockAutoSearching = useRef(false);
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
@@ -187,6 +188,9 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const onRegionChangeComplete = async (region) => {
+    if (lockAutoSearching.current) {
+      return;
+    }
     const radius = 111.045 * region.latitudeDelta;
     // if (location != null) {
       debounce.cancel()
@@ -211,12 +215,16 @@ export const HomeScreen = ({ navigation, route }) => {
     navigation.navigate("Home", { searchItem: item });
   };
 
-  // const lockSearching = useRef(false);
-
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
-        onRegionChange={()=>setHideList(true)}
+        onPanDrag={()=>lockAutoSearching.current = false}
+        moveOnMarkerPress={false}
+        onRegionChange={()=>{
+          if (!lockAutoSearching.current) {
+            setHideList(true)
+          }
+        }}
         onRegionChangeComplete={onRegionChangeComplete}
         initialRegion={INITIAL_REGION}
         customMapStyle={MAP_STYLE}
@@ -240,7 +248,7 @@ export const HomeScreen = ({ navigation, route }) => {
           horizontal
           style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
           contentContainerStyle={globalStyles.mainListContainer}
-          // onScrollBeginDrag={()=>lockSearching.current = true}
+          onScrollBeginDrag={()=>lockAutoSearching.current = true}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
             {useNativeDriver: true}
