@@ -323,7 +323,7 @@ export const PlaceRating = ({
             <View style={s.buyIndicatorContainer}>
               <ActivityIndicator color={colors.treeBlues} style={s.buyIndicator} animating={loading}/>
             </View>
-            <View style={s.buyContainer(small)}>
+            <View style={s.buyContainer(small, loading)}>
               {pointsToUnlock && (
                 <Text style={s.buyPoints}>{pointsToUnlock}</Text>
               )}
@@ -374,7 +374,8 @@ const s = StyleSheet.create({
     color: colors.treeBlues,
   },
 
-  buyContainer: (small) => ({
+  buyContainer: (small, loading) => ({
+    opacity: loading ? 0.5 : 1,
     marginRight: 12,
     borderWidth: 1,
     borderColor: colors.treeBlues,
