@@ -107,6 +107,7 @@ export const ProgressScreen = ({ navigation, route }) => {
             loginLogout();
           }
         }, 400);
+        params.signupNow = null;
       }
     }
   }, [route]);
