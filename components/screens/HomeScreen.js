@@ -255,18 +255,18 @@ export const HomeScreen = ({ navigation, route }) => {
     navigation.navigate("Home", { searchItem: item });
   };
   
-  const markerPressed = useCallback((place) => {
-    lockAutoSearching.current = true;
-    setSelectedPlace(place);
-    const index = serverPlaces.findIndex(p=>p.key===place.key);
-    if (index > -1) {
-      cardsListRef.current.scrollToOffset({
-        animated: true,
-        offset: index*ITEM_WIDTH
-      });
-    }
-    animateToItem(place);
-  })
+  // const markerPressed = useCallback((place) => {
+  //   lockAutoSearching.current = true;
+  //   setSelectedPlace(place);
+  //   const index = serverPlaces.findIndex(p=>p.key===place.key);
+  //   if (index > -1) {
+  //     cardsListRef.current.scrollToOffset({
+  //       animated: true,
+  //       offset: index*ITEM_WIDTH
+  //     });
+  //   }
+  //   animateToItem(place);
+  // })
 
   return (
     <View style={globalStyles.homeContainer}>
