@@ -7,20 +7,20 @@ const hideKey = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide'
 export const useKeyboard = () => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-  const onKeyboardDidShow = (e) => {
+  const onKeyboardShow = (e) => {
     setKeyboardHeight(e.endCoordinates.height);
   };
 
-  const onKeyboardDidHide = () => {
+  const onKeyboardHide = () => {
     setKeyboardHeight(0);
   };
 
   useEffect(() => {
-    Keyboard.addListener(showKey, onKeyboardDidShow);
-    Keyboard.addListener(hideKey, onKeyboardDidHide);
+    Keyboard.addListener(showKey, onKeyboardShow);
+    Keyboard.addListener(hideKey, onKeyboardHide);
     return () => {
-      Keyboard.removeListener(showKey, onKeyboardDidShow);
-      Keyboard.removeListener(hideKey, onKeyboardDidHide);
+      Keyboard.removeListener(showKey, onKeyboardShow);
+      Keyboard.removeListener(hideKey, onKeyboardHide);
     };
   }, []);
 
