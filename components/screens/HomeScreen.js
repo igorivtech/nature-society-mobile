@@ -226,7 +226,7 @@ export const HomeScreen = ({ navigation, route }) => {
       return;
     }
     // const radius = 111.045 * region.latitudeDelta;
-    const radius = 111.045 * region.longitudeDelta;
+    const radius = 111.045 * region.longitudeDelta / 2;
     // if (location != null) {
       debounce.cancel()
       debounce(region, radius);
