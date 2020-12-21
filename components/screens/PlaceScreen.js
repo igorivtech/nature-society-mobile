@@ -193,7 +193,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               unlockPlace={unlockPlace}
               locked={placeLocked(user, place)}
               title={strings.placeScreen.crowdnessTitle(false)}
-              image={require("../../assets/images/HowBusyOrange.png")}
+              image={require("../../assets/images/HowBusyL.png")}
               color={place.crowdnessColor}
               rating={place.crowdness}
             />
