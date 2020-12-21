@@ -3,7 +3,7 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
-import { height } from "../../../values/consts";
+import { height, THUMB_COLORS } from "../../../values/consts";
 import LottieView from 'lottie-react-native';
 import { strings } from "../../../values/strings";
 import { colors } from "../../../values/colors";
@@ -12,14 +12,6 @@ import useIsMounted from 'ismounted';
 const THUMB_RADIUS = 24.5 / 2;
 const SLIDER_HEIGHT = Math.min(347, (height-45*2)*0.5);
 const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
-const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
-export const CLEANNESS_COLORS = {
-  1: THUMB_COLORS[0],
-  2: THUMB_COLORS[1],
-  3: THUMB_COLORS[2],
-  4: THUMB_COLORS[3],
-  5: THUMB_COLORS[4],
-}
 const DURATION = 200;
 const LINE_OPACITY = 0.15;
 const TITLE_TRANSLATE_Y = 4;

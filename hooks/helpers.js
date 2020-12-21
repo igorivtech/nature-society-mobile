@@ -1,6 +1,5 @@
 import * as ImageManipulator from "expo-image-manipulator";
-import { CLEANNESS_COLORS } from "../components/views/report/Slider";
-import { height, width } from "../values/consts";
+import { CLEANNESS_COLORS, height, width } from "../values/consts";
 
 export const clamp = (min, value, max) => {
   if (value < min) {
