@@ -101,13 +101,11 @@ export const HomeScreen = ({ navigation, route }) => {
       }, 10000);
     }
   }, [requestPermissions, isFocused]);
-
   useEffect(() => {
     if (locationPermission != null && locationPermission.granted) {
       tryFetchLocation();
     }
   }, [locationPermission]);
-
   useEffect(()=>{
     if (objectLength(location) > 0) {
       lockAutoSearching.current = false;
