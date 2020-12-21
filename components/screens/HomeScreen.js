@@ -212,15 +212,12 @@ export const HomeScreen = ({ navigation, route }) => {
   }
 
   const debounce = useCallback(_.debounce(async(region, radius) => {
-    // if (lockSearching.current) {
-    //   return;
-    // }
     const pp = await getPlaces(region, location, radius);
     dispatch({
       type: SAVE_PLACES,
       payload: pp,
     });
-  }, 500), [location]);
+  }, 700), [location]);
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
