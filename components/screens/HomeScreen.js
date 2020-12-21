@@ -4,6 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { HomeButton } from "../views/home/views";
 import { globalStyles } from "../../values/styles";
 import {
+  SCREEN_ASPECT_RATIO,
   height,
   DEFAULT_NOTIFICATION,
   DEFAULT_PLACES,
@@ -198,9 +199,11 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const animateToItem = (item) => {
+    const paddedLD = item.position.longitudeDelta + 0.25;
     mapRef.current.animateToRegion({
       ...item.position,
-      longitudeDelta: item.position.longitudeDelta + 0.25
+      longitudeDelta: paddedLD,
+      latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
     }, 1000);
   };
 

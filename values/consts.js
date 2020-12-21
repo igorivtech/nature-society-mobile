@@ -6,6 +6,8 @@ export const statusBarHeight = Constants.statusBarHeight;
 export const width = Dimensions.get("window").width;
 export const height = Dimensions.get("window").height;
 
+export const SCREEN_ASPECT_RATIO = height/width;
+
 export const NAV_DURATION = 500;
 export const NAV_DURATION_CLOSE = 400;
 
