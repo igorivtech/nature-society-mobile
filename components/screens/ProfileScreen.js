@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -23,6 +23,7 @@ import { useUploadImage } from "../../hooks/aws";
 import { cognitoToUser } from "../../hooks/useUser";
 import { objectLength, resizeImage } from "../../hooks/helpers";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import _ from "lodash";
 
 export const ProfileScreen = ({ navigation }) => {
 
@@ -68,13 +69,18 @@ export const ProfileScreen = ({ navigation }) => {
   }, [])
 
   useEffect(() => {
+    debounce.cancel();
+    debounce(keyboardHeight);
+  }, [keyboardHeight]);
+
+  const debounce = useCallback(_.debounce((keyboardHeight) => {
     setScrollEnabled(keyboardHeight > 0);
     if (keyboardHeight === 0) {
       scrollRef.current.scrollToPosition(0, 0);
     } else {
-      scrollRef.current.scrollToPosition(0, height*0.15);  
+      scrollRef.current.scrollToPosition(0, height*0.15);
     }
-  }, [keyboardHeight]);
+  }, 250), []);
 
   const selectImage = async () => {
     setLoadingImage(true);

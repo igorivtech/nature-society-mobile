@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -23,6 +23,7 @@ import { useUploadImage } from "../../hooks/aws";
 import { resizeImage, validateEmail } from "../../hooks/helpers";
 import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser } from "../../hooks/useUser";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import _ from "lodash";
 
 const PASSWORD_MIN_LENGTH = 8;
 const DEFAULT_POINTS = 200;
@@ -70,13 +71,18 @@ export const LoginScreen = ({ navigation }) => {
   const scrollRef = useRef();
 
   useEffect(() => {
+    debounce.cancel();
+    debounce(keyboardHeight);
+  }, [keyboardHeight]);
+
+  const debounce = useCallback(_.debounce((keyboardHeight) => {
     setScrollEnabled(keyboardHeight > 0);
     if (keyboardHeight === 0) {
       scrollRef.current.scrollToPosition(0, 0);
     } else {
       scrollRef.current.scrollToPosition(0, height*0.15);
     }
-  }, [keyboardHeight]);
+  }, 250), []);
 
   const selectImage = async () => {
     setLoadingImage(true);
