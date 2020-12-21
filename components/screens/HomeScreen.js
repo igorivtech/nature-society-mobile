@@ -29,6 +29,7 @@ import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
 import _ from "lodash";
 import { objectLength } from "../../hooks/helpers";
+import { UserMarker } from "../views/home/UserMarker";
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" };
@@ -274,6 +275,7 @@ export const HomeScreen = ({ navigation, route }) => {
         style={globalStyles.mapStyle}
       >
         {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker selectedPlace={selectedPlace} globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
+        {location && (<UserMarker user={user} location={location} />)}
       </MapView>
       
       <SafeAreaView>
