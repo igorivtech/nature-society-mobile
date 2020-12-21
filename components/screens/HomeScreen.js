@@ -46,6 +46,7 @@ export const HomeScreen = ({ navigation, route }) => {
   let animationTimeout = null;
   const [hideList, setHideList] = useState(true);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [requestPermissions, setRequestPermissions] = useState(false);
 
   const isFocused = useIsFocused();
   const firstTime = useRef(true);
@@ -74,21 +75,38 @@ export const HomeScreen = ({ navigation, route }) => {
   }, []);
 
   const tryFetchLocation = async () => {
-    let { status } = await Location.requestPermissionsAsync();
-    if (status !== 'granted') {
-      setErrorMsg('Permission to access location was denied');
-      lockAutoSearching.current = false;
-      onRegionChangeComplete(mapRef.current.__lastRegion);
-      return;
-    }
-    let location = await Location.getCurrentPositionAsync({});
-    if (location) {
-      setLocation(location.coords);
+    let { status } = await Location.getPermissionsAsync();
+    if (status === 'granted') {
+      let location = await Location.getCurrentPositionAsync({});
+      if (location) {
+        setLocation(location.coords);
+      } else {
+        lockAutoSearching.current = false;
+        onRegionChangeComplete(mapRef.current.__lastRegion);
+      }
     } else {
       lockAutoSearching.current = false;
       onRegionChangeComplete(mapRef.current.__lastRegion);
+      if (status === 'undetermined') {
+        setRequestPermissions(true);
+      }
     }
   }
+
+  useEffect(() => { // permissions popup
+    if (requestPermissions && isFocused) {
+      setRequestPermissions(false);
+      setTimeout(() => {
+        setPopupVisible(true);
+      }, 10000);
+    }
+  }, [requestPermissions, isFocused]);
+
+  useEffect(() => {
+    if (locationPermission != null && locationPermission.granted) {
+      tryFetchLocation();
+    }
+  }, [locationPermission]);
 
   useEffect(()=>{
     if (objectLength(location) > 0) {
@@ -99,15 +117,6 @@ export const HomeScreen = ({ navigation, route }) => {
       }, 1000);
     }
   }, [location])
-
-  useEffect(() => {
-    // permissions popup
-    if (locationPermission != null && !locationPermission.granted && isFocused) {
-      setTimeout(() => {
-        setPopupVisible(true);
-      }, 4000);
-    }
-  }, [locationPermission, isFocused]);
 
   useEffect(() => {
     if (serverPlaces && serverPlaces.length > 0) {
