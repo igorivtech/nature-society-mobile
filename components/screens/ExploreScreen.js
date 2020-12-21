@@ -5,17 +5,14 @@ import {
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
-  SafeAreaView,
   TextInput,
   Image,
   TouchableOpacity,
   Keyboard,
-  FlatList,
   Animated,
   Easing,
   ActivityIndicator,
 } from "react-native";
-import { useKeyboard } from "../../hooks/useKeyboard";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
