@@ -259,7 +259,7 @@ export const SearchBar = ({
 
 const SearchCard = ({ settings, user, item, showItem, index }) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={() => showItem(item)}>
+    <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
       <Image style={styles.cardImage} source={{ uri: item.image }} />
       <View style={styles.cardDetailsContainer}>
         <View style={styles.cardLocationContainer}>
