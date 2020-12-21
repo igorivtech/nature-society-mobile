@@ -171,8 +171,7 @@ export const HomeScreen = ({ navigation, route }) => {
           showPlace(s);
         }, 500);
         params.searchItem = null;
-      }
-      if (params.signupNow) {
+      } else if (params.signupNow === true) {
         setHideList(true);
         setTimeout(() => {
           setHideList(true);

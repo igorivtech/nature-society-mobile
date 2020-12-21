@@ -101,7 +101,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   useEffect(() => {
     const params = route.params;
     if (params != null) {
-      if (params.signupNow) {
+      if (params.signupNow === true) {
         setTimeout(() => {
           if (isFocused) {
             loginLogout();
