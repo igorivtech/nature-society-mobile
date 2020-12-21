@@ -171,55 +171,48 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
     animationOpacity.setValue(ANIMATION_OPACITY);
-    Animated.timing(startUpTranslateY, {
-      delay: 1200,
-      toValue: -40,
-      duration: 400,
-      useNativeDriver: false
-    }).start(()=>{
-      if (!isMounted) {return}
+    Animated.sequence([
+      Animated.timing(startUpTranslateY, {
+        delay: 1200,
+        toValue: -40,
+        duration: 400,
+        useNativeDriver: false
+      }),
       Animated.timing(startUpTranslateY, {
         toValue: 60,
         duration: 500,
         useNativeDriver: false
+      }),
+      Animated.timing(startUpTranslateY, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: false
+      }),
+      Animated.parallel([
+        Animated.timing(lineOpacity, {
+          toValue: LINE_OPACITY,
+          useNativeDriver: true,
+          easing: Easing.inOut(Easing.ease)
+        }),
+        Animated.timing(animationOpacity, {
+          toValue: 1,
+          useNativeDriver: true,
+          easing: Easing.inOut(Easing.ease)
+        }),
+      ]),
+      Animated.timing(textContainerOpacity, {
+        toValue: 0,
+        useNativeDriver: true
+      })
+    ]).start(()=>{
+      resetTitles();
+      Animated.timing(textContainerOpacity, {
+        toValue: 1,
+        useNativeDriver: true
       }).start(()=>{
         if (!isMounted) {return}
-        Animated.timing(startUpTranslateY, {
-          toValue: 0,
-          duration: 500,
-          useNativeDriver: false
-        }).start(()=>{
-          if (!isMounted) {return}
-          Animated.parallel([
-            Animated.timing(lineOpacity, {
-              toValue: LINE_OPACITY,
-              useNativeDriver: true,
-              easing: Easing.inOut(Easing.ease)
-            }),
-            Animated.timing(animationOpacity, {
-              toValue: 1,
-              useNativeDriver: true,
-              easing: Easing.inOut(Easing.ease)
-            }),
-          ]).start(()=>{
-            if (!isMounted) {return}
-            Animated.timing(textContainerOpacity, {
-              toValue: 0,
-              useNativeDriver: true
-            }).start(()=>{
-              if (!isMounted) {return}
-              resetTitles();
-              Animated.timing(textContainerOpacity, {
-                toValue: 1,
-                useNativeDriver: true
-              }).start(()=>{
-                if (!isMounted) {return}
-                setDragEnabled(true);
-                setContinueEnabled(true);
-              })
-            })
-          });
-        })
+        setDragEnabled(true);
+        setContinueEnabled(true);
       })
     })
   }
