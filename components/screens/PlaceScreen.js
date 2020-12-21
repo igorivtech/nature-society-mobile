@@ -72,19 +72,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const goBack = () => {
-    Promise.all([
-      textRef.current.fadeOut(fadeOutDuration),
-      ratingRef.current.fadeOut(fadeOutDuration),
-      visitorsRef.current.fadeOut(fadeOutDuration),
-      descRef.current.fadeOut(fadeOutDuration),
-      actionsRef.current.fadeOut(fadeOutDuration),
-    ]).then(() => navigation.goBack());
-    // textRef.current.fadeOut(fadeOutDuration);
-    // ratingRef.current.fadeOut(fadeOutDuration);
-    // visitorsRef.current.fadeOut(fadeOutDuration);
-    // descRef.current.fadeOut(fadeOutDuration);
-    // actionsRef.current.fadeOut(fadeOutDuration);
-    // navigation.goBack();
+    navigation.goBack()
   };
 
   const handleSwipeDown = (event) => {
