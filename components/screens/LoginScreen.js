@@ -60,7 +60,6 @@ export const LoginScreen = ({ navigation }) => {
   
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [keyboardHeight] = useKeyboard();
-  const [paddingBottom, setPaddingBottom] = useState(0);
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
 
   const [popupVisible, setPopupVisible] = useState(false);
@@ -312,7 +311,7 @@ export const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView innerRef={r=>scrollRef.current=r} onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
+      <KeyboardAwareScrollView innerRef={r=>scrollRef.current=r} onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView}>
 
         <View style={styles.popupsContainer(safeAreaHeight)}>
 
@@ -383,12 +382,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  scrollView: (paddingBottom) => ({
+  scrollView: {
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: "center",
-    paddingBottom,
-  }),
+  },
 
   popupsContainer: (height) => ({
     height,
