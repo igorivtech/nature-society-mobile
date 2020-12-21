@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { Keyboard, KeyboardEvent } from "react-native";
+import { Keyboard, KeyboardEvent, Platform } from "react-native";
+
+const showKey = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow'
+const hideKey = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide'
 
 export const useKeyboard = () => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
@@ -13,11 +16,11 @@ export const useKeyboard = () => {
   };
 
   useEffect(() => {
-    Keyboard.addListener("keyboardWillShow", onKeyboardDidShow);
-    Keyboard.addListener("keyboardWillHide", onKeyboardDidHide);
+    Keyboard.addListener(showKey, onKeyboardDidShow);
+    Keyboard.addListener(hideKey, onKeyboardDidHide);
     return () => {
-      Keyboard.removeListener("keyboardWillShow", onKeyboardDidShow);
-      Keyboard.removeListener("keyboardWillHide", onKeyboardDidHide);
+      Keyboard.removeListener(showKey, onKeyboardDidShow);
+      Keyboard.removeListener(hideKey, onKeyboardDidHide);
     };
   }, []);
 
