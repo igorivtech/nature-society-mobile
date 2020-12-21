@@ -1,15 +1,14 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {
   Animated,
   Image,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
 import { placeLocked } from "../../../hooks/helpers";
-import { colors } from "../../../values/colors";
 import { width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
 import { globalStyles } from "../../../values/styles";
@@ -48,13 +47,15 @@ export const PlaceCard = ({ settings, user, item, index, scrollX, callback }) =>
     outputRange: [0, -CARD_TRANSLATE_Y, 0],
   });
 
-  const showPlace = () => {
-    callback(item);
-  };
+  const showPlace = useCallback((tap) => {
+    if (tap.nativeEvent.state === State.END) {
+      callback(item);
+    }
+  });
 
   return (
     <View style={cardStyle}>
-      <TouchableWithoutFeedback onPress={showPlace}>
+      <TapGestureHandler onHandlerStateChange={showPlace}>
         <Animated.View style={globalStyles.mainCardContainer(translateY)}>
           <SharedElement
             style={StyleSheet.absoluteFill}
@@ -125,7 +126,7 @@ export const PlaceCard = ({ settings, user, item, index, scrollX, callback }) =>
             />
           </SharedElement>
         </Animated.View>
-      </TouchableWithoutFeedback>
+      </TapGestureHandler>
     </View>
   );
 };
