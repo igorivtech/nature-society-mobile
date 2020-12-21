@@ -9,6 +9,7 @@ import {
   DEFAULT_NOTIFICATION,
   DEFAULT_PLACES,
   INITIAL_REGION,
+  DEFAULT_COOR_DELTA,
 } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import {
@@ -90,7 +91,10 @@ export const HomeScreen = ({ navigation, route }) => {
   useEffect(()=>{
     if (objectLength(location) > 0) {
       lockAutoSearching.current = false;
-      onRegionChangeComplete(mapRef.current.__lastRegion);
+      mapRef.current.animateToRegion({
+        ...location,
+        ...DEFAULT_COOR_DELTA
+      }, 1000);
     }
   }, [location])
 
