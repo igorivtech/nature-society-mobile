@@ -22,16 +22,12 @@ import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
 import { resizeImage, validateEmail } from "../../hooks/helpers";
 import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser } from "../../hooks/useUser";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const PASSWORD_MIN_LENGTH = 8;
 const DEFAULT_POINTS = 200;
 const DEFAULT_NUM_OF_REPORTS = 0;
 const DEFAULT_UNLOCKED_PLACES = {};
-
-const scrollZero = {
-  y: 0,
-  animated: true,
-}
 
 export const LoginScreen = ({ navigation }) => {
 
@@ -75,17 +71,11 @@ export const LoginScreen = ({ navigation }) => {
   const scrollRef = useRef();
 
   useEffect(() => {
-    setPaddingBottom(Math.max(keyboardHeight - 100, 0));
     setScrollEnabled(keyboardHeight > 0);
     if (keyboardHeight === 0) {
-      scrollRef.current.scrollTo(scrollZero);
+      scrollRef.current.scrollToPosition(0, 0);
     } else {
-      setTimeout(() => {
-        scrollRef.current.scrollTo({
-          y: height*0.15,
-          animated: true,
-        });  
-      }, 100);
+      scrollRef.current.scrollToPosition(0, height*0.15);
     }
   }, [keyboardHeight]);
 
@@ -322,7 +312,7 @@ export const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
+      <KeyboardAwareScrollView innerRef={r=>scrollRef.current=r} onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
 
         <View style={styles.popupsContainer(safeAreaHeight)}>
 
@@ -378,7 +368,7 @@ export const LoginScreen = ({ navigation }) => {
           />
 
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
       <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>

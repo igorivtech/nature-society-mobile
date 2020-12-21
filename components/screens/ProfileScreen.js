@@ -22,11 +22,7 @@ import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
 import { cognitoToUser } from "../../hooks/useUser";
 import { objectLength, resizeImage } from "../../hooks/helpers";
-
-const scrollZero = {
-  y: 0,
-  animated: true,
-}
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const ProfileScreen = ({ navigation }) => {
 
@@ -73,17 +69,11 @@ export const ProfileScreen = ({ navigation }) => {
   }, [])
 
   useEffect(() => {
-    setPaddingBottom(Math.max(keyboardHeight - 100, 0));
     setScrollEnabled(keyboardHeight > 0);
     if (keyboardHeight === 0) {
-      scrollRef.current.scrollTo(scrollZero);
+      scrollRef.current.scrollToPosition(0, 0);
     } else {
-      setTimeout(() => {
-        scrollRef.current.scrollTo({
-          y: height*0.15,
-          animated: true,
-        });  
-      }, 100);
+      scrollRef.current.scrollToPosition(0, height*0.15);  
     }
   }, [keyboardHeight]);
 
@@ -207,7 +197,7 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
+      <KeyboardAwareScrollView innerRef={r=>scrollRef.current=r} onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView(paddingBottom)}>
 
         <View style={styles.popupsContainer(safeAreaHeight)}>
 
@@ -231,7 +221,7 @@ export const ProfileScreen = ({ navigation }) => {
           />
 
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
       <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>
