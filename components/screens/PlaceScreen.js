@@ -169,7 +169,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           <Animatable.View
             useNativeDriver
             ref={textRef}
-            animation="bounceIn"
+            // animation="bounceIn"
             delay={600}
             style={globalStyles.fullWidth}
           >
@@ -183,7 +183,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           <Animatable.View
             useNativeDriver
             ref={ratingRef}
-            animation="bounceIn"
+            // animation="bounceIn"
             delay={800}
             style={s.ratingContainer}
           >
