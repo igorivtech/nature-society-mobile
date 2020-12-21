@@ -452,7 +452,7 @@ const s = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 15,
     width: "100%",
-    height: height * 0.27,
+    aspectRatio: 1.429
   },
 
   container: {
