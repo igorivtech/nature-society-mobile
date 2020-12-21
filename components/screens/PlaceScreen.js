@@ -35,6 +35,7 @@ import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser} from '../../
 import { placeLocked } from "../../hooks/helpers";
 
 const fadeOutDuration = 100;
+const VERTICAL_MARGIN = 35;
 
 export const PlaceScreen = ({ navigation, route }) => {
 
@@ -171,7 +172,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             ref={textRef}
             // animation="bounceIn"
             delay={600}
-            style={globalStyles.fullWidth}
+            style={{...globalStyles.fullWidth, marginBottom: VERTICAL_MARGIN}}
           >
             <Text style={textStyles.boldOfSize(24)}>{place.title}</Text>
 
@@ -216,7 +217,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             animation="fadeInUp"
             delay={500}
             ref={visitorsRef}
-            style={globalStyles.fullWidth}
+            style={{...globalStyles.fullWidth, marginVertical: VERTICAL_MARGIN}}
           >
             <Text style={textStyles.normalOfSize(12)}>
               {strings.placeScreen.recentVisitors(placeLocked(user, place))}
@@ -391,6 +392,8 @@ const s = StyleSheet.create({
     ...textStyles.normalOfSize(16),
     ...globalStyles.fullWidth,
     lineHeight: 17,
+    marginBottom: VERTICAL_MARGIN,
+    flexGrow: 1
   },
 
   actions: {
@@ -426,6 +429,7 @@ const s = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "flex-end",
+    marginBottom: VERTICAL_MARGIN,
   },
 
   bgStyle: {
