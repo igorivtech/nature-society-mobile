@@ -35,7 +35,7 @@ import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser} from '../../
 import { placeLocked } from "../../hooks/helpers";
 
 const fadeOutDuration = 100;
-const VERTICAL_MARGIN = 35;
+const VERTICAL_MARGIN = Math.min(35, height*0.015);
 
 export const PlaceScreen = ({ navigation, route }) => {
 
