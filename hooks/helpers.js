@@ -54,7 +54,7 @@ export const calcPlaceDelta = ({southWest, northEast}) => {
     const ASPECT_RATIO = width / height;
     const northeastLat = northEast.latitude;
     const southwestLat = southWest.latitude;
-    const latitudeDelta = (northeastLat - southwestLat) + 0.5;
+    const latitudeDelta = (northeastLat - southwestLat);
     const longitudeDelta = latitudeDelta * ASPECT_RATIO;
     return {latitudeDelta, longitudeDelta}
 }
