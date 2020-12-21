@@ -5,19 +5,19 @@ import { markerStyles } from '../../views/progress/PathSegment'
 
 export const UserMarker = ({ user, location }) => {
   const [trackChanges, setTrackChanges] = useState(0);
-  const turnOffTrackChanged = useCallback(() => {
-    setTrackChanges((v) => v + 1);
+  const updateTrackChanged = useCallback(() => {
+    setTrackChanges(v=>(v + 1));
   }, [setTrackChanges]);
   return (
-    <Marker tracksViewChanges={true} coordinate={location}>
+    <Marker tracksViewChanges={trackChanges < 2} coordinate={location}>
       <View style={markerStyles.markerContainer}>
         <Image
-          onLoad={turnOffTrackChanged}
+          onLoad={updateTrackChanged}
           style={markerStyles.markerIcon}
           source={require("../../../assets/images/path_marker.png")}
         />
         <Image
-          onLoad={turnOffTrackChanged}
+          onLoad={updateTrackChanged}
           source={user !== null ? { uri: user.image } : null}
           style={markerStyles.profilePic}
         />
