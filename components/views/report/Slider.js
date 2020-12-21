@@ -176,17 +176,17 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
         delay: 1200,
         toValue: -40,
         duration: 400,
-        useNativeDriver: false
+        useNativeDriver: true
       }),
       Animated.timing(startUpTranslateY, {
         toValue: 60,
         duration: 500,
-        useNativeDriver: false
+        useNativeDriver: true
       }),
       Animated.timing(startUpTranslateY, {
         toValue: 0,
         duration: 500,
-        useNativeDriver: false
+        useNativeDriver: true
       }),
       Animated.parallel([
         Animated.timing(lineOpacity, {
@@ -221,7 +221,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
     Animated.timing(scale, {
       toValue,
       duration: 100,
-      useNativeDriver: false
+      useNativeDriver: true
     }).start();
   }
 
@@ -308,7 +308,9 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
             <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
               <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
-                <Animated.View style={sliderStyles.thumb(thumbColor, scale, startUpTranslateY)} />
+                <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
+                  <Animated.View style={sliderStyles.thumbBg(thumbColor)} />
+                </Animated.View>
               </Animated.View>
             </PanGestureHandler>
           </View>
@@ -384,6 +386,10 @@ const pagStyles = StyleSheet.create({
 
 const sliderStyles = StyleSheet.create({
 
+  thumbBg: (color) => ({
+    ...StyleSheet.absoluteFill,
+    backgroundColor: color
+  }),
 
   animation: (opacity) => ({
     ...StyleSheet.absoluteFill,
@@ -528,12 +534,12 @@ const sliderStyles = StyleSheet.create({
       {translateY: thumbTranslateY}
     ]
   }),
-  thumb: (thumbColor, scale, translateY) => ({
+  thumb: (scale, translateY) => ({
     // zIndex: 1,
     height: 2*THUMB_RADIUS,
     width: 2*THUMB_RADIUS,
     borderRadius: THUMB_RADIUS,
-    backgroundColor: thumbColor,
+    overflow: 'hidden',
     transform: [{scale}, {translateY}]
   })
 })
