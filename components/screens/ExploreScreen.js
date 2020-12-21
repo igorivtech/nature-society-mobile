@@ -28,6 +28,9 @@ import _ from "lodash";
 import { useServer } from "../../hooks/useServer";
 import { useIsFocused } from '@react-navigation/native';
 import { placeLocked } from "../../hooks/helpers";
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
+
+const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
 export const BORDER_RADIUS = 15;
 const CARD_PADDING = 2;
@@ -52,8 +55,6 @@ export const ExploreScreen = ({ navigation, route }) => {
 
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
-  const [keyboardHeight] = useKeyboard();
-  const [keyboardBottomPadding, setKeyboardBottomPadding] = useState(40);
 
   const cardListAlpha = useRef(new Animated.Value(1)).current;
 
@@ -90,10 +91,6 @@ export const ExploreScreen = ({ navigation, route }) => {
       }
     }
   }
-
-  useEffect(() => {
-    setKeyboardBottomPadding(40 + keyboardHeight);
-  }, [keyboardHeight]);
 
   const closeSearch = () => {
     debounce.cancel();
@@ -144,12 +141,12 @@ export const ExploreScreen = ({ navigation, route }) => {
         />
 
         <View style={styles.listsContainer}>
-          <Animated.FlatList
+          <AwareFlatList
             onEndReached={loadMorePlaces}
             onEndReachedThreshold={2}
             scrollIndicatorInsets={styles.scrollInsets}
             style={styles.cardsList(searchOn, cardListAlpha)}
-            contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
+            contentContainerStyle={styles.flatListContainer}
             data={places}
             keyExtractor={(item) => item.key}
             ListFooterComponent={()=>{
@@ -161,13 +158,13 @@ export const ExploreScreen = ({ navigation, route }) => {
             }}
             renderItem={({ item, index }) => <SearchCard settings={settings} user={user} showItem={showItem} item={item} index={index} />}
           />
-          <Animated.FlatList
+          <AwareFlatList
             scrollIndicatorInsets={styles.scrollInsets}
             style={{...StyleSheet.absoluteFill, opacity: cardListAlpha.interpolate({
               inputRange: [0, 1],
               outputRange: [1, 0]
             })}}
-            contentContainerStyle={styles.flatListContainer(keyboardBottomPadding)}
+            contentContainerStyle={styles.flatListContainer}
             data={filteredPlaces}
             keyExtractor={(item) => item.key}
             renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
@@ -385,11 +382,10 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
   },
-  flatListContainer: (keyboardBottomPadding) => ({
+  flatListContainer: {
     paddingVertical: 34,
     paddingHorizontal: 40,
-    paddingBottom: keyboardBottomPadding,
-  }),
+  },
 
   card: {
     borderWidth: 1,
