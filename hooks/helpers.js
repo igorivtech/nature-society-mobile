@@ -1,4 +1,5 @@
 import * as ImageManipulator from "expo-image-manipulator";
+import { CLEANNESS_COLORS } from "../components/views/report/Slider";
 import { height, width } from "../values/consts";
 
 export const clamp = (min, value, max) => {
@@ -114,9 +115,11 @@ export const convertServerPlaces = (serverPlaces, location) => {
     if (place.cleanesss === 0) {
       res[i].cleanness = 3.5
     }
+    res[i].cleannessColor = siteColor(res[i].cleanness);
     if (place.cleanesss === 0) {
       res[i].crowdness = 4.5
     }
+    res[i].crowdnessColor = siteColor(res[i].crowdness);
   })
 
   if (location) {
@@ -124,6 +127,10 @@ export const convertServerPlaces = (serverPlaces, location) => {
   }
 
   return res
+}
+
+const siteColor = (rating) => {
+  return CLEANNESS_COLORS[clamp(1, Math.round(rating), 5)]
 }
 
 export const placeLocked = (user, place) => {
