@@ -15,6 +15,7 @@ import { Auth } from "aws-amplify";
 import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../../hooks/useUser";
 import { useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
+import { convertSliderValue } from "../../hooks/helpers";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -81,8 +82,8 @@ export const ReportScreen = ({navigation, route}) => {
       setLoadingSendReport(true);
       uploadImage(image, async (url)=>{
         let data = {
-          cleanness: cleannessRef.current, 
-          crowdness: crowdnessRef.current,
+          cleanness: convertSliderValue(cleannessRef.current),
+          crowdness: convertSliderValue(crowdnessRef.current),
           placeId: location._id,
           checkboxes: {
             'i_helped': iHelped.on,

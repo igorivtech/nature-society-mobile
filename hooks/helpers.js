@@ -128,6 +128,10 @@ export const convertServerPlaces = (serverPlaces, location) => {
   return res
 }
 
+export const convertSliderValue = (value) => {
+  return 1 + 4*value;
+}
+
 const siteColor = (rating) => {
   return CLEANNESS_COLORS[clamp(1, Math.round(rating), 5)]
 }
