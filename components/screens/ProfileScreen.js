@@ -196,7 +196,7 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView automaticallyAdjustContentInsets={false} onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView}>
+      <KeyboardAwareScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView}>
 
         <View style={styles.popupsContainer(safeAreaHeight)}>
 
