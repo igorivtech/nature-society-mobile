@@ -1,106 +1,87 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Image, Text } from "react-native";
-import * as Animatable from "react-native-animatable";
+import { Animated, Easing, Image } from "react-native";
 import { UserContext } from "../../../context/context";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 
-const animation = {
-  0: {
-    opacity: 1,
-    transform: [{ translateX: 0 }, { scale: 1 }],
-  },
-  1: {
-    opacity: 0,
-    transform: [{ translateX: 130 / 2 }, { scale: 0 }],
-  },
-};
-
-const enterAnimation = {
-  0: {
-    opacity: 0,
-    transform: [{ translateX: 130 / 2 }, { scale: 0 }],
-  },
-  1: {
-    opacity: 1,
-    transform: [{ translateX: 0 }, { scale: 1 }],
-  },
-};
-
-const opacity = (on) => ({
-  0: {
-    opacity: on ? 0 : 1,
-  },
-  1: {
-    opacity: on ? 1 : 0,
-  },
-});
-
+const HIDDEN_TRANSLATE_X = 130/2;
 const TEXT_DURATION = 600;
 
 export const GrowthPoints = ({isFocused, popupVisible}) => {
+  
   const {state} = useContext(UserContext);
   const {user} = state;
+
+  const [points, setPoints] = useState(0);
+
+  const translateX = useRef(new Animated.Value(HIDDEN_TRANSLATE_X)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
+  const scale = useRef(new Animated.Value(0)).current;
+  const textOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(()=>{
     if (!isFocused || popupVisible) {
       return;
     }
-    if (user) {
-      if (user.points !== points) {
-        if (points === 0) { // first time
-          setTimeout(() => {
-            if (textRef.current == null) {return}
-            textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
-              if (textRef.current == null) {return}
-              setPoints(user.points);
-              textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
-                disappear(2500);
-              });
-            });
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            if (containerRef.current == null) {return}
-            containerRef.current.animate(enterAnimation, 800).then(()=>{
-              setTimeout(() => {
-                if (textRef.current == null) {return}
-                textRef.current.animate(opacity(false), TEXT_DURATION).then(() => {
-                  if (textRef.current == null) {return}
-                  setPoints(user.points);
-                  textRef.current.animate(opacity(true), TEXT_DURATION).then(() => {
-                    disappear(3500);
-                  });
-                });
-              }, 1000);
-            });
-          }, 1000);
-        }
-      }
+    if (user && user.points !== points) {
+      show(true, 1000).start(()=>{
+        Animated.timing(textOpacity, {
+          delay: 1000,
+          toValue: 0,
+          useNativeDriver: true,
+          duration: TEXT_DURATION,
+          easing: Easing.inOut(Easing.ease)
+        }).start(()=>{
+          setPoints(user.points);
+          Animated.timing(textOpacity, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: TEXT_DURATION,
+            easing: Easing.inOut(Easing.ease)
+          }).start(()=>{
+            show(false, 3500).start();
+          })
+        })
+      })
     }
   }, [user, isFocused, popupVisible]);
 
-  const disappear = (delay) => {
-    setTimeout(() => {
-      containerRef.current.animate(animation, 800);
-    }, delay);
+  const show = (show, delay) => {
+    return Animated.parallel([
+      Animated.timing(opacity, {
+        delay,
+        toValue: show ? 1 : 0,
+        useNativeDriver: true,
+        duration: 800,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(scale, {
+        delay,
+        toValue: show ? 1 : 0,
+        useNativeDriver: true,
+        duration: 800,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(translateX, {
+        delay,
+        toValue: show ? 0 : HIDDEN_TRANSLATE_X,
+        useNativeDriver: true,
+        duration: 800,
+        easing: Easing.inOut(Easing.ease)
+      })
+    ])
   }
 
-  const [points, setPoints] = useState(0);
-  const containerRef = useRef();
-  const textRef = useRef();
-
   return (
-    <Animatable.View ref={containerRef} style={globalStyles.pointsGrowthContainer}>
-      <Animatable.Text
-        ref={textRef}
+    <Animated.View style={globalStyles.pointsGrowthContainer(opacity, scale, translateX)}>
+      <Animated.Text
         adjustsFontSizeToFit={true}
         numberOfLines={1}
-        style={textStyles.pointsGrowthText}
+        style={textStyles.pointsGrowthText(textOpacity)}
       >
         {points}
-      </Animatable.Text>
+      </Animated.Text>
       <Image source={require("../../../assets/images/growth_icon.png")} />
-    </Animatable.View>
+    </Animated.View>
   );
 };

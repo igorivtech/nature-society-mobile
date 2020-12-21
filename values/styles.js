@@ -171,7 +171,7 @@ export const globalStyles = StyleSheet.create({
     borderRadius: large ? (27/2) : 11,
   }),
 
-  pointsGrowthContainer: {
+  pointsGrowthContainer: (opacity, scale, translateX) => ({
     position: 'absolute',
     top: height * 0.22,
     right: 10,
@@ -184,5 +184,7 @@ export const globalStyles = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     maxWidth: 130,
-  },
+    opacity,
+    transform: [{ translateX }, { scale }],
+  }),
 });

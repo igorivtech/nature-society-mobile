@@ -58,12 +58,13 @@ export const textStyles = StyleSheet.create({
     
   }),
 
-  pointsGrowthText: {
+  pointsGrowthText: (opacity) => ({
+    opacity,
     flexShrink: 1,
     paddingHorizontal: 11,
     fontFamily: fonts.normal,
     fontSize: 40,
     textAlign: 'center',
     color: colors.treeBlues
-  }
+  })
 });
