@@ -54,7 +54,7 @@ export const calcPlaceDelta = ({southWest, northEast}) => {
     const ASPECT_RATIO = width / height;
     const northeastLat = northEast.latitude;
     const southwestLat = southWest.latitude;
-    const latitudeDelta = northeastLat - southwestLat;
+    const latitudeDelta = (northeastLat - southwestLat) + 0.5;
     const longitudeDelta = latitudeDelta * ASPECT_RATIO;
     return {latitudeDelta, longitudeDelta}
 }
@@ -101,8 +101,8 @@ export const convertServerPlaces = (serverPlaces, location) => {
     res[i].position = {
       longitude: place.location.coordinates[0],
       latitude: place.location.coordinates[1],
-      latitudeDelta: latitudeDelta+0.5,
-      longitudeDelta: longitudeDelta+0.5,
+      latitudeDelta,
+      longitudeDelta,
     }
     if (place.title.trim() === "") {
       res[i].title = "אין שם";
