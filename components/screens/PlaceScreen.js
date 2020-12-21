@@ -35,7 +35,13 @@ import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser} from '../../
 import { placeLocked } from "../../hooks/helpers";
 
 const fadeOutDuration = 100;
-const VERTICAL_MARGIN = Math.min(35, height*0.015);
+let VERTICAL_MARGIN = Math.min(35, height*0.015);
+let CONTAINER_VERTICAL_PADDING = 40;
+if (height > 667) {
+  VERTICAL_MARGIN = Math.min(35, height*0.025);
+} else {
+  CONTAINER_VERTICAL_PADDING = 30;
+}
 
 export const PlaceScreen = ({ navigation, route }) => {
 
@@ -432,7 +438,7 @@ const s = StyleSheet.create({
     marginTop: NAV_CLOSE_TAP_SIZE,
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 40,
+    paddingVertical: CONTAINER_VERTICAL_PADDING,
     paddingHorizontal: 20,
   },
 
