@@ -24,8 +24,8 @@ import { resizeImage, validateEmail } from "../../hooks/helpers";
 import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser } from "../../hooks/useUser";
 
 const PASSWORD_MIN_LENGTH = 8;
-const DEFAULT_POINTS = 630;
-const DEFAULT_NUM_OF_REPORTS = 31;
+const DEFAULT_POINTS = 200;
+const DEFAULT_NUM_OF_REPORTS = 0;
 const DEFAULT_UNLOCKED_PLACES = {};
 
 const scrollZero = {
