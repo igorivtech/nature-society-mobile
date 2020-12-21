@@ -64,6 +64,8 @@ export const HomeScreen = ({ navigation, route }) => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
+        lockAutoSearching.current = false;
+        onRegionChangeComplete(mapRef.current.__lastRegion);
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
