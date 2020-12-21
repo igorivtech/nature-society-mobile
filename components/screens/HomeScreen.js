@@ -63,22 +63,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   // STARTUP POINT
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        lockAutoSearching.current = false;
-        onRegionChangeComplete(mapRef.current.__lastRegion);
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      if (location) {
-        setLocation(location.coords);
-      } else {
-        lockAutoSearching.current = false;
-        onRegionChangeComplete(mapRef.current.__lastRegion);
-      }
-    })();
+    tryFetchLocation();
     // notification - DEBUG
     // setTimeout(() => {
     //   dispatch({
@@ -87,6 +72,23 @@ export const HomeScreen = ({ navigation, route }) => {
     //   })
     // }, 2000);
   }, []);
+
+  const tryFetchLocation = async () => {
+    let { status } = await Location.requestPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      lockAutoSearching.current = false;
+      onRegionChangeComplete(mapRef.current.__lastRegion);
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    if (location) {
+      setLocation(location.coords);
+    } else {
+      lockAutoSearching.current = false;
+      onRegionChangeComplete(mapRef.current.__lastRegion);
+    }
+  }
 
   useEffect(()=>{
     if (objectLength(location) > 0) {
