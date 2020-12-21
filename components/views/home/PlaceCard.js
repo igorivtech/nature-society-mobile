@@ -100,7 +100,7 @@ export const PlaceCard = ({ settings, user, item, index, scrollX, callback }) =>
                 item={item}
                 image={require("../../../assets/images/HowBusy.png")}
                 rating={item.crowdness}
-                color={colors.grass}
+                color={item.crowdnessColor}
               />
 
               <View style={globalStyles.spacer(16)} />
@@ -108,7 +108,7 @@ export const PlaceCard = ({ settings, user, item, index, scrollX, callback }) =>
               <RatingView
                 image={require("../../../assets/images/Heart.png")}
                 rating={item.cleanness}
-                color={colors.treeBlues}
+                color={item.cleannessColor}
               />
 
               <View style={globalStyles.spacer(2)} />

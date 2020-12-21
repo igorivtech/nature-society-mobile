@@ -194,7 +194,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               locked={placeLocked(user, place)}
               title={strings.placeScreen.crowdnessTitle(false)}
               image={require("../../assets/images/HowBusyOrange.png")}
-              color={colors.desertRock}
+              color={place.crowdnessColor}
               rating={place.crowdness}
             />
 
@@ -202,7 +202,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               leftMargin={40}
               title={strings.placeScreen.cleannessTitle(placeLocked(user, place))}
               image={require("../../assets/images/HeartL.png")}
-              color={colors.grass}
+              color={place.cleannessColor}
               rating={place.cleanness}
             />
           </Animatable.View>
@@ -339,7 +339,7 @@ export const PlaceRating = ({
           </Text>
         )}
         
-        <Image source={locked ? (small ? require("../../assets/images/place_locked_icon_small.png") : require("../../assets/images/place_locked_icon_large.png")) : image} />
+        <Image style={locked ? {} : {tintColor: color}} source={locked ? (small ? require("../../assets/images/place_locked_icon_small.png") : require("../../assets/images/place_locked_icon_large.png")) : image} />
       </View>
       
       
