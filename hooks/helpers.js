@@ -116,12 +116,10 @@ export const convertServerPlaces = (serverPlaces, location) => {
     //
     if (place.cleanesss === 0) {
       res[i].cleanness = Math.round(10*clamp(1, 5*Math.random(), 5))/10;
-      res[i].cleanness = res[i].cleanness.toFixed(1);
     }
     res[i].cleannessColor = siteColor(res[i].cleanness);
     if (place.cleanesss === 0) {
       res[i].crowdness = Math.round(10*clamp(1, 5*Math.random(), 5))/10;
-      res[i].crowdness = res[i].crowdness.toFixed(1);
     }
     res[i].crowdnessColor = siteColor(res[i].crowdness);
   })
