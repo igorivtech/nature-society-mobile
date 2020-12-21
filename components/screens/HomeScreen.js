@@ -198,7 +198,10 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const animateToItem = (item) => {
-    mapRef.current.animateToRegion(item.position, 1000);
+    mapRef.current.animateToRegion({
+      ...item.position,
+      longitudeDelta: item.position.longitudeDelta + 0.25
+    }, 1000);
   };
 
   const showPlace = (place) => {
