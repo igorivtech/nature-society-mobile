@@ -324,7 +324,7 @@ export const PlaceRating = ({
           </TouchableOpacity>
         ) : (
           <Text style={s.ratingStyle(small, color)}>
-            {rating}
+            {rating.toFixed(1)}
           </Text>
         )}
         

@@ -169,9 +169,9 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
 
       <View style={StyleSheet.absoluteFill}>
         {current && (
-          <View style={styles.markerContainer} ref={markerRef}>
-            <Image style={styles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
-            <Image source={user !== null ? {uri: user.image} : null} style={styles.profilePic} />
+          <View style={markerStyles.markerContainer} ref={markerRef}>
+            <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
+            <Image source={user !== null ? {uri: user.image} : null} style={markerStyles.profilePic} />
           </View>
         )}
         <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : topMarkerImage} />
@@ -270,7 +270,7 @@ const flStyles = StyleSheet.create({
   }
 })
 
-const styles = StyleSheet.create({
+export const markerStyles = StyleSheet.create({
 
   markerIcon: {
     position: 'absolute'
@@ -291,6 +291,10 @@ const styles = StyleSheet.create({
     width: 65,
     alignItems: 'center'
   },
+})
+
+
+const styles = StyleSheet.create({
 
   topContainer: {
     ...StyleSheet.absoluteFill,
