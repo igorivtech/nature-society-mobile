@@ -128,7 +128,7 @@ export const HomeScreen = ({ navigation, route }) => {
         const item = serverPlaces[i];
         if (selectedPlace == null || item.key !== selectedPlace.key) {
           setSelectedPlace(item);
-          mapRef.current.animateToRegion(item.position, 1000);
+          animateToItem(item);
         }
       }, 10);
     })
