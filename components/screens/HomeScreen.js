@@ -45,7 +45,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const isFocused = useIsFocused();
   const firstTime = useRef(true);
-  const selectedPlace = useRef();
+  const [selectedPlace, setSelectedPlace] = useState(null);
   const [location, setLocation] = useState(null);
   const mapRef = useRef(null);
   const lockAutoSearching = useRef(false);
@@ -94,7 +94,7 @@ export const HomeScreen = ({ navigation, route }) => {
       // setTimeout(() => {
       if (isFocused) {
         setHideList(false);
-        selectedPlace.current = serverPlaces[0];
+        setSelectedPlace(serverPlaces[0]);
         // animateToItem(serverPlaces[0]);
       }
       setupCardListener();
@@ -113,8 +113,8 @@ export const HomeScreen = ({ navigation, route }) => {
       }
       animationTimeout = setTimeout(()=>{
         const item = serverPlaces[i];
-        if (item.key !== selectedPlace?.current.key) {
-          selectedPlace.current = item;
+        if (selectedPlace == null || item.key !== selectedPlace.key) {
+          setSelectedPlace(item);
           mapRef.current.animateToRegion(item.position, 1000);
         }
       }, 10);
@@ -171,8 +171,8 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const report = () => {
-    if (selectedPlace?.current) {
-      const location = selectedPlace?.current;
+    if (selectedPlace != null) {
+      const location = selectedPlace;
       navigation.navigate("Report", { location });
     }
   };
@@ -228,7 +228,7 @@ export const HomeScreen = ({ navigation, route }) => {
   
   const markerPressed = useCallback((place) => {
     lockAutoSearching.current = true;
-    selectedPlace.current = place;
+    setSelectedPlace(place);
     const index = serverPlaces.findIndex(p=>p.key===place.key);
     if (index > -1) {
       cardsListRef.current.scrollToOffset({
@@ -257,7 +257,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker selectedPlace={selectedPlace} globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
       </MapView>
       
       <SafeAreaView>
