@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Animated, Image } from "react-native";
+import { Animated, Image, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { ITEM_WIDTH } from "./PlaceCard";
 
@@ -28,14 +28,25 @@ export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, i
     
     return (
       <Marker zIndex={selectedPlace != null ? (selectedPlace.key === place.key ? 2 : 1) : 1} tracksViewChanges={trackChanges || globalTracksViewChanges} onPress={p} coordinate={place.position}>
-        <Animated.View style={{
-            opacity,
-            transform: [{scale}]
-          }}>
-          <Image onLoad={turnOffTrackChanged} source={place.cleanness > 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png")} />
-        </Animated.View>
+        <View style={styles.container}>
+          <Animated.Image style={styles.marker(scale)} onLoad={turnOffTrackChanged} source={place.cleanness > 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png")} />
+        </View>
       </Marker>
     )
   }
+
+  const styles = StyleSheet.create({
+    container: {
+      width: 66.11,
+      height: 63.12,
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+    },
+    marker: (scale)=>({
+      position: 'absolute',
+      bottom: 0,
+      transform: [{scale}]
+    })
+  })
 
   // tracksViewChanges={trackChanges}
