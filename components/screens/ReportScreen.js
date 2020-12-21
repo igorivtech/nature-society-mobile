@@ -77,14 +77,12 @@ export const ReportScreen = ({navigation, route}) => {
   const {sendReport} = useServer();
 
   const finishReport = async () => {
-    const cleanness = cleannessRef.current;
-    const crowdness = crowdnessRef.current;
     try {
       setLoadingSendReport(true);
       uploadImage(image, async (url)=>{
         let data = {
-          cleanness, 
-          crowdness,
+          cleanness: cleannessRef.current, 
+          crowdness: crowdnessRef.current,
           placeId: location._id,
           checkboxes: {
             'i_helped': iHelped.on,
