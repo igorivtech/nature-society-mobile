@@ -39,6 +39,9 @@ export const resizeImage = async (response) => {
 };
 
 export const objectLength = (object) => {
+  if (object === null) {
+    return 0;
+  }
   return Object.keys(object).length;
 }
 

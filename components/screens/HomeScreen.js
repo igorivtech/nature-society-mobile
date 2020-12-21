@@ -27,6 +27,7 @@ import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
 import _ from "lodash";
+import { objectLength } from "../../hooks/helpers";
 
 const SCREEN_WAIT_DURATION = 400;
 const leftSpacer = { key: "left-spacer" };
@@ -48,7 +49,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [location, setLocation] = useState(null);
   const mapRef = useRef(null);
-  const lockAutoSearching = useRef(false);
+  const lockAutoSearching = useRef(true);
   const [globalTracksViewChanges, setGlobalTracksViewChanges] = useState(false);
 
   const cardsListRef = useRef(null);
@@ -68,6 +69,9 @@ export const HomeScreen = ({ navigation, route }) => {
       let location = await Location.getCurrentPositionAsync({});
       if (location) {
         setLocation(location.coords);
+      } else {
+        lockAutoSearching.current = false;
+        onRegionChangeComplete(mapRef.current.__lastRegion);
       }
     })();
     // notification - DEBUG
@@ -78,6 +82,13 @@ export const HomeScreen = ({ navigation, route }) => {
     //   })
     // }, 2000);
   }, []);
+
+  useEffect(()=>{
+    if (objectLength(location) > 0) {
+      lockAutoSearching.current = false;
+      onRegionChangeComplete(mapRef.current.__lastRegion);
+    }
+  }, [location])
 
   useEffect(() => {
     // permissions popup
