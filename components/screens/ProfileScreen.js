@@ -13,7 +13,7 @@ import { ProfileView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
 import { DEFAULT_IMAGE_QUALITY, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
-import { SAVE_USER } from "../../context/userReducer";
+import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
@@ -179,6 +179,12 @@ export const ProfileScreen = ({ navigation }) => {
       type: SAVE_USER,
       payload: user
     });
+    if (user === null) {
+      dispatch({
+        type: SAVE_TOKEN,
+        payload: null
+      });
+    }
     navigation.navigate("Progress")
   }
 
