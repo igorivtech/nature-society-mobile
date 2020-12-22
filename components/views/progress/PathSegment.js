@@ -50,26 +50,21 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   const [userProgress, setUserProgress] = useState(0.5);
 
-  const {topDone, bottomDone, current} = item;
-
-  const topMarkerImage = topDone ? largeIcon : smallIcon;
-  const bottomMarkerImage = bottomDone ? largeIcon : smallIcon;
-
   const markerRef = useRef();
   const markerSmallRef = useRef();
   const markerBigRef = useRef();
   const topContainerRef = useRef();
   const bottomContainerRef = useRef();
 
-  const line = `
+  const line = useRef(`
     M${pathTWidth/2},0
     C${pathTWidth},${pathHeight * 0.25}
     ${0},${pathHeight * 0.75}
     ${pathTWidth/2},${pathHeight}
-  `;
+  `).current;
 
-  const properties = path.svgPathProperties(line);
-  const lineLength = properties.getTotalLength();
+  const properties = useRef(path.svgPathProperties(line)).current;
+  const lineLength = useRef(properties.getTotalLength()).current;
 
   const inputRange = [
     (index - 1) * pathHeight + animationPadding, 
@@ -87,10 +82,10 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   useEffect(()=>{
     setUserProgress(0.5);
-    if (user && current) {
-      if (!bottomDone) {
+    if (user && item.current) {
+      if (!item.bottomDone) {
         setUserProgress(0.1);
-      } else if (!topDone) {
+      } else if (!item.topDone) {
         const p = user !== null ? user.points : 0
         setUserProgress(1 - (0.25 + 0.5 * (item.topPoints - p)/item.topPoints));
       }
@@ -98,7 +93,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
   }, [user])
 
   useEffect(() => {
-    if (current) {
+    if (item.current) {
       const { x, y } = properties.getPointAtLength(lineLength * (1-userProgress));
       markerRef.current.setNativeProps({
         top: y,
@@ -115,7 +110,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
-    const iconSize = current ? 34 : topDone ? 76 : 34;
+    const iconSize = item.current ? 34 : item.topDone ? 76 : 34;
     const translateY = -iconSize / 2;
     const translateX = -iconSize / 2;
     markerSmallRef.current.setNativeProps({
@@ -135,7 +130,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   const setupBottom = () => {
     const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
-    const iconSize = current ? 76 : bottomDone ? 76 : 34;
+    const iconSize = item.current ? 76 : item.bottomDone ? 76 : 34;
     const translateY = -iconSize / 2;
     const translateX = -iconSize / 2;
     markerBigRef.current.setNativeProps({
@@ -155,7 +150,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
-      {current ? (
+      {item.current ? (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
           <Path d={line} stroke={colors.path} strokeWidth={PATH_WIDTH} />
           <Path
@@ -168,19 +163,19 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
         </Svg>
       ) : (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke={colors.path} strokeWidth={(topDone && bottomDone) ? DONE_WIDTH : PATH_WIDTH} />
+          <Path d={line} stroke={colors.path} strokeWidth={(item.topDone && item.bottomDone) ? DONE_WIDTH : PATH_WIDTH} />
         </Svg>
       )}
 
       <View style={StyleSheet.absoluteFill}>
-        {current && (
+        {item.current && (
           <View style={markerStyles.markerContainer} ref={markerRef}>
             <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
             <Image source={(user !== null && user.image !==null) ? {uri: user.image} : require("../../../assets/images/default_profile_pic.png")} style={markerStyles.profilePic} />
           </View>
         )}
-        <Image style={styles.marker} ref={markerSmallRef} source={current ? smallIcon : topMarkerImage} />
-        <Image style={styles.marker} ref={markerBigRef} source={current ? largeIcon : bottomMarkerImage} />
+        <Image style={styles.marker} ref={markerSmallRef} source={item.current ? smallIcon : (item.topDone ? largeIcon : smallIcon)} />
+        <Image style={styles.marker} ref={markerBigRef} source={item.current ? largeIcon : (item.bottomDone ? largeIcon : smallIcon)} />
         <View style={styles.topContainer} ref={topContainerRef}>
           <FloatingLabel title={item.topTitle} points={item.topPoints} right={true} done={item.topDone} />
         </View>
