@@ -151,7 +151,7 @@ export const ProgressScreen = ({ navigation, route }) => {
         </TouchableOpacity>
 
         <UserHeader />
-        <Popup />
+        <ProgressPopup />
 
       </View>
 
@@ -180,7 +180,7 @@ const userHeaderName = (fullName) => {
   }
 }
 
-const Popup = () => {
+const ProgressPopup = () => {
 
   const {state, dispatch} = useContext(UserContext);
   const {user, notification} = state;
