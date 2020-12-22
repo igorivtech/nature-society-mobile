@@ -88,7 +88,8 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
     if (!bottomDone) {
       userProgress = 0.1;
     } else if (!topDone) {
-      userProgress = 1 - (0.25 + 0.5 * (item.topPoints - user.points)/item.topPoints);
+      const p = user !== null ? user.points : 0
+      userProgress = 1 - (0.25 + 0.5 * (item.topPoints - p)/item.topPoints);
     }
   }
 
@@ -207,7 +208,7 @@ const FloatingLabel = ({right, done, points, title}) => {
           <Text style={flStyles.notDoneTitle}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={flStyles.notDoneInnerText}>{user ? (points - user.points) : ""}</Text>
+            <Text style={flStyles.notDoneInnerText}>{user ? (points - user.points) : points}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>
