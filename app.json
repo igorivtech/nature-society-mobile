@@ -24,6 +24,7 @@
     "android": {
       "package": "com.ivtech.hala",
       "versionCode": 1
-    }
+    },
+    "description": ""
   }
 }
