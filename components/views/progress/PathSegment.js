@@ -90,7 +90,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
         setUserProgress(1 - (0.25 + 0.5 * (item.topPoints - p)/item.topPoints));
       }
     }
-  }, [user])
+  }, []) // user
 
   useEffect(() => {
     if (item.current) {
