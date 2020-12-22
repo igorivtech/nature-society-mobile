@@ -44,7 +44,7 @@ const BOTTOM_CONTAINER_WIDTH = 70;
 const TOP_CONTAINER_MARGIN = 14;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
-export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
+export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -189,7 +189,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
       
     </View>
   );
-};
+});
 
 const FloatingLabel = ({right, done, points, title}) => {
 
