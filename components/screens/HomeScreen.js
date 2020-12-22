@@ -120,9 +120,9 @@ export const HomeScreen = ({ navigation, route }) => {
     if (serverPlaces && serverPlaces.length > 0) {
       setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
       // setTimeout(() => {
+      setSelectedPlace(serverPlaces[0]);
       if (isFocused) {
         setHideList(false);
-        setSelectedPlace(serverPlaces[0]);
         // animateToItem(serverPlaces[0]);
       }
       setupCardListener();
