@@ -26,15 +26,16 @@ import useIsMounted from "ismounted";
 
 export const ProgressScreen = ({ navigation, route }) => {
 
+  const {state, dispatch} = useContext(UserContext);
+  const {user, notification, settings} = state;
+
   const isFocused = useIsFocused();
   const isMounted = useIsMounted();
 
   const [popupVisible, setPopupVisible] = useState(false);
-  const [data, setData] = useState([]);
+  const initialState = useRef(calcCustomAchievements(settings.achievements, user !== null ? user.points : 0).reverse()).current;
+  const [data, setData] = useState(initialState); // []
   const scrollView = useRef();
-
-  const {state, dispatch} = useContext(UserContext);
-  const {user, notification, settings} = state;
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const alreadyAnimatedPath = useRef(false);
