@@ -202,6 +202,10 @@ export const LoginScreen = ({ navigation }) => {
             });
             const authUser = await Auth.signIn(signupEmail.trim(), signupPassword);
             saveUser(cognitoToUser(authUser));
+            dispatch({
+              type: SAVE_TOKEN,
+              payload: getToken(authUser),
+            });
           } catch (error) {
             handleError(error);
           } finally {
