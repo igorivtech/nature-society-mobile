@@ -13,10 +13,11 @@ export const useUser = (dispatch) => {
   const {getSettings} = useServer();
   useEffect(() => {
     (async () => {
+      setLoadingUser(true);
       try {
-        setLoadingUser(true);
-        const cognitoUser = await Auth.currentAuthenticatedUser({
-          // bypassCache: true,
+        dispatch({
+          type: SAVE_ACHIEVEMENTS,
+          payload: SERVER_ACHIEVEMENTS
         })
         const settings = await getSettings();
         if (settings) {
@@ -25,6 +26,13 @@ export const useUser = (dispatch) => {
             payload: settings
           })
         }
+      } catch (error) {
+        console.log(error) || console.log(null);
+      }
+      try {
+        const cognitoUser = await Auth.currentAuthenticatedUser({
+          // bypassCache: true,
+        })
         dispatch({
           type: SAVE_TOKEN,
           payload: getToken(cognitoUser),
@@ -33,10 +41,6 @@ export const useUser = (dispatch) => {
           type: SAVE_USER,
           payload: cognitoToUser(cognitoUser),
         });
-        dispatch({
-          type: SAVE_ACHIEVEMENTS,
-          payload: SERVER_ACHIEVEMENTS
-        })
       } catch (error) {
         console.log(error) || console.log(null);
       } finally {
