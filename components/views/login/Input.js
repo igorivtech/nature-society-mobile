@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
       bottom: 4,
       ...textStyles.normalOfSize(18),
       color: colors.treeBlues,
-      textDecorationLine: "underline",
     }),
   
     animatedTextContainer: (marginBottom) => ({
