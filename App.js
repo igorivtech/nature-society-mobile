@@ -30,6 +30,7 @@ import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { useUser } from "./hooks/useUser";
 import { useUserUsageTime } from "./hooks/useUserUsageTime";
+import { useNotifications } from "./hooks/useNotifications";
 
 Amplify.configure(awsconfig);
 enableScreens();
@@ -42,6 +43,7 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {loadingUser} = useUser(dispatch);
 
+  useNotifications(state, dispatch);
   useUserUsageTime();
 
   useEffect(()=>{
