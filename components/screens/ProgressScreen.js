@@ -31,6 +31,8 @@ export const ProgressScreen = ({ navigation, route }) => {
   const {state, dispatch} = useContext(UserContext);
   const {user, notification, settings} = state;
 
+  const [refresh, setRefresh] = useState(false);
+
   const isFocused = useIsFocused();
 
   const [popupVisible, setPopupVisible] = useState(false);
@@ -68,6 +70,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   useEffect(()=>{
     const output = calcCustomAchievements(settings.achievements, user !== null ? user.points : 0);
     setData([...output].reverse());
+    setRefresh(v=>!v);
   }, [settings, user])
 
   useEffect(()=>{
@@ -139,6 +142,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
       <View style={styles.progressScreenContainer}>
         <Animated.FlatList
+          extraData={refresh}
           data={data}
           bounces={false}
           scrollEventThrottle={16}
