@@ -107,7 +107,7 @@ export const PathSegment = ({ scrollY, index, item, popupVisible }) => {
     }
     setupTop();
     setupBottom();
-  }, [user]);
+  });
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
