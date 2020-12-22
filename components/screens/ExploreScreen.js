@@ -280,7 +280,7 @@ const SearchCard = ({ settings, user, item, showItem, index }) => {
             locked={placeLocked(user, item)}
             title={strings.placeScreen.crowdnessTitle(true)}
             image={require("../../assets/images/HowBusy.png")}
-            color={colors.desertRock}
+            color={item.crowdnessColor}
             rating={item.crowdness}
           />
 
@@ -289,7 +289,7 @@ const SearchCard = ({ settings, user, item, showItem, index }) => {
             leftMargin={40}
             title={strings.placeScreen.cleannessTitle(placeLocked(user, item))}
             image={require("../../assets/images/Heart.png")}
-            color={colors.grass}
+            color={item.cleannessColor}
             rating={item.cleanness}
           />
         </View>
