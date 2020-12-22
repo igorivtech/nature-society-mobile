@@ -374,13 +374,13 @@ export const ProfileView = memo(
   }
 );
 
-export const SmallButton = ({ title, onPress }) => {
+export const SmallButton = memo(({ title, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Text style={styles.smallButtonText}>{title}</Text>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   profilePicTitle: {

@@ -193,6 +193,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const progress = () => {
     setHideList(true);
     setTimeout(() => {
+      setHideList(true);
       navigation.navigate("Progress");
     }, SCREEN_WAIT_DURATION);
   };
@@ -207,6 +208,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const explore = () => {
     setHideList(true);
     setTimeout(() => {
+      setHideList(true);
       navigation.navigate("Explore", {location});
     }, SCREEN_WAIT_DURATION);
   };

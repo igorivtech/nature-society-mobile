@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 import { View, Text, Pressable, Animated, Easing, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
@@ -53,7 +53,7 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
   );
 };
 
-export const CoolButton = ({ textStyle = {}, title, onPress, loading = false }) => {
+export const CoolButton = memo(({ textStyle = {}, title, onPress, loading = false }) => {
 
   const opacity = useRef(new Animated.Value(1)).current;
 
@@ -81,7 +81,7 @@ export const CoolButton = ({ textStyle = {}, title, onPress, loading = false }) 
       </Animated.View>
     </TouchableOpacity>
   );
-};
+});
 
 const coolStyles = StyleSheet.create({
   container: (opacity) => ({
