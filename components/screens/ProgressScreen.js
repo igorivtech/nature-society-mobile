@@ -23,6 +23,8 @@ import { UserHeader } from "../views/progress/views";
 import { calcCustomAchievements } from "../../hooks/helpers"
 import { useIsFocused } from "@react-navigation/native";
 import useIsMounted from "ismounted";
+import { Popup } from "../views/Popup";
+import { shouldAskUser } from "../../hooks/useNotifications";
 
 export const ProgressScreen = ({ navigation, route }) => {
 
@@ -30,9 +32,9 @@ export const ProgressScreen = ({ navigation, route }) => {
   const {user, notification, settings} = state;
 
   const isFocused = useIsFocused();
-  const isMounted = useIsMounted();
 
   const [popupVisible, setPopupVisible] = useState(false);
+  const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const initialState = useRef(calcCustomAchievements(settings.achievements, user !== null ? user.points : 0).reverse()).current;
   const [data, setData] = useState(initialState); // []
   const scrollView = useRef();
@@ -49,10 +51,11 @@ export const ProgressScreen = ({ navigation, route }) => {
     //   })
     // }, 4000);
     setTimeout(() => {
-      if (isMounted && isFocused) {
-        dispatch({
-          type: ASK_PUSH,
-          payload: true
+      if (isFocused) {
+        shouldAskUser().then(should => {
+          if (should) {
+            setPushPopupVisible(true);
+          }
         })
       }
     }, 5000);
@@ -121,6 +124,13 @@ export const ProgressScreen = ({ navigation, route }) => {
     }
   }, [route]);
 
+  const askPush = () => {
+    dispatch({
+      type: ASK_PUSH,
+      payload: true
+    })
+  }
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
@@ -152,6 +162,12 @@ export const ProgressScreen = ({ navigation, route }) => {
 
         <UserHeader />
         <ProgressPopup />
+        <Popup
+          textData={strings.popups.pushPermissions}
+          action={askPush}
+          popupVisible={pushPopupVisible}
+          setPopupVisible={setPushPopupVisible}
+        />
 
       </View>
 
