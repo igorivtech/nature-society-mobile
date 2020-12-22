@@ -86,3 +86,14 @@ async function registerForPushNotificationsAsync() {
 
   return token;
 }
+
+export const shouldAskUser = async() => {
+  let ask = false;
+  if (Constants.isDevice) {
+    const { status } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    ask = status === "undetermined";
+  } 
+  return ask;
+}
