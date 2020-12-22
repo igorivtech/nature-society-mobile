@@ -16,6 +16,7 @@ import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../..
 import { useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue } from "../../hooks/helpers";
+import { errors } from "../../values/consts";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -118,6 +119,9 @@ export const ReportScreen = ({navigation, route}) => {
           } else {
             console.error("cant update user");
           }
+        } else {
+          handleError(errors.reportNotLoggedIn);
+          setLoadingSendReport(false);    
         }
       })
     } catch (error) {

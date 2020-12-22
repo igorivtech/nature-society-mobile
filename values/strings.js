@@ -34,6 +34,10 @@ const errors = {
   "invalid_email": {
     title: 'כתובת אימייל לא תקינה.',
     yes: 'אישור'
+  },
+  "report_lot_logged_in": {
+    title: 'אינכם מחוברים למצב הטבע.',
+    yes: 'אישור'
   }
 }
 
