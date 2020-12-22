@@ -18,23 +18,21 @@ export const useNotifications = (state, dispatch) => {
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
+    registerForPushNotificationsAsync().then((token) => {
+      console.log(`expo push token: `, token);
+      setExpoPushToken(token);
+    });
 
     // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener(
-      (notification) => {
-        setNotification(notification);
-      }
-    );
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+      console.log(notification);
+      setNotification(notification);
+    });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response);
-      }
-    );
+    });
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener);
