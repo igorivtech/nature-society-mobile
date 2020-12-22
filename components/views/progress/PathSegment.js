@@ -110,7 +110,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
-    const iconSize = item.current ? 34 : item.topDone ? 76 : 34;
+    const iconSize = item.topDone ? 76 : 34;
     const translateY = -iconSize / 2;
     const translateX = -iconSize / 2;
     markerSmallRef.current.setNativeProps({
@@ -130,7 +130,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   const setupBottom = () => {
     const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
-    const iconSize = item.current ? 76 : item.bottomDone ? 76 : 34;
+    const iconSize = item.bottomDone ? 76 : 34;
     const translateY = -iconSize / 2;
     const translateX = -iconSize / 2;
     markerBigRef.current.setNativeProps({
@@ -174,8 +174,8 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
             <Image source={(user !== null && user.image !==null) ? {uri: user.image} : require("../../../assets/images/default_profile_pic.png")} style={markerStyles.profilePic} />
           </View>
         )}
-        <Image style={styles.marker} ref={markerSmallRef} source={item.current ? smallIcon : (item.topDone ? largeIcon : smallIcon)} />
-        <Image style={styles.marker} ref={markerBigRef} source={item.current ? largeIcon : (item.bottomDone ? largeIcon : smallIcon)} />
+        <Image style={styles.marker} ref={markerSmallRef} source={item.topDone ? largeIcon : smallIcon} />
+        <Image style={styles.marker} ref={markerBigRef} source={item.bottomDone ? largeIcon : smallIcon} />
         <View style={styles.topContainer} ref={topContainerRef}>
           <FloatingLabel title={item.topTitle} points={item.topPoints} right={true} done={item.topDone} />
         </View>
