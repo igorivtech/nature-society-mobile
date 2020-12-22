@@ -67,7 +67,7 @@ export const cognitoToUser = (cognitoUser) => {
   return user;
 };
 
-const getToken = (cognitoUser) => {
+export const getToken = (cognitoUser) => {
   const { signInUserSession } = cognitoUser;
   if (
     signInUserSession &&

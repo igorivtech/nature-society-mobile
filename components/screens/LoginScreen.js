@@ -13,7 +13,7 @@ import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupVi
 import * as ImagePicker from 'expo-image-picker';
 import { DEFAULT_IMAGE_QUALITY, errors, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
-import { SAVE_USER } from "../../context/userReducer";
+import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
@@ -21,7 +21,7 @@ import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
 import { resizeImage, validateEmail } from "../../hooks/helpers";
-import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser } from "../../hooks/useUser";
+import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, getToken } from "../../hooks/useUser";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import _ from "lodash";
 
@@ -157,6 +157,10 @@ export const LoginScreen = ({ navigation }) => {
         setLoadingLogin(true);
         Auth.signIn(loginEmail.trim(), loginPassword).then((cognitoUser)=>{
           saveUser(cognitoToUser(cognitoUser));
+          dispatch({
+            type: SAVE_TOKEN,
+            payload: getToken(cognitoUser),
+          });
         }).catch((error)=>{
           handleError(error);
         }).finally(()=>setLoadingLogin(false));
