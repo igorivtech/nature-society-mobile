@@ -32,19 +32,19 @@ const crowd = {
 
 export const ReportScreen = ({navigation, route}) => {
 
-  let details = [
+  let details = useRef([
     {id: "1_extra_light", title: "עודף תאורה", on: false},
     {id: "0_full_bins", title: "פחים מלאים", on: false},
     {id: "3_fires_marks", title: "סימני מדורות", on: false},
     {id: "2_open_bins", title: "פחים פתוחים", on: false},
     {id: "4_broken_bins", title: "פחים שבורים", on: false},
-  ]
+  ]).current;
   
-  let iHelped = {
+  let iHelped = useRef({
     id: "i_helped",
     title: "ניקיתי את המקום ועזרתי\nלשמור על הטבע",
     on: false
-  }
+  }).current;
 
   const cleannessRef = useRef(0.5);
   const crowdnessRef = useRef(0.5);
