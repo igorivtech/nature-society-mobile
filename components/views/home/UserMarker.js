@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Image, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { markerStyles } from '../../views/progress/PathSegment'
@@ -8,8 +8,11 @@ export const UserMarker = ({ user, location }) => {
   const updateTrackChanged = useCallback(() => {
     setTrackChanges(v=>(v + 1));
   }, [setTrackChanges]);
+  useEffect(()=>{
+    setTrackChanges(0);
+  }, [user])
   return (
-    <Marker zIndex={4} coordinate={location}>
+    <Marker zIndex={4} tracksViewChanges={trackChanges < 2} coordinate={location}>
       <View style={markerStyles.markerContainer}>
         <Image
           onLoad={updateTrackChanged}
