@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 import { View, TouchableOpacity, Image, Text, Animated, StyleSheet, Easing } from "react-native";
 import { colors } from "../../../values/colors";
 import { globalStyles } from "../../../values/styles";
@@ -10,7 +10,7 @@ const images = {
   2: require("../../../assets/images/Progress.png"),
 };
 
-export const HomeButton = ({ index, onPress, notification }) => {
+export const HomeButton = memo(({ index, onPress, notification }) => {
 
   const opacity = useRef(new Animated.Value(0)).current;
 
@@ -33,7 +33,7 @@ export const HomeButton = ({ index, onPress, notification }) => {
       <Image source={images[index]} />
     </TouchableOpacity>
   );
-};
+});
 
 const ICON_SIZE = 42.5;
 const BG_SIZE = ICON_SIZE + 6;
