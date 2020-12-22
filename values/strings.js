@@ -70,6 +70,11 @@ export const strings = {
       yes: "יאללה, מגניב",
       no: "בהזדמנות",
     },
+    pushPermissions: {
+      title: "כדי שנוכל לשלוח לך עדכונים מגניבים.",
+      yes: "יאללה, מגניב",
+      no: "בהזדמנות",
+    },
     exitReport: {
       title: "יציאה באמצע דיווח תמחק אותו.\nבטוח שתרצה לצאת?",
       no: "כן, בוא נצא", // because reverse buttons
