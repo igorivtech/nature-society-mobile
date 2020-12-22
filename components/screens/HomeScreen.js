@@ -255,7 +255,7 @@ export const HomeScreen = ({ navigation, route }) => {
     navigation.navigate("Home", { searchItem: item });
   };
   
-  // const markerPressed = useCallback((place) => {
+  const markerPressed = useCallback((place) => {
   //   lockAutoSearching.current = true;
   //   setSelectedPlace(place);
   //   const index = serverPlaces.findIndex(p=>p.key===place.key);
@@ -266,7 +266,7 @@ export const HomeScreen = ({ navigation, route }) => {
   //     });
   //   }
   //   animateToItem(place);
-  // })
+  })
 
   return (
     <View style={globalStyles.homeContainer}>
