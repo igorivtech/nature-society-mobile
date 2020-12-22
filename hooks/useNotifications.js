@@ -1,7 +1,7 @@
+import React, { useState, useEffect, useRef } from "react";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
-import React, { useState, useEffect, useRef } from "react";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
