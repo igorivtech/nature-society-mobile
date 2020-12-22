@@ -50,9 +50,7 @@ export default function App() {
 
   useEffect(()=>{
     if (fontsLoaded && !loadingOnboarding && !loadingUser) {
-      setTimeout(() => {
-        SplashScreen.hideAsync();
-      }, 50);
+      SplashScreen.hideAsync();
     }
   },[fontsLoaded, loadingOnboarding, loadingUser])
 
