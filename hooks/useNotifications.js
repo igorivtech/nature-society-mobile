@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
+import {ASK_PUSH} from "../context/userReducer"
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -17,11 +18,21 @@ export const useNotifications = (state, dispatch) => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
+  const {askPush} = state;
+
+  useEffect(()=>{
+    if (askPush) {
+      dispatch({
+        type: ASK_PUSH,
+        payload: false
+      })
+      registerForPushNotificationsAsync().then((token) => {
+        setExpoPushToken(token);
+      });
+    }
+  }, [askPush])
+
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => {
-      console.log(`expo push token: `, token);
-      setExpoPushToken(token);
-    });
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
@@ -59,7 +70,7 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    console.log(`expo push token: `, token);
   } else {
     console.log("Must use physical device for Push Notifications");
   }

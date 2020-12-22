@@ -11,7 +11,7 @@ import {
   Easing,
 } from "react-native";
 import { UserContext } from "../../context/context";
-import { SAVE_NOTIFICATION, SAVE_USER } from "../../context/userReducer";
+import { ASK_PUSH, SAVE_NOTIFICATION, SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
 import { DEFAULT_NOTIFICATION, height, statusBarHeight } from "../../values/consts";
 import { strings } from "../../values/strings";
@@ -22,10 +22,12 @@ import { PathSegment, pathHeight } from "../views/progress/PathSegment";
 import { UserHeader } from "../views/progress/views";
 import { calcCustomAchievements } from "../../hooks/helpers"
 import { useIsFocused } from "@react-navigation/native";
+import useIsMounted from "ismounted";
 
 export const ProgressScreen = ({ navigation, route }) => {
 
   const isFocused = useIsFocused();
+  const isMounted = useIsMounted();
 
   const [popupVisible, setPopupVisible] = useState(false);
   const [data, setData] = useState([]);
@@ -37,15 +39,23 @@ export const ProgressScreen = ({ navigation, route }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const alreadyAnimatedPath = useRef(false);
 
-  // useEffect(()=> {
-  //   // DEBUG
-  //   setTimeout(() => {
-  //     dispatch({
-  //       type: SAVE_NOTIFICATION,
-  //       payload: DEFAULT_NOTIFICATION
-  //     })
-  //   }, 4000);
-  // }, [])
+  useEffect(()=> {
+    // DEBUG
+    // setTimeout(() => {
+    //   dispatch({
+    //     type: SAVE_NOTIFICATION,
+    //     payload: DEFAULT_NOTIFICATION
+    //   })
+    // }, 4000);
+    setTimeout(() => {
+      if (isMounted && isFocused) {
+        dispatch({
+          type: ASK_PUSH,
+          payload: true
+        })
+      }
+    }, 5000);
+  }, [])
 
   useEffect(()=>{
     setPopupVisible(notification != null);
