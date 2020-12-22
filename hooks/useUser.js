@@ -38,7 +38,7 @@ export const useUser = (dispatch) => {
           payload: SERVER_ACHIEVEMENTS
         })
       } catch (error) {
-        console.log(err) || console.log(null);
+        console.log(error) || console.log(null);
       } finally {
         setLoadingUser(false);
       }
