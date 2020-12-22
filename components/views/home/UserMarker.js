@@ -9,7 +9,7 @@ export const UserMarker = ({ user, location }) => {
     setTrackChanges(v=>(v + 1));
   }, [setTrackChanges]);
   return (
-    <Marker zIndex={4} tracksViewChanges={trackChanges < 2} coordinate={location}>
+    <Marker zIndex={4} coordinate={location}>
       <View style={markerStyles.markerContainer}>
         <Image
           onLoad={updateTrackChanged}
@@ -18,7 +18,7 @@ export const UserMarker = ({ user, location }) => {
         />
         <Image
           onLoad={updateTrackChanged}
-          source={user !== null ? { uri: user.image } : null}
+          source={user !== null ? { uri: user.image } : require("../../../assets/images/default_profile_pic.png")}
           style={markerStyles.profilePic}
         />
       </View>
