@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, memo } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { UserContext } from "../../../context/context";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 
-export const UserHeader = ({}) => {
+export const UserHeader = memo(({}) => {
 
     const {state} = useContext(UserContext);
     const {user, settings} = state;
@@ -46,7 +46,7 @@ export const UserHeader = ({}) => {
         
       </View>
     )
-  }
+  })
   
   export const HeaderDetail = ({icon, value, title}) => {
     return (
