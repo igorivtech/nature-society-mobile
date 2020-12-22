@@ -33,7 +33,7 @@ const clampAnimationValue = (p) => {
 
 const TITLES_DELTA = 1/7;
 
-export const Slider = memo(({valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
+export const Slider = memo(({valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible, notLoggedInError, token}) => {
 
   const {animation, title, titles} = item;
 
@@ -225,6 +225,12 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
   }
 
   const localOnPress = () => {
+    if (token === null) {
+      if (notLoggedInError !== null) {
+        notLoggedInError();
+      }
+      return;
+    }
     if (alreadyAnswered.current) {
       onPress(); // next please
     } else {
