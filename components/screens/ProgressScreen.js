@@ -52,10 +52,10 @@ export const ProgressScreen = ({ navigation, route }) => {
   }, [notification])
 
   useEffect(()=>{
-    if (user != null) {
-      const output = calcCustomAchievements(settings.achievements, user.points);
+    // if (user != null) {
+      const output = calcCustomAchievements(settings.achievements, user !== null ? user.points : 0);
       setData([...output].reverse());
-    }
+    // }
   }, [settings, user])
 
   useEffect(()=>{
