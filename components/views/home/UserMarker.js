@@ -9,7 +9,7 @@ export const UserMarker = ({ user, location }) => {
     setTrackChanges(v=>(v + 1));
   }, [setTrackChanges]);
   return (
-    <Marker tracksViewChanges={trackChanges < 2} coordinate={location}>
+    <Marker zIndex={4} tracksViewChanges={trackChanges < 2} coordinate={location}>
       <View style={markerStyles.markerContainer}>
         <Image
           onLoad={updateTrackChanged}
