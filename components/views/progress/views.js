@@ -23,6 +23,8 @@ export const UserHeader = memo(({}) => {
         if (last.length > 0) {
           setLastAchievement(last)
         }
+      } else {
+        setLastAchievement(settings.achievements[0].title)
       }
     }, [user])
   
