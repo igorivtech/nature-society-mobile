@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "מצב הטבע",
+    "name": "בשביל הטבע",
     "slug": "nature-society",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,11 +18,11 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.yourcompany.yourappname",
+      "bundleIdentifier": "com.ivtech.hala",
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.yourcompany.yourappname",
+      "package": "com.ivtech.hala",
       "versionCode": 1
     }
   }
