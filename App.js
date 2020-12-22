@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useReducer, useEffect } from "react";
 //
 import { AppLoading } from "expo";
+import * as SplashScreen from 'expo-splash-screen';
 import { fontsLoader } from "./values/fonts";
 import {
   fadeOptions,
@@ -42,6 +43,18 @@ export default function App() {
   const {loadingUser} = useUser(dispatch);
 
   useUserUsageTime();
+
+  useEffect(()=>{
+    SplashScreen.preventAutoHideAsync();
+  },[])
+
+  useEffect(()=>{
+    if (fontsLoaded && !loadingOnboarding && !loadingUser) {
+      setTimeout(() => {
+        SplashScreen.hideAsync();
+      }, 50);
+    }
+  },[fontsLoaded, loadingOnboarding, loadingUser])
 
   const contextValue = React.useMemo(() => ({
     state,
