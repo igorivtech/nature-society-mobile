@@ -61,12 +61,12 @@ export const CoolButton = ({ textStyle = {}, title, onPress, loading = false }) 
     Animated.timing(opacity, {
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
-      toValue: loading ? 0.5 : 1
+      toValue: loading ? 0.7 : 1
     }).start();
   }, [loading]);
   
   return (
-    <TouchableOpacity disabled={loading} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.7} disabled={loading} onPress={onPress}>
       <Animated.View
         style={coolStyles.container(opacity)}
       >
