@@ -26,7 +26,6 @@ const pathXCenter = pathWidth*0.3
 const pathTWidth = pathHeight * 0.3;
 //
 const topMarkerPosition = 0.15;
-let userProgress = 0.5;
 const bottomMarkerPosition = 0.8;
 //
 const markerHeight = 72;
@@ -48,6 +47,8 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   const {state} = useContext(UserContext);
   const {user} = state;
+
+  const [userProgress, setUserProgress] = useState(0.5);
 
   const {topDone, bottomDone, current} = item;
 
@@ -84,14 +85,17 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
     extrapolate: 'clamp'
   })
 
-  if (user && current) {
-    if (!bottomDone) {
-      userProgress = 0.1;
-    } else if (!topDone) {
-      const p = user !== null ? user.points : 0
-      userProgress = 1 - (0.25 + 0.5 * (item.topPoints - p)/item.topPoints);
+  useEffect(()=>{
+    setUserProgress(0.5);
+    if (user && current) {
+      if (!bottomDone) {
+        setUserProgress(0.1);
+      } else if (!topDone) {
+        const p = user !== null ? user.points : 0
+        setUserProgress(1 - (0.25 + 0.5 * (item.topPoints - p)/item.topPoints));
+      }
     }
-  }
+  }, [user])
 
   useEffect(() => {
     if (current) {
