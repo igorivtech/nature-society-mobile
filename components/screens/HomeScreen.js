@@ -190,28 +190,28 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }, [route]);
 
-  const progress = () => {
+  const progress = useCallback(() => {
     setHideList(true);
     setTimeout(() => {
       setHideList(true);
       navigation.navigate("Progress");
     }, SCREEN_WAIT_DURATION);
-  };
+  }, [navigation])
 
-  const report = () => {
+  const report = useCallback(() => {
     if (selectedPlace != null) {
       const location = selectedPlace;
       navigation.navigate("Report", { location });
     }
-  };
+  }, [selectedPlace, navigation])
 
-  const explore = () => {
+  const explore = useCallback(() => {
     setHideList(true);
     setTimeout(() => {
       setHideList(true);
       navigation.navigate("Explore", {location});
     }, SCREEN_WAIT_DURATION);
-  };
+  }, [navigation, location])
 
   const animateToItem = (item) => {
     const paddedLD = item.position.longitudeDelta + 0.25;
@@ -222,9 +222,9 @@ export const HomeScreen = ({ navigation, route }) => {
     }, 1000);
   };
 
-  const showPlace = (place) => {
+  const showPlace = useCallback((place) => {
     navigation.navigate("Place", { place });
-  };
+  }, [navigation]);
 
   const askLocationPermissions = () => {
     askLocation();
@@ -253,10 +253,6 @@ export const HomeScreen = ({ navigation, route }) => {
     });
   }, 700), [location]);
 
-  const showItem = (item) => {
-    navigation.navigate("Home", { searchItem: item });
-  };
-  
   const markerPressed = useCallback((place) => {
   //   lockAutoSearching.current = true;
   //   setSelectedPlace(place);

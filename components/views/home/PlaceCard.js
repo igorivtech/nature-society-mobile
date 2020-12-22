@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, memo} from "react";
 import {
   Animated,
   Image,
@@ -35,7 +35,7 @@ const cardStyle = {
 // crowdness: 3.6,
 // image:
 
-export const PlaceCard = ({ settings, user, item, index, scrollX, callback }) => {
+export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback }) => {
   const inputRange = [
     (index - 2) * ITEM_WIDTH,
     (index - 1) * ITEM_WIDTH,
@@ -129,7 +129,7 @@ export const PlaceCard = ({ settings, user, item, index, scrollX, callback }) =>
       </TapGestureHandler>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   titleContainer: {
