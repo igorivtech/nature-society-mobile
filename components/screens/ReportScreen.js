@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import { View, StyleSheet, Animated, SafeAreaView, Modal } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
@@ -140,19 +140,23 @@ export const ReportScreen = ({navigation, route}) => {
 
   const nextSegment = () => {
     if (scrollY?._value <= scrollViewHeight.current*2) {
-      scrollView?.current.scrollTo({
-        animated: true,
-        y: scrollY._value+scrollViewHeight.current
-      })
+      if (scrollView?.current) {
+        scrollView?.current.scrollTo({
+          animated: true,
+          y: scrollY._value+scrollViewHeight.current
+        })
+      }
     }
   }
 
   const previousSegment = () => {
     if (scrollY?._value > 0) {
-      scrollView?.current.scrollTo({
-        animated: true,
-        y: scrollY._value-scrollViewHeight.current
-      })
+      if (scrollView?.current) {
+        scrollView?.current.scrollTo({
+          animated: true,
+          y: scrollY._value-scrollViewHeight.current
+        })
+      }
     }
   }
 

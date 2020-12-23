@@ -82,23 +82,29 @@ export const ProgressScreen = ({ navigation, route }) => {
       const currentIndex = data.findIndex(achievement=>achievement.current);
       if (alreadyAnimatedPath.current) {
         setTimeout(() => {
-          scrollView?.current.scrollToOffset({
-            offset: pathHeight * currentIndex,
-            animated: true,
-          })  
-        }, 700);
-      } else {
-        alreadyAnimatedPath.current = true;
-        setTimeout(()=>{
-          scrollView?.current.scrollToOffset({
-            offset: pathHeight * currentIndex + 400,
-            animated: false,
-          });  
-          setTimeout(() => {
+          if (scrollView?.current) {
             scrollView?.current.scrollToOffset({
               offset: pathHeight * currentIndex,
               animated: true,
             })  
+          }
+        }, 700);
+      } else {
+        alreadyAnimatedPath.current = true;
+        setTimeout(()=>{
+          if (scrollView?.current) {
+            scrollView?.current.scrollToOffset({
+              offset: pathHeight * currentIndex + 400,
+              animated: false,
+            });  
+          }
+          setTimeout(() => {
+            if (scrollView?.current) {
+              scrollView?.current.scrollToOffset({
+                offset: pathHeight * currentIndex,
+                animated: true,
+              })
+            }
           }, 700);
         }, 0)
       }
