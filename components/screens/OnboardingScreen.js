@@ -144,17 +144,14 @@ export const OnboardingScreen = ({ navigation }) => {
       toValue: 0.1,
       duration: 200,
       useNativeDriver: true,
-    }).start();
-    // change
-    setTimeout(() => {
+    }).start(()=>{
       setCurrText(text);
-      // in
       Animated.timing(textAlpha, {
         toValue: 1,
         duration: 300,
         useNativeDriver: true,
       }).start();
-    }, 200);
+    });
   };
 
   return (
