@@ -76,9 +76,9 @@ export const ProfileScreen = ({ navigation }) => {
   const debounce = useCallback(_.debounce((keyboardHeight) => {
     setScrollEnabled(keyboardHeight > 0);
     if (keyboardHeight === 0) {
-      scrollRef.current.scrollToPosition(0, 0);
+      scrollRef?.current.scrollToPosition(0, 0);
     } else {
-      scrollRef.current.scrollToPosition(0, height*0.15);
+      scrollRef?.current.scrollToPosition(0, height*0.15);
     }
   }, 250), []);
 

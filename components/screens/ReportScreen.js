@@ -139,11 +139,8 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const nextSegment = () => {
-    if (scrollView.current == null) {
-      return;
-    }
     if (scrollY._value <= scrollViewHeight.current*2) {
-      scrollView.current.scrollTo({
+      scrollView?.current.scrollTo({
         animated: true,
         y: scrollY._value+scrollViewHeight.current
       })
@@ -151,11 +148,8 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const previousSegment = () => {
-    if (scrollView.current == null) {
-      return;
-    }
     if (scrollY._value > 0) {
-      scrollView.current.scrollTo({
+      scrollView?.current.scrollTo({
         animated: true,
         y: scrollY._value-scrollViewHeight.current
       })
