@@ -7,7 +7,6 @@ import {
   SCREEN_ASPECT_RATIO,
   height,
   DEFAULT_NOTIFICATION,
-  DEFAULT_PLACES,
   INITIAL_REGION,
   DEFAULT_COOR_DELTA,
 } from "../../values/consts";

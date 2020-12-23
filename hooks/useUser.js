@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Amplify, { Auth } from "aws-amplify";
-import { SAVE_ACHIEVEMENTS, SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER } from "../context/userReducer";
-import { DEFAULT_ACHIEVEMENTS, SERVER_ACHIEVEMENTS } from "../values/consts";
+import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER } from "../context/userReducer";
 import { useServer } from "./useServer";
 
 export const ATTRIBUTE_POINTS = "custom:points";
@@ -15,10 +14,6 @@ export const useUser = (dispatch) => {
     (async () => {
       setLoadingUser(true);
       try {
-        dispatch({
-          type: SAVE_ACHIEVEMENTS,
-          payload: SERVER_ACHIEVEMENTS
-        })
         const settings = await getSettings();
         if (settings) {
           dispatch({
