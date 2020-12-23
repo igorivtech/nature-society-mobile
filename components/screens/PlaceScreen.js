@@ -74,7 +74,8 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const report = () => {
-    navigation.navigate("Report", {location: place});
+    route.params.place = null;
+    navigation.navigate("Home", {reportNow: {...place}})
   };
 
   const goBack = () => {

@@ -202,6 +202,19 @@ export const HomeScreen = ({ navigation, route }) => {
           setHideList(true);
           navigation.navigate("Progress", {signupNow: true});
         }, SCREEN_WAIT_DURATION);
+      } else if (params.reportNow != null) {
+        setListOpacity(0);
+        setTimeout(() => {
+          setListOpacity(0);
+          setHideButtons(true);
+          setHideList(true);
+          const location = {...params.reportNow};
+          params.reportNow = null;
+          navigation.navigate("Report", { location });
+          setTimeout(() => {
+            setListOpacity(1);
+          }, 400);
+        }, 200);
       }
     }
   }, [route]);
