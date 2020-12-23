@@ -8,6 +8,7 @@ import LottieView from 'lottie-react-native';
 import { strings } from "../../../values/strings";
 import { colors } from "../../../values/colors";
 import useIsMounted from 'ismounted';
+import AsyncStorage from "@react-native-community/async-storage";
 
 const THUMB_RADIUS = 24.5 / 2;
 const SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
@@ -32,6 +33,7 @@ const clampAnimationValue = (p) => {
 }
 
 const TITLES_DELTA = 1/7;
+const ALREADY_SHOWN = "ALREADY_SHOWN"
 
 export const Slider = memo(({valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible, notLoggedInError, token}) => {
 
@@ -161,9 +163,36 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
     }).start();
   }
 
-  const startThumbAnimation = () => {
+  const startThumbAnimation = async () => {
     if (!isMounted) {return}
     // textContainerOpacity.setValue(1);
+    const alreadyShown = await AsyncStorage.getItem(ALREADY_SHOWN);
+    if (alreadyShown === null) {
+      AsyncStorage.setItem(ALREADY_SHOWN, "1").then(()=>{})
+      firstTimeAnimation();
+    } else {
+      regularAnimation();
+    }
+  }
+
+  const regularAnimation = () => {
+    lineOpacity.setValue(0);
+    animationOpacity.setValue(ANIMATION_OPACITY);
+    Animated.parallel([
+      Animated.timing(lineOpacity, {
+        toValue: LINE_OPACITY,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(animationOpacity, {
+        toValue: 1,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
+    ]).start();
+  }
+
+  const firstTimeAnimation = () => {
     setMiddleText(strings.reportScreen.scrollHint);
     setDragEnabled(false);
     setContinueEnabled(false);
