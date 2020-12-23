@@ -375,6 +375,7 @@ const styles = StyleSheet.create({
   },
 
   listsContainer: {
+    marginTop: 34, // this is new - remove if needed
     flex: 1,
     width: '100%'
   },
@@ -402,7 +403,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   flatListContainer: {
-    paddingVertical: 34,
+    // paddingVertical: 34,
+    paddingBottom: 34,
     paddingHorizontal: 40,
   },
 
