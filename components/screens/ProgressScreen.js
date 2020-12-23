@@ -82,7 +82,7 @@ export const ProgressScreen = ({ navigation, route }) => {
       const currentIndex = data.findIndex(achievement=>achievement.current);
       if (alreadyAnimatedPath.current) {
         setTimeout(() => {
-          scrollView.current.scrollToOffset({
+          scrollView?.current.scrollToOffset({
             offset: pathHeight * currentIndex,
             animated: true,
           })  
@@ -90,12 +90,12 @@ export const ProgressScreen = ({ navigation, route }) => {
       } else {
         alreadyAnimatedPath.current = true;
         setTimeout(()=>{
-          scrollView.current.scrollToOffset({
+          scrollView?.current.scrollToOffset({
             offset: pathHeight * currentIndex + 400,
             animated: false,
           });  
           setTimeout(() => {
-            scrollView.current.scrollToOffset({
+            scrollView?.current.scrollToOffset({
               offset: pathHeight * currentIndex,
               animated: true,
             })  
