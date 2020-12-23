@@ -54,6 +54,8 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const cardListAlpha = useRef(new Animated.Value(1)).current;
+  const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
+  const topLeftRadius = useRef(new Animated.Value(30)).current;
 
   useEffect(()=> {
     Animated.timing(cardListAlpha, {
@@ -62,6 +64,20 @@ export const ExploreScreen = ({ navigation, route }) => {
       easing: Easing.inOut(Easing.ease),
       toValue: searchOn ? 0 : 1
     }).start();
+    Animated.parallel([
+      Animated.timing(leftMargin, {
+        duration: 100,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+        toValue: searchOn ? 0 : EXIT_SIZE
+      }),
+      Animated.timing(topLeftRadius, {
+        duration: 100,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+        toValue: searchOn ? 0 : 30
+      })
+    ]).start();
   }, [searchOn])
 
   useEffect(() => {
@@ -127,7 +143,7 @@ export const ExploreScreen = ({ navigation, route }) => {
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
 
-      <View style={styles.searchScreenContainer}>
+      <Animated.View style={styles.searchScreenContainer(leftMargin, topLeftRadius)}>
         <SearchBar
           loadingSearch={loadingSearch}
           searchTerm={searchTerm}
@@ -167,7 +183,7 @@ export const ExploreScreen = ({ navigation, route }) => {
             renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
           />
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -435,15 +451,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.clear,
   },
 
-  searchScreenContainer: {
+  searchScreenContainer: (marginLeft, topLeftRadius) => ({
     paddingTop: 30,
-    borderTopLeftRadius: 30,
+    borderTopLeftRadius: topLeftRadius,
     flex: 1,
     backgroundColor: "white",
-    marginLeft: EXIT_SIZE,
+    marginLeft,
     marginTop: statusBarHeight,
     alignItems: "center",
-  },
+  }),
 
   tap: {
     position: "absolute",
