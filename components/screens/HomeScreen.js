@@ -194,7 +194,7 @@ export const HomeScreen = ({ navigation, route }) => {
           setTimeout(() => {
             setListOpacity(1);
           }, 400);
-        }, 500);
+        }, 100);
         params.searchItem = null;
       } else if (params.signupNow === true) {
         setHideList(true);
