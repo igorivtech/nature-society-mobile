@@ -84,7 +84,7 @@ export const LoginScreen = ({ navigation }) => {
     }
   }, 250), []);
 
-  const selectImage = async () => {
+  const selectImage = useCallback(async () => {
     setLoadingImage(true);
     const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status === 'granted') {
@@ -110,37 +110,37 @@ export const LoginScreen = ({ navigation }) => {
       setPopupVisible(true);
       setLoadingImage(false);
     }
-  };
+  }, []);
 
   const onSafeAreaLayout = (event) => {
     setSafeAreaHeight(event.nativeEvent.layout.height);
   }
 
-  const onNameChanged = (value) => {
+  const onNameChanged = useCallback((value) => {
     setName(value);
-  };
+  }, []);
 
-  const onLoginEmailChanged = (value) => {
+  const onLoginEmailChanged = useCallback((value) => {
     setLoginEmail(value);
-  };
+  }, []);
 
-  const onLoginPasswordChanged = (value) => {
+  const onLoginPasswordChanged = useCallback((value) => {
     setLoginPassword(value);
-  };
+  }, []);
 
-  const onSignupEmailChanged = (value) => {
+  const onSignupEmailChanged = useCallback((value) => {
     setSignupEmail(value);
-  };
+  }, []);
 
-  const onSignupPasswordChanged = (value) => {
+  const onSignupPasswordChanged = useCallback((value) => {
     setSignupPassword(value);
-  };
+  }, []);
 
-  const onNewPasswordChanged = (value) => {
+  const onNewPasswordChanged = useCallback((value) => {
     setNewPassword(value);
-  };
+  }, []);
 
-  const goBack = () => {
+  const goBack = useCallback(() => {
     if (emailSentVisible || newPasswordVisible) {
       return;
     }
@@ -149,9 +149,9 @@ export const LoginScreen = ({ navigation }) => {
     } else {
       navigation.goBack();
     }
-  };
+  }, [emailSentVisible, newPasswordVisible, forgotPasswordVisible, signupVisible, navigation, login]);
 
-  const login = () => {
+  const login = useCallback(() => {
     if (loginVisible) {
       if (validateEmail(loginEmail) && loginPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingLogin(true);
@@ -174,13 +174,13 @@ export const LoginScreen = ({ navigation }) => {
     } else {
       showLogin();
     }
-  }
+  }, [loginVisible, loginEmail, loginPassword])
 
   // const res = await Auth.currentSession();
   // let accessToken = res.getAccessToken();
   // let jwt = accessToken.getJwtToken();
 
-  const signup = () => {
+  const signup = useCallback(() => {
     if (signupVisible) {
       if (name.trim() !== "" && validateEmail(signupEmail) && signupPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingSignup(true);
@@ -224,21 +224,21 @@ export const LoginScreen = ({ navigation }) => {
     } else {
       showSignup();
     }
-  }
+  }, [signupVisible, name, signupEmail, signupPassword, image])
 
-  const showLogin = () => {
+  const showLogin = useCallback(() => {
     setLoginVisible(true);
     setSignupVisible(false);
     setForgotPasswordVisible(false);
     setNewPasswordVisible(false);
-  }
+  }, [])
 
-  const showSignup = () => {
+  const showSignup = useCallback(() => {
     setSignupVisible(true);
     setLoginVisible(false);
     setForgotPasswordVisible(false);
     setNewPasswordVisible(false);
-  }
+  }, [])
 
   const saveUser = (user) => {
     dispatch({
@@ -248,7 +248,7 @@ export const LoginScreen = ({ navigation }) => {
     navigation.navigate("Progress");
   }
 
-  const forgotPassword = () => {
+  const forgotPassword = useCallback(() => {
     if (forgotPasswordVisible) {
       console.log("forgotPassword");
     } else {
@@ -258,9 +258,9 @@ export const LoginScreen = ({ navigation }) => {
       setSignupVisible(false);
       setNewPasswordVisible(false);
     }
-  }
+  }, [forgotPasswordVisible, loginEmail])
 
-  const tapClose = (event) => {
+  const tapClose = useCallback((event) => {
     if (event.nativeEvent.state === State.END) {
       if (keyboardHeight > 0 ) {
         Keyboard.dismiss();
@@ -268,9 +268,9 @@ export const LoginScreen = ({ navigation }) => {
         goBack();
       }
     }
-  }
+  }, [keyboardHeight, goBack])
 
-  const restorePassword = () => {
+  const restorePassword = useCallback(() => {
     if (restoreEmail.length > 0) {
       setLoadingRestorePassword(true);
       Auth.forgotPassword(restoreEmail)
@@ -285,14 +285,14 @@ export const LoginScreen = ({ navigation }) => {
     } else {
       console.log("no email");
     }
-  }
+  }, [restoreEmail])
 
-  const gotIt = () => {
+  const gotIt = useCallback(() => {
     setNewPasswordVisible(true);
     setEmailSentVisible(false);
-  }
+  }, [])
 
-  const changePassword = () => {
+  const changePassword = useCallback(() => {
     if (newPassword.length >= PASSWORD_MIN_LENGTH && code.length > 0) {
       setLoadingChangePassword(true);
       Auth.forgotPasswordSubmit(restoreEmail, code, newPassword)
@@ -313,7 +313,7 @@ export const LoginScreen = ({ navigation }) => {
         handleError(errors.enterCode);
       }
     }
-  }
+  }, [newPassword, code, restoreEmail])
 
   const handleError = (error) => {
     if (error) {
