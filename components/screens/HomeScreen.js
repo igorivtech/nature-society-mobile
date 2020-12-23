@@ -31,7 +31,7 @@ import _ from "lodash";
 import { objectLength } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
 
-const SCREEN_WAIT_DURATION = 400;
+const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
 const rightSpacer = { key: "right-spacer" };
 
