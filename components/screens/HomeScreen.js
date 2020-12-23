@@ -199,8 +199,12 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const report = useCallback(() => {
     if (selectedPlace != null) {
-      const location = selectedPlace;
-      navigation.navigate("Report", { location });
+      setHideList(true);
+      setTimeout(() => {
+        setHideList(true);
+        const location = selectedPlace;
+        navigation.navigate("Report", { location });
+      }, SCREEN_WAIT_DURATION);
     }
   }, [selectedPlace, navigation])
 

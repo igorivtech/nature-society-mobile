@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
 
   container: {
     ...globalStyles.container,
-    backgroundColor: colors.grass,
+    backgroundColor: colors.clear,
   },
   dummyText: {
     transform: [{translateY: -100}],

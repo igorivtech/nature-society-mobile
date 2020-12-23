@@ -83,6 +83,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (location) {
       currentPage.current = 0;
+      setPlaces([]);
       loadMorePlaces();
       setFilteredPlaces(serverPlaces);
       return () => {
