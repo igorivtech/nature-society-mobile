@@ -58,13 +58,13 @@ export const ExploreScreen = ({ navigation, route }) => {
   const topLeftRadius = useRef(new Animated.Value(30)).current;
 
   useEffect(()=> {
-    Animated.timing(cardListAlpha, {
-      useNativeDriver: true,
-      duration: 300,
-      easing: Easing.inOut(Easing.ease),
-      toValue: searchOn ? 0 : 1
-    }).start();
     Animated.parallel([
+      Animated.timing(cardListAlpha, {
+        useNativeDriver: true,
+        duration: 300,
+        easing: Easing.inOut(Easing.ease),
+        toValue: searchOn ? 0 : 1
+      }),
       Animated.timing(leftMargin, {
         duration: 150,
         useNativeDriver: false,
