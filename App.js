@@ -70,7 +70,7 @@ export default function App() {
       <NavigationContainer>
         <HomeStack.Navigator initialRouteName={onboardingShown ? "Home" : "Onboarding"} headerMode="none">
           <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
-          <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
+          <HomeStack.Screen name="Home" component={HomeScreen} />
           <HomeStack.Screen name="Place" component={PlaceScreen} options={slideFromBottomOptions} />
           <HomeStack.Screen name="Explore" component={ExploreScreen} options={slideFromRightOptions} />
           <HomeStack.Screen name="Progress" component={ProgressScreen} options={slideFromLeftOptions} />
