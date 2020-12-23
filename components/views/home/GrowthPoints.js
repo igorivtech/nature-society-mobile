@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Animated, Easing, Image } from "react-native";
 import { UserContext } from "../../../context/context";
@@ -7,12 +8,15 @@ import { textStyles } from "../../../values/textStyles";
 const HIDDEN_TRANSLATE_X = 130/2;
 const TEXT_DURATION = 600;
 
+const ALREADY_SHOWN = "ALREADY_SHOWN"
+
 export const GrowthPoints = ({isFocused, popupVisible}) => {
   
   const {state} = useContext(UserContext);
   const {user} = state;
 
   const [points, setPoints] = useState(0);
+  const [ready, setReady] = useState(false);
 
   const translateX = useRef(new Animated.Value(HIDDEN_TRANSLATE_X)).current;
   const opacity = useRef(new Animated.Value(0)).current;
@@ -20,7 +24,28 @@ export const GrowthPoints = ({isFocused, popupVisible}) => {
   const textOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(()=>{
-    if (!isFocused || popupVisible) {
+    (async()=>{
+      if (user !== null) {
+        const shown = await AsyncStorage.getItem(ALREADY_SHOWN);
+        if (shown === null) {
+          await AsyncStorage.setItem(ALREADY_SHOWN, '1');
+          setReady(true);
+        } else {
+          setPoints(user.points);
+          show(true, 1000).start(()=>{
+            show(false, 3500).start(()=>{
+              setReady(true);
+            });
+          })
+        }
+      } else {
+        setReady(true);
+      }
+    })()
+  }, [])
+
+  useEffect(()=>{
+    if (!isFocused || popupVisible || !ready) {
       return;
     }
     if (user && user.points !== points) {
@@ -44,7 +69,7 @@ export const GrowthPoints = ({isFocused, popupVisible}) => {
         })
       })
     }
-  }, [user, isFocused, popupVisible]);
+  }, [user, isFocused, popupVisible, ready]);
 
   const show = (show, delay) => {
     return Animated.parallel([
