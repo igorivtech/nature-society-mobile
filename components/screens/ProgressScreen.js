@@ -30,8 +30,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
   const {user, notification, settings} = state;
-
-  const [refresh, setRefresh] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const isFocused = useIsFocused();
 
@@ -68,9 +67,14 @@ export const ProgressScreen = ({ navigation, route }) => {
   }, [notification])
 
   useEffect(()=>{
-    const output = calcCustomAchievements(settings.achievements, user !== null ? user.points : 0);
-    setData([...output].reverse());
-    setRefresh(v=>!v);
+    let output = calcCustomAchievements(settings.achievements, user !== null ? user.points : 0);
+    output.reverse();
+    output.forEach((elem, i) => {
+      if (elem.current) {
+        setCurrentIndex(i);
+      }
+    });
+    setData(output);
   }, [settings, user])
 
   useEffect(()=>{
@@ -142,7 +146,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
       <View style={styles.progressScreenContainer}>
         <Animated.FlatList
-          extraData={refresh}
+          extraData={currentIndex}
           data={data}
           bounces={false}
           scrollEventThrottle={16}
@@ -153,7 +157,7 @@ export const ProgressScreen = ({ navigation, route }) => {
           ref={scrollView}
           style={styles.scrollView}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index})=><PathSegment popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />}
+          renderItem={({item, index})=><PathSegment currentIndex={currentIndex} popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />}
          />
         
         <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>

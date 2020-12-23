@@ -43,7 +43,7 @@ const BOTTOM_CONTAINER_WIDTH = 70;
 const TOP_CONTAINER_MARGIN = 14;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
-export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
+export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -82,7 +82,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   useEffect(()=>{
     setUserProgress(0.5);
-    if (user && item.current) {
+    if (user && currentIndex === index) {
       if (!item.bottomDone) {
         setUserProgress(0.1);
       } else if (!item.topDone) {
@@ -90,10 +90,10 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
         setUserProgress(1 - (0.25 + 0.5 * (item.topPoints - p)/item.topPoints));
       }
     }
-  }, []) // user
+  }, [user, currentIndex])
 
   useEffect(() => {
-    if (item.current) {
+    if (currentIndex === index) {
       const { x, y } = properties.getPointAtLength(lineLength * (1-userProgress));
       markerRef.current.setNativeProps({
         top: y,
@@ -150,7 +150,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
 
   return (
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
-      {item.current ? (
+      {currentIndex === index ? (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
           <Path d={line} stroke={colors.path} strokeWidth={PATH_WIDTH} />
           <Path
@@ -168,7 +168,7 @@ export const PathSegment = memo(({ scrollY, index, item, popupVisible }) => {
       )}
 
       <View style={StyleSheet.absoluteFill}>
-        {item.current && (
+        {currentIndex === index && (
           <View style={markerStyles.markerContainer} ref={markerRef}>
             <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
             <Image source={(user !== null && user.image !==null) ? {uri: user.image} : require("../../../assets/images/default_profile_pic.png")} style={markerStyles.profilePic} />
