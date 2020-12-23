@@ -88,7 +88,9 @@ export const HomeScreen = ({ navigation, route }) => {
       lockAutoSearching.current = false;
       onRegionChangeComplete(mapRef.current.__lastRegion);
       if (status === 'undetermined') {
-        setRequestPermissions(true);
+        setTimeout(() => {
+          setRequestPermissions(true);
+        }, 1000*60);
       }
     }
   }
@@ -96,9 +98,7 @@ export const HomeScreen = ({ navigation, route }) => {
   useEffect(() => { // permissions popup
     if (requestPermissions && isFocused) {
       setRequestPermissions(false);
-      setTimeout(() => {
-        setPopupVisible(true);
-      }, 10000);
+      setPopupVisible(true);
     }
   }, [requestPermissions, isFocused]);
   useEffect(() => {
