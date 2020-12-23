@@ -141,6 +141,11 @@ export const ExploreScreen = ({ navigation, route }) => {
     navigation.navigate("Home", { searchItem: item });
   };
 
+  const textListOpacity = cardListAlpha.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0]
+  })
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
@@ -177,10 +182,7 @@ export const ExploreScreen = ({ navigation, route }) => {
           />
           <AwareFlatList
             scrollIndicatorInsets={styles.scrollInsets}
-            style={{...StyleSheet.absoluteFill, opacity: cardListAlpha.interpolate({
-              inputRange: [0, 1],
-              outputRange: [1, 0]
-            })}}
+            style={{...StyleSheet.absoluteFill, opacity: textListOpacity}}
             contentContainerStyle={styles.flatListContainer}
             data={filteredPlaces}
             keyExtractor={(item) => item.key}
