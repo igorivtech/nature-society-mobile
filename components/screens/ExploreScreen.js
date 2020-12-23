@@ -66,13 +66,13 @@ export const ExploreScreen = ({ navigation, route }) => {
     }).start();
     Animated.parallel([
       Animated.timing(leftMargin, {
-        duration: 100,
+        duration: 150,
         useNativeDriver: false,
         easing: Easing.inOut(Easing.ease),
         toValue: searchOn ? 0 : EXIT_SIZE
       }),
       Animated.timing(topLeftRadius, {
-        duration: 100,
+        duration: 150,
         useNativeDriver: false,
         easing: Easing.inOut(Easing.ease),
         toValue: searchOn ? 0 : 30
@@ -81,12 +81,15 @@ export const ExploreScreen = ({ navigation, route }) => {
   }, [searchOn])
 
   useEffect(() => {
-    loadMorePlaces();
-    setFilteredPlaces(serverPlaces);
-    return () => {
-      debounce.cancel();
-    };
-  }, []);
+    if (location) {
+      currentPage.current = 0;
+      loadMorePlaces();
+      setFilteredPlaces(serverPlaces);
+      return () => {
+        debounce.cancel();
+      };
+    }
+  }, [location]);
 
   const loadMorePlaces = async () => {
     if (currentPage.current === -1) {
