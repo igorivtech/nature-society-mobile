@@ -50,6 +50,8 @@ export const LoginScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  // const [loginEmail, setLoginEmail] = useState("nimmmm@gmail.com");
+  // const [loginPassword, setLoginPassword] = useState("123123123");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [restoreEmail, setRestoreEmail] = useState("");
