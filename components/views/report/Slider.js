@@ -165,7 +165,6 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
 
   const startThumbAnimation = async () => {
     if (!isMounted) {return}
-    // textContainerOpacity.setValue(1);
     const alreadyShown = await AsyncStorage.getItem(ALREADY_SHOWN);
     if (alreadyShown === null) {
       AsyncStorage.setItem(ALREADY_SHOWN, "1").then(()=>{})
