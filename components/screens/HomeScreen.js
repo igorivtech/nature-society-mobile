@@ -239,7 +239,12 @@ export const HomeScreen = ({ navigation, route }) => {
   };
 
   const showPlace = useCallback((place) => {
-    navigation.navigate("Place", { place });
+    setHideList(true);
+    setTimeout(() => {
+      setHideList(true);
+      navigation.navigate("Place", { place });
+    }, SCREEN_WAIT_DURATION);
+
   }, [navigation]);
 
   const askLocationPermissions = () => {
