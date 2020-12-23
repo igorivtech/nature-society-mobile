@@ -250,7 +250,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
           setTimeout(() => {
             backToNormal();
           }, 1000);
-        }, 2000);
+        }, 3000);
       });
       // animation opacity? - yes, probably animation opacity.
       Animated.timing(animationOpacity, {
