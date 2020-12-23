@@ -194,6 +194,7 @@ export const OnboardingScreen = ({ navigation }) => {
         <Animated.Text style={{
           ...textStyles.onboardingText, 
           opacity: textAlpha,
+          height: 100,
           transform: [
             {scale: textScale}
           ]
@@ -203,7 +204,6 @@ export const OnboardingScreen = ({ navigation }) => {
           <Animated.View
             style={{
               opacity: doneButtonAlpha,
-              marginTop: 40,
               transform: [
                 { translateY: doneButtonYTranslate },
                 { scale: doneButtonScale },
