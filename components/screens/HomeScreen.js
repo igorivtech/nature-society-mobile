@@ -43,6 +43,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const [places, setPlaces] = useState([]);
   let animationTimeout = null;
+  const [listOpacity, setListOpacity] = useState(1);
   const [hideList, setHideList] = useState(true);
   const [hideButtons, setHideButtons] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -186,9 +187,13 @@ export const HomeScreen = ({ navigation, route }) => {
     const params = route.params;
     if (params != null) {
       if (params.searchItem != null) {
+        setListOpacity(0);
         const s = { ...params.searchItem };
         setTimeout(() => {
           showPlace(s);
+          setTimeout(() => {
+            setListOpacity(1);
+          }, 400);
         }, 500);
         params.searchItem = null;
       } else if (params.signupNow === true) {
@@ -244,7 +249,6 @@ export const HomeScreen = ({ navigation, route }) => {
       setHideList(true);
       navigation.navigate("Place", { place });
     }, SCREEN_WAIT_DURATION);
-
   }, [navigation]);
 
   const askLocationPermissions = () => {
@@ -321,7 +325,7 @@ export const HomeScreen = ({ navigation, route }) => {
           ref={cardsListRef}
           data={places}
           horizontal
-          style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate)}
+          style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate, listOpacity)}
           contentContainerStyle={globalStyles.mainListContainer}
           onScrollBeginDrag={()=>{
             lockAutoSearching.current = true;

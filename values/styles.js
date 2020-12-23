@@ -138,7 +138,8 @@ export const globalStyles = StyleSheet.create({
     paddingBottom: 8,
   },
 
-  mainListStyle: (paddingTop, yTranslate) => ({
+  mainListStyle: (paddingTop, yTranslate, opacity) => ({
+    opacity,
     paddingTop,
     transform: [{ translateY: yTranslate }],
     flexGrow: 0,
