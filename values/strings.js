@@ -121,7 +121,8 @@ export const strings = {
       return 'מבקר אחרון';
     },
     cleannessTitle: (locked) => {
-      return locked ? "מצב וניקיון הטבע" : "מצב הטבע";
+      // return locked ? "מצב וניקיון הטבע" : "מצב הטבע";
+      return "מצב וניקיון הטבע";
     },
     crowdnessTitle: (small) => {
       return small ? 
