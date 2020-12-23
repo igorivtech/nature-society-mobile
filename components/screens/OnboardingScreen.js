@@ -62,7 +62,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const finish = () => {
     navigation.navigate("Home");
-    AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, "true").then(()=>{});
+    AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, (new Date()).toString()).then(()=>{});
   };
 
   useEffect(() => {
