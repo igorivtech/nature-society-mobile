@@ -21,7 +21,7 @@ const CARD_ANIMATION_DURATION = 400;
 
 const useVisible = (visible, initialValue) => {
 
-  const opacity = useRef(new Animated.Value(initialValue)).current;
+  const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(initialValue)).current;
 
   useEffect(()=>{

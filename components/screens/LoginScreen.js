@@ -274,16 +274,20 @@ export const LoginScreen = ({ navigation }) => {
 
   const restorePassword = useCallback(() => {
     if (restoreEmail.length > 0) {
-      setLoadingRestorePassword(true);
-      Auth.forgotPassword(restoreEmail)
-        .then(data => {
-          setEmailSentVisible(true);
-          setForgotPasswordVisible(false);
-        })
-        .catch(err => {
-          handleError(err);
-        })
-        .finally(()=>setLoadingRestorePassword(false));
+      if (validateEmail(restoreEmail)) {
+        handleError(errors.invalidEmail);
+      } else {
+        setLoadingRestorePassword(true);
+        Auth.forgotPassword(restoreEmail)
+          .then(data => {
+            setEmailSentVisible(true);
+            setForgotPasswordVisible(false);
+          })
+          .catch(err => {
+            handleError(err);
+          })
+          .finally(()=>setLoadingRestorePassword(false));
+      }
     } else {
       console.log("no email");
     }
