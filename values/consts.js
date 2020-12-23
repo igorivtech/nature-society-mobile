@@ -6,6 +6,7 @@ export const statusBarHeight = Constants.statusBarHeight;
 export const width = Dimensions.get("window").width;
 export const height = Dimensions.get("window").height;
 export const pureHeight = height - Constants.statusBarHeight;
+export const safeAreaHeight = Constants.statusBarHeight;
 
 export const SCREEN_ASPECT_RATIO = height/width;
 

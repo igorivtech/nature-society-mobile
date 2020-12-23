@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { width, height } from "./consts";
+import { width, height, safeAreaHeight } from "./consts";
 
 export const globalStyles = StyleSheet.create({
   mapStyle: {
-    ...StyleSheet.absoluteFill
+    ...StyleSheet.absoluteFill,
+    bottom: -(safeAreaHeight+20),
+    top: -(safeAreaHeight+20)
   },
   centerChildren: {
     alignItems: "center",
