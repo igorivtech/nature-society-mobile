@@ -82,7 +82,7 @@ export const ProfileScreen = ({ navigation }) => {
     }
   }, 250), []);
 
-  const selectImage = async () => {
+  const selectImage = useCallback(async () => {
     setLoadingImage(true);
     const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status === 'granted') {
@@ -108,25 +108,25 @@ export const ProfileScreen = ({ navigation }) => {
       setPopupVisible(true);
       setLoadingImage(false);
     }
-  };
+  }, []);
 
   const onSafeAreaLayout = (event) => {
     setSafeAreaHeight(event.nativeEvent.layout.height);
   }
 
-  const onNameChanged = (value) => {
+  const onNameChanged = useCallback((value) => {
     setName(value);
-  };
+  }, []);
 
-  const onSignupEmailChanged = (value) => {
+  const onSignupEmailChanged = useCallback((value) => {
     setSignupEmail(value);
-  };
+  }, []);
 
   const goBack = () => {
     navigation.goBack();
   };
 
-  const updateChanges = async () => {
+  const updateChanges = useCallback(async () => {
     let attributes = {}
     if (name !== user.name) {
       attributes.name = name;
@@ -163,16 +163,16 @@ export const ProfileScreen = ({ navigation }) => {
         setLoadingUpdate(false);
       }
     })
-  }
+  }, [name, user, signupEmail, image])
 
-  const logout = () => {
+  const logout = useCallback(() => {
     Auth.signOut().then(()=>{
       updateUser(null);
     }).catch((error)=>{
       console.error(error);
       updateUser(null);
     });
-  }
+  }, [])
 
   const updateUser = (user) => {
     dispatch({
@@ -188,7 +188,7 @@ export const ProfileScreen = ({ navigation }) => {
     navigation.navigate("Progress")
   }
 
-  const tapClose = (event) => {
+  const tapClose = useCallback((event) => {
     if (event.nativeEvent.state === State.END) {
       if (keyboardHeight > 0 ) {
         Keyboard.dismiss();
@@ -196,7 +196,7 @@ export const ProfileScreen = ({ navigation }) => {
         goBack();
       }
     }
-  }
+  }, [keyboardHeight])
 
   const handleError = (error) => {
     if (error) {
