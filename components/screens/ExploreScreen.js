@@ -456,7 +456,7 @@ const styles = StyleSheet.create({
 
   searchScreenContainer: (marginLeft, topLeftRadius) => ({
     paddingTop: 30,
-    borderTopLeftRadius: topLeftRadius,
+    borderTopLeftRadius: 30, // topLeftRadius
     flex: 1,
     backgroundColor: "white",
     marginLeft,
