@@ -95,13 +95,14 @@ export const globalStyles = StyleSheet.create({
     width: "100%",
   },
 
-  homeTopContainer: {
+  homeTopContainer: (translateY) => ({
+    transform: [{translateY}],
     alignItems: 'center',
     flexDirection: "row",
     paddingHorizontal: 64,
     justifyContent: "space-between",
     marginTop: 20,
-  },
+  }),
 
   mainCardContainer: (translateY) => ({
     padding: 3,

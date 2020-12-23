@@ -44,6 +44,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [places, setPlaces] = useState([]);
   let animationTimeout = null;
   const [hideList, setHideList] = useState(true);
+  const [hideButtons, setHideButtons] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [requestPermissions, setRequestPermissions] = useState(false);
 
@@ -58,6 +59,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
+  const buttonsTranslateY = useRef(new Animated.Value(0)).current;
 
   const {getPlaces} = useServer();
 
@@ -155,6 +157,7 @@ export const HomeScreen = ({ navigation, route }) => {
       } else {
         if (serverPlaces.length > 0) {
           setHideList(false);
+          setHideButtons(false);
         }
       }
     });
@@ -169,6 +172,15 @@ export const HomeScreen = ({ navigation, route }) => {
       useNativeDriver: true,
     }).start();
   }, [hideList]);
+
+  useEffect(() => {
+    Animated.timing(buttonsTranslateY, {
+      toValue: hideButtons ? -(height * 0.25) : 0,
+      duration: 700,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+  }, [hideButtons]);
 
   useEffect(() => {
     const params = route.params;
@@ -200,6 +212,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const report = useCallback(() => {
     if (selectedPlace != null) {
       setHideList(true);
+      setHideButtons(true);
       setTimeout(() => {
         setHideList(true);
         const location = selectedPlace;
@@ -292,11 +305,11 @@ export const HomeScreen = ({ navigation, route }) => {
       </MapView>
       
       <SafeAreaView>
-        <View style={globalStyles.homeTopContainer}>
+        <Animated.View style={globalStyles.homeTopContainer(buttonsTranslateY)}>
           <HomeButton index={2} notification={notification} onPress={progress} />
           <HomeButton index={1} onPress={report} />
           <HomeButton index={0} onPress={explore} />
-        </View>
+        </Animated.View>
       </SafeAreaView>
       <SafeAreaView>
         <Animated.FlatList
