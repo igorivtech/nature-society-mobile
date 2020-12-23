@@ -39,20 +39,20 @@ export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, acti
         toValue: popupVisible ? 1 : 0.5,
         easing: Easing.inOut(Easing.ease),
       }),
-      Animated.timing(opacity, {
-        useNativeDriver: true,
-        duration: DURATION,
-        toValue: popupVisible ? 1 : 0,
-        easing: Easing.inOut(Easing.ease),
-      }),
+      // Animated.timing(opacity, {
+      //   useNativeDriver: true,
+      //   duration: DURATION,
+      //   toValue: popupVisible ? 1 : 0,
+      //   easing: Easing.inOut(Easing.ease),
+      // }),
     ]).start();
   }, [popupVisible]);
 
   const scale = useRef(new Animated.Value(0.8)).current;
-  const opacity = useRef(new Animated.Value(0)).current;
+  // const opacity = useRef(new Animated.Value(0)).current;
 
   return (
-    <Modal transparent={true} animationType="fade" visible={popupVisible}>
+    <Modal transparent={true} animationType='fade' visible={popupVisible}>
       <View style={popupStyles.bg}>
         <TouchableWithoutFeedback
           style={StyleSheet.absoluteFill}
@@ -60,7 +60,7 @@ export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, acti
         >
           <View style={StyleSheet.absoluteFill} />
         </TouchableWithoutFeedback>
-        <Animated.View style={popupStyles.cardContainer(scale, opacity)}>
+        <Animated.View style={popupStyles.cardContainer(scale, 1)}>
           <Text style={popupStyles.title}>{textData.title}</Text>
           <PopupButton
             title={textData.yes}
