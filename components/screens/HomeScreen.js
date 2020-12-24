@@ -86,7 +86,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const tryFetchLocation = async () => {
     let { status } = await Location.getPermissionsAsync();
     if (status === 'granted') {
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getLastKnownPositionAsync({});
       if (location) {
         setLocation(location.coords);
       } else {
