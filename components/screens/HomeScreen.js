@@ -34,6 +34,11 @@ import { UserMarker } from "../views/home/UserMarker";
 const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
 const rightSpacer = { key: "right-spacer" };
+const MAP_ANIMATION_DURATION = 700;
+
+const calcRadius = (region) => {
+  return 111.045 * region.longitudeDelta / 2;
+}
 
 export const HomeScreen = ({ navigation, route }) => {
   const { state, dispatch } = useContext(UserContext);
@@ -84,11 +89,13 @@ export const HomeScreen = ({ navigation, route }) => {
         setLocation(location.coords);
       } else {
         lockAutoSearching.current = false;
-        onRegionChangeComplete(mapRef.current.__lastRegion);
+        const radius = calcRadius(mapRef.current.__lastRegion);
+        actuallyGetPlaces(mapRef.current.__lastRegion, null, radius);
       }
     } else {
       lockAutoSearching.current = false;
-      onRegionChangeComplete(mapRef.current.__lastRegion);
+      const radius = calcRadius(mapRef.current.__lastRegion);
+      actuallyGetPlaces(mapRef.current.__lastRegion, null, radius);
       if (status === 'undetermined') {
         setTimeout(() => {
           setRequestPermissions(true);
@@ -110,11 +117,15 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [locationPermission]);
   useEffect(()=>{
     if (objectLength(location) > 0) {
-      lockAutoSearching.current = false;
-      mapRef.current.animateToRegion({
+      const region = {
         ...location,
         ...DEFAULT_COOR_DELTA
-      }, 1000);
+      }
+      actuallyGetPlaces(region, location, calcRadius(region));
+      mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
+      setTimeout(() => {
+        lockAutoSearching.current = false;
+      }, MAP_ANIMATION_DURATION+100);
     }
   }, [location])
 
@@ -253,7 +264,7 @@ export const HomeScreen = ({ navigation, route }) => {
       ...item.position,
       longitudeDelta: paddedLD,
       latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
-    }, 1000);
+    }, MAP_ANIMATION_DURATION);
   };
 
   const showPlace = useCallback((place) => {
@@ -273,8 +284,7 @@ export const HomeScreen = ({ navigation, route }) => {
     if (lockAutoSearching.current) {
       return;
     }
-    // const radius = 111.045 * region.latitudeDelta;
-    const radius = 111.045 * region.longitudeDelta / 2;
+    const radius = calcRadius(region);
     // if (location != null) {
       debounce.cancel()
       debounce(region, radius);
