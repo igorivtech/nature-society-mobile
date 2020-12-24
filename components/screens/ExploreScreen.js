@@ -146,12 +146,7 @@ export const ExploreScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={goBack} style={StyleSheet.absoluteFill}>
-        <View style={StyleSheet.absoluteFill} />
-      </TouchableWithoutFeedback>
-
       <Animated.View style={styles.searchScreenContainer(leftMargin)}>
-
         <Animated.View style={{width: '100%', transform: [{translateX: listTranslateX}]}}>
           <SearchBar
             loadingSearch={loadingSearch}
@@ -190,6 +185,9 @@ export const ExploreScreen = ({ navigation, route }) => {
             renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
           />
         </Animated.View>
+        <TouchableWithoutFeedback onPress={goBack}>
+          <View style={styles.tapClose} />
+        </TouchableWithoutFeedback>
       </Animated.View>
     </View>
   );
@@ -470,5 +468,13 @@ const styles = StyleSheet.create({
     marginTop: statusBarHeight,
     alignItems: "center",
   }),
+
+  tapClose: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: -EXIT_SIZE,
+    width: EXIT_SIZE,
+  }
   
 });
