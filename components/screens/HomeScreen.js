@@ -127,7 +127,7 @@ export const HomeScreen = ({ navigation, route }) => {
         if (lockAutoSearching?.current) {
           lockAutoSearching.current = false;
         }
-      }, MAP_ANIMATION_DURATION+500);
+      }, MAP_ANIMATION_DURATION+1000);
     }
   }, [location])
 
