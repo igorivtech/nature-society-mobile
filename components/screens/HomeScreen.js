@@ -283,13 +283,17 @@ export const HomeScreen = ({ navigation, route }) => {
     // }
   }
 
-  const debounce = useCallback(_.debounce(async(region, radius) => {
+  const debounce = useCallback(_.debounce((region, radius) => {
+    actuallyGetPlaces(region, location, radius)
+  }, 700), [location]);
+
+  const actuallyGetPlaces = async (region, location, radius) => {
     const pp = await getPlaces(region, location, radius);
     dispatch({
       type: SAVE_PLACES,
       payload: pp,
     });
-  }, 700), [location]);
+  }
 
   const markerPressed = useCallback((place) => {
   //   lockAutoSearching.current = true;
