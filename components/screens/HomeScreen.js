@@ -124,8 +124,10 @@ export const HomeScreen = ({ navigation, route }) => {
       actuallyGetPlaces(region, location, calcRadius(region));
       mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
       setTimeout(() => {
-        lockAutoSearching.current = false;
-      }, MAP_ANIMATION_DURATION+100);
+        if (lockAutoSearching?.current) {
+          lockAutoSearching.current = false;
+        }
+      }, MAP_ANIMATION_DURATION+500);
     }
   }, [location])
 

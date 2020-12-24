@@ -219,7 +219,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             </Text>
             {place.lastVisitors && (
               <View style={s.recentVisitorsContainer}>
-                {place.lastVisitors.map((visitor, index) => (
+                {place.lastVisitors.slice(0, 2).map((visitor, index) => (
                   <RecentVisitor
                     key={`${index}`}
                     large
