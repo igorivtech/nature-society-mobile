@@ -228,7 +228,7 @@ export const HomeScreen = ({ navigation, route }) => {
           navigation.navigate("Report", { location });
           setTimeout(() => {
             setListOpacity(1);
-          }, 400);
+          }, 1000);
         }, 200);
       }
     }
