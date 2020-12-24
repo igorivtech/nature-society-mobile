@@ -96,8 +96,8 @@ export const HomeScreen = ({ navigation, route }) => {
       }
     } else {
       lockAutoSearching.current = false;
-      const radius = calcRadius(mapRef.current.__lastRegion);
-      actuallyGetPlaces(mapRef.current.__lastRegion, null, radius);
+      const radius = calcRadius(INITIAL_REGION);
+      actuallyGetPlaces(INITIAL_REGION, null, radius);
       if (status === 'undetermined') {
         setTimeout(() => {
           setRequestPermissions(true);
