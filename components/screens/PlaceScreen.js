@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   ActivityIndicator,
+  Linking,
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
@@ -66,7 +67,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   const actionsRef = useRef();
 
   const waze = () => {
-    console.log("waze");
+    Linking.openURL(`https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`)
   };
 
   const share = () => {
