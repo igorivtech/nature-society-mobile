@@ -169,7 +169,7 @@ export const HomeScreen = ({ navigation, route }) => {
       if (firstTime.current) {
         firstTime.current = false;
       } else {
-        if (serverPlaces.length > 0) {
+        if (serverPlaces && serverPlaces.length > 0) {
           setHideList(false);
           setHideButtons(false);
         }
@@ -241,7 +241,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [navigation])
 
   const report = useCallback(() => {
-    if (selectedPlace != null) {
+    // if (selectedPlace != null) {
       setHideList(true);
       setHideButtons(true);
       setTimeout(() => {
@@ -249,7 +249,7 @@ export const HomeScreen = ({ navigation, route }) => {
         const location = selectedPlace;
         navigation.navigate("Report", { location });
       }, SCREEN_WAIT_DURATION);
-    }
+    // }
   }, [selectedPlace, navigation])
 
   const explore = useCallback(() => {
