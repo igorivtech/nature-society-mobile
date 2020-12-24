@@ -19,10 +19,10 @@ import { globalStyles } from "../../../values/styles";
 
 const CARD_ANIMATION_DURATION = 400;
 
-const useVisible = (visible, initialValue) => {
+const useVisible = (visible, initialScale, initialOpacity) => {
 
-  const opacity = useRef(new Animated.Value(1)).current;
-  const scale = useRef(new Animated.Value(initialValue)).current;
+  const opacity = useRef(new Animated.Value(initialOpacity)).current;
+  const scale = useRef(new Animated.Value(initialScale)).current;
 
   useEffect(()=>{
     Animated.timing(opacity, {
@@ -55,7 +55,7 @@ export const LoginView = memo(
     loading
   }) => {
 
-    const {opacity, scale} = useVisible(visible, 0);
+    const {opacity, scale} = useVisible(visible, 0, 1);
 
     return (
       <View style={styles.absolutePopup(visible)}>
@@ -109,7 +109,7 @@ export const ForgotPasswordView = memo(
     restorePassword
   }) => {
 
-    const {opacity, scale} = useVisible(visible, 0);
+    const {opacity, scale} = useVisible(visible, 0, 0);
     
     return (
       <View style={styles.absolutePopup(visible)}>
@@ -146,7 +146,7 @@ export const EmailSentView = memo(
     gotIt,
   }) => {
 
-    const {opacity, scale} = useVisible(visible, 0);
+    const {opacity, scale} = useVisible(visible, 0, 0);
 
     return (
       <View style={styles.absolutePopup(visible)}>
@@ -180,7 +180,7 @@ export const NewPasswordView = memo(
     changePassword
   }) => {
 
-    const {opacity, scale} = useVisible(visible, 0);
+    const {opacity, scale} = useVisible(visible, 0, 0);
     
     return (
       <View style={styles.absolutePopup(visible)}>
@@ -237,7 +237,7 @@ export const SignupView = memo(
     loading
   }) => {
 
-    const {opacity, scale} = useVisible(visible, 0);
+    const {opacity, scale} = useVisible(visible, 0, 0);
 
     return (
       <View style={styles.absolutePopup(visible)}>
@@ -317,7 +317,7 @@ export const ProfileView = memo(
     setLoadingImage
   }) => {
 
-    const {opacity, scale} = useVisible(visible, 0);
+    const {opacity, scale} = useVisible(visible, 0, 1);
 
     return (
       <View style={styles.absolutePopup(visible)}>
