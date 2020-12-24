@@ -22,7 +22,9 @@
       "bundleIdentifier": "com.ivtech.hala",
       "buildNumber": "1.0.0",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["waze"]
+        "LSApplicationQueriesSchemes": [
+          "waze"
+        ]
       }
     },
     "android": {
