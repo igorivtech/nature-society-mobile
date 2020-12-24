@@ -43,6 +43,8 @@ export const ProgressScreen = ({ navigation, route }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const alreadyAnimatedPath = useRef(false);
 
+  let timeout = null;
+
   useEffect(()=> {
     // DEBUG
     // setTimeout(() => {
@@ -51,16 +53,19 @@ export const ProgressScreen = ({ navigation, route }) => {
     //     payload: DEFAULT_NOTIFICATION
     //   })
     // }, 4000);
-    setTimeout(() => {
-      if (isFocused) {
-        shouldAskUser().then(should => {
-          if (should && isFocused) {
-            setPushPopupVisible(true);
-          }
-        })
-      }
-    }, 5000);
-  }, [])
+    if (isFocused) {
+      shouldAskUser().then(should => {
+        if (should && isFocused) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            if (isFocused) {
+              setPushPopupVisible(true);
+            }    
+          }, 5000);
+        }
+      })
+    }
+  }, [isFocused])
 
   useEffect(()=>{
     setPopupVisible(notification != null);
