@@ -167,7 +167,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
     if (!isMounted) {return}
     const alreadyShown = await AsyncStorage.getItem(ALREADY_SHOWN);
     if (alreadyShown === null) {
-      if (token !== null) {
+      if (token != null) {
         AsyncStorage.setItem(ALREADY_SHOWN, "1").then(()=>{})
       }
       firstTimeAnimation();
