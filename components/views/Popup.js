@@ -17,7 +17,7 @@ import { textStyles } from "../../values/textStyles";
 
 const DURATION = 300;
 
-export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, action = emptyFunc, reverseActions = false, single = false }) => {
+export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, action = emptyFunc, reverseActions = false }) => {
   const close = () => {
     setPopupVisible(false);
   };
@@ -68,7 +68,7 @@ export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, acti
             filled={true}
           />
 
-          {!single && (
+          {(textData.no != null && textData.no.length > 0) && (
             <PopupButton
               title={textData.no}
               onPress={reverseActions ? doAction : close}
