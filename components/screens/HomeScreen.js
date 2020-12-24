@@ -210,12 +210,13 @@ export const HomeScreen = ({ navigation, route }) => {
             setListOpacity(1);
           }, 400);
         }, 200);
-        params.searchItem = null;
+        navigation.setParams({searchItem: null});
       } else if (params.signupNow === true) {
+        navigation.setParams({signupNow: null});
         setHideList(true);
         setTimeout(() => {
           setHideList(true);
-          navigation.navigate("Progress", {signupNow: true});
+          navigation.navigate("Progress", {showSignup: true});
         }, SCREEN_WAIT_DURATION);
       } else if (params.reportNow != null) {
         setListOpacity(0);
@@ -224,7 +225,7 @@ export const HomeScreen = ({ navigation, route }) => {
           setHideButtons(true);
           setHideList(true);
           const location = {...params.reportNow};
-          params.reportNow = null;
+          navigation.setParams({reportNow: null});
           navigation.navigate("Report", { location });
           setTimeout(() => {
             setListOpacity(1);

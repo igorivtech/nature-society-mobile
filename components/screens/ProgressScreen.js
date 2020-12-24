@@ -131,13 +131,13 @@ export const ProgressScreen = ({ navigation, route }) => {
   useEffect(() => {
     const params = route.params;
     if (params != null) {
-      if (params.signupNow === true) {
+      if (params.showSignup === true) {
+        navigation.setParams({showSignup: null});
         setTimeout(() => {
           if (isFocused) {
             loginLogout();
           }
         }, 400);
-        params.signupNow = null;
       }
     }
   }, [route]);
