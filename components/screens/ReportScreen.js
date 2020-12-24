@@ -16,7 +16,7 @@ import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../..
 import { useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue } from "../../hooks/helpers";
-import { errors, safeAreaHeight } from "../../values/consts";
+import { emptyFunc, errors, safeAreaHeight } from "../../values/consts";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -61,12 +61,20 @@ export const ReportScreen = ({navigation, route}) => {
   const [errorData, setErrorData] = useState(strings.popups.empty);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
+  const errorActionRef = useRef(emptyFunc);
+
   useEffect(()=>{
     setLocation(location);
     details.forEach(d=>d.on=false);
     iHelped.on = false;
     scrollY.addListener(({value})=>{});
   }, []);
+
+  useEffect(()=>{
+    if (!errorPopupVisible) {
+      errorActionRef.current = emptyFunc;
+    }
+  }, [errorPopupVisible])
 
   const scrollViewHeight = useRef(0);
   const scrollView = useRef();
@@ -181,7 +189,13 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const notLoggedInError = () => {
-    handleError(errors.reportNotLoggedIn);
+    errorActionRef.current = signupNow;
+    setErrorData(strings.popups.signupNow);
+    setErrorPopupVisible(true);
+  }
+
+  const signupNow = () => {
+    navigation.navigate("Home", {signupNow: true})
   }
 
   return (
@@ -207,7 +221,7 @@ export const ReportScreen = ({navigation, route}) => {
         </Animatable.View>
       </View>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
-      <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
+      <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} actionRef={errorActionRef} />
       <ModalSearch location={location != null ? location.position : null} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
     </View>
   );
