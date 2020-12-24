@@ -138,10 +138,13 @@ export const globalStyles = StyleSheet.create({
     paddingBottom: 8,
   },
 
-  mainListStyle: (paddingTop, yTranslate, opacity) => ({
+  cardContainerTranslateY: (translateY) => ({
+    transform: [{translateY}]
+  }),
+
+  mainListStyle: (paddingTop, opacity) => ({
     opacity,
     paddingTop,
-    transform: [{ translateY: yTranslate }],
     flexGrow: 0,
   }),
 

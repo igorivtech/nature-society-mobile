@@ -40,6 +40,8 @@ const calcRadius = (region) => {
   return 111.045 * region.longitudeDelta / 2;
 }
 
+const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
+
 export const HomeScreen = ({ navigation, route }) => {
   const { state, dispatch } = useContext(UserContext);
   const { user, notification, serverPlaces, settings } = state;
@@ -349,12 +351,12 @@ export const HomeScreen = ({ navigation, route }) => {
           <HomeButton index={0} onPress={explore} />
         </Animated.View>
       </SafeAreaView>
-      <SafeAreaView>
+      <AnimatedSafeAreaView style={globalStyles.cardContainerTranslateY(listYTranslate)}>
         <Animated.FlatList
           ref={cardsListRef}
           data={places}
           horizontal
-          style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listYTranslate, listOpacity)}
+          style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listOpacity)}
           contentContainerStyle={globalStyles.mainListContainer}
           onScrollBeginDrag={()=>{
             lockAutoSearching.current = true;
@@ -386,7 +388,7 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
-      </SafeAreaView>
+      </AnimatedSafeAreaView>
       <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
       <Popup
         textData={strings.popups.locationPermissions}
