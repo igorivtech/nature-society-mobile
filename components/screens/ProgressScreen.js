@@ -54,7 +54,7 @@ export const ProgressScreen = ({ navigation, route }) => {
     setTimeout(() => {
       if (isFocused) {
         shouldAskUser().then(should => {
-          if (should) {
+          if (should && isFocused) {
             setPushPopupVisible(true);
           }
         })
