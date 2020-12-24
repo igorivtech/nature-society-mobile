@@ -99,7 +99,7 @@ export const ReportScreen = ({navigation, route}) => {
           data.image = url
         }
         const response = await sendReport(token, data);
-        if (response) {
+        if (response.content) {
           let attributes = {}
           attributes[ATTRIBUTE_POINTS] = `${user.points + settings.reportPoints}`;
           attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
@@ -119,6 +119,9 @@ export const ReportScreen = ({navigation, route}) => {
           } else {
             console.error("cant update user");
           }
+        } else if (response.error) {
+          handleError(response.error);
+          setLoadingSendReport(false); 
         } else {
           handleError(errors.reportNotLoggedIn);
           setLoadingSendReport(false); 

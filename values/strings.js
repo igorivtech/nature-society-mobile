@@ -1,4 +1,8 @@
 const errors = {
+  "report_lot_logged_in": {
+    title: 'כבר מילאתם דוח לאתר זה.',
+    yes: 'אישור'  
+  },
   "UsernameExistsException": {
     title: 'אימייל כבר קיים במערכת.',
     yes: 'אישור'  

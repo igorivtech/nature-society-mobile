@@ -124,10 +124,12 @@ export const useServer = () => {
           Authorization: token
         }
       });
-      return response;
+      const content = await response.json();
+      console.log({content});
+      return {content};
     } catch (error) {
-      console.log({ error });
-      return null;
+      console.log({error});
+      return {error};
     }
   }
 
