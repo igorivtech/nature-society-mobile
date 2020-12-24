@@ -261,12 +261,10 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
       }
       return;
     }
-    if (alreadyAnswered?.current) {
+    if (alreadyAnswered.current) {
       onPress(); // next please
     } else {
-      if (alreadyAnswered?.current) {
-        alreadyAnswered.current = true;
-      }
+      alreadyAnswered.current = true;
       setContinueEnabled(false);
       setDragEnabled(false);
       Animated.parallel(
