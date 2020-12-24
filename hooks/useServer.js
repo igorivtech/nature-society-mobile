@@ -117,8 +117,10 @@ export const useServer = () => {
     try {
       const response = await fetch(`${BASE_URL}/newReport`, {
         method: "POST",
-        body: reportData,
+        body: JSON.stringify(reportData),
         headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: token
         }
       });
