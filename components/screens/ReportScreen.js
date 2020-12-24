@@ -16,7 +16,7 @@ import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../..
 import { useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue } from "../../hooks/helpers";
-import { errors } from "../../values/consts";
+import { errors, safeAreaHeight } from "../../values/consts";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -182,7 +182,7 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TapView onPress={tapClose} />
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
         <Animatable.View animation='fadeIn' delay={400} style={StyleSheet.absoluteFill}>
@@ -206,7 +206,7 @@ export const ReportScreen = ({navigation, route}) => {
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
       <Popup textData={errorData} single popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
       <ModalSearch location={location.position} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -228,7 +228,8 @@ const styles = StyleSheet.create({
     ...globalStyles.shadow,
     borderRadius: 22.5,
     marginHorizontal: 30,
-    marginVertical: 45,
+    marginBottom: 45,
+    marginTop: 35 + safeAreaHeight,
     backgroundColor: 'white',
     flex: 1,
     alignSelf: 'stretch',
