@@ -101,7 +101,7 @@ export const HomeScreen = ({ navigation, route }) => {
       if (status === 'undetermined') {
         setTimeout(() => {
           setRequestPermissions(true);
-        }, 1000*60);
+        }, 1000*20);
       }
     }
   }
