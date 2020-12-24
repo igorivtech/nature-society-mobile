@@ -146,7 +146,7 @@ export const ExploreScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
+      <TouchableWithoutFeedback onPress={goBack} style={StyleSheet.absoluteFill}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
 
@@ -470,12 +470,5 @@ const styles = StyleSheet.create({
     marginTop: statusBarHeight,
     alignItems: "center",
   }),
-
-  tap: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: EXIT_SIZE,
-  },
+  
 });
