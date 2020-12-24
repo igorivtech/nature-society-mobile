@@ -353,7 +353,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
       </View>
       
       <Animated.View style={sliderStyles.continueButton(bottomTopContainersOpacity)}>
-        <TouchableOpacity disabled={!continueEnabled} onPress={localOnPress}>
+        <TouchableOpacity disabled={(showLocation && location == null) || !continueEnabled} onPress={localOnPress}>
           <Animated.View style={sliderStyles.buttonContainer}>
             <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
           </Animated.View>
@@ -364,7 +364,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
         {showLocation && (
           <TouchableWithoutFeedback onPress={pickLocation}>
             <View style={sliderStyles.locationContainer}>
-              <Text style={sliderStyles.locationText}>{location.title}</Text>
+              <Text style={sliderStyles.locationText}>{location != null ? location.title : strings.pleaseSelectLocation}</Text>
               <Image source={require("../../../assets/images/location_small_marker.png")} /> 
             </View>
           </TouchableWithoutFeedback>

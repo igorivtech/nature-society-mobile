@@ -46,6 +46,7 @@ const errors = {
 }
 
 export const strings = {
+  pleaseSelectLocation: 'אנא בחרו אתר טבע',
   code: 'קוד',
   showInfo: 'הצג\nמידע',
   popups: {
