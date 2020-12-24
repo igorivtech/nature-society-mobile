@@ -261,7 +261,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [navigation, location])
 
   const animateToItem = (item) => {
-    const paddedLD = item.position.longitudeDelta + 0.25;
+    const paddedLD = item.position.longitudeDelta + 0.15;
     mapRef.current.animateToRegion({
       ...item.position,
       longitudeDelta: paddedLD,
