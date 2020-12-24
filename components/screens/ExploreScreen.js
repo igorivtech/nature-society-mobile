@@ -55,7 +55,11 @@ export const ExploreScreen = ({ navigation, route }) => {
 
   const cardListAlpha = useRef(new Animated.Value(1)).current;
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
-  const topLeftRadius = useRef(new Animated.Value(30)).current;
+  const listTranslateX = leftMargin.interpolate({
+    inputRange: [0, EXIT_SIZE],
+    outputRange: [0, -EXIT_SIZE/2],
+    extrapolate: 'clamp',
+  });
 
   useEffect(()=> {
     Animated.parallel([
@@ -66,17 +70,11 @@ export const ExploreScreen = ({ navigation, route }) => {
         toValue: searchOn ? 0 : 1
       }),
       Animated.timing(leftMargin, {
-        duration: 150,
-        useNativeDriver: false,
+        duration: 300,
+        useNativeDriver: true,
         easing: Easing.inOut(Easing.ease),
         toValue: searchOn ? 0 : EXIT_SIZE
       }),
-      Animated.timing(topLeftRadius, {
-        duration: 150,
-        useNativeDriver: false,
-        easing: Easing.inOut(Easing.ease),
-        toValue: searchOn ? 0 : 30
-      })
     ]).start();
   }, [searchOn])
 
@@ -152,17 +150,20 @@ export const ExploreScreen = ({ navigation, route }) => {
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
 
-      <Animated.View style={styles.searchScreenContainer(leftMargin, topLeftRadius)}>
-        <SearchBar
-          loadingSearch={loadingSearch}
-          searchTerm={searchTerm}
-          searchOn={searchOn}
-          setSearchOn={setSearchOn}
-          closeSearch={closeSearch}
-          textChanged={textChanged}
-        />
+      <Animated.View style={styles.searchScreenContainer(leftMargin)}>
 
-        <View style={styles.listsContainer}>
+        <Animated.View style={{width: '100%', transform: [{translateX: listTranslateX}]}}>
+          <SearchBar
+            loadingSearch={loadingSearch}
+            searchTerm={searchTerm}
+            searchOn={searchOn}
+            setSearchOn={setSearchOn}
+            closeSearch={closeSearch}
+            textChanged={textChanged}
+          />
+        </Animated.View>
+
+        <Animated.View style={styles.listsContainer(listTranslateX)}>
           <AwareFlatList
             onEndReached={loadMorePlaces}
             onEndReachedThreshold={2}
@@ -188,7 +189,7 @@ export const ExploreScreen = ({ navigation, route }) => {
             keyExtractor={(item) => item.key}
             renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
           />
-        </View>
+        </Animated.View>
       </Animated.View>
     </View>
   );
@@ -374,11 +375,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
 
-  listsContainer: {
+  listsContainer: (translateX) => ({
     marginTop: 34, // this is new - remove if needed
     flex: 1,
-    width: '100%'
-  },
+    width: '100%',
+    transform: [{translateX}]
+  }),
 
   translateY: (translateY) => ({
     transform: [{ translateY }],
@@ -459,12 +461,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.clear,
   },
 
-  searchScreenContainer: (marginLeft, topLeftRadius) => ({
+  searchScreenContainer: (marginLeft) => ({
     paddingTop: 30,
-    borderTopLeftRadius: 30, // topLeftRadius
+    borderTopLeftRadius: 30,
     flex: 1,
     backgroundColor: "white",
-    marginLeft,
+    transform: [{translateX: marginLeft}],
     marginTop: statusBarHeight,
     alignItems: "center",
   }),
