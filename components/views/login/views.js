@@ -55,7 +55,7 @@ export const LoginView = memo(
     loading
   }) => {
 
-    const {opacity, scale} = useVisible(visible, 1);
+    const {opacity, scale} = useVisible(visible, 0);
 
     return (
       <View style={styles.absolutePopup(visible)}>
