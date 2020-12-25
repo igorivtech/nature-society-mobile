@@ -317,6 +317,9 @@ export const HomeScreen = ({ navigation, route }) => {
   }
 
   const markerPressed = useCallback((place) => {
+    if (selectedPlace != null && place._id === selectedPlace._id) {
+      return;
+    }
     const index = serverPlaces.findIndex(p=>p.key===place.key);
     if (index > -1) {
       ignoreCardsListener.current = true;
