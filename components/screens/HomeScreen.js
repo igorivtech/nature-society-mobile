@@ -219,13 +219,13 @@ export const HomeScreen = ({ navigation, route }) => {
           navigation.navigate("Progress", {showSignup: true});
         }, SCREEN_WAIT_DURATION);
       } else if (params.reportNow != null) {
+        const location = {...params.reportNow};
+        navigation.setParams({reportNow: null});
         setListOpacity(0);
         setTimeout(() => {
           setListOpacity(0);
           setHideButtons(true);
-          setHideList(true);
-          const location = {...params.reportNow};
-          navigation.setParams({reportNow: null});
+          setHideList(true);  
           navigation.navigate("Report", { location });
           setTimeout(() => {
             setListOpacity(1);
