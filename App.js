@@ -31,6 +31,7 @@ import awsconfig from './aws-exports';
 import { useUser } from "./hooks/useUser";
 import { useUserUsageTime } from "./hooks/useUserUsageTime";
 import { useNotifications } from "./hooks/useNotifications";
+import NetInfo from '@react-native-community/netinfo';
 
 Amplify.configure(awsconfig);
 enableScreens();
@@ -48,13 +49,17 @@ export default function App() {
 
   useEffect(()=>{
     SplashScreen.preventAutoHideAsync();
+    //
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+    });
+    return unsubscribe;
   },[])
 
   useEffect(()=>{
     if (fontsLoaded && !loadingOnboarding && !loadingUser) {
-      setTimeout(() => {
-        SplashScreen.hideAsync();
-      }, 4);
+      SplashScreen.hideAsync()
     }
   },[fontsLoaded, loadingOnboarding, loadingUser])
 

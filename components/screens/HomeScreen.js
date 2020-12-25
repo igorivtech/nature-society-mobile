@@ -304,10 +304,12 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const actuallyGetPlaces = async (region, location, radius) => {
     const pp = await getPlaces(region, location, radius);
-    dispatch({
-      type: SAVE_PLACES,
-      payload: pp,
-    });
+    if (pp && pp !== null && pp != undefined) {
+      dispatch({
+        type: SAVE_PLACES,
+        payload: pp,
+      });
+    }
   }
 
   const markerPressed = useCallback((place) => {
