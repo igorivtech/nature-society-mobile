@@ -62,6 +62,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [location, setLocation] = useState(null);
   const mapRef = useRef(null);
   const lockAutoSearching = useRef(true);
+  const ignoreCardsListener = useRef(false);
   const [globalTracksViewChanges, setGlobalTracksViewChanges] = useState(false);
 
   const cardsListRef = useRef(null);
@@ -152,6 +153,9 @@ export const HomeScreen = ({ navigation, route }) => {
   const setupCardListener = () => {
     scrollX.removeAllListeners();
     scrollX.addListener(({value}) => {
+      if (ignoreCardsListener.current) {
+        return;
+      }
       const i = Math.round(value/ITEM_WIDTH);
       if (animationTimeout !== null) {
         clearTimeout(animationTimeout);
@@ -313,18 +317,18 @@ export const HomeScreen = ({ navigation, route }) => {
   }
 
   const markerPressed = useCallback((place) => {
-    showPlace(place);
-  //   lockAutoSearching.current = true;
-  //   setSelectedPlace(place);
-  //   const index = serverPlaces.findIndex(p=>p.key===place.key);
-  //   if (index > -1) {
-  //     cardsListRef.current.scrollToOffset({
-  //       animated: true,
-  //       offset: index*ITEM_WIDTH
-  //     });
-  //   }
-  //   animateToItem(place);
-  })
+    const index = serverPlaces.findIndex(p=>p.key===place.key);
+    if (index > -1) {
+      ignoreCardsListener.current = true;
+      lockAutoSearching.current = true;
+      setSelectedPlace(place);
+      cardsListRef.current.scrollToOffset({
+        animated: true,
+        offset: index*ITEM_WIDTH
+      });
+      animateToItem(place);
+    }
+  }, [serverPlaces])
 
   return (
     <View style={globalStyles.homeContainer}>
@@ -370,6 +374,7 @@ export const HomeScreen = ({ navigation, route }) => {
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
             {useNativeDriver: true}
           )}
+          onMomentumScrollEnd={()=>ignoreCardsListener.current=false}
           scrollEventThrottle={16}
           keyExtractor={(item) => item.key}
           snapToInterval={ITEM_WIDTH}
