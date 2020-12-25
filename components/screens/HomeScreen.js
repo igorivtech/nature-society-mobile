@@ -313,6 +313,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }
 
   const markerPressed = useCallback((place) => {
+    showPlace(place);
   //   lockAutoSearching.current = true;
   //   setSelectedPlace(place);
   //   const index = serverPlaces.findIndex(p=>p.key===place.key);
