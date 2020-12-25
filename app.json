@@ -24,7 +24,19 @@
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "waze"
-        ]
+        ],
+        "NSCameraUsageDescription":
+          "אנחנו משתמשים במצלמה כדי שתוכלו להעלות תמונות של האתרים שאתם מבקרים בהם.",
+        "NSPhotoLibraryUsageDescription":
+          "אנחנו משתמשים בגלריה כדי שתוכלו להעלות תמונות פרופיל.",
+        "NSLocationAlwaysUsageDescription":
+          "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם.",
+        "NSLocationUsageDescription":
+          "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם.",
+        "NSLocationWhenInUseUsageDescription":
+          "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription":
+          "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם.",
       }
     },
     "android": {
