@@ -24,7 +24,7 @@ export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, i
         toValue: 0.8,
         easing: Easing.inOut(Easing.ease)
       }).start(()=>{
-        setTrackChanges(v=>v+1);
+        setTrackChanges(2);
       })
     }
   }, [trackChanges])
@@ -45,7 +45,7 @@ export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, i
 
   useEffect(()=>{
     if (place) {
-      setTrackChanges(true);
+      setTrackChanges(0);
       setImage(place.cleanness > 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png"))
     }
   }, [place])
