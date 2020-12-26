@@ -299,9 +299,9 @@ export const HomeScreen = ({ navigation, route }) => {
     }, SCREEN_WAIT_DURATION);
   }, [navigation]);
 
-  const askLocationPermissions = () => {
+  const askLocationPermissions = useCallback(() => {
     askLocation();
-  };
+  }, []);
 
   const onRegionChangeComplete = async (region) => {
     setGlobalTracksViewChanges(false);

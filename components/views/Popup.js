@@ -1,16 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import {
   View,
   StyleSheet,
   Animated,
-  Modal,
   TouchableWithoutFeedback,
   Text,
   TouchableOpacity,
   Easing,
 } from "react-native";
+import Modal from 'react-native-modal';
 import { colors } from "../../values/colors";
-import { emptyFunc, width } from "../../values/consts";
+import { emptyFunc, height, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
@@ -18,18 +18,28 @@ import { textStyles } from "../../values/textStyles";
 const DURATION = 300;
 
 export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, action = emptyFunc, reverseActions = false }) => {
+
+  const applyAction = useRef(false);
+  
   const close = () => {
     setPopupVisible(false);
   };
 
   const doAction = () => {
+    applyAction.current = true;
     setPopupVisible(false);
-    if (actionRef && actionRef?.current) {
-      actionRef?.current();
-    } else {
-      action();
-    }
   };
+
+  const onModalHide = useCallback(() => {
+    if (applyAction.current) {
+      applyAction.current = false;
+      if (actionRef && actionRef?.current) {
+        actionRef?.current();
+      } else {
+        action();
+      }
+    }
+  }, []);
 
   useEffect(() => {
     Animated.parallel([
@@ -52,7 +62,14 @@ export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, acti
   // const opacity = useRef(new Animated.Value(0)).current;
 
   return (
-    <Modal transparent={true} animationType='fade' visible={popupVisible}>
+    <Modal 
+      style={{margin: 0}} 
+      backdropColor={colors.clear}
+      onModalHide={onModalHide}
+      animationIn='fadeIn' 
+      animationOut='fadeOut' 
+      isVisible={popupVisible}
+    >
       <View style={popupStyles.bg}>
         <TouchableWithoutFeedback
           style={StyleSheet.absoluteFill}
