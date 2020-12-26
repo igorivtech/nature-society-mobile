@@ -1,18 +1,33 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { Animated, Image, StyleSheet, View } from "react-native";
+import React, { useState, useCallback, useEffect, useRef } from "react";
+import { Animated, Easing, Image, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { ITEM_WIDTH } from "./PlaceCard";
 
 export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, index, selectedPlace}) => {
-  const [trackChanges, setTrackChanges] = useState(true)
+  const [trackChanges, setTrackChanges] = useState(0)
   const [image, setImage] = useState(null);
 
-  const scale = scrollX.interpolate({
-    inputRange: [ (index - 1) * ITEM_WIDTH, index*ITEM_WIDTH, (index+1)*ITEM_WIDTH ],
-    // outputRange: [0.75, 1, 0.75],
-    outputRange: [0.75, 0.75, 0.75],
-    extrapolate: 'clamp'
-  })
+  // const scale = scrollX.interpolate({
+  //   inputRange: [ (index - 1) * ITEM_WIDTH, index*ITEM_WIDTH, (index+1)*ITEM_WIDTH ],
+  //   // outputRange: [0.75, 1, 0.75],
+  //   outputRange: [0.75, 0.75, 0.75],
+  //   extrapolate: 'clamp'
+  // })
+
+  const scale = useRef(new Animated.Value(0)).current;
+  
+  useEffect(()=>{
+    if (trackChanges === 1) {
+      Animated.timing(scale, {
+        duration: 300,
+        useNativeDriver: true,
+        toValue: 0.8,
+        easing: Easing.inOut(Easing.ease)
+      }).start(()=>{
+        setTrackChanges(v=>v+1);
+      })
+    }
+  }, [trackChanges])
 
   const opacity = scrollX.interpolate({
     inputRange: [ (index - 1) * ITEM_WIDTH, index*ITEM_WIDTH, (index+1)*ITEM_WIDTH ],
@@ -21,8 +36,8 @@ export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, i
   })
 
   const turnOffTrackChanged = useCallback(()=>{
-    setTrackChanges(false);
-  }, [setTrackChanges])
+    setTrackChanges(1);
+  }, []);
 
   const p = useCallback(()=>{
     onPress(place);
@@ -36,9 +51,9 @@ export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, i
   }, [place])
 
   return (
-    <Marker zIndex={selectedPlace != null ? (selectedPlace.key === place.key ? 2 : 1) : 1} tracksViewChanges={trackChanges} onPress={p} coordinate={place.position}>
+    <Marker zIndex={selectedPlace != null ? (selectedPlace.key === place.key ? 2 : 1) : 1} tracksViewChanges={trackChanges < 2} onPress={p} coordinate={place.position}>
       <View style={styles.container}>
-        <Animated.Image style={styles.marker(0.75)} onLoad={turnOffTrackChanged} source={image} />
+        <Animated.Image style={styles.marker(scale)} onLoad={turnOffTrackChanged} source={image} />
       </View>
     </Marker>
   )
