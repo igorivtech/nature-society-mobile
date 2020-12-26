@@ -333,17 +333,23 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }, [serverPlaces])
 
+  const onPanDrag = useCallback(()=>{
+    lockAutoSearching.current = false
+  }, [])
+
+  const onRegionChange = useCallback(()=>{
+    setGlobalTracksViewChanges(true);
+    if (!lockAutoSearching.current) {
+      setHideList(true)
+    }
+  }, [])
+
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
-        onPanDrag={()=>lockAutoSearching.current = false}
+        onPanDrag={onPanDrag}
         moveOnMarkerPress={false}
-        onRegionChange={()=>{
-          setGlobalTracksViewChanges(true);
-          if (!lockAutoSearching.current) {
-            setHideList(true)
-          }
-        }}
+        onRegionChange={onRegionChange}
         onRegionChangeComplete={onRegionChangeComplete}
         initialRegion={INITIAL_REGION}
         customMapStyle={MAP_STYLE}
