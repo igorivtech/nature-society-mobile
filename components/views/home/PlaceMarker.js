@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef, memo } from "react";
 import { Animated, Easing, Image, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { ITEM_WIDTH } from "./PlaceCard";
 
-export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, index, selectedPlace}) => {
+export const PlaceMarker = memo(({globalTracksViewChanges, place, onPress, scrollX, index, selectedPlace}) => {
   const [trackChanges, setTrackChanges] = useState(0)
   const [image, setImage] = useState(null);
 
@@ -58,7 +58,7 @@ export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, i
       </View>
     </Marker>
   )
-}
+})
 
 // trackChanges || globalTracksViewChanges
 // tracksViewChanges={trackChanges}
