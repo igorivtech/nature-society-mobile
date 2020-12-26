@@ -147,14 +147,17 @@ export const ExploreScreen = ({ navigation, route }) => {
 
   const handleSwipeRight = (event) => {
     if (event.nativeEvent.state === State.END) {
-      closeSearch();
+      if (searchOn) {
+        closeSearch();
+      } else {
+        goBack();
+      }
     }
   };
 
   return (
     <View style={styles.container}>
       <FlingGestureHandler
-        enabled={searchOn}
         direction={Directions.RIGHT}
         onHandlerStateChange={handleSwipeRight}
       >
