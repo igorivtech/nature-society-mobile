@@ -118,7 +118,7 @@ export const HomeScreen = ({ navigation, route }) => {
       tryFetchLocation();
     }
   }, [locationPermission]);
-  useEffect(()=>{
+  useEffect(()=>{ // current location fetched
     if (objectLength(location) > 0) {
       const region = {
         ...location,
