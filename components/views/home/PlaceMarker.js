@@ -19,7 +19,7 @@ export const PlaceMarker = ({globalTracksViewChanges, place, onPress, scrollX, i
   useEffect(()=>{
     if (trackChanges === 1) {
       Animated.timing(scale, {
-        delay: index * 50,
+        delay: index * 100,
         duration: 300,
         useNativeDriver: true,
         toValue: 0.8,
