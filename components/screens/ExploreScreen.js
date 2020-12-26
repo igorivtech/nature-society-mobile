@@ -26,6 +26,7 @@ import { useServer } from "../../hooks/useServer";
 import { useIsFocused } from '@react-navigation/native';
 import { placeLocked } from "../../hooks/helpers";
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
+import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -144,51 +145,63 @@ export const ExploreScreen = ({ navigation, route }) => {
     outputRange: [1, 0]
   })
 
+  const handleSwipeRight = (event) => {
+    if (event.nativeEvent.state === State.END) {
+      closeSearch();
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Animated.View style={styles.searchScreenContainer(leftMargin)}>
-        <Animated.View style={{width: '100%', transform: [{translateX: listTranslateX}]}}>
-          <SearchBar
-            loadingSearch={loadingSearch}
-            searchTerm={searchTerm}
-            searchOn={searchOn}
-            setSearchOn={setSearchOn}
-            closeSearch={closeSearch}
-            textChanged={textChanged}
-          />
-        </Animated.View>
+      <FlingGestureHandler
+        enabled={searchOn}
+        direction={Directions.RIGHT}
+        onHandlerStateChange={handleSwipeRight}
+      >
+        <Animated.View style={styles.searchScreenContainer(leftMargin)}>
+          <Animated.View style={{width: '100%', transform: [{translateX: listTranslateX}]}}>
+            <SearchBar
+              loadingSearch={loadingSearch}
+              searchTerm={searchTerm}
+              searchOn={searchOn}
+              setSearchOn={setSearchOn}
+              closeSearch={closeSearch}
+              textChanged={textChanged}
+            />
+          </Animated.View>
 
-        <Animated.View style={styles.listsContainer(listTranslateX)}>
-          <AwareFlatList
-            onEndReached={loadMorePlaces}
-            onEndReachedThreshold={2}
-            scrollIndicatorInsets={styles.scrollInsets}
-            style={styles.cardsList(searchOn, cardListAlpha)}
-            contentContainerStyle={styles.flatListContainer}
-            data={places}
-            keyExtractor={(item) => item.key}
-            ListFooterComponent={()=>{
-              return (
-                <View style={styles.paginationIndicatorContainer} key='indicator'>
-                  <ActivityIndicator animating={loadingMorePlaces} color={colors.treeBlues} />
-                </View>                
-              )
-            }}
-            renderItem={({ item, index }) => <SearchCard settings={settings} user={user} showItem={showItem} item={item} index={index} />}
-          />
-          <AwareFlatList
-            scrollIndicatorInsets={styles.scrollInsets}
-            style={{...StyleSheet.absoluteFill, opacity: textListOpacity}}
-            contentContainerStyle={styles.flatListContainer}
-            data={filteredPlaces}
-            keyExtractor={(item) => item.key}
-            renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
-          />
+          <Animated.View style={styles.listsContainer(listTranslateX)}>
+            <AwareFlatList
+              onEndReached={loadMorePlaces}
+              onEndReachedThreshold={2}
+              scrollIndicatorInsets={styles.scrollInsets}
+              style={styles.cardsList(searchOn, cardListAlpha)}
+              contentContainerStyle={styles.flatListContainer}
+              data={places}
+              keyExtractor={(item) => item.key}
+              ListFooterComponent={()=>{
+                return (
+                  <View style={styles.paginationIndicatorContainer} key='indicator'>
+                    <ActivityIndicator animating={loadingMorePlaces} color={colors.treeBlues} />
+                  </View>                
+                )
+              }}
+              renderItem={({ item, index }) => <SearchCard settings={settings} user={user} showItem={showItem} item={item} index={index} />}
+            />
+            <AwareFlatList
+              scrollIndicatorInsets={styles.scrollInsets}
+              style={{...StyleSheet.absoluteFill, opacity: textListOpacity}}
+              contentContainerStyle={styles.flatListContainer}
+              data={filteredPlaces}
+              keyExtractor={(item) => item.key}
+              renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
+            />
+          </Animated.View>
+          <TouchableWithoutFeedback onPress={goBack}>
+            <View style={styles.tapClose} />
+          </TouchableWithoutFeedback>
         </Animated.View>
-        <TouchableWithoutFeedback onPress={goBack}>
-          <View style={styles.tapClose} />
-        </TouchableWithoutFeedback>
-      </Animated.View>
+      </FlingGestureHandler>
     </View>
   );
 };
