@@ -424,6 +424,7 @@ export const HomeScreen = ({ navigation, route }) => {
       </AnimatedSafeAreaView>
       <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
       <Popup
+        permissions={true}
         textData={strings.popups.locationPermissions}
         action={askLocationPermissions}
         popupVisible={popupVisible}

@@ -182,6 +182,7 @@ export const ProgressScreen = ({ navigation, route }) => {
         <UserHeader />
         <ProgressPopup />
         <Popup
+          permissions={true}
           textData={strings.popups.pushPermissions}
           action={askPush}
           popupVisible={pushPopupVisible}

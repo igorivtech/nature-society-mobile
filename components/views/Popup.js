@@ -17,7 +17,7 @@ import { textStyles } from "../../values/textStyles";
 
 const DURATION = 300;
 
-export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, action = emptyFunc, reverseActions = false }) => {
+export const Popup = ({ permissions = false, textData, popupVisible, setPopupVisible, actionRef, action = emptyFunc, reverseActions = false }) => {
 
   const applyAction = useRef(false);
   
@@ -26,12 +26,20 @@ export const Popup = ({ textData, popupVisible, setPopupVisible, actionRef, acti
   };
 
   const doAction = () => {
-    applyAction.current = true;
+    if (permissions) {
+      applyAction.current = true;
+    } else {
+      if (actionRef && actionRef?.current) {
+        actionRef?.current();
+      } else {
+        action();
+      }
+    }
     setPopupVisible(false);
   };
 
   const onModalHide = useCallback(() => {
-    if (applyAction.current) {
+    if (permissions && applyAction.current) {
       applyAction.current = false;
       if (actionRef && actionRef?.current) {
         actionRef?.current();
