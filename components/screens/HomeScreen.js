@@ -9,6 +9,7 @@ import {
   DEFAULT_NOTIFICATION,
   INITIAL_REGION,
   DEFAULT_COOR_DELTA,
+  width,
 } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import {
@@ -39,6 +40,20 @@ const MAP_ANIMATION_DURATION = 700;
 const calcRadius = (region) => {
   return 111.045 * region.longitudeDelta / 2;
 }
+
+const getZoomLevelFromRegion = (region) => {
+  const { longitudeDelta } = region;
+  // Normalize longitudeDelta which can assume negative values near central meridian
+  const lngD = (360 + longitudeDelta) % 360;
+  // Calculate the number of tiles currently visible in the viewport
+  const tiles = width / 256;
+  // Calculate the currently visible portion of the globe
+  const portion = lngD / 360;
+  // Calculate the portion of the globe taken up by each tile
+  const tilePortion = portion / tiles;
+  // Return the zoom level which splits the globe into that number of tiles
+  return Math.log2(1 / tilePortion);
+};
 
 const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
 
