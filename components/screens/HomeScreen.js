@@ -319,7 +319,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const debounce = useCallback(_.debounce((region) => {
     actuallyGetPlaces(region, location)
-  }, 700), [location]);
+  }, 500), [location]);
 
   const actuallyGetPlaces = async (region, location) => {
     const pp = await getPlaces(region, location, calcRadius(region));
