@@ -243,6 +243,11 @@ export const SearchBar = ({
     outputRange: [1, 0],
     extrapolate: 'clamp',
   })
+  const bottomLineWidth = searchIconOnOpacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 2],
+    extrapolate: 'clamp'
+  })
 
   useEffect(()=>{
     Animated.timing(searchIconOnOpacity, {
@@ -268,7 +273,7 @@ export const SearchBar = ({
   };
 
   return (
-    <View style={styles.searchContainer(searchOn)}>
+    <View style={styles.searchContainer}>
 
       <Animated.View style={styles.searchIndicatorContainer(opacity)}>
         <ActivityIndicator style={styles.indicator} animating={loadingSearch} color={colors.treeBlues} />
@@ -296,6 +301,8 @@ export const SearchBar = ({
         <Animated.Image style={styles.searchOnImage(searchIconOnOpacity)} source={require("../../assets/images/search_icon.png")}/>
         <Animated.Image style={styles.searchOffImage(searchIconOffOpacity)} source={require("../../assets/images/search_off_icon.png")}/>
       </View>
+
+      <Animated.View style={styles.bottomBorder(bottomLineWidth)} />
     </View>
   );
 };
@@ -348,6 +355,16 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  bottomBorder: (height) => ({ 
+    transform: [{scaleY: height}, {translateY: 1}],
+    height: 1,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: colors.treeBlues
+  }),
 
   searchOnImage: (opacity) => ({
     position: 'absolute',
@@ -483,16 +500,14 @@ const styles = StyleSheet.create({
     color: colors.treeBlues,
   },
 
-  searchContainer: (searchOn) => ({
-    borderBottomColor: colors.treeBlues,
-    borderBottomWidth: searchOn ? 2 : 1,
+  searchContainer: {
     marginVertical: 4,
     marginHorizontal: 40,
     padding: 4,
     // height: 36,
     alignItems: "center",
     flexDirection: "row",
-  }),
+  },
   container: {
     flex: 1,
     backgroundColor: colors.clear,
