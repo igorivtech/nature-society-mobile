@@ -38,7 +38,7 @@ export const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation, route }) => {
 
-  const {location} = route.params;
+  const {location, hasLocation} = route.params;
   const currentPage = useRef(0);
 
   const isFocused = useIsFocused();
@@ -189,7 +189,7 @@ export const ExploreScreen = ({ navigation, route }) => {
                   </View>                
                 )
               }}
-              renderItem={({ item, index }) => <SearchCard settings={settings} user={user} showItem={showItem} item={item} index={index} />}
+              renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
             />
             <AwareFlatList
               scrollIndicatorInsets={styles.scrollInsets}
@@ -288,7 +288,7 @@ export const SearchBar = ({
   );
 };
 
-const SearchCard = ({ settings, user, item, showItem, index }) => {
+const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
   return (
     <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
       <Image style={styles.cardImage} source={{ uri: item.image }} />
@@ -296,7 +296,7 @@ const SearchCard = ({ settings, user, item, showItem, index }) => {
         <View style={styles.cardLocationContainer}>
           {item.distance && (
             <Text style={textStyles.normalOfSize(14)}>
-              {strings.distanceFromYou(item.distance)}
+              {strings.distanceFromYou(hasLocation ? item.distance : null)}
             </Text>  
           )}
           <View style={{flexGrow: 1, minWidth: 4}} />

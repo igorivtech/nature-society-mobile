@@ -278,7 +278,10 @@ export const HomeScreen = ({ navigation, route }) => {
     setHideList(true);
     setTimeout(() => {
       setHideList(true);
-      navigation.navigate("Explore", {location});
+      navigation.navigate("Explore", {
+        location: location ?? mapRef.current.__lastRegion,
+        hasLocation: location != null
+      });
     }, SCREEN_WAIT_DURATION);
   }, [navigation, location])
 
