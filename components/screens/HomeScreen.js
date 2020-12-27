@@ -107,11 +107,11 @@ export const HomeScreen = ({ navigation, route }) => {
         setLocation(location.coords);
       } else {
         lockAutoSearching.current = false;
-        actuallyGetPlaces(INITIAL_REGION, null, calcRadius(INITIAL_REGION));
+        actuallyGetPlaces(INITIAL_REGION, null);
       }
     } else {
       lockAutoSearching.current = false;
-      actuallyGetPlaces(INITIAL_REGION, null, calcRadius(INITIAL_REGION));
+      actuallyGetPlaces(INITIAL_REGION, null);
       if (status === 'undetermined') {
         setTimeout(() => {
           setRequestPermissions(true);
@@ -137,7 +137,7 @@ export const HomeScreen = ({ navigation, route }) => {
         ...location,
         ...DEFAULT_COOR_DELTA
       }
-      actuallyGetPlaces(region, location, calcRadius(region));
+      actuallyGetPlaces(region, location);
       mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
       setTimeout(() => {
         if (lockAutoSearching?.current) {
@@ -309,21 +309,20 @@ export const HomeScreen = ({ navigation, route }) => {
     if (lockAutoSearching.current) {
       return;
     }
-    const radius = calcRadius(region);
     // if (location != null) {
       debounce.cancel()
-      debounce(region, radius);
+      debounce(region);
     // } else {
     //   console.log("current location is null");
     // }
   }
 
-  const debounce = useCallback(_.debounce((region, radius) => {
-    actuallyGetPlaces(region, location, radius)
+  const debounce = useCallback(_.debounce((region) => {
+    actuallyGetPlaces(region, location)
   }, 700), [location]);
 
-  const actuallyGetPlaces = async (region, location, radius) => {
-    const pp = await getPlaces(region, location, radius);
+  const actuallyGetPlaces = async (region, location) => {
+    const pp = await getPlaces(region, location, calcRadius(region));
     if (pp && pp !== null && pp != undefined) {
       dispatch({
         type: SAVE_PLACES,
