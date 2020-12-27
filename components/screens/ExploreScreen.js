@@ -21,6 +21,7 @@ import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
 import { statusBarHeight } from "../../values/consts";
+import { globalStyles } from "../../values/styles";
 import _ from "lodash";
 import { useServer } from "../../hooks/useServer";
 import { useIsFocused } from '@react-navigation/native';
@@ -236,6 +237,20 @@ export const SearchBar = ({
 }) => {
 
   const opacity = useRef(new Animated.Value(1)).current;
+  const searchIconOnOpacity = useRef(new Animated.Value(0)).current;
+  const searchIconOffOpacity = searchIconOnOpacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  })
+
+  useEffect(()=>{
+    Animated.timing(searchIconOnOpacity, {
+      toValue: searchOn ? 1 : 0,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  }, [searchOn])
 
   useEffect(()=>{
     Animated.timing(opacity, {
@@ -277,13 +292,10 @@ export const SearchBar = ({
         style={styles.searchInput}
       />     
 
-      <Image
-        source={
-          searchOn
-            ? require("../../assets/images/search_icon.png")
-            : require("../../assets/images/search_off_icon.png")
-        }
-      />
+      <View>
+        <Animated.Image style={styles.searchOnImage(searchIconOnOpacity)} source={require("../../assets/images/search_icon.png")}/>
+        <Animated.Image style={styles.searchOffImage(searchIconOffOpacity)} source={require("../../assets/images/search_off_icon.png")}/>
+      </View>
     </View>
   );
 };
@@ -336,6 +348,17 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  searchOnImage: (opacity) => ({
+    position: 'absolute',
+    resizeMode: 'contain',
+    opacity
+  }),
+
+  searchOffImage: (opacity) => ({
+    resizeMode: 'contain',
+    opacity
+  }),
 
   paginationIndicatorContainer: {
     paddingVertical: 12,
