@@ -307,7 +307,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, []);
 
   const onRegionChangeComplete = async (region) => {
-    setGlobalTracksViewChanges(false);
+    // setGlobalTracksViewChanges(false);
     if (lockAutoSearching.current) {
       return;
     }
@@ -356,7 +356,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [])
 
   const onRegionChange = useCallback(()=>{
-    setGlobalTracksViewChanges(true);
+    // setGlobalTracksViewChanges(true);
     if (!lockAutoSearching.current) {
       setHideList(true)
     }
@@ -395,7 +395,7 @@ export const HomeScreen = ({ navigation, route }) => {
           contentContainerStyle={globalStyles.mainListContainer}
           onScrollBeginDrag={()=>{
             lockAutoSearching.current = true;
-            setGlobalTracksViewChanges(true);
+            // setGlobalTracksViewChanges(true);
           }}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
