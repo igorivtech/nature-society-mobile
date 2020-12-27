@@ -107,13 +107,11 @@ export const HomeScreen = ({ navigation, route }) => {
         setLocation(location.coords);
       } else {
         lockAutoSearching.current = false;
-        const radius = calcRadius(INITIAL_REGION);
-        actuallyGetPlaces(INITIAL_REGION, null, radius);
+        actuallyGetPlaces(INITIAL_REGION, null, calcRadius(INITIAL_REGION));
       }
     } else {
       lockAutoSearching.current = false;
-      const radius = calcRadius(INITIAL_REGION);
-      actuallyGetPlaces(INITIAL_REGION, null, radius);
+      actuallyGetPlaces(INITIAL_REGION, null, calcRadius(INITIAL_REGION));
       if (status === 'undetermined') {
         setTimeout(() => {
           setRequestPermissions(true);
