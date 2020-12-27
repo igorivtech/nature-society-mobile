@@ -236,7 +236,7 @@ export const SearchBar = ({
   loadingSearch = false
 }) => {
 
-  const opacity = useRef(new Animated.Value(1)).current;
+  const indicatorOpacity = useRef(new Animated.Value(1)).current;
   const searchIconOnOpacity = useRef(new Animated.Value(0)).current;
   const searchIconOffOpacity = searchIconOnOpacity.interpolate({
     inputRange: [0, 1],
@@ -258,7 +258,7 @@ export const SearchBar = ({
   }, [searchOn])
 
   useEffect(()=>{
-    Animated.timing(opacity, {
+    Animated.timing(indicatorOpacity, {
       useNativeDriver: true,
       toValue: loadingSearch ? 1 : 0,
       easing: Easing.inOut(Easing.ease)
@@ -275,7 +275,7 @@ export const SearchBar = ({
   return (
     <View style={styles.searchContainer}>
 
-      <Animated.View style={styles.searchIndicatorContainer(opacity)}>
+      <Animated.View style={styles.searchIndicatorContainer(indicatorOpacity)}>
         <ActivityIndicator style={styles.indicator} animating={loadingSearch} color={colors.treeBlues} />
       </Animated.View>
 
