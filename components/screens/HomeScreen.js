@@ -178,9 +178,7 @@ export const HomeScreen = ({ navigation, route }) => {
           return;
         }
         const i = Math.round(value/ITEM_WIDTH);
-        if (animationTimeout !== null) {
-          clearTimeout(animationTimeout);
-        }
+        clearTimeout(animationTimeout);
         animationTimeout = setTimeout(()=>{
           const item = serverPlaces[i];
           if (selectedPlace == null || item.key !== selectedPlace.key) {
