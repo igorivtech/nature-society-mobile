@@ -154,8 +154,8 @@ export const HomeScreen = ({ navigation, route }) => {
           timeInterval: 60*1000,
           distanceInterval: 100 // meters
         }, (l) => {
-          if (l != null) {
-            console.log(l.coords);
+          if (l != null && l.coords != null) {
+            setLocation(l.coords)
           }
         }).then(r=>locationListener.current=r.remove);
       }
