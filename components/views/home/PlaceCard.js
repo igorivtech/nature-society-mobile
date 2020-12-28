@@ -116,14 +116,8 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
             </View>
           </View>
 
-          <SharedElement
-            style={globalStyles.cardMainImage}
-            id={`place.${item.key}.image`}
-          >
-            <Image
-              style={{ ...globalStyles.cardMainImage, width: "100%" }}
-              source={{ uri: item.image }}
-            />
+          <SharedElement style={globalStyles.cardMainImage} id={`place.${item.key}.image`}>
+            <Image style={styles.image} source={{ uri: item.image }} />
           </SharedElement>
         </Animated.View>
       </TapGestureHandler>
@@ -132,6 +126,10 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
 });
 
 const styles = StyleSheet.create({
+  image: {
+    ...globalStyles.cardMainImage, 
+    width: "100%"
+  },
   titleContainer: {
     flexShrink: 1
   }
