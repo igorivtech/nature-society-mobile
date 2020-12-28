@@ -152,6 +152,14 @@ export const HomeScreen = ({ navigation, route }) => {
       setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
       // setTimeout(() => {
       setSelectedPlace(serverPlaces[0]);
+      ignoreCardsListener.current = true;
+      cardsListRef.current.scrollToOffset({
+        animated: false,
+        offset: 0
+      });
+      setTimeout(() => {
+        ignoreCardsListener.current = false;
+      }, 1);
       if (isFocused) {
         setHideList(false);
         // animateToItem(serverPlaces[0]);
