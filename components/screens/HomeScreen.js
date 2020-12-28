@@ -363,6 +363,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const onRegionChange = useCallback(()=>{
     // setGlobalTracksViewChanges(true);
     if (!lockAutoSearching.current) {
+      setSelectedPlace(null);
       setHideList(true)
     }
   }, [])
