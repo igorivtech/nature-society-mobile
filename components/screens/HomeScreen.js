@@ -159,37 +159,38 @@ export const HomeScreen = ({ navigation, route }) => {
       });
       setTimeout(() => {
         ignoreCardsListener.current = false;
-      }, 1);
+      }, 10);
       if (isFocused) {
         setHideList(false);
         // animateToItem(serverPlaces[0]);
       }
-      setupCardListener();
       // }, 1000);
     } else {
       // somthing i guess?
     }
   }, [serverPlaces]);
 
-  const setupCardListener = () => {
+  useEffect(()=>{ // setup cards listener
     scrollX.removeAllListeners();
-    scrollX.addListener(({value}) => {
-      if (ignoreCardsListener.current) {
-        return;
-      }
-      const i = Math.round(value/ITEM_WIDTH);
-      if (animationTimeout !== null) {
-        clearTimeout(animationTimeout);
-      }
-      animationTimeout = setTimeout(()=>{
-        const item = serverPlaces[i];
-        if (selectedPlace == null || item.key !== selectedPlace.key) {
-          setSelectedPlace(item);
-          animateToItem(item);
+    if (serverPlaces && serverPlaces.length > 0) {
+      scrollX.addListener(({value}) => {
+        if (ignoreCardsListener.current) {
+          return;
         }
-      }, 10);
-    })
-  }
+        const i = Math.round(value/ITEM_WIDTH);
+        if (animationTimeout !== null) {
+          clearTimeout(animationTimeout);
+        }
+        animationTimeout = setTimeout(()=>{
+          const item = serverPlaces[i];
+          if (selectedPlace == null || item.key !== selectedPlace.key) {
+            setSelectedPlace(item);
+            animateToItem(item);
+          }
+        }, 10);
+      })
+    }
+  }, [serverPlaces, selectedPlace])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
