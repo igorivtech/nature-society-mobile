@@ -31,6 +31,9 @@
         "NSLocationUsageDescription": "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם.",
         "NSLocationWhenInUseUsageDescription": "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם."
+      },
+      "config": {
+        "googleMapsApiKey": ""
       }
     },
     "android": {
