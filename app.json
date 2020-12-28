@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.ivtech.hala",
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.0.3",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "waze"
@@ -33,7 +33,7 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם."
       },
       "config": {
-        "googleMapsApiKey": ""
+        "googleMapsApiKey": "AIzaSyCZWRw4uja13gJHCiIuDtZ7atE4mU8DNAo"
       }
     },
     "android": {
