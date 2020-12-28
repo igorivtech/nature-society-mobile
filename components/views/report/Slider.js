@@ -364,7 +364,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
         {showLocation && (
           <TouchableWithoutFeedback onPress={pickLocation}>
             <View style={sliderStyles.locationContainer}>
-              <Text style={sliderStyles.locationText}>{location != null ? location.title : strings.pleaseSelectLocation}</Text>
+              <Text numberOfLines={1} minimumFontScale={0.75} adjustsFontSizeToFit={true} style={sliderStyles.locationText}>{location != null ? location.title : strings.pleaseSelectLocation}</Text>
               <Image source={require("../../../assets/images/location_small_marker.png")} /> 
             </View>
           </TouchableWithoutFeedback>
