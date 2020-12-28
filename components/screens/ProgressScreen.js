@@ -36,14 +36,13 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   const [popupVisible, setPopupVisible] = useState(false);
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
+  const [showPushPopup, setShowPushPopup] = useState(false);
   const initialState = useRef(calcCustomAchievements(settings.achievements, user !== null ? user.points : 0).reverse()).current;
   const [data, setData] = useState(initialState); // []
   const scrollView = useRef();
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const alreadyAnimatedPath = useRef(false);
-
-  let timeout = null;
 
   useEffect(()=> {
     // DEBUG
@@ -53,19 +52,20 @@ export const ProgressScreen = ({ navigation, route }) => {
     //     payload: DEFAULT_NOTIFICATION
     //   })
     // }, 4000);
-    if (isFocused) {
-      shouldAskUser().then(should => {
-        if (should && isFocused) {
-          clearTimeout(timeout);
-          timeout = setTimeout(() => {
-            if (isFocused) {
-              setPushPopupVisible(true);
-            }    
-          }, 5000);
-        }
-      })
+    shouldAskUser().then(should => {
+      if (should) {
+        setTimeout(() => {
+          setShowPushPopup(true);
+        }, 5000);
+      }
+    })
+  }, [])
+
+  useEffect(()=>{
+    if (showPushPopup && isFocused) {
+      setPushPopupVisible(true);
     }
-  }, [isFocused])
+  }, [showPushPopup, isFocused])
 
   useEffect(()=>{
     setPopupVisible(notification != null);
