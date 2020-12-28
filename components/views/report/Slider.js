@@ -484,7 +484,8 @@ const sliderStyles = StyleSheet.create({
 
   locationText: {
     ...textStyles.normalOfSize(18),
-    color: colors.treeBlues
+    color: colors.treeBlues,
+    flexShrink: 1
   },
 
   locationContainer: {
