@@ -47,7 +47,7 @@ export const PlaceMarker = memo(({globalTracksViewChanges, place, onPress, scrol
   useEffect(()=>{
     if (place) {
       setTrackChanges(0);
-      setImage(place.cleanness > 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png"))
+      setImage(place.cleanness >= 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png"))
     }
   }, [place])
 

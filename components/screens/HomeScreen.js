@@ -172,6 +172,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(()=>{ // setup cards listener
     scrollX.removeAllListeners();
+    clearTimeout(animationTimeout);
     if (serverPlaces && serverPlaces.length > 0) {
       scrollX.addListener(({value}) => {
         if (ignoreCardsListener.current) {
