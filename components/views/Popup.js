@@ -84,6 +84,7 @@ export const Popup = ({ permissions = false, textData, popupVisible, setPopupVis
     >
       <View style={popupStyles.bg}>
         <TouchableWithoutFeedback
+          disabled={permissions}
           style={StyleSheet.absoluteFill}
           onPress={close}
         >
