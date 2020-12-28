@@ -32,6 +32,7 @@ import { useUser } from "./hooks/useUser";
 import { useUserUsageTime } from "./hooks/useUserUsageTime";
 import { useNotifications } from "./hooks/useNotifications";
 import NetInfo from '@react-native-community/netinfo';
+import { SPLASH_HIDE_DELAY } from "./values/consts";
 
 Amplify.configure(awsconfig);
 enableScreens();
@@ -61,7 +62,7 @@ export default function App() {
     if (fontsLoaded && !loadingOnboarding && !loadingUser) {
       setTimeout(() => {
         SplashScreen.hideAsync()
-      }, 300);
+      }, SPLASH_HIDE_DELAY);
     }
   },[fontsLoaded, loadingOnboarding, loadingUser])
 

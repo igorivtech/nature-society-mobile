@@ -8,6 +8,8 @@ export const height = Dimensions.get("window").height;
 export const pureHeight = height - Constants.statusBarHeight;
 export const safeAreaHeight = Constants.statusBarHeight;
 
+export const SPLASH_HIDE_DELAY = 300;
+
 export const SCREEN_ASPECT_RATIO = height/width;
 
 export const DEFAULT_COOR_DELTA = {

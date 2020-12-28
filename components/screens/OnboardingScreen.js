@@ -11,7 +11,7 @@ import {
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
-import { width, height } from "../../values/consts";
+import { width, height, SPLASH_HIDE_DELAY } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -27,7 +27,7 @@ const titles = {
 
 export const OnboardingScreen = ({ navigation }) => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
-  const [currIndex, setIndex] = useState(0);
+  const [currIndex, setIndex] = useState(-1);
   const [doneVisible, setDoneVisible] = useState(false);
   const [finishVisible, setFinishVisible] = useState(false);
 
@@ -43,7 +43,11 @@ export const OnboardingScreen = ({ navigation }) => {
   const textScale = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
+    setTimeout(() => {
+      setIndex(0);
+    }, SPLASH_HIDE_DELAY);
     Animated.timing(textScale, {
+      delay: SPLASH_HIDE_DELAY,
       toValue: 1,
       duration: 500,
       easing: Easing.inOut(Easing.ease),
