@@ -79,6 +79,8 @@ export const HomeScreen = ({ navigation, route }) => {
   const lockAutoSearching = useRef(true);
   const ignoreCardsListener = useRef(false);
   const [globalTracksViewChanges, setGlobalTracksViewChanges] = useState(false);
+  const firstTimeSettingLocation = useRef(true);
+  const locationListener = useRef(null);
 
   const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -133,17 +135,35 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [locationPermission]);
   useEffect(()=>{ // current location fetched
     if (objectLength(location) > 0) {
-      const region = {
-        ...location,
-        ...DEFAULT_COOR_DELTA
-      }
-      actuallyGetPlaces(region, location);
-      mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
-      setTimeout(() => {
-        if (lockAutoSearching?.current) {
-          lockAutoSearching.current = false;
+      if (firstTimeSettingLocation.current) {
+        firstTimeSettingLocation.current = false;
+        ignoreCardsListener.current = true;
+        lockAutoSearching.current = true;
+        setHideList(true);
+        const region = {
+          ...location,
+          ...DEFAULT_COOR_DELTA
         }
-      }, MAP_ANIMATION_DURATION+1000);
+        actuallyGetPlaces(region, location);
+        mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
+        setTimeout(() => {
+          ignoreCardsListener.current = false;
+          lockAutoSearching.current = false;
+        }, MAP_ANIMATION_DURATION+500);
+        Location.watchPositionAsync({
+          timeInterval: 60*1000,
+          distanceInterval: 100 // meters
+        }, (l) => {
+          if (l != null) {
+            console.log(l.coords);
+          }
+        }).then(r=>locationListener.current=r.remove);
+      }
+    }
+    return () => {
+      if (locationListener?.current != null) {
+        locationListener?.current();
+      }
     }
   }, [location])
 
