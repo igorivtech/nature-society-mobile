@@ -61,7 +61,7 @@ export default function App() {
     if (fontsLoaded && !loadingOnboarding && !loadingUser) {
       setTimeout(() => {
         SplashScreen.hideAsync()
-      }, 1);
+      }, 10);
     }
   },[fontsLoaded, loadingOnboarding, loadingUser])
 
