@@ -63,6 +63,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   useEffect(()=>{
     if (showPushPopup && isFocused) {
+      setShowPushPopup(false);
       setPushPopupVisible(true);
     }
   }, [showPushPopup, isFocused])
