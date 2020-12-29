@@ -44,8 +44,8 @@ const BOTTOM_CONTAINER_MARGIN = 12;
 export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
 
   const realIndex = index*2;
-  const bottomIcon = item.bottomDone ? rankImages[realIndex].on : rankImages[realIndex].off;
-  const topIcon = item.topDone ? rankImages[realIndex+1].on : rankImages[realIndex+1].off;
+  const bottomIcon = item.bottomDone ? rankImages[realIndex].on.image : rankImages[realIndex].off.image;
+  const topIcon = item.topDone ? rankImages[realIndex+1].on.image : rankImages[realIndex+1].off.image;
 
   const {state} = useContext(UserContext);
   const {user} = state;
