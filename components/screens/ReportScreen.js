@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import { View, StyleSheet, Animated, SafeAreaView, Platform } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
@@ -22,8 +22,8 @@ import useIsMounted from "ismounted";
 const clean = {
   title: strings.reportScreen.cleanTitle,
   titles: strings.reportScreen.cleanTitles,
-  animation: Platform.OS === 'android' ? require('../../assets/animations/clean_android.json') : require("../../assets/animations/clean.json"),
-  introAnimation: Platform.OS === 'android' ? require('../../assets/animations/clean_intro_android.json') : require("../../assets/animations/clean_intro.json")
+  animation: require("../../assets/animations/clean.json"),
+  introAnimation: require("../../assets/animations/clean_intro.json")
 }
 
 const crowd = {
