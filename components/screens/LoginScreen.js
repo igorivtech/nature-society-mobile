@@ -30,7 +30,7 @@ const DEFAULT_POINTS = 50;
 const DEFAULT_NUM_OF_REPORTS = 0;
 const DEFAULT_UNLOCKED_PLACES = {};
 
-export const LoginScreen = ({ navigation }) => {
+export const LoginScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
 
@@ -141,6 +141,16 @@ export const LoginScreen = ({ navigation }) => {
   const onNewPasswordChanged = useCallback((value) => {
     setNewPassword(value);
   }, []);
+
+  useEffect(()=>{
+    const params = route.params;
+    if (params != null) {
+      if (params.register) {
+        navigation.setParams({register: null});
+        signup();
+      }
+    }
+  }, [route])
 
   const goBack = useCallback(() => {
     if (emailSentVisible || newPasswordVisible) {

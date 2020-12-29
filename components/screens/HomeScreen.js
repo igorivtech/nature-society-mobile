@@ -277,7 +277,7 @@ export const HomeScreen = ({ navigation, route }) => {
           setHideButtons(true);
           setHideList(true);
           if (user === null) {
-            navigation.navigate("Login");
+            navigation.navigate("Login", {register: true});
           } else {
             navigation.navigate("Profile");
           }
