@@ -100,7 +100,7 @@ export const Slider = memo(({autoPlay, valueRef, item, location, showLocation = 
 
   const animationProgress = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
-    outputRange: [0, 0.281, 0.514, 0.747, 1],
+    outputRange: [0.00001, 0.281, 0.514, 0.747, 1],
     extrapolate: 'clamp'
   })
 
