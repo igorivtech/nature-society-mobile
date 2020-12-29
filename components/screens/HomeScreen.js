@@ -368,7 +368,9 @@ export const HomeScreen = ({ navigation, route }) => {
       });
     }
     if (specialLockForInitialFetch.current) {
-      specialLockForInitialFetch.current = false;
+      setTimeout(() => {
+        specialLockForInitialFetch.current = false;
+      }, 1000);
     }
   }
 
