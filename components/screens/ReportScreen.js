@@ -169,7 +169,7 @@ export const ReportScreen = ({navigation, route}) => {
             if (isMounted) {
               setAutoPlaySecond(true);
             }
-          }, 1000);
+          }, 500);
         }
       }
     }
