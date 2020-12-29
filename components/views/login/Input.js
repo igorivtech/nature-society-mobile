@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing, StyleSheet, TextInput, View } from "react-native";
 import { colors } from "../../../values/colors";
+import { smallScreen } from "../../../values/consts";
 import { textStyles } from "../../../values/textStyles";
 
 const DURATION = 300;
@@ -75,7 +76,7 @@ export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', titl
   };
 
   return (
-    <View style={styles.animatedTextContainer(extraMargin ? 64 : 32)}>
+    <View style={styles.animatedTextContainer(extraMargin ? (smallScreen ? 44 : 64) : (smallScreen ? 26 : 32))}>
       <Animated.Text onLayout={(e) => {
         placeholderWidth.current = e.nativeEvent.layout.width;
         placeholderHeight.current = e.nativeEvent.layout.height;

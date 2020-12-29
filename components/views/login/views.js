@@ -14,7 +14,7 @@ import { textStyles } from "../../../values/textStyles";
 import { Input } from "./Input";
 import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
-import { CARD_RADIUS, width } from "../../../values/consts";
+import { CARD_RADIUS, smallScreen, width } from "../../../values/consts";
 import { globalStyles } from "../../../values/styles";
 
 const CARD_ANIMATION_DURATION = 400;
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingTop: 32,
     paddingBottom: 24,
-    paddingHorizontal: 40,
+    paddingHorizontal: smallScreen ? 30 : 40,
     width: width - 2 * 30,
     backgroundColor: "white",
     borderRadius: CARD_RADIUS,
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
   },
 
   loginTitle: {
-    marginBottom: 38,
+    marginBottom: smallScreen ? 18 : 38,
     ...textStyles.boldOfSize(24),
     color: colors.treeBlues,
     textAlign: "right",
