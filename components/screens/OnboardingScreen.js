@@ -60,7 +60,16 @@ export const OnboardingScreen = ({ navigation }) => {
       return;
     }
     if (currIndex < 2) {
-      setIndex(currIndex + 1);
+      setIndex(v=>v+1);
+    }
+  };
+
+  const previous = () => {
+    if (doneVisible) {
+      return;
+    }
+    if (currIndex > 0) {
+      setIndex(v=>v-1);
     }
   };
 
@@ -163,6 +172,10 @@ export const OnboardingScreen = ({ navigation }) => {
 
       <TouchableWithoutFeedback onPress={next} style={globalStyles.halfLeft}>
         <View style={globalStyles.halfLeftInner} />
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={previous} style={globalStyles.halfRight}>
+        <View style={globalStyles.halfRightInner} />
       </TouchableWithoutFeedback>
 
       <View style={globalStyles.onboardingMainContainer}>
