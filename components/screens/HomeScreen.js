@@ -155,7 +155,7 @@ export const HomeScreen = ({ navigation, route }) => {
         setTimeout(() => {
           ignoreCardsListener.current = false;
           lockAutoSearching.current = false;
-        }, MAP_ANIMATION_DURATION+2000);
+        }, MAP_ANIMATION_DURATION+1000);
         Location.watchPositionAsync({
           timeInterval: 60*1000,
           distanceInterval: 100 // meters
