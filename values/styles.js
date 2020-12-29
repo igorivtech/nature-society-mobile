@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { width, height, safeAreaHeight } from "./consts";
+import { width, height, safeAreaHeight, smallScreen } from "./consts";
 
 export const globalStyles = StyleSheet.create({
   mapStyle: {
@@ -116,7 +116,7 @@ export const globalStyles = StyleSheet.create({
     transform: [{translateY}],
     alignItems: 'center',
     flexDirection: "row",
-    paddingHorizontal: 64,
+    paddingHorizontal: smallScreen ? 44 : 64,
     justifyContent: "space-between",
     marginTop: 20,
   }),

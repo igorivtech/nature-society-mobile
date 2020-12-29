@@ -7,7 +7,7 @@ import {
   Text,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { height, width } from "../../../values/consts";
+import { height, smallScreen, width } from "../../../values/consts";
 import { EXIT_SIZE } from "../../screens/ExploreScreen";
 var path = require("svg-path-properties");
 import Constants from "expo-constants";
@@ -205,12 +205,12 @@ const FloatingLabel = ({right, done, points, title}) => {
     <View style={flStyles.container(right)}>
       {done ? (
         <View style={flStyles.doneContainer(right)}>
-          <Text style={flStyles.doneText(right)}>{title}</Text>
+          <Text adjustsFontSizeToFit={smallScreen} style={flStyles.doneText(right)}>{title}</Text>
           <View style={flStyles.doneBorder} />
         </View>
       ) : (
         <View style={flStyles.notDoneContainer(right)}>
-          <Text style={flStyles.notDoneTitle(right)}>{title}</Text>
+          <Text adjustsFontSizeToFit={smallScreen} style={flStyles.notDoneTitle(right)}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
             <Text style={flStyles.notDoneInnerText}>{user ? (points - user.numOfReports) : points}</Text>
