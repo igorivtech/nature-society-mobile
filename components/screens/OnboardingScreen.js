@@ -205,7 +205,7 @@ export const OnboardingScreen = ({ navigation }) => {
           />
         </Animated.View>
 
-        <Animated.Text adjustsFontSizeToFit={true} style={{
+        <Animated.Text numberOfLines={3} adjustsFontSizeToFit={true} style={{
           ...textStyles.onboardingText, 
           opacity: textAlpha,
           height: 80,
