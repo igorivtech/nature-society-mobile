@@ -23,11 +23,6 @@ export const ITEM_HEIGHT = ITEM_WIDTH * 0.466;
 export const SPACER_ITEM_SIZE = (width - ITEM_WIDTH) / 2;
 export const spacerStyle = { width: SPACER_ITEM_SIZE };
 
-const cardStyle = {
-  width: ITEM_WIDTH,
-  height: ITEM_HEIGHT,
-};
-
 // title: "בריכת נמרוד",
 // distance: 34,
 // lastVisitor: "איגור",
@@ -54,7 +49,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
   });
 
   return (
-    <View style={cardStyle}>
+    <View style={styles.card}>
       <TapGestureHandler onHandlerStateChange={showPlace}>
         <Animated.View style={globalStyles.mainCardContainer(translateY)}>
           <SharedElement
@@ -126,6 +121,12 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
 });
 
 const styles = StyleSheet.create({
+  card: {
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
+    backgroundColor: 'red',
+    overflow: 'visible'
+  },
   image: {
     ...globalStyles.cardMainImage, 
     width: "100%"
