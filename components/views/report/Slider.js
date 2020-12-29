@@ -98,11 +98,16 @@ export const Slider = memo(({autoPlay, valueRef, item, location, showLocation = 
   const [introAnimationOpacity, setIntroAnimationOpacity] = useState(1);
   const introAnimationRef = useRef();
 
+  const animationProgress = progress.interpolate({
+    inputRange: [0, 0.25, 0.5, 0.75, 1],
+    outputRange: [0, 0.281, 0.514, 0.747, 1],
+    extrapolate: 'clamp'
+  })
+
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
     outputRange: THUMB_COLORS,
     extrapolate: 'clamp',
-    useNativeDriver: true
   })
 
   const thumbTranslateY = progress.interpolate({
@@ -357,7 +362,7 @@ export const Slider = memo(({autoPlay, valueRef, item, location, showLocation = 
     <View style={sliderStyles.container}>
       <View style={sliderStyles.animationSliderContainer}>
         <Animated.View style={sliderStyles.animation(animationOpacity)}>
-          <LottieView source={animation} progress={progress} resizeMode='contain' />
+          <LottieView source={animation} progress={animationProgress} resizeMode='contain' />
         </Animated.View>
         <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
           <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode='contain' onAnimationFinish={onIntroFinish} />
