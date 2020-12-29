@@ -144,13 +144,13 @@ export const Slider = memo(({autoPlay, valueRef, item, location, showLocation = 
   const continueButtonOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(()=>{
-    const disabled = (showLocation && location == null) || !continueEnabled;
+    const disabled = (showLocation && location == null) || !continueEnabled || !autoPlay;
     Animated.timing(continueButtonOpacity, {
       toValue: disabled ? 0.5 : 1,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease)
     }).start();
-  }, [showLocation, location, continueEnabled]);
+  }, [showLocation, location, continueEnabled, autoPlay]);
 
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
@@ -384,7 +384,7 @@ export const Slider = memo(({autoPlay, valueRef, item, location, showLocation = 
       </View>
       
       <Animated.View style={sliderStyles.continueButton(bottomTopContainersOpacity)}>
-        <TouchableOpacity disabled={(showLocation && location == null) || !continueEnabled} onPress={localOnPress}>
+        <TouchableOpacity disabled={(showLocation && location == null) || !continueEnabled || !autoPlay} onPress={localOnPress}>
           <Animated.View style={sliderStyles.buttonContainer(continueButtonOpacity)}>
             <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
           </Animated.View>
