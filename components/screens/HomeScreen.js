@@ -115,10 +115,12 @@ export const HomeScreen = ({ navigation, route }) => {
         setLocation(location.coords);
       } else {
         lockAutoSearching.current = false;
+        console.log("actuallyGetPlaces: try fetch location granted but no location");
         actuallyGetPlaces(INITIAL_REGION, null);
       }
     } else {
       lockAutoSearching.current = false;
+      console.log("actuallyGetPlaces: try fetch location not");
       actuallyGetPlaces(INITIAL_REGION, null);
       if (status === 'undetermined') {
         setTimeout(() => {
@@ -150,6 +152,7 @@ export const HomeScreen = ({ navigation, route }) => {
           ...location,
           ...DEFAULT_COOR_DELTA
         }
+        console.log("actuallyGetPlaces: first time location fetched - useEffect");
         actuallyGetPlaces(region, location);
         mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
         setTimeout(() => {
@@ -339,6 +342,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, []);
 
   const debounce = useCallback(_.debounce((region) => {
+    console.log("actuallyGetPlaces: debounce");
     actuallyGetPlaces(region, location)
   }, 700), [location]); // 500
 
