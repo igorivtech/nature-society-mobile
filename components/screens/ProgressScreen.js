@@ -161,11 +161,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   };
 
   const loginLogout = () => {
-    if (user === null) {
-      navigation.navigate("Login");
-    } else {
-      navigation.navigate("Profile");
-    }
+    navigation.navigate("Home", {loginLogout: true})
   };
 
   useEffect(() => {

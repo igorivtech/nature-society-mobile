@@ -247,7 +247,7 @@ export const LoginScreen = ({ navigation }) => {
       type: SAVE_USER,
       payload: user
     })
-    navigation.navigate("Progress");
+    navigation.navigate("Home");
   }
 
   const forgotPassword = useCallback(() => {
@@ -397,7 +397,7 @@ export const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({ 
   container: {
     flex: 1,
-    backgroundColor: colors.grass,
+    backgroundColor: colors.clear,
     alignItems: "center",
     justifyContent: "center",
   },

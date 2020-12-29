@@ -267,12 +267,24 @@ export const HomeScreen = ({ navigation, route }) => {
           }, 400);
         }, 200);
         navigation.setParams({searchItem: null});
-      } else if (params.signupNow === true) {
-        navigation.setParams({signupNow: null});
-        setHideList(true);
+      } else if (params.signupNow === true || params.loginLogout != null) {
+        navigation.setParams({
+          signupNow: null,
+          loginLogout: null
+        });
+        setListOpacity(0);
         setTimeout(() => {
+          setListOpacity(0);
+          setHideButtons(true);
           setHideList(true);
-          navigation.navigate("Progress", {showSignup: true});
+          if (user === null) {
+            navigation.navigate("Login");
+          } else {
+            navigation.navigate("Profile");
+          }
+          setTimeout(() => {
+            setListOpacity(1);
+          }, 1000);
         }, SCREEN_WAIT_DURATION);
       } else if (params.reportNow != null) {
         const location = {...params.reportNow};

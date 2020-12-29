@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useReducer, useEffect } from "react";
+import {I18nManager} from 'react-native';
 //
 import { AppLoading } from "expo";
 import * as SplashScreen from 'expo-splash-screen';
@@ -37,6 +38,7 @@ import { SPLASH_HIDE_DELAY } from "./values/consts";
 Amplify.configure(awsconfig);
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
+I18nManager.allowRTL(false);
 
 export default function App() {
 

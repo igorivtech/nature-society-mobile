@@ -185,7 +185,7 @@ export const ProfileScreen = ({ navigation }) => {
         payload: null
       });
     }
-    navigation.navigate("Progress")
+    navigation.navigate("Home")
   }
 
   const tapClose = useCallback((event) => {
@@ -242,7 +242,7 @@ export const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({ 
   container: {
     flex: 1,
-    backgroundColor: colors.grass,
+    backgroundColor: colors.clear,
     alignItems: "center",
     justifyContent: "center",
   },
