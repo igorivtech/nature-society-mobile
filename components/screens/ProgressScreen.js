@@ -89,7 +89,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   const restartApp = useCallback(() => {
     Alert.alert(
       "לאפס את האפליקציה?",
-      "תצטרכו לאחר מכן לסגור את האפליקציה ולפתוח אותה מחדש.",
+      "האפליקציה תיסגר בעצמה ותצטרכו לפתוח אותה שוב.",
       [
         {
           text: "Cancel",
