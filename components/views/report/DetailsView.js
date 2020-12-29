@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, Animated, Easing, TouchableOpacity } from "react-native";
 import { colors } from "../../../values/colors";
+import { smallScreen } from "../../../values/consts";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 
@@ -47,7 +48,7 @@ export const DetailsView = ({details, iHelped}) => {
   
     return (
       <View style={detailsStyles.itemContainer(large)}>
-        <Text style={textStyles.normalOfSize(large ? 18 : 16)}>{detail.title}</Text>
+        <Text style={textStyles.normalOfSize(large ? (smallScreen ? 16 : 18) : (smallScreen ? 14 : 16))}>{detail.title}</Text>
         <TouchableOpacity onPress={toggleValue}>
           <View style={detailsStyles.checkboxContainer(large)}>
             <Animated.Image style={detailsStyles.leaf(scale)} source={image} />
@@ -67,7 +68,7 @@ export const DetailsView = ({details, iHelped}) => {
     },
   
     itemContainer: (large) => ({
-      marginVertical: 7,
+      marginVertical: smallScreen ? 5 : 7,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',
@@ -78,7 +79,7 @@ export const DetailsView = ({details, iHelped}) => {
       transform: [ {scale} ]
     }),
     checkboxContainer: (large) => ({
-      marginLeft: large ? 12 : 8,
+      marginLeft: large ? (smallScreen ? 8 : 12) : (smallScreen ? 4 : 8),
       height: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
       width: large ? CHECKBOX_SIZE_LARGE : CHECKBOX_SIZE,
       borderRadius: large ? 10 : 5,
@@ -88,7 +89,7 @@ export const DetailsView = ({details, iHelped}) => {
       alignItems: 'center'
     }),
     container: {
-      marginVertical: 16,
+      marginVertical: smallScreen ? 12 : 16,
       flex: 1,
       alignItems: 'stretch',
       justifyContent: 'space-around'
