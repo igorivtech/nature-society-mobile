@@ -8,6 +8,7 @@ import { TakePicView, GoBackButton, FinishButton } from "./views";
 import {UserContext} from "../../../context/context"
 import { colors } from "../../../values/colors";
 import { useEffect } from "react";
+import { smallScreen } from "../../../values/consts";
 
 export const Report = ({goBack, image, setImage, finishReport, details, iHelped, loadingSendReport}) => {
 
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
 
   pointsContainer: {
     marginTop: 12,
-    marginBottom: 26,
+    marginBottom: smallScreen ? 2 : 26,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: "center"
