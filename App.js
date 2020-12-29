@@ -35,10 +35,10 @@ import { useNotifications } from "./hooks/useNotifications";
 import NetInfo from '@react-native-community/netinfo';
 import { SPLASH_HIDE_DELAY } from "./values/consts";
 
+I18nManager.allowRTL(false);
 Amplify.configure(awsconfig);
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
-I18nManager.allowRTL(false);
 
 export default function App() {
 
