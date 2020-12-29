@@ -72,12 +72,12 @@ export const useServer = () => {
         }
       );
       const data = await response.json();
-      loadingPlaces.current = false;
       return convertServerPlaces(data, location);
     } catch (error) {
       console.log({ error });
-      loadingPlaces.current = false;
       return [];
+    } finally {
+      loadingPlaces.current = false;
     }
   };
 
