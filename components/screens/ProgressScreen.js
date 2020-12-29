@@ -40,7 +40,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const [showPushPopup, setShowPushPopup] = useState(false);
-  const initialState = useRef(calcCustomAchievements(settings.achievements, user !== null ? user.points : 0).reverse()).current;
+  const initialState = useRef(calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0).reverse()).current;
   const [data, setData] = useState(initialState); // []
   const scrollView = useRef();
 
@@ -76,7 +76,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   }, [notification])
 
   useEffect(()=>{
-    let output = calcCustomAchievements(settings.achievements, user !== null ? user.points : 0);
+    let output = calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0);
     output.reverse();
     output.forEach((elem, i) => {
       if (elem.current) {
