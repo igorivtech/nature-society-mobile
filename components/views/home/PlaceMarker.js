@@ -42,7 +42,7 @@ export const PlaceMarker = memo(({globalTracksViewChanges, place, onPress, scrol
 
   const p = useCallback(()=>{
     onPress(place);
-  }, [place])
+  }, [place, onPress])
 
   useEffect(()=>{
     if (place) {
