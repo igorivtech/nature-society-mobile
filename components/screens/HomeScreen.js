@@ -238,7 +238,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
-      toValue: hideList ? height * 0.25 : 0,
+      toValue: hideList ? height * 0.3 : 0,
       duration: 700,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,

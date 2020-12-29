@@ -9,13 +9,13 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
 import { placeLocked } from "../../../hooks/helpers";
-import { width } from "../../../values/consts";
+import { smallScreen, width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 import { RatingView, RecentVisitor } from "./views";
 
-export const SPACING = 40;
+export const SPACING = smallScreen ? 20 : 40;
 export const CARD_TRANSLATE_Y = 20;
 export const ITEM_WIDTH = width - 2 * SPACING;
 // const ITEM_WIDTH = width * 0.79;
