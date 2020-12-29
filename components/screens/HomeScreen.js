@@ -284,7 +284,7 @@ export const HomeScreen = ({ navigation, route }) => {
           setTimeout(() => {
             setListOpacity(1);
           }, 1000);
-        }, SCREEN_WAIT_DURATION);
+        }, 200);
       } else if (params.reportNow != null) {
         const location = {...params.reportNow};
         navigation.setParams({reportNow: null});
