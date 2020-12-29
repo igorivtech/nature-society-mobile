@@ -34,13 +34,17 @@ import { useUserUsageTime } from "./hooks/useUserUsageTime";
 import { useNotifications } from "./hooks/useNotifications";
 import NetInfo from '@react-native-community/netinfo';
 import { SPLASH_HIDE_DELAY } from "./values/consts";
+import * as Updates from 'expo-updates';
 
-try {
-  I18nManager.forceRTL(false);
-} catch (e) {console.error(e)}
-try {
-  I18nManager.allowRTL(false);
-} catch (e) {console.error(e)}
+if (I18nManager.isRTL) {
+  try {
+    I18nManager.forceRTL(false);
+  } catch (e) {console.error(e)}
+  try {
+    I18nManager.allowRTL(false);
+  } catch (e) {console.error(e)}
+  Updates.reloadAsync();
+}
 Amplify.configure(awsconfig);
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
