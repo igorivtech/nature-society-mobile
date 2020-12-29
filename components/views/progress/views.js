@@ -4,8 +4,9 @@ import { UserContext } from "../../../context/context";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
+import { TapView } from "../general";
 
-export const UserHeader = memo(({}) => {
+export const UserHeader = memo(({restartApp}) => {
 
     const {state} = useContext(UserContext);
     const {user, settings} = state;
@@ -45,6 +46,8 @@ export const UserHeader = memo(({}) => {
           <HeaderDetail value={user ? user.numOfReports : 0} title={strings.progressScreen.reportsTitle} icon={require("../../../assets/images/header_reports_icon.png")} />
           <HeaderDetail value={user ? user.points : 0} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
         </View>
+
+        <TapView numberOfTaps={4} onPress={restartApp} />
         
       </View>
     )

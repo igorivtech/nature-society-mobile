@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -82,6 +82,10 @@ export const ProgressScreen = ({ navigation, route }) => {
     });
     setData(output);
   }, [settings, user])
+
+  const restartApp = useCallback(() => {
+    console.log("restartApp");
+  }, [])
 
   useEffect(()=>{
     if (data.length > 0) {
@@ -180,7 +184,7 @@ export const ProgressScreen = ({ navigation, route }) => {
           )}
         </TouchableOpacity>
 
-        <UserHeader />
+        <UserHeader restartApp={restartApp} />
         <ProgressPopup />
         <Popup
           permissions={true}
