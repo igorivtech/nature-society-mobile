@@ -38,3 +38,21 @@ export const useUploadImage = () => {
   
 }
 
+export const uploadImageAsync = async (token, reportId, image) => {
+  if (image == null || token == null || reportId == null) {
+    return;
+  }
+  const fileName = uuidv4();
+  const result = image;
+  const response = await fetch(result.uri);
+  const blob = await response.blob();
+  Storage.put(`users/${fileName}`, blob, {
+    contentType: image.type,
+    ACL: "public-read",
+    visibility: "public",
+    level: "public",
+  })
+    .then(() => {
+      const url = `https://naturesocietyd770eeed1aeb4e34ba859038a344c121174124-prod.s3.eu-central-1.amazonaws.com/public/users/${fileName}`;
+    })
+}

@@ -13,7 +13,7 @@ import { SAVE_USER } from "../../context/userReducer";
 import * as Animatable from "react-native-animatable";
 import { Auth } from "aws-amplify";
 import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../../hooks/useUser";
-import { useUploadImage } from "../../hooks/aws";
+import { uploadImageAsync, useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue } from "../../hooks/helpers";
 import { emptyFunc, errors, safeAreaHeight } from "../../values/consts";
@@ -89,52 +89,48 @@ export const ReportScreen = ({navigation, route}) => {
   const finishReport = async () => {
     try {
       setLoadingSendReport(true);
-      uploadImage(image, async (url)=>{
-        let data = {
-          cleanness: convertSliderValue(cleannessRef.current),
-          crowdness: convertSliderValue(crowdnessRef.current),
-          placeId: location._id,
-          checkboxes: {
-            'i_helped': iHelped.on,
-            '1_extra_light': details[0].on,
-            '0_full_bins': details[1].on,
-            '3_fires_marks': details[2].on,
-            '2_open_bins': details[3].on,
-            '4_broken_bins': details[4].on,
-          }
+      let data = {
+        cleanness: convertSliderValue(cleannessRef.current),
+        crowdness: convertSliderValue(crowdnessRef.current),
+        placeId: location._id,
+        checkboxes: {
+          'i_helped': iHelped.on,
+          '1_extra_light': details[0].on,
+          '0_full_bins': details[1].on,
+          '3_fires_marks': details[2].on,
+          '2_open_bins': details[3].on,
+          '4_broken_bins': details[4].on,
         }
-        if (url) {
-          data.image = url
-        }
-        const response = await sendReport(token, data);
-        if (response.content) {
-          let attributes = {}
-          attributes[ATTRIBUTE_POINTS] = `${user.points + settings.reportPoints}`;
-          attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
-          let cognitoUser = await Auth.currentAuthenticatedUser({
+      }
+      const response = await sendReport(token, data);
+      if (response.content && response.content.id != null) {
+        let attributes = {}
+        attributes[ATTRIBUTE_POINTS] = `${user.points + settings.reportPoints}`;
+        attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
+        let cognitoUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+        if (result === 'SUCCESS') {
+          let updatedCognitoUser = await Auth.currentAuthenticatedUser({
             bypassCache: true,
           });
-          let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-          if (result === 'SUCCESS') {
-            let updatedCognitoUser = await Auth.currentAuthenticatedUser({
-              bypassCache: true,
-            });
-            dispatch({
-              type: SAVE_USER,
-              payload: cognitoToUser(updatedCognitoUser)
-            })
-            navigation.navigate("Home");
-          } else {
-            console.error("cant update user");
-          }
-        } else if (response.error) {
-          handleError(response.error);
-          setLoadingSendReport(false); 
+          dispatch({
+            type: SAVE_USER,
+            payload: cognitoToUser(updatedCognitoUser)
+          })
+          navigation.navigate("Home");
+          uploadImageAsync(token, response.content.id, image);
         } else {
-          handleError(errors.reportNotLoggedIn);
-          setLoadingSendReport(false); 
+          console.error("cant update user");
         }
-      })
+      } else if (response.error) {
+        handleError(response.error);
+        setLoadingSendReport(false); 
+      } else {
+        handleError(errors.reportNotLoggedIn);
+        setLoadingSendReport(false); 
+      }
     } catch (error) {
       handleError(error);
       setLoadingSendReport(false);
