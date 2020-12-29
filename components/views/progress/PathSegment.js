@@ -44,8 +44,8 @@ const BOTTOM_CONTAINER_MARGIN = 12;
 export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
 
   const realIndex = index*2;
-  const topImageObject = item.topDone ? rankImages[realIndex+1].on : rankImages[realIndex+1].off;
-  const bottomImageObject = item.bottomDone ? rankImages[realIndex].on : rankImages[realIndex].off;
+  const topImageObject = item.topDone ? rankImages[realIndex].on : rankImages[realIndex].off;
+  const bottomImageObject = item.bottomDone ? rankImages[realIndex+1].on : rankImages[realIndex+1].off;
   const bottomIcon = bottomImageObject.image;
   const topIcon = topImageObject.image;
 
@@ -91,7 +91,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
         setUserProgress(0.1);
       } else if (!item.topDone) {
         const p = user !== null ? user.points : 0
-        setUserProgress(1 - (0.25 + 0.5 * (item.topPoints - p)/item.topPoints));
+        setUserProgress(1 - (0.25 + 0.5 * (topImageObject.points - p)/topImageObject.points));
       }
     }
   }, [user, currentIndex])
@@ -183,10 +183,10 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
         <Image style={styles.marker} ref={markerSmallRef} source={topIcon} />
         <Image style={styles.marker} ref={markerBigRef} source={bottomIcon} />
         <View style={styles.topContainer} ref={topContainerRef}>
-          <FloatingLabel title={item.topTitle} points={item.topPoints} right={true} done={item.topDone} />
+          <FloatingLabel title={topImageObject.title} points={topImageObject.points} right={true} done={item.topDone} />
         </View>
         <Animatable.View animation={popupVisible ? "fadeOut" : "fadeIn"} style={styles.bottomContainer} ref={bottomContainerRef}>
-          <FloatingLabel title={item.bottomTitle} points={item.bottomPoints} right={false} done={item.bottomDone} />
+          <FloatingLabel title={bottomImageObject.title} points={bottomImageObject.points} right={false} done={item.bottomDone} />
         </Animatable.View>
       </View>
       
