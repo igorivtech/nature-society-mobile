@@ -506,7 +506,7 @@ const sliderStyles = StyleSheet.create({
     borderBottomColor: colors.treeBlues,
     borderBottomWidth: 1,
     alignSelf: 'stretch',
-    marginBottom: 21,
+    marginBottom: smallScreen ? 14 : 21,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
