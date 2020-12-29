@@ -17,6 +17,7 @@ import { uploadImageAsync, useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue } from "../../hooks/helpers";
 import { emptyFunc, errors, safeAreaHeight } from "../../values/consts";
+import useIsMounted from "ismounted";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -51,8 +52,13 @@ export const ReportScreen = ({navigation, route}) => {
   const cleannessRef = useRef(0.5);
   const crowdnessRef = useRef(0.5);
 
+  const [autoPlayFirst, setAutoPlayFirst] = useState(false);
+  const [autoPlaySecond, setAutoPlaySecond] = useState(false);
+
   const {state, dispatch} = useContext(UserContext);
   const {user, token, settings} = state;
+
+  const isMounted = useIsMounted();
   
   const {location} = route.params;
   const [selectedLocation, setLocation] = useState(location);
@@ -68,6 +74,12 @@ export const ReportScreen = ({navigation, route}) => {
     details.forEach(d=>d.on=false);
     iHelped.on = false;
     scrollY.addListener(({value})=>{});
+    //
+    setTimeout(() => {
+      if (isMounted) {
+        setAutoPlayFirst(true);
+      }
+    }, 1000);
   }, []);
 
   useEffect(()=>{
@@ -152,6 +164,13 @@ export const ReportScreen = ({navigation, route}) => {
           animated: true,
           y: scrollY._value+scrollViewHeight.current
         })
+        if (scrollY?._value == 0 && !autoPlaySecond) {
+          setTimeout(() => {
+            if (isMounted) {
+              setAutoPlaySecond(true);
+            }
+          }, 1000);
+        }
       }
     }
   }
@@ -210,8 +229,8 @@ export const ReportScreen = ({navigation, route}) => {
             scrollEventThrottle={16}
             contentContainerStyle={styles.scrollViewContent}
             style={StyleSheet.absoluteFill}>
-            <Slider valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} notLoggedInError={notLoggedInError} token={token} />
-            <Slider valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
+            <Slider autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} notLoggedInError={notLoggedInError} token={token} />
+            <Slider autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
             <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
           </Animated.ScrollView>
         </Animatable.View>

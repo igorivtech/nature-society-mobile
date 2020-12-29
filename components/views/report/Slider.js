@@ -38,7 +38,7 @@ const clampAnimationValue = (p) => {
 const TITLES_DELTA = 1/7;
 const ALREADY_SHOWN = "ALREADY_SHOWN"
 
-export const Slider = memo(({valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible, notLoggedInError, token}) => {
+export const Slider = memo(({autoPlay, valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible, notLoggedInError, token}) => {
 
   const {animation, introAnimation, title, titles} = item;
 
@@ -347,6 +347,12 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
     animationOpacity.setValue(1);
   }, [])
 
+  useEffect(()=>{
+    if (autoPlay) {
+      introAnimationRef.current.play();
+    }
+  }, [autoPlay])
+
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.animationSliderContainer}>
@@ -354,7 +360,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
           <LottieView source={animation} progress={progress} resizeMode='contain' />
         </Animated.View>
         <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
-          <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={true} resizeMode='contain' onAnimationFinish={onIntroFinish} />
+          <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode='contain' onAnimationFinish={onIntroFinish} />
         </Animated.View>
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
