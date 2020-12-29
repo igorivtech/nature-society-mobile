@@ -36,9 +36,9 @@ const PATH_WIDTH = 1.5;
 const DONE_WIDTH = 3;
 
 const CONTAINER_HEIGHT = 44;
-const TOP_CONTAINER_WIDTH = 55;
+const TOP_CONTAINER_WIDTH = smallScreen ? 45 : 55;
+const TOP_CONTAINER_MARGIN = smallScreen ? 4 : 14;
 const BOTTOM_CONTAINER_WIDTH = 70;
-const TOP_CONTAINER_MARGIN = 14;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
 export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
