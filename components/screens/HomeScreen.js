@@ -86,6 +86,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const ignoreCardsListener = useRef(false);
   const [globalTracksViewChanges, setGlobalTracksViewChanges] = useState(false);
   const firstTimeSettingLocation = useRef(true);
+  const specialLockForInitialFetch = useRef(false);
   const locationListener = useRef(null);
 
   const cardsListRef = useRef(null);
@@ -147,6 +148,7 @@ export const HomeScreen = ({ navigation, route }) => {
         firstTimeSettingLocation.current = false;
         ignoreCardsListener.current = true;
         lockAutoSearching.current = true;
+        specialLockForInitialFetch.current = true;
         setHideList(true);
         const region = {
           ...location,
@@ -354,6 +356,9 @@ export const HomeScreen = ({ navigation, route }) => {
         payload: pp,
       });
     }
+    if (specialLockForInitialFetch.current) {
+      specialLockForInitialFetch.current = false;
+    }
   }
 
   const markerPressed = useCallback((place) => {
@@ -381,7 +386,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const onRegionChangeComplete = async (region) => {
     // setGlobalTracksViewChanges(false);
-    if (lockAutoSearching.current) {
+    if (lockAutoSearching.current || specialLockForInitialFetch.current) {
       return;
     }
     // if (location != null) {
