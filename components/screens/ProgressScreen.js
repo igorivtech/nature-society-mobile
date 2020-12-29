@@ -40,8 +40,9 @@ export const ProgressScreen = ({ navigation, route }) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const [showPushPopup, setShowPushPopup] = useState(false);
-  const initialState = useRef(calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0).reverse()).current;
-  const [data, setData] = useState(initialState); // []
+  const [data, setData] = useState(
+    calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0).reverse()
+  );
   const scrollView = useRef();
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -62,6 +63,12 @@ export const ProgressScreen = ({ navigation, route }) => {
         }, 5000);
       }
     })
+    //
+    data.forEach((elem, i) => {
+      if (elem.current) {
+        setCurrentIndex(i);
+      }
+    });
   }, [])
 
   useEffect(()=>{
@@ -74,17 +81,6 @@ export const ProgressScreen = ({ navigation, route }) => {
   useEffect(()=>{
     setPopupVisible(notification != null);
   }, [notification])
-
-  useEffect(()=>{
-    let output = calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0);
-    output.reverse();
-    output.forEach((elem, i) => {
-      if (elem.current) {
-        setCurrentIndex(i);
-      }
-    });
-    setData(output);
-  }, [settings, user])
 
   const restartApp = useCallback(() => {
     Alert.alert(
