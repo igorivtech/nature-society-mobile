@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { convertServerPlaces } from "./helpers";
 
-const BASE_URL = `https://ddaflq8r2a.execute-api.eu-central-1.amazonaws.com/prod`;
+export const BASE_URL = `https://ddaflq8r2a.execute-api.eu-central-1.amazonaws.com/prod`;
 
 export const useServer = () => {
 
