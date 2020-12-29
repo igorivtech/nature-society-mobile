@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState, useCallback } from "react";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
 import {clamp} from '../../../hooks/helpers'
@@ -40,7 +40,7 @@ const ALREADY_SHOWN = "ALREADY_SHOWN"
 
 export const Slider = memo(({valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible, notLoggedInError, token}) => {
 
-  const {animation, title, titles} = item;
+  const {animation, introAnimation, title, titles} = item;
 
   const isMounted = useIsMounted();
 
@@ -88,7 +88,9 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
   const textContainerOpacity = useRef(new Animated.Value(1)).current;
   const bottomTopContainersOpacity = useRef(new Animated.Value(1)).current;
   const indicatorOpacity = useRef(new Animated.Value(1)).current;
-  const animationOpacity = useRef(new Animated.Value(1)).current;
+  const animationOpacity = useRef(new Animated.Value(0)).current;
+  const [introAnimationOpacity, setIntroAnimationOpacity] = useState(1);
+  const introAnimationRef = useRef();
 
   const thumbColor = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
@@ -157,6 +159,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
       clampAnimation();
     } else if (event.nativeEvent.state === State.BEGAN) {
       scaleThumb(0.8);
+      onIntroFinish();
     }
   }
 
@@ -339,11 +342,19 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
     setSearchVisible(true);
   }
 
+  const onIntroFinish = useCallback(() => {
+    setIntroAnimationOpacity(0);
+    animationOpacity.setValue(1);
+  }, [])
+
   return (
     <View style={sliderStyles.container}>
       <View style={sliderStyles.animationSliderContainer}>
         <Animated.View style={sliderStyles.animation(animationOpacity)}>
           <LottieView source={animation} progress={progress} resizeMode='contain' />
+        </Animated.View>
+        <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
+          <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode='contain' onAnimationFinish={onIntroFinish} />
         </Animated.View>
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
@@ -438,6 +449,11 @@ const sliderStyles = StyleSheet.create({
   thumbBg: (color) => ({
     ...StyleSheet.absoluteFill,
     backgroundColor: color
+  }),
+
+  introAnimation: (opacity) => ({
+    ...StyleSheet.absoluteFill,
+    opacity
   }),
 
   animation: (opacity) => ({

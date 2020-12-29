@@ -21,13 +21,15 @@ import { emptyFunc, errors, safeAreaHeight } from "../../values/consts";
 const clean = {
   title: strings.reportScreen.cleanTitle,
   titles: strings.reportScreen.cleanTitles,
-  animation: require('../../assets/animations/rainbow.json')
+  animation: require('../../assets/animations/rainbow.json'),
+  introAnimation: require('../../assets/animations/rainbow.json')
 }
 
 const crowd = {
   title: strings.reportScreen.crowdTitle,
   titles: strings.reportScreen.crowdTitles,
-  animation: require('../../assets/animations/lock.json')
+  animation: require('../../assets/animations/lock.json'),
+  introAnimation: require('../../assets/animations/lock.json')
 }
 
 export const ReportScreen = ({navigation, route}) => {
