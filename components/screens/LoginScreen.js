@@ -26,7 +26,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import _ from "lodash";
 
 const PASSWORD_MIN_LENGTH = 8;
-const DEFAULT_POINTS = 200;
+const DEFAULT_POINTS = 50;
 const DEFAULT_NUM_OF_REPORTS = 0;
 const DEFAULT_UNLOCKED_PLACES = {};
 
