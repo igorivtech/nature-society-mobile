@@ -52,8 +52,6 @@ export const ReportScreen = ({navigation, route}) => {
   const {state, dispatch} = useContext(UserContext);
   const {user, token, settings} = state;
   
-  const {uploadImage} = useUploadImage();
-
   const {location} = route.params;
   const [selectedLocation, setLocation] = useState(location);
   const [searchVisible, setSearchVisible] = useState(false);
