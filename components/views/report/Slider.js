@@ -354,7 +354,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
           <LottieView source={animation} progress={progress} resizeMode='contain' />
         </Animated.View>
         <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
-          <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode='contain' onAnimationFinish={onIntroFinish} />
+          <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={true} resizeMode='contain' onAnimationFinish={onIntroFinish} />
         </Animated.View>
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
