@@ -9,6 +9,7 @@ export const textStyles = StyleSheet.create({
     marginTop: 20,
     fontFamily: fonts.normal,
     fontSize: 22,
+    lineHeight: 24
   },
 
   onboardingCoolButton: {
