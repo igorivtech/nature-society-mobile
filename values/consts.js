@@ -53,7 +53,7 @@ export const errors = {
     code: "invalid_email"
   },
   reportNotLoggedIn: {
-  code: "report_lot_logged_in"
+    code: "report_lot_logged_in"
   }
 }
 

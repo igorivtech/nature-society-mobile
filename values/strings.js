@@ -1,6 +1,6 @@
 const errors = {
   "report_lot_logged_in": {
-    title: 'כבר מילאתם דוח לאתר זה.',
+    title: 'קרתה שגיאה, אנא נסו שנית.',
     yes: 'אישור'  
   },
   "UsernameExistsException": {
@@ -39,10 +39,6 @@ const errors = {
     title: 'כתובת אימייל לא תקינה.',
     yes: 'אישור'
   },
-  "report_lot_logged_in": {
-    title: 'אינכם מחוברים לבשביל הטבע.\nאנא הירשמו כדי להמשיך למלא דוח.',
-    yes: 'אישור'
-  }
 }
 
 export const strings = {
