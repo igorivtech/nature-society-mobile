@@ -208,7 +208,7 @@ export const OnboardingScreen = ({ navigation }) => {
         <Animated.Text style={{
           ...textStyles.onboardingText, 
           opacity: textAlpha,
-          height: 100,
+          height: 70,
           transform: [
             {scale: textScale}
           ]
