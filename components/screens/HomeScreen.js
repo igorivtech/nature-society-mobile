@@ -332,19 +332,6 @@ export const HomeScreen = ({ navigation, route }) => {
     askLocation();
   }, []);
 
-  const onRegionChangeComplete = async (region) => {
-    // setGlobalTracksViewChanges(false);
-    if (lockAutoSearching.current) {
-      return;
-    }
-    // if (location != null) {
-      debounce.cancel()
-      debounce(region);
-    // } else {
-    //   console.log("current location is null");
-    // }
-  }
-
   const debounce = useCallback(_.debounce((region) => {
     actuallyGetPlaces(region, location)
   }, 700), [location]); // 500
@@ -361,6 +348,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const markerPressed = useCallback((place) => {
     if (selectedPlace != null && place._id === selectedPlace._id) {
+      showPlace(place);
       return;
     }
     const index = serverPlaces.findIndex(p=>p.key===place.key);
@@ -374,7 +362,20 @@ export const HomeScreen = ({ navigation, route }) => {
       });
       animateToItem(place);
     }
-  }, [serverPlaces])
+  }, [selectedPlace, serverPlaces])
+
+  const onRegionChangeComplete = async (region) => {
+    // setGlobalTracksViewChanges(false);
+    if (lockAutoSearching.current) {
+      return;
+    }
+    // if (location != null) {
+      debounce.cancel()
+      debounce(region);
+    // } else {
+    //   console.log("current location is null");
+    // }
+  }
 
   const onPanDrag = useCallback(()=>{
     lockAutoSearching.current = false
