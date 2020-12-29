@@ -164,19 +164,19 @@ export const ProgressScreen = ({ navigation, route }) => {
     navigation.navigate("Home", {loginLogout: true})
   };
 
-  useEffect(() => {
-    const params = route.params;
-    if (params != null) {
-      if (params.showSignup === true) {
-        navigation.setParams({showSignup: null});
-        setTimeout(() => {
-          if (isFocused) {
-            loginLogout();
-          }
-        }, 400);
-      }
-    }
-  }, [route]);
+  // useEffect(() => {
+  //   const params = route.params;
+  //   if (params != null) {
+  //     if (params.showSignup === true) {
+  //       navigation.setParams({showSignup: null});
+  //       setTimeout(() => {
+  //         if (isFocused) {
+  //           loginLogout();
+  //         }
+  //       }, 400);
+  //     }
+  //   }
+  // }, [route]);
 
   const askPush = () => {
     dispatch({
