@@ -482,7 +482,7 @@ const sliderStyles = StyleSheet.create({
   }),
 
   title: {
-    ...textStyles.normalOfSize(30),
+    ...textStyles.normalOfSize(smallScreen ? 24 : 30),
     alignSelf: 'stretch'
   },
 
