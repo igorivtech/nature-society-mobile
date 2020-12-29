@@ -36,6 +36,9 @@ import NetInfo from '@react-native-community/netinfo';
 import { SPLASH_HIDE_DELAY } from "./values/consts";
 
 try {
+  I18nManager.forceRTL(false);
+} catch (e) {console.error(e)}
+try {
   I18nManager.allowRTL(false);
 } catch (e) {console.error(e)}
 Amplify.configure(awsconfig);
