@@ -9,9 +9,10 @@ import {
   Image,
   Animated,
   Easing,
+  Alert,
 } from "react-native";
 import { UserContext } from "../../context/context";
-import { ASK_PUSH, SAVE_NOTIFICATION, SAVE_USER } from "../../context/userReducer";
+import { ASK_PUSH, SAVE_NOTIFICATION, SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
 import { DEFAULT_NOTIFICATION, height, statusBarHeight } from "../../values/consts";
 import { strings } from "../../values/strings";
@@ -25,6 +26,8 @@ import { useIsFocused } from "@react-navigation/native";
 import useIsMounted from "ismounted";
 import { Popup } from "../views/Popup";
 import { shouldAskUser } from "../../hooks/useNotifications";
+import { Auth } from "aws-amplify";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const ProgressScreen = ({ navigation, route }) => {
 
@@ -84,7 +87,39 @@ export const ProgressScreen = ({ navigation, route }) => {
   }, [settings, user])
 
   const restartApp = useCallback(() => {
-    console.log("restartApp");
+    Alert.alert(
+      "לאפס את האפליקציה?",
+      "תצטרכו לאחר מכן לסגור את האפליקציה ולפתוח אותה מחדש.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => {
+          Auth.signOut().then(()=>{
+          }).catch((error)=>{
+          }).finally(()=>{
+            dispatch({
+              type: SAVE_USER,
+              payload: user
+            });
+            dispatch({
+              type: SAVE_TOKEN,
+              payload: null
+            });
+            AsyncStorage.clear().then(()=>{
+              (async()=>{
+                Alert.alert(
+                  "כעט סגרו את האפליקציה",
+                  { cancelable: false }
+                );
+              })()
+            })
+          });
+        } }
+      ],
+      { cancelable: false }
+    );
   }, [])
 
   useEffect(()=>{
