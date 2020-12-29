@@ -22,14 +22,14 @@ import useIsMounted from "ismounted";
 const clean = {
   title: strings.reportScreen.cleanTitle,
   titles: strings.reportScreen.cleanTitles,
-  animation: require('../../assets/animations/rainbow.json'),
+  animation: require('../../assets/animations/clean.json'),
   introAnimation: require('../../assets/animations/clean_intro.json')
 }
 
 const crowd = {
   title: strings.reportScreen.crowdTitle,
   titles: strings.reportScreen.crowdTitles,
-  animation: require('../../assets/animations/lock.json'),
+  animation: require('../../assets/animations/clean.json'),
   introAnimation: require('../../assets/animations/clean_intro.json')
 }
 
