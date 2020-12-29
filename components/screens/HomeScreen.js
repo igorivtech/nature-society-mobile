@@ -451,7 +451,7 @@ export const HomeScreen = ({ navigation, route }) => {
           ref={cardsListRef}
           data={places}
           horizontal
-          style={globalStyles.mainListStyle(CARD_TRANSLATE_Y, listOpacity)}
+          style={globalStyles.mainListStyle(0, listOpacity)}
           contentContainerStyle={globalStyles.mainListContainer}
           onScrollBeginDrag={()=>{
             lockAutoSearching.current = true;

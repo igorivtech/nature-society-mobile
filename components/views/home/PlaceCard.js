@@ -123,7 +123,8 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
 const styles = StyleSheet.create({
   card: {
     width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
+    height: ITEM_HEIGHT+CARD_TRANSLATE_Y,
+    paddingTop: CARD_TRANSLATE_Y,
     overflow: 'visible'
   },
   image: {
