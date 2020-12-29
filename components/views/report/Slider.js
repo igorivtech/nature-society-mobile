@@ -3,7 +3,7 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
-import { height, pureHeight, THUMB_COLORS } from "../../../values/consts";
+import { height, pureHeight, smallScreen, THUMB_COLORS } from "../../../values/consts";
 import LottieView from 'lottie-react-native';
 import { strings } from "../../../values/strings";
 import { colors } from "../../../values/colors";
@@ -11,7 +11,10 @@ import useIsMounted from 'ismounted';
 import AsyncStorage from "@react-native-community/async-storage";
 
 const THUMB_RADIUS = 26.5 / 2;
-const SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
+let SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
+if (smallScreen) {
+  SLIDER_HEIGHT = 220;
+}
 const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const DURATION = 200;
 const LINE_OPACITY = 0.15;
@@ -540,7 +543,7 @@ const sliderStyles = StyleSheet.create({
   sliderTextContainer: {
     position: 'absolute',
     right: 16,
-    bottom: height * 0.04,
+    bottom: smallScreen ? 0 : height * 0.04,
     flexDirection: 'row',
   },
 
