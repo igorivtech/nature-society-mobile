@@ -13,6 +13,8 @@ export const SPLASH_HIDE_DELAY = 300;
 
 export const SCREEN_ASPECT_RATIO = height/width;
 
+export const smallScreen = height < 667;
+
 export const DEFAULT_COOR_DELTA = {
   longitudeDelta: 0.3, // 1 is 111 kilometers
   latitudeDelta: 0.5*SCREEN_ASPECT_RATIO
