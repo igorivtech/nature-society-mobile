@@ -123,6 +123,7 @@ const PopupButton = ({ filled, title, onPress }) => {
 
 const popupStyles = StyleSheet.create({
   title: {
+    textAlign: 'right',
     marginBottom: 20,
     ...textStyles.normalOfSize(18),
     color: colors.treeBlues,
