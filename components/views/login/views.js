@@ -217,7 +217,7 @@ export const NewPasswordView = memo(
   }
 );
 
-const PIC_SIZE = 111;
+const PIC_SIZE = smallScreen ? 100 : 111;
 const INNER_PIC_SIZE = PIC_SIZE - 6;
 
 export const SignupView = memo(
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   },
 
   profilePicContainer: {
-    marginBottom: 44,
+    marginBottom: smallScreen ? 22 : 44,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
   },
 
   profilePicContainerLarge: {
-    marginBottom: 64,
+    marginBottom: smallScreen ? 24 : 64,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
