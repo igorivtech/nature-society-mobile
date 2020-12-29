@@ -15,6 +15,7 @@ import { colors } from "../../../values/colors";
 import { textStyles } from "../../../values/textStyles";
 import { UserContext } from "../../../context/context";
 import * as Animatable from "react-native-animatable";
+import { rankImages } from "../../../values/images";
 
 export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
 const pathPadding = 0;
@@ -34,9 +35,6 @@ const markerWidth = 65;
 const PATH_WIDTH = 1.5;
 const DONE_WIDTH = 3;
 
-const smallIcon = require("../../../assets/images/path_marker_small.png");
-const largeIcon = require("../../../assets/images/path_marker_big.png");
-
 const CONTAINER_HEIGHT = 44;
 const TOP_CONTAINER_WIDTH = 55;
 const BOTTOM_CONTAINER_WIDTH = 70;
@@ -44,6 +42,10 @@ const TOP_CONTAINER_MARGIN = 14;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
 export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
+
+  const realIndex = index*2;
+  const bottomIcon = item.bottomDone ? rankImages[realIndex].on : rankImages[realIndex].off;
+  const topIcon = item.topDone ? rankImages[realIndex+1].on : rankImages[realIndex+1].off;
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -174,8 +176,8 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
             <Image source={(user !== null && user.image !==null) ? {uri: user.image} : require("../../../assets/images/default_profile_pic.png")} style={markerStyles.profilePic} />
           </View>
         )}
-        <Image style={styles.marker} ref={markerSmallRef} source={item.topDone ? largeIcon : smallIcon} />
-        <Image style={styles.marker} ref={markerBigRef} source={item.bottomDone ? largeIcon : smallIcon} />
+        <Image style={styles.marker} ref={markerSmallRef} source={topIcon} />
+        <Image style={styles.marker} ref={markerBigRef} source={bottomIcon} />
         <View style={styles.topContainer} ref={topContainerRef}>
           <FloatingLabel title={item.topTitle} points={item.topPoints} right={true} done={item.topDone} />
         </View>

@@ -13,17 +13,17 @@ export const useUser = (dispatch) => {
   useEffect(() => {
     (async () => {
       setLoadingUser(true);
-      try {
-        const settings = await getSettings();
-        if (settings) {
-          dispatch({
-            type: SAVE_SETTINGS,
-            payload: settings
-          })
-        }
-      } catch (error) {
-        console.log(error) || console.log(null);
-      }
+      // try {
+      //   const settings = await getSettings();
+      //   if (settings) {
+      //     dispatch({
+      //       type: SAVE_SETTINGS,
+      //       payload: settings
+      //     })
+      //   }
+      // } catch (error) {
+      //   console.log(error) || console.log(null);
+      // }
       try {
         const cognitoUser = await Auth.currentAuthenticatedUser({
           // bypassCache: true,
