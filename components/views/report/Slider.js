@@ -136,6 +136,17 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
     useNativeDriver: true
   })
 
+  const continueButtonOpacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(()=>{
+    const disabled = (showLocation && location == null) || !continueEnabled;
+    Animated.timing(continueButtonOpacity, {
+      toValue: disabled ? 0.5 : 1,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  }, [showLocation, location, continueEnabled]);
+
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
       currentOffset.current = progress._value;
@@ -354,7 +365,7 @@ export const Slider = memo(({valueRef, item, location, showLocation = false, sta
       
       <Animated.View style={sliderStyles.continueButton(bottomTopContainersOpacity)}>
         <TouchableOpacity disabled={(showLocation && location == null) || !continueEnabled} onPress={localOnPress}>
-          <Animated.View style={sliderStyles.buttonContainer}>
+          <Animated.View style={sliderStyles.buttonContainer(continueButtonOpacity)}>
             <Text style={sliderStyles.buttonText}>{strings.continue}</Text>
           </Animated.View>
         </TouchableOpacity>
@@ -509,7 +520,8 @@ const sliderStyles = StyleSheet.create({
     color: colors.treeBlues,
   },
 
-  buttonContainer: {
+  buttonContainer: (opacity) => ({
+    opacity,
     borderRadius: 10,
     borderColor: colors.treeBlues,
     height: 45,
@@ -519,7 +531,7 @@ const sliderStyles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 16,
     justifyContent: 'center'
-  },
+  }),
 
   container: {
     height: '33.3333333333333%'
