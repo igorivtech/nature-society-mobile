@@ -205,12 +205,12 @@ const FloatingLabel = ({right, done, points, title}) => {
     <View style={flStyles.container(right)}>
       {done ? (
         <View style={flStyles.doneContainer(right)}>
-          <Text style={flStyles.doneText}>{title}</Text>
+          <Text style={flStyles.doneText(right)}>{title}</Text>
           <View style={flStyles.doneBorder} />
         </View>
       ) : (
         <View style={flStyles.notDoneContainer(right)}>
-          <Text style={flStyles.notDoneTitle}>{title}</Text>
+          <Text style={flStyles.notDoneTitle(right)}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
             <Text style={flStyles.notDoneInnerText}>{user ? (points - user.numOfReports) : points}</Text>
@@ -244,10 +244,11 @@ const flStyles = StyleSheet.create({
     alignSelf: 'stretch'
   },
 
-  notDoneTitle: {
+  notDoneTitle: (right) => ({
     ...textStyles.normalOfSize(11),
-    color: colors.lighterShade
-  },
+    color: colors.lighterShade,
+    textAlign: !right ? 'right' : 'left',
+  }),
 
   notDoneContainer: (right) => ({
     alignItems: right ? 'flex-start' : 'flex-end',
@@ -265,10 +266,11 @@ const flStyles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center'
   }),
-  doneText: {
+  doneText: (right) => ({
     ...textStyles.boldOfSize(14),
-    color: colors.treeBlues
-  },
+    color: colors.treeBlues,
+    textAlign: !right ? 'right' : 'left',
+  }),
   doneBorder: {
     backgroundColor: colors.treeBlues,
     height: 1,
