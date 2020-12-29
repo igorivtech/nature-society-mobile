@@ -195,7 +195,7 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const signupNow = () => {
-    navigation.navigate("Home", {signupNow: true})
+    navigation.navigate("Home", {loginLogout: true})
   }
 
   return (

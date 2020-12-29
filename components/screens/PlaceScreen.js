@@ -93,7 +93,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   }
 
   const signupNow = () => {
-    navigation.navigate("Home", {signupNow: true})
+    navigation.navigate("Home", {loginLogout: true})
   }
 
   const unlockPlace = async () => {

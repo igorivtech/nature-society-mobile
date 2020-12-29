@@ -267,9 +267,8 @@ export const HomeScreen = ({ navigation, route }) => {
           }, 400);
         }, 200);
         navigation.setParams({searchItem: null});
-      } else if (params.signupNow === true || params.loginLogout != null) {
+      } else if (params.loginLogout != null) {
         navigation.setParams({
-          signupNow: null,
           loginLogout: null
         });
         setListOpacity(0);
