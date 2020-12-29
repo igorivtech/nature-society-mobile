@@ -44,10 +44,10 @@ const BOTTOM_CONTAINER_MARGIN = 12;
 export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
 
   const realIndex = index*2;
-  const topImageObject = rankImages[realIndex+1];
-  const bottomImageObject = rankImages[realIndex];
-  const bottomIcon = item.bottomDone ? bottomImageObject.on.image : bottomImageObject.off.image;
-  const topIcon = item.topDone ? topImageObject.on.image : topImageObject.off.image;
+  const topImageObject = item.topDone ? rankImages[realIndex+1].on : rankImages[realIndex+1].off;
+  const bottomImageObject = item.bottomDone ? rankImages[realIndex].on : rankImages[realIndex].off;
+  const bottomIcon = bottomImageObject.image;
+  const topIcon = topImageObject.image;
 
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -114,9 +114,10 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
-    const iconSize = item.topDone ? 76 : 34;
-    const translateY = -iconSize / 2;
-    const translateX = -iconSize / 2;
+    const iconWidth = topImageObject.size.width
+    const iconHeight = topImageObject.size.height
+    const translateY = -iconHeight / 2;
+    const translateX = -iconWidth / 2;
     markerSmallRef.current.setNativeProps({
       top: pSmall.y,
       left: pSmall.x,
@@ -126,7 +127,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
       top: pSmall.y,
       left: pSmall.x,
       transform: [
-        {translateX: -iconSize/2 - TOP_CONTAINER_WIDTH - TOP_CONTAINER_MARGIN},
+        {translateX: -iconWidth/2 - TOP_CONTAINER_WIDTH - TOP_CONTAINER_MARGIN},
         {translateY: -CONTAINER_HEIGHT/2}
       ]
     })
@@ -134,9 +135,10 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
 
   const setupBottom = () => {
     const pBig = properties.getPointAtLength(lineLength * bottomMarkerPosition);
-    const iconSize = item.bottomDone ? 76 : 34;
-    const translateY = -iconSize / 2;
-    const translateX = -iconSize / 2;
+    const iconWidth = bottomImageObject.size.width
+    const iconHeight = bottomImageObject.size.height
+    const translateY = -iconHeight / 2;
+    const translateX = -iconWidth / 2;
     markerBigRef.current.setNativeProps({
       top: pBig.y,
       left: pBig.x,
@@ -146,7 +148,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
       top: pBig.y,
       left: pBig.x,
       transform: [
-        {translateX: iconSize / 2 + BOTTOM_CONTAINER_MARGIN},
+        {translateX: iconWidth / 2 + BOTTOM_CONTAINER_MARGIN},
         {translateY: -CONTAINER_HEIGHT/2}
       ]
     })
