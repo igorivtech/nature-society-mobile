@@ -434,8 +434,8 @@ const styles = StyleSheet.create({
     opacity: opacity,
     alignItems: "center",
     justifyContent: "space-between",
-    paddingTop: 32,
-    paddingBottom: 24,
+    paddingTop: smallScreen ? 28 : 32,
+    paddingBottom: smallScreen ? 20 : 24,
     paddingHorizontal: smallScreen ? 30 : 40,
     width: width - 2 * 30,
     backgroundColor: "white",
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
   },
 
   loginTitle: {
-    marginBottom: smallScreen ? 18 : 38,
+    marginBottom: smallScreen ? 28 : 38,
     ...textStyles.boldOfSize(24),
     color: colors.treeBlues,
     textAlign: "right",
