@@ -82,20 +82,23 @@ const tempRankImages = [
 ];
 
 const imageSize = (index, on) => {
-  let height = on ? 58.5 : 58.5;
-  let width = on ? 70 : 70;
+  let height = on ? 58.5 : 30;
+  let width = on ? 70 : 35;
   if (index < 4) {
-    height = on ? 58.5 : 58.5;
-    width = on ? 70 : 70;
+    height = on ? 58.5 : 30;
+    width = on ? 70 : 35;
   } else if (index < 8) {
-    height = on ? 58.5 : 58.5;
-    width = on ? 70 : 70;
+    height = on ? 65 : 30;
+    width = on ? 78 : 35;
   } else if (index < 12) {
-    height = on ? 58.5 : 58.5;
-    width = on ? 70 : 70;
+    height = on ? 70 : 35;
+    width = on ? 70 : 35;
   } else if (index < 16) {
-    height = on ? 58.5 : 58.5;
-    width = on ? 70 : 70;
+    height = on ? 80 : 35;
+    width = on ? 70 : 30;
+  } else if (index < 20) {
+    height = on ? 70 : 35;
+    width = on ? 62 : 31;
   }
   return {
     height,
