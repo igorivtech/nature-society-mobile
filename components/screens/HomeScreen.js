@@ -41,6 +41,12 @@ const calcRadius = (region) => {
   return 111.045 * region.longitudeDelta / 2;
 }
 
+const EPSILON = 0.01;
+
+const mapAtPlace = (mapRegion, place) => {
+  return Math.abs(mapRegion.latitude - place.position.latitude) < EPSILON && Math.abs(mapRegion.longitude - place.position.longitude) < EPSILON
+}
+
 const getZoomLevelFromRegion = (region) => {
   const { longitudeDelta } = region;
   // Normalize longitudeDelta which can assume negative values near central meridian
@@ -348,19 +354,24 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const markerPressed = useCallback((place) => {
     if (selectedPlace != null && place._id === selectedPlace._id) {
-      showPlace(place);
-      return;
-    }
-    const index = serverPlaces.findIndex(p=>p.key===place.key);
-    if (index > -1) {
-      ignoreCardsListener.current = true;
-      lockAutoSearching.current = true;
-      setSelectedPlace(place);
-      cardsListRef.current.scrollToOffset({
-        animated: true,
-        offset: index*ITEM_WIDTH
-      });
-      animateToItem(place);
+      if (mapAtPlace(mapRef.current.__lastRegion, place)) {
+        showPlace(place);
+      } else {
+        lockAutoSearching.current = true;
+        animateToItem(place);
+      }
+    } else {
+      const index = serverPlaces.findIndex(p=>p.key===place.key);
+      if (index > -1) {
+        ignoreCardsListener.current = true;
+        lockAutoSearching.current = true;
+        setSelectedPlace(place);
+        cardsListRef.current.scrollToOffset({
+          animated: true,
+          offset: index*ITEM_WIDTH
+        });
+        animateToItem(place);
+      }
     }
   }, [selectedPlace, serverPlaces])
 
