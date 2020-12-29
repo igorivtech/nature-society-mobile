@@ -23,6 +23,7 @@ import {
   height,
   NAV_CLOSE_TAP_SIZE,
   recentVisitors,
+  smallScreen,
 } from "../../values/consts";
 import {
   Directions,
@@ -231,6 +232,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           </Animatable.View>
 
           <Animatable.Text
+            adjustsFontSizeToFit={true}
             useNativeDriver
             animation="fadeInUp"
             delay={700}
@@ -445,7 +447,7 @@ const s = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 15,
     width: "100%",
-    aspectRatio: 1.429
+    aspectRatio: smallScreen ? 2 : 1.429
   },
 
   container: {
