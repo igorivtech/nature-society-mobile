@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Modal from 'react-native-modal';
 import { colors } from "../../values/colors";
-import { emptyFunc, height, width } from "../../values/consts";
+import { emptyFunc, height, smallScreen, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
@@ -136,7 +136,7 @@ const popupStyles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 24,
     ...globalStyles.shadow,
-    paddingHorizontal: 40,
+    paddingHorizontal: smallScreen ? 30 : 40,
     width: 314,
     maxWidth: width - 2 * 30,
     alignSelf: "center",
