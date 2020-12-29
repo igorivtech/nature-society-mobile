@@ -1,5 +1,6 @@
 import { Dimensions } from "react-native";
 import Constants from 'expo-constants';
+import { rankImages } from "./images";
 
 export const statusBarHeight = Constants.statusBarHeight;
 
@@ -81,72 +82,10 @@ export const DEFAULT_NOTIFICATION = {
 export const DEFAULT_IMAGE_QUALITY = 0.5;
 
 export const DEFAULT_SETTINGS = {
-  achievements: [
-    {
-      "score": 0,
-      "title": "חדש",
-    },
-    {
-      "score": 20,
-      "title": "בוטנאי",
-    },
-    {
-      "score": 200,
-      "title": "חקלאי",
-    },
-    {
-      "score": 300,
-      "title": "גדול",
-    },
-    {
-      "score": 400,
-      "title": "קטן",
-    },
-    {
-      "score": 500,
-      "title": "ממש",
-    },
-    {
-      "score": 600,
-      "title": "דדה",
-    },
-    {
-      "score": 700,
-      "title": "בבה",
-    },
-    {
-      "score": 1000,
-      "title": "לא",
-    },
-    {
-      "score": 1200,
-      "title": "כן",
-    },
-    {
-      "score": 1300,
-      "title": "מחר",
-    },
-    {
-      "score": 1400,
-      "title": "מחרתיים",
-    },
-    {
-      "score": 1600,
-      "title": "אולי",
-    },
-    {
-      "score": 1700,
-      "title": "מתישהו",
-    },
-    {
-      "score": 1800,
-      "title": "איפשהו",
-    },
-    {
-      "score": 2000,
-      "title": "סוף",
-    },
-  ],
+  achievements: [...rankImages].reverse().map(item=>({
+    "score": item.on.points,
+    "title": item.on.title
+  })),
   pointsForUnlock: 10,
   reportPoints: 30,
 };
