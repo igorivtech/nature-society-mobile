@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   card: {
     width: ITEM_WIDTH,
     height: ITEM_HEIGHT,
-    backgroundColor: 'red',
     overflow: 'visible'
   },
   image: {
