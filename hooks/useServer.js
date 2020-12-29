@@ -61,6 +61,7 @@ export const useServer = () => {
 
   const getPlaces = async (coordinate, location, radius) => {
     if (loadingPlaces.current) {
+      console.log(-1);
       return;
     }
     loadingPlaces.current = true;
@@ -72,9 +73,11 @@ export const useServer = () => {
         }
       );
       const data = await response.json();
+      console.log(0);
       return convertServerPlaces(data, location);
     } catch (error) {
       console.log({ error });
+      console.log(1);
       return [];
     } finally {
       loadingPlaces.current = false;
