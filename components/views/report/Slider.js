@@ -10,7 +10,7 @@ import { colors } from "../../../values/colors";
 import useIsMounted from 'ismounted';
 import AsyncStorage from "@react-native-community/async-storage";
 
-const THUMB_RADIUS = 24.5 / 2;
+const THUMB_RADIUS = 26.5 / 2;
 const SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
 const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
 const DURATION = 200;
