@@ -1,5 +1,5 @@
 import * as ImageManipulator from "expo-image-manipulator";
-import { CLEANNESS_COLORS, height, width } from "../values/consts";
+import { CLEANNESS_COLORS, height, SCREEN_ASPECT_RATIO, width } from "../values/consts";
 
 export const clamp = (min, value, max) => {
   if (value < min) {
@@ -94,15 +94,15 @@ export const convertServerPlaces = (serverPlaces, location) => {
 
   res.forEach((place, i) => {
     res[i].key = place._id;
-    const {longitudeDelta, latitudeDelta} = calcPlaceDelta({
-      southWest: place.southwest[0],
-      northEast: place.northeast[0]
-    })
+    // const {longitudeDelta, latitudeDelta} = calcPlaceDelta({
+    //   southWest: place.southwest[0],
+    //   northEast: place.northeast[0]
+    // })
     res[i].position = {
       longitude: place.location.coordinates[0],
       latitude: place.location.coordinates[1],
-      latitudeDelta,
-      longitudeDelta,
+      latitudeDelta: 0.1 * SCREEN_ASPECT_RATIO,
+      longitudeDelta: 0.1,
     }
     if (place.title.trim() === "") {
       res[i].title = "אין שם";
