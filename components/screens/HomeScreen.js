@@ -401,12 +401,10 @@ export const HomeScreen = ({ navigation, route }) => {
     if (lockAutoSearching.current || specialLockForInitialFetch.current) {
       return;
     }
-    // if (location != null) {
-      debounce.cancel()
-      debounce(region);
-    // } else {
-    //   console.log("current location is null");
-    // }
+      
+    actuallyGetPlaces(region, location) // TEST PURPOSES, instead of:
+      // debounce.cancel()
+      // debounce(region);
   }
 
   const onPanDrag = useCallback(()=>{
