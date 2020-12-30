@@ -71,6 +71,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const { askLocation, locationPermission } = useLocationPermissions();
 
+  const [globalShow, setGlobalShow] = useState(null);
   const [places, setPlaces] = useState([]);
   let animationTimeout = null;
   const [listOpacity, setListOpacity] = useState(1);
@@ -184,6 +185,7 @@ export const HomeScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (serverPlaces && serverPlaces.length > 0) {
       setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
+      setGlobalShow(true);
       // setTimeout(() => {
       setSelectedPlace(serverPlaces[0]);
       ignoreCardsListener.current = true;
@@ -377,10 +379,14 @@ export const HomeScreen = ({ navigation, route }) => {
         if (data.searchId === currSearchId.current) {
           const pp = data.pp;
           if (pp.length > 0) {
-            dispatch({
-              type: SAVE_PLACES,
-              payload: pp,
-            });
+            const timeout = serverPlaces.length > 0 ? 300 : 0;
+            setGlobalShow(false);
+            setTimeout(() => {
+              dispatch({
+                type: SAVE_PLACES,
+                payload: pp,
+              });
+            }, timeout);
           }
         } else {
           console.log("DISCARDING OLD PLACES");
@@ -451,7 +457,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker selectedPlace={selectedPlace} globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker globalShow={globalShow} selectedPlace={selectedPlace} globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
         {location && (<UserMarker user={user} location={location} />)}
       </MapView>
       
