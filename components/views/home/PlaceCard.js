@@ -80,14 +80,16 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
               />
             </View>
 
-            <RecentVisitor
-              title={item.lastVisitors[0].lastVisitorName}
-              details={strings.homeScreen.recentVisitor(
-                // item.lastVisitorGender === 0
-                true
-              )}
-              image={item.lastVisitors[0].lastVisitorImage}
-            />
+            {item.lastVisitors.length > 0 && (
+              <RecentVisitor
+                title={item.lastVisitors[0].lastVisitorName}
+                details={strings.homeScreen.recentVisitor(
+                  // item.lastVisitorGender === 0
+                  true
+                )}
+                image={item.lastVisitors[0].lastVisitorImage}
+              />
+            )}
 
             <View style={globalStyles.cardLocationContainer}>
               <RatingView
