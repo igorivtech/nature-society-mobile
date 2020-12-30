@@ -379,7 +379,10 @@ export const HomeScreen = ({ navigation, route }) => {
         if (data.searchId === currSearchId.current) {
           const pp = data.pp;
           if (pp.length > 0) {
-            const timeout = serverPlaces.length > 0 ? 300 : 0;
+            let timeout = serverPlaces.length*50;
+            if (timeout > 0) {
+              timeout += 300;
+            }
             setGlobalShow(false);
             setTimeout(() => {
               dispatch({

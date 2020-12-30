@@ -20,7 +20,7 @@ export const PlaceMarker = memo(({globalShow, place, onPress, scrollX, index, se
     if (globalShow !== null) {
       setTrackChanges(v=>v-1);
       Animated.timing(scale, {
-        delay: globalShow ? index * 100 : 0,
+        delay: index * (globalShow ? 100 : 50),
         duration: 300,
         useNativeDriver: true,
         toValue: globalShow ? 0.8 : 0,
