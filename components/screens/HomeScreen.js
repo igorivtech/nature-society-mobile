@@ -28,7 +28,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
-import _ from "lodash";
+// import _ from "lodash";
 import { objectLength } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
 import "react-native-get-random-values";
@@ -90,6 +90,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const firstTimeSettingLocation = useRef(true);
   const specialLockForInitialFetch = useRef(false);
   const locationListener = useRef(null);
+  const currSearchId = useRef(null);
 
   const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -364,12 +365,10 @@ export const HomeScreen = ({ navigation, route }) => {
     askLocation();
   }, []);
 
-  const debounce = useCallback(_.debounce((region) => {
-    console.log("actuallyGetPlaces: debounce");
-    actuallyGetPlaces(region, location)
-  }, 500), [location]);
-
-  const currSearchId = useRef(null);
+  // const debounce = useCallback(_.debounce((region) => {
+  //   console.log("actuallyGetPlaces: debounce");
+  //   actuallyGetPlaces(region, location)
+  // }, 500), [location]);
 
   const actuallyGetPlaces = (region, location) => {
     currSearchId.current = uuidv4();
