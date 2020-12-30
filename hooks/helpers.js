@@ -59,7 +59,7 @@ export const calcPlaceDelta = ({southWest, northEast}) => {
     return {latitudeDelta, longitudeDelta}
 }
 
-export const calcCustomAchievements = (serverAchievements, userPoints) => {
+export const calcCustomAchievements = async (serverAchievements, userPoints) => {
   let output = [];
   var i;
   let currentSet = false;

@@ -63,13 +63,16 @@ export const ProgressScreen = ({ navigation, route }) => {
       }
     })
     //
-    const output = calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0)
-    output.forEach((elem, i) => {
-      if (elem.current) {
-        setCurrentIndex(i);
-      }
-    });
-    setData(output);
+    const f = async () => {
+      const output = await calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0)
+      output.forEach((elem, i) => {
+        if (elem.current) {
+          setCurrentIndex(i);
+        }
+      });
+      setData(output);
+    }
+    f();
   }, [])
 
   useEffect(()=>{
