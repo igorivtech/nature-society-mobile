@@ -370,7 +370,7 @@ export const HomeScreen = ({ navigation, route }) => {
     if (specialLockForInitialFetch.current) {
       setTimeout(() => {
         specialLockForInitialFetch.current = false;
-      }, 1000);
+      }, 1500);
     }
   }
 
