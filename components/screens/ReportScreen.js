@@ -83,7 +83,7 @@ export const ReportScreen = ({navigation, route}) => {
     }, 1000);
     setTimeout(() => {
       setLoaded(true);
-    }, NAV_DURATION);
+    }, NAV_DURATION+300);
   }, []);
 
   useEffect(()=>{

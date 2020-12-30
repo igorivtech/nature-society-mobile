@@ -51,10 +51,10 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }, [loaded])
 
   useEffect(()=>{
-    if (autoPlay) {
+    if (autoPlay && loaded) {
       introAnimationRef.current.play();
     }
-  }, [autoPlay])
+  }, [autoPlay, loaded])
 
   const [titleTranslateY, setTitleTranslateY] = useState(TITLE_TRANSLATE_Y);
   const [topText, setTopText] = useState(titles[4]);
