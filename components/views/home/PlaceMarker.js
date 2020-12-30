@@ -16,23 +16,37 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
 
   const scale = useRef(new Animated.Value(0)).current;
 
+  // useEffect(()=>{
+  //   if (globalShow !== null) {
+  //     if (!globalShow && keepMarkerAlive.current[place._id] != null) {
+  //       return;
+  //     }
+  //     setTrackChanges(v=>v-1);
+  //     Animated.timing(scale, {
+  //       delay: index * (globalShow ? 100 : 50),
+  //       duration: 300,
+  //       useNativeDriver: true,
+  //       toValue: globalShow ? 0.8 : 0,
+  //       easing: Easing.inOut(Easing.ease)
+  //     }).start(()=>{
+  //       setTrackChanges(v=>v+1);
+  //     })
+  //   }
+  // }, [globalShow])
+
   useEffect(()=>{
-    if (globalShow !== null) {
-      if (!globalShow && keepMarkerAlive.current[place._id] != null) {
-        return;
-      }
-      setTrackChanges(v=>v-1);
+    if (trackChanges === 1) {
       Animated.timing(scale, {
-        delay: index * (globalShow ? 100 : 50),
+        delay: index * 100,
         duration: 300,
         useNativeDriver: true,
-        toValue: globalShow ? 0.8 : 0,
+        toValue: 0.8,
         easing: Easing.inOut(Easing.ease)
       }).start(()=>{
-        setTrackChanges(v=>v+1);
+        setTrackChanges(2);
       })
     }
-  }, [globalShow])
+  }, [trackChanges])
   
   const opacity = scrollX.interpolate({
     inputRange: [ (index - 1) * ITEM_WIDTH, index*ITEM_WIDTH, (index+1)*ITEM_WIDTH ],
