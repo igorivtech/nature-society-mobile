@@ -63,8 +63,7 @@ export const ProgressScreen = ({ navigation, route }) => {
       }
     })
     //
-    let output = calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0)
-    output.reverse();
+    const output = calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0)
     output.forEach((elem, i) => {
       if (elem.current) {
         setCurrentIndex(i);

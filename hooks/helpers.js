@@ -85,6 +85,7 @@ export const calcCustomAchievements = (serverAchievements, userPoints) => {
       output = [...output, item];
     }
   }
+  output.reverse();
   return output
 }
 

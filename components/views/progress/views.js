@@ -17,7 +17,7 @@ export const UserHeader = memo(({restartApp}) => {
       if (user) {
         let last = ''
         settings.achievements.forEach(achievement => {
-          if (user.points >= achievement.score) {
+          if (user.numOfReports >= achievement.score) {
             last = achievement.title;
           }
         });
