@@ -74,7 +74,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const sharePressed = () => {
-    share("TITLE TITLE", "MESSAGE MESSAGE");
+    share("TITLE TITLE", "https://www.reddit.com");
   };
 
   const report = () => {
