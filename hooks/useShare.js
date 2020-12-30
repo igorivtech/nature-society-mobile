@@ -7,6 +7,8 @@ export const useShare = () => {
       const result = await Share.share({
         title,
         url,
+      }, {
+        subject: title
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
