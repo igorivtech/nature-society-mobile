@@ -72,7 +72,14 @@ export const useServer = () => {
             method: "GET",
           }
         ).then(response => response.json())
-         .then(data=>resolve(convertServerPlaces(data, location)))
+         .then(data=>{
+           if (Array.isArray(data)) {
+             resolve(convertServerPlaces(data, location))
+           } else {
+             console.error("PLACES ERROR: big error. result is not an array.");
+             resolve([]);
+           }
+          })
          .catch(err=>{
            console.error("PLACES ERROR:", err);
            resolve(null)
