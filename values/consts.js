@@ -35,7 +35,7 @@ export const CARD_RADIUS = 24;
 export const INITIAL_REGION = {
   longitude: 34.9916,
   latitude: 31.4561,
-  latitudeDelta: 4,
+  latitudeDelta: 2*SCREEN_ASPECT_RATIO,
   longitudeDelta: 2,
 }
 
