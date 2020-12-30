@@ -205,20 +205,20 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }
 
   const regularAnimation = () => {
-    lineOpacity.setValue(0);
-    // animationOpacity.setValue(ANIMATION_OPACITY);
-    Animated.parallel([
-      Animated.timing(lineOpacity, {
-        toValue: LINE_OPACITY,
-        useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      // Animated.timing(animationOpacity, {
-      //   toValue: 1,
-      //   useNativeDriver: true,
-      //   easing: Easing.inOut(Easing.ease)
-      // }),
-    ]).start();
+    // lineOpacity.setValue(0);
+    // // animationOpacity.setValue(ANIMATION_OPACITY);
+    // Animated.parallel([
+    //   Animated.timing(lineOpacity, {
+    //     toValue: LINE_OPACITY,
+    //     useNativeDriver: true,
+    //     easing: Easing.inOut(Easing.ease)
+    //   }),
+    //   // Animated.timing(animationOpacity, {
+    //   //   toValue: 1,
+    //   //   useNativeDriver: true,
+    //   //   easing: Easing.inOut(Easing.ease)
+    //   // }),
+    // ]).start();
   }
 
   const firstTimeAnimation = () => {
