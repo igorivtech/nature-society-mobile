@@ -30,8 +30,8 @@ const clean = {
 const crowd = {
   title: strings.reportScreen.crowdTitle,
   titles: strings.reportScreen.crowdTitles,
-  animation: require('../../assets/animations/clean.json'),
-  introAnimation: require('../../assets/animations/clean_intro.json')
+  animation: require('../../assets/animations/crowd.json'),
+  introAnimation: require('../../assets/animations/crowd_intro.json')
 }
 
 export const ReportScreen = ({navigation, route}) => {
