@@ -40,9 +40,7 @@ export const ProgressScreen = ({ navigation, route }) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const [showPushPopup, setShowPushPopup] = useState(false);
-  const [data, setData] = useState(
-    calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0).reverse()
-  );
+  const [data, setData] = useState([]);
   const scrollView = useRef();
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -65,18 +63,14 @@ export const ProgressScreen = ({ navigation, route }) => {
       }
     })
     //
-    data.forEach((elem, i) => {
+    let output = calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0)
+    output.reverse();
+    output.forEach((elem, i) => {
       if (elem.current) {
         setCurrentIndex(i);
       }
     });
-    //
-    Animated.timing(pathOpacity, {
-      toValue: 1,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-      delay: 500
-    }).start();
+    setData(output);
   }, [])
 
   useEffect(()=>{
@@ -128,6 +122,12 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   useEffect(()=>{
     if (data.length > 0) {
+      Animated.timing(pathOpacity, {
+        toValue: 1,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+      //
       const currentIndex = data.findIndex(achievement=>achievement.current);
       if (alreadyAnimatedPath.current) {
         setTimeout(() => {
