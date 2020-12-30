@@ -24,14 +24,16 @@ const clean = {
   title: strings.reportScreen.cleanTitle,
   titles: strings.reportScreen.cleanTitles,
   animation: require("../../assets/animations/clean.json"),
-  introAnimation: require("../../assets/animations/clean_intro.json")
+  introAnimation: require("../../assets/animations/clean_intro.json"),
+  outputRange: [0.00001, 0.281, 0.514, 0.747, 1]
 }
 
 const crowd = {
   title: strings.reportScreen.crowdTitle,
   titles: strings.reportScreen.crowdTitles,
   animation: require('../../assets/animations/crowd.json'),
-  introAnimation: require('../../assets/animations/crowd_intro.json')
+  introAnimation: require('../../assets/animations/crowd_intro.json'),
+  outputRange: [0.00001, 0.2173, 0.565, 0.77, 1]
 }
 
 export const ReportScreen = ({navigation, route}) => {
