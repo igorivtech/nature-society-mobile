@@ -45,7 +45,18 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   const isMounted = useIsMounted();
 
   useEffect(()=>{
-    if (loaded && startUpAnimation) {
+    if (startUpAnimation) {
+      AsyncStorage.getItem(ALREADY_SHOWN).then(alreadyShown => {
+        if (alreadyShown === null) {
+          setMiddleText(strings.reportScreen.scrollHint);
+          lineOpacity.setValue(0);
+        }
+      })
+    }
+  }, [])
+
+  useEffect(()=>{
+    if (startUpAnimation && loaded) {
       startThumbAnimation();
     }
   }, [loaded])
@@ -230,7 +241,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     // animationOpacity.setValue(ANIMATION_OPACITY);
     Animated.sequence([
       Animated.timing(startUpTranslateY, {
-        delay: 1200,
+        delay: 200,
         toValue: -40,
         duration: 400,
         useNativeDriver: true
