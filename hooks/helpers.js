@@ -115,7 +115,7 @@ export const convertServerPlaces = (serverPlaces, location) => {
       res[i].distance = null;
     }
     //
-    res[i].cleanness = place.cleanesss;
+    res[i].cleanness = place.cleanness;
     res[i].cleannessColor = siteColor(res[i].cleanness);
     //
     res[i].crowdness = place.crowdness;
