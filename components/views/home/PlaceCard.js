@@ -67,7 +67,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
           <View style={globalStyles.cardDetailsContainer}>
             <View style={globalStyles.cardLocationContainer}>
               <View style={styles.titleContainer}>
-                <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.cardTitle}>{item.title}</Text>
+                <Text numberOfLines={2} minimumFontScale={0.7} adjustsFontSizeToFit={true} style={textStyles.cardTitle}>{item.title}</Text>
                 {item.distance && (
                   <Text style={textStyles.cardDetail}>
                     {strings.distanceFromYou(item.distance)}
