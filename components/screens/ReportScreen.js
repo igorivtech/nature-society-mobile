@@ -157,7 +157,7 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const sharePressed = () => {
-    share("", "https://www.reddit.com");
+    share(strings.reportScreen.share(location.title), "https://www.reddit.com");
   }
 
   const tapClose = () => {
