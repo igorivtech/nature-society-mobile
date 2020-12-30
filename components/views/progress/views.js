@@ -58,7 +58,7 @@ export const UserHeader = memo(({restartApp}) => {
           <HeaderDetail value={user ? user.points : 0} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
         </View>
 
-        <TapView numberOfTaps={4} onPress={restartApp} />
+        <TapView numberOfTaps={16} onPress={restartApp} />
         
       </View>
     )
