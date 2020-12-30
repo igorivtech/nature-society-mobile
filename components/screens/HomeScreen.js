@@ -217,7 +217,7 @@ export const HomeScreen = ({ navigation, route }) => {
           const item = serverPlaces[i];
           if (selectedPlace == null || item.key !== selectedPlace.key) {
             setSelectedPlace(item);
-            animateToItem(item);
+            animateToItem(item, true);
           }
         }, 10);
       })
@@ -335,13 +335,21 @@ export const HomeScreen = ({ navigation, route }) => {
     }, SCREEN_WAIT_DURATION);
   }, [navigation, location])
 
-  const animateToItem = (item) => {
+  const animateToItem = (item, noZoom = false) => {
     const paddedLD = item.position.longitudeDelta + 0.2;
-    mapRef.current.animateToRegion({
-      ...item.position,
-      longitudeDelta: paddedLD,
-      latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
-    }, MAP_ANIMATION_DURATION);
+    // if (noZoom) {
+    //   mapRef.current.animateToRegion({
+    //     ...mapRef.current.__lastRegion,
+    //     longitude: item.position.longitude,
+    //     latitude: item.position.latitude,
+    //   }, MAP_ANIMATION_DURATION);
+    // } else {
+      mapRef.current.animateToRegion({
+        ...item.position,
+        longitudeDelta: paddedLD,
+        latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
+      }, MAP_ANIMATION_DURATION);
+    // }
   };
 
   const showPlace = useCallback((place) => {
