@@ -68,6 +68,7 @@ export const ReportScreen = ({navigation, route}) => {
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const errorActionRef = useRef(emptyFunc);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(()=>{
     setLocation(location);
@@ -80,6 +81,9 @@ export const ReportScreen = ({navigation, route}) => {
         setAutoPlayFirst(true);
       }
     }, 1000);
+    setTimeout(() => {
+      setLoaded(true);
+    }, 300);
   }, []);
 
   useEffect(()=>{
@@ -229,8 +233,8 @@ export const ReportScreen = ({navigation, route}) => {
             scrollEventThrottle={16}
             contentContainerStyle={styles.scrollViewContent}
             style={StyleSheet.absoluteFill}>
-            <Slider autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} notLoggedInError={notLoggedInError} token={token} />
-            <Slider autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
+            <Slider loaded={loaded} autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} notLoggedInError={notLoggedInError} token={token} />
+            <Slider loaded={loaded} autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
             <Report image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
           </Animated.ScrollView>
         </Animatable.View>
