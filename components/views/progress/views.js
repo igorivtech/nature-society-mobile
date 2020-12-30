@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState, memo } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useContext, useEffect, useState, memo, useRef } from "react";
+import { Animated, Easing, Image, StyleSheet, Text, View } from "react-native";
 import { UserContext } from "../../../context/context";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
@@ -12,6 +12,17 @@ export const UserHeader = memo(({restartApp}) => {
     const {user, settings} = state;
 
     const [lastAchievement, setLastAchievement] = useState('');
+    const opacity = useRef(new Animated.Value(0)).current;
+
+    useEffect(()=>{
+      if (lastAchievement.length > 0) {
+        Animated.timing(opacity, {
+          useNativeDriver: true,
+          easing: Easing.inOut(Easing.ease),
+          toValue: 1
+        }).start();
+      }
+    }, [lastAchievement])
 
     useEffect(()=>{
       if (user) {
@@ -35,7 +46,7 @@ export const UserHeader = memo(({restartApp}) => {
         <View style={styles.headerNameContainer}>
           <View style={styles.headerTextsContainer}>
             <Text style={textStyles.boldOfSize(24)}>{user ? user.name : strings.guest}</Text>
-            <Text style={textStyles.normalOfSize(18)}>{lastAchievement}</Text>
+            <Animated.Text style={headerDetailsStyles.title(opacity)}>{lastAchievement}</Animated.Text>
           </View>
           <Image source={require("../../../assets/images/flag_icon.png")} />
         </View>
@@ -66,6 +77,11 @@ export const UserHeader = memo(({restartApp}) => {
   }
   
   const headerDetailsStyles = StyleSheet.create({
+
+    title: (opacity) => ({
+      ...textStyles.normalOfSize(18),
+      opacity
+    }),
   
     topContainer: {
       flexDirection: 'row',
