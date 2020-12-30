@@ -361,11 +361,13 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const actuallyGetPlaces = (region, location) => {
     getPlaces(region, location, calcRadius(region)).then(pp => {
-      if (pp != null && pp.length > 0) {
-        dispatch({
-          type: SAVE_PLACES,
-          payload: pp,
-        });
+      if (pp !== null) {
+        if (pp.length > 0) {
+          dispatch({
+            type: SAVE_PLACES,
+            payload: pp,
+          });
+        }
         if (specialLockForInitialFetch.current) {
           specialLockForInitialFetch.current = false;
         }

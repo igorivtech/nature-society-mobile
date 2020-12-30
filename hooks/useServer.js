@@ -82,7 +82,7 @@ export const useServer = () => {
           })
          .catch(err=>{
            console.error("PLACES ERROR:", err);
-           resolve(null)
+           resolve([])
          })
          .finally(()=>loadingPlaces.current = false);
       }
