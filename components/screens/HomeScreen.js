@@ -385,10 +385,12 @@ export const HomeScreen = ({ navigation, route }) => {
             }
             setGlobalShow(false);
             setTimeout(() => {
-              dispatch({
-                type: SAVE_PLACES,
-                payload: pp,
-              });
+              if (data.searchId === currSearchId.current) {
+                dispatch({
+                  type: SAVE_PLACES,
+                  payload: pp,
+                });
+              }
             }, timeout);
           }
         } else {
