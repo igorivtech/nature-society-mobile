@@ -92,6 +92,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const specialLockForInitialFetch = useRef(false);
   const locationListener = useRef(null);
   const currSearchId = useRef(null);
+  const keepMarkerAlive = useRef({});
 
   const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -379,7 +380,14 @@ export const HomeScreen = ({ navigation, route }) => {
         if (data.searchId === currSearchId.current) {
           const pp = data.pp;
           if (pp.length > 0) {
-            let timeout = serverPlaces.length*50;
+            keepMarkerAlive.current = {}
+            serverPlaces.forEach(sp => {
+              if (pp.findIndex(p=>p._id === sp._id) > -1) {
+                keepMarkerAlive.current[sp._id] = 1;
+              }
+            });
+            //
+            let timeout = (serverPlaces.length - 0)*50; // objectLength(keepMarkerAlive.current)
             if (timeout > 0) {
               timeout += 300;
             }
@@ -462,7 +470,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker globalShow={globalShow} selectedPlace={selectedPlace} globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
+        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker keepMarkerAlive={keepMarkerAlive} globalShow={globalShow} selectedPlace={selectedPlace} globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
         {location && (<UserMarker user={user} location={location} />)}
       </MapView>
       

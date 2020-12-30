@@ -3,7 +3,7 @@ import { Animated, Easing, Image, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { ITEM_WIDTH } from "./PlaceCard";
 
-export const PlaceMarker = memo(({globalShow, place, onPress, scrollX, index, selectedPlace}) => {
+export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, scrollX, index, selectedPlace}) => {
   const [trackChanges, setTrackChanges] = useState(0)
   const [image, setImage] = useState(null);
 
@@ -18,6 +18,9 @@ export const PlaceMarker = memo(({globalShow, place, onPress, scrollX, index, se
 
   useEffect(()=>{
     if (globalShow !== null) {
+      if (keepMarkerAlive.current[place._id] != null) {
+        return;
+      }
       setTrackChanges(v=>v-1);
       Animated.timing(scale, {
         delay: index * (globalShow ? 100 : 50),
