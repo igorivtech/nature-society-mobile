@@ -15,6 +15,10 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
   // })
 
   const scale = useRef(new Animated.Value(0)).current;
+  const translateY = scale.interpolate({
+    inputRange: [0, 1],
+    outputRange: [64*0.8/2, 0]
+  });
 
   // useEffect(()=>{
   //   if (globalShow !== null) {
@@ -72,7 +76,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
   return (
     <Marker reuseIdentifier={place.key} zIndex={selectedPlace != null ? (selectedPlace.key === place.key ? 2 : 1) : 1} tracksViewChanges={trackChanges < 2} onPress={p} coordinate={place.position}>
       <View style={styles.container}>
-        <Animated.Image style={styles.marker(scale)} onLoad={turnOffTrackChanged} source={image} />
+        <Animated.Image style={styles.marker(scale, translateY)} onLoad={turnOffTrackChanged} source={image} />
       </View>
     </Marker>
   )
@@ -88,9 +92,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  marker: (scale)=>({
+  marker: (scale, translateY)=>({
     position: 'absolute',
     bottom: 0,
-    transform: [{scale}]
+    transform: [{translateY}, {scale}]
   })
 })
