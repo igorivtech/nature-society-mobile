@@ -74,7 +74,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const sharePressed = () => {
-    share(strings.placeScreen.sharePlace(place.title), "https://www.reddit.com");
+    share(strings.placeScreen.sharePlace(place.title), "https://www.teva.org.il");
   };
 
   const report = () => {
