@@ -18,7 +18,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
 
   useEffect(()=>{
     if (globalShow !== null) {
-      if (keepMarkerAlive.current[place._id] != null) {
+      if (!globalShow && keepMarkerAlive.current[place._id] != null) {
         return;
       }
       setTrackChanges(v=>v-1);
