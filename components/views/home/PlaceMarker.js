@@ -52,7 +52,7 @@ export const PlaceMarker = memo(({globalTracksViewChanges, place, onPress, scrol
   }, [place])
 
   return (
-    <Marker zIndex={selectedPlace != null ? (selectedPlace.key === place.key ? 2 : 1) : 1} tracksViewChanges={trackChanges < 2} onPress={p} coordinate={place.position}>
+    <Marker reuseIdentifier={place.key} zIndex={selectedPlace != null ? (selectedPlace.key === place.key ? 2 : 1) : 1} tracksViewChanges={trackChanges < 2} onPress={p} coordinate={place.position}>
       <View style={styles.container}>
         <Animated.Image style={styles.marker(scale)} onLoad={turnOffTrackChanged} source={image} />
       </View>
