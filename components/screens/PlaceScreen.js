@@ -15,6 +15,7 @@ import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { Popup } from "../views/Popup"
+import { useShare } from "../../hooks/useShare";
 
 import * as Animatable from "react-native-animatable";
 import { RecentVisitor } from "../views/home/views";
@@ -52,6 +53,8 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   const { place } = route.params;
 
+  const { share } = useShare();
+
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
   const popupAction = useRef(emptyFunc);
@@ -70,8 +73,8 @@ export const PlaceScreen = ({ navigation, route }) => {
     Linking.openURL(`https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`)
   };
 
-  const share = () => {
-    console.log("share");
+  const sharePressed = () => {
+    share("TITLE TITLE", "MESSAGE MESSAGE");
   };
 
   const report = () => {
@@ -255,7 +258,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               icon={require("../../assets/images/waze_icon.png")}
             />
             <PlaceAction
-              onPress={share}
+              onPress={sharePressed}
               title={strings.placeScreen.share}
               icon={require("../../assets/images/share_icon.png")}
             />
