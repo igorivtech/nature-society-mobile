@@ -142,22 +142,20 @@ export const ProgressScreen = ({ navigation, route }) => {
         }, 700);
       } else {
         alreadyAnimatedPath.current = true;
-        setTimeout(()=>{
+        if (scrollView?.current) {
+          scrollView?.current.scrollToOffset({
+            offset: pathHeight * currentIndex + 400,
+            animated: false,
+          });  
+        }
+        setTimeout(() => {
           if (scrollView?.current) {
             scrollView?.current.scrollToOffset({
-              offset: pathHeight * currentIndex + 400,
-              animated: false,
-            });  
+              offset: pathHeight * currentIndex,
+              animated: true,
+            })
           }
-          setTimeout(() => {
-            if (scrollView?.current) {
-              scrollView?.current.scrollToOffset({
-                offset: pathHeight * currentIndex,
-                animated: true,
-              })
-            }
-          }, 700);
-        }, 0)
+        }, 700);
       }
     }
   }, [data])
