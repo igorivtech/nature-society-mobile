@@ -59,29 +59,27 @@ export const useServer = () => {
     }
   };
 
-  const getPlaces = async (coordinate, location, radius) => {
-    if (loadingPlaces.current) {
-      console.log(-1);
-      return;
-    }
-    loadingPlaces.current = true;
-    try {
-      const response = await fetch(
-        `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=10&radius=${1000 * radius}`,
-        {
-          method: "GET",
-        }
-      );
-      const data = await response.json();
-      console.log(0);
-      return convertServerPlaces(data, location);
-    } catch (error) {
-      console.log({ error });
-      console.log(1);
-      return [];
-    } finally {
-      loadingPlaces.current = false;
-    }
+  const getPlaces = (coordinate, location, radius) => {
+    return new Promise((resolve) => {
+      if (loadingPlaces.current) {
+        console.error("PLACES ERROR: still loadingPlaces");
+        resolve(null)
+      } else {
+        loadingPlaces.current = true;
+        fetch(
+          `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=10&radius=${1000 * radius}`,
+          {
+            method: "GET",
+          }
+        ).then(response => response.json())
+         .then(data=>resolve(convertServerPlaces(data, location)))
+         .catch(err=>{
+           console.error("PLACES ERROR:", err);
+           resolve(null)
+         })
+         .finally(()=>loadingPlaces.current = false);
+      }
+    })
   };
 
   const getSettings = async () => {

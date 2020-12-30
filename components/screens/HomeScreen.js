@@ -359,19 +359,18 @@ export const HomeScreen = ({ navigation, route }) => {
     actuallyGetPlaces(region, location)
   }, 700), [location]); // 500
 
-  const actuallyGetPlaces = async (region, location) => {
-    const pp = await getPlaces(region, location, calcRadius(region));
-    if (pp && pp !== null && pp != undefined) {
-      dispatch({
-        type: SAVE_PLACES,
-        payload: pp,
-      });
-    }
-    if (specialLockForInitialFetch.current) {
-      setTimeout(() => {
-        specialLockForInitialFetch.current = false;
-      }, 1500);
-    }
+  const actuallyGetPlaces = (region, location) => {
+    getPlaces(region, location, calcRadius(region)).then(pp => {
+      if (pp != null) {
+        dispatch({
+          type: SAVE_PLACES,
+          payload: pp,
+        });
+        if (specialLockForInitialFetch.current) {
+          specialLockForInitialFetch.current = false;
+        }
+      }
+    })
   }
 
   const markerPressed = useCallback((place) => {
