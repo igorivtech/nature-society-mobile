@@ -461,8 +461,9 @@ export const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
-        onPanDrag={onPanDrag}
+        rotateEnabled={false}
         moveOnMarkerPress={false}
+        onPanDrag={onPanDrag}
         onRegionChange={onRegionChange}
         onRegionChangeComplete={onRegionChangeComplete}
         initialRegion={INITIAL_REGION}
