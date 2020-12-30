@@ -102,8 +102,8 @@ export const convertServerPlaces = (serverPlaces, location) => {
     res[i].position = {
       longitude: place.location.coordinates[0],
       latitude: place.location.coordinates[1],
-      latitudeDelta: 0.1 * SCREEN_ASPECT_RATIO,
-      longitudeDelta: 0.1,
+      latitudeDelta: 0.15 * SCREEN_ASPECT_RATIO,
+      longitudeDelta: 0.15,
     }
     if (place.title.trim() === "") {
       res[i].title = "אין שם";
