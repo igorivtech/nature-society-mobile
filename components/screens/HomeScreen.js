@@ -375,9 +375,8 @@ export const HomeScreen = ({ navigation, route }) => {
     currSearchId.current = uuidv4();
     getPlaces(currSearchId.current, region, location, calcRadius(region)).then(data => {
       if (data !== null) {
-        const pp = data.pp;
-        const searchId = data.searchId;
-        if (searchId === currSearchId.current) {
+        if (data.searchId === currSearchId.current) {
+          const pp = data.pp;
           if (pp.length > 0) {
             dispatch({
               type: SAVE_PLACES,
