@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Image, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
-import { markerStyles } from '../../views/progress/PathSegment'
 
 export const UserMarker = ({ user, location }) => {
   const [trackChanges, setTrackChanges] = useState(0);
@@ -12,8 +11,8 @@ export const UserMarker = ({ user, location }) => {
     setTrackChanges(0);
   }, [user])
   return (
-    <Marker zIndex={4} tracksViewChanges={trackChanges < 2} coordinate={location}>
-      <View style={markerStyles.markerContainer}>
+    <Marker style={markerStyles.markerContainer} zIndex={4} tracksViewChanges={trackChanges < 2} coordinate={location}>
+      <View style={markerStyles.markerInnerContainer}>
         <Image
           onLoad={updateTrackChanged}
           style={markerStyles.markerIcon}
@@ -28,3 +27,29 @@ export const UserMarker = ({ user, location }) => {
     </Marker>
   );
 };
+
+export const markerStyles = StyleSheet.create({
+
+  markerContainer: {
+    height: 72,
+    width: 65,
+  },
+
+  markerIcon: {
+    position: 'absolute'
+  },
+
+  profilePic: {
+    marginTop: 11,
+    backgroundColor: 'white',
+    width: 31.2,
+    height: 31.2,
+    borderRadius: 31.2/2
+  },
+
+  markerInnerContainer: {
+    zIndex: 2,
+    ...StyleSheet.absoluteFill,
+    alignItems: 'center'
+  },
+})
