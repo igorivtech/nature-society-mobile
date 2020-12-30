@@ -216,10 +216,12 @@ export const PlaceScreen = ({ navigation, route }) => {
             ref={visitorsRef}
             style={{...globalStyles.fullWidth, marginVertical: VERTICAL_MARGIN}}
           >
-            <Text style={textStyles.normalOfSize(12)}>
-              {strings.placeScreen.recentVisitors(placeLocked(user, place))}
-            </Text>
-            {place.lastVisitors && (
+            {place.lastVisitors.length > 0 && (
+              <Text style={textStyles.normalOfSize(12)}>
+                {strings.placeScreen.recentVisitors(placeLocked(user, place))}
+              </Text>
+            )}
+            {place.lastVisitors.length > 0 && (
               <View style={s.recentVisitorsContainer}>
                 {place.lastVisitors.slice(0, 2).map((visitor, index) => (
                   <RecentVisitor
