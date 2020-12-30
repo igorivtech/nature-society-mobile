@@ -6,7 +6,6 @@ export const BASE_URL = `https://ddaflq8r2a.execute-api.eu-central-1.amazonaws.c
 export const useServer = () => {
 
   const [loadingSearch, setLoadingSearch] = useState(false);
-  const loadingPlaces = useRef(false);
   const [loadingMorePlaces, setLoadingMorePlaces] = useState(false);
 
   const getExplorePlaces = async (location, page) => {
@@ -59,33 +58,27 @@ export const useServer = () => {
     }
   };
 
-  const getPlaces = (coordinate, location, radius) => {
+  const getPlaces = (searchId, coordinate, location, radius) => {
     return new Promise((resolve) => {
-      if (loadingPlaces.current) {
-        console.error("PLACES ERROR: still loadingPlaces");
-        resolve(null)
-      } else {
-        loadingPlaces.current = true;
-        fetch(
-          `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=10&radius=${1000 * radius}`,
-          {
-            method: "GET",
+      fetch(
+        `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=10&radius=${1000 * radius}`,
+        { method: "GET" }
+      ).then(response => response.json())
+        .then(data=>{
+          if (Array.isArray(data)) {
+            resolve({
+              searchId,
+              pp: convertServerPlaces(data, location)
+            })
+          } else {
+            console.error("PLACES ERROR: big error. result is not an array.");
+            resolve(null);
           }
-        ).then(response => response.json())
-         .then(data=>{
-           if (Array.isArray(data)) {
-             resolve(convertServerPlaces(data, location))
-           } else {
-             console.error("PLACES ERROR: big error. result is not an array.");
-             resolve([]);
-           }
-          })
-         .catch(err=>{
-           console.error("PLACES ERROR:", err);
-           resolve([])
-         })
-         .finally(()=>loadingPlaces.current = false);
-      }
+        })
+        .catch(err=>{
+          console.error("PLACES ERROR:", err);
+          resolve(null)
+        })
     })
   };
 

@@ -31,6 +31,8 @@ import { useServer } from "../../hooks/useServer";
 import _ from "lodash";
 import { objectLength } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 
 const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
@@ -359,14 +361,23 @@ export const HomeScreen = ({ navigation, route }) => {
     actuallyGetPlaces(region, location)
   }, 500), [location]);
 
+  const currSearchId = useRef(null);
+
   const actuallyGetPlaces = (region, location) => {
-    getPlaces(region, location, calcRadius(region)).then(pp => {
-      if (pp !== null) {
-        if (pp.length > 0) {
-          dispatch({
-            type: SAVE_PLACES,
-            payload: pp,
-          });
+    currSearchId.current = uuidv4();
+    getPlaces(currSearchId.current, region, location, calcRadius(region)).then(data => {
+      if (data !== null) {
+        const pp = data.pp;
+        const searchId = data.searchId;
+        if (searchId === currSearchId.current) {
+          if (pp.length > 0) {
+            dispatch({
+              type: SAVE_PLACES,
+              payload: pp,
+            });
+          }
+        } else {
+          console.log("DISCARDING OLD PLACES");
         }
         if (specialLockForInitialFetch.current) {
           specialLockForInitialFetch.current = false;
