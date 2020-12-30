@@ -121,7 +121,7 @@ export const strings = {
     coolButton: "מגניב",
   },
   placeScreen: {
-    share: (name) => {
+    sharePlace: (name) => {
       return `חשבתי שיעניין אותך להסתכל על ${name}, אתר טבע שמצאתי באפליקציית בשביל הטבע`
     },
     recentVisitors: (locked) => {
@@ -173,7 +173,7 @@ export const strings = {
     chooseNewPasswordTitle: "החלף סיסמה",
   },
   reportScreen: {
-    share: (name) => {
+    sharePlace: (name) => {
       return "משהו משהו משהו"
     },
     scrollHint: "גרירה למטה ולמעלה\nכדי לבחור ציון",
