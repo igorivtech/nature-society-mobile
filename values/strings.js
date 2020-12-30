@@ -174,7 +174,7 @@ export const strings = {
   },
   reportScreen: {
     sharePlace: (name) => {
-      return "משהו משהו משהו"
+      return `דיווחתי ועזרתי לשמור על הטבע ב${name} עם אפליקציית בשביל הטבע`
     },
     scrollHint: "גרירה למטה ולמעלה\nכדי לבחור ציון",
     share: "שיתוף",
