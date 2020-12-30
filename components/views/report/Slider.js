@@ -375,10 +375,10 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
         {loaded && (
           <View style={StyleSheet.absoluteFill}>
             <Animated.View style={sliderStyles.animation(animationOpacity)}>
-              <LottieView source={animation} progress={animationProgress} resizeMode='contain' />
+              <LottieView style={StyleSheet.absoluteFill} source={animation} progress={animationProgress} resizeMode='contain' />
             </Animated.View>
             <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
-              <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode='contain' onAnimationFinish={onIntroFinish} />
+              <LottieView style={StyleSheet.absoluteFill} ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode='contain' onAnimationFinish={onIntroFinish} />
             </Animated.View>
           </View>
         )}
