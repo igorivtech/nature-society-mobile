@@ -74,7 +74,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const sharePressed = () => {
-    share("TITLE TITLE", "https://www.reddit.com");
+    share(`מצאתי אתר טבע חדש ומעניין באפליקציית בשביל הטבע.`, "https://www.reddit.com");
   };
 
   const report = () => {

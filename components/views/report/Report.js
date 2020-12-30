@@ -10,7 +10,7 @@ import { colors } from "../../../values/colors";
 import { useEffect } from "react";
 import { smallScreen } from "../../../values/consts";
 
-export const Report = ({goBack, image, setImage, finishReport, details, iHelped, loadingSendReport}) => {
+export const Report = ({goBack, image, setImage, finishReport, details, iHelped, loadingSendReport, sharePressed}) => {
 
   const {state} = useContext(UserContext);
   const {user, settings} = state;
@@ -36,10 +36,6 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
     ]).start(()=>{
       setSecondContainerZIndex(1);
     });
-  }
-
-  const share = () => {
-    console.log("share");
   }
 
   return (
@@ -72,7 +68,7 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
           <Text style={styles.pointsText}>{`+${settings.reportPoints}`}</Text>
           <Image source={require("../../../assets/images/report_done_icon.png")} />
         </View>
-        <Button title={strings.reportScreen.share} filled={true} onPress={share} />
+        <Button title={strings.reportScreen.share} filled={true} onPress={sharePressed} />
         <Button title={strings.reportScreen.done} filled={false} onPress={finishReport} loading={loadingSendReport} />
       </Animated.View>
     </View>
