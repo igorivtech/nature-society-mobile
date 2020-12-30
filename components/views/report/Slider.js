@@ -45,10 +45,10 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   const isMounted = useIsMounted();
 
   useEffect(()=>{
-    if (startUpAnimation) {
+    if (loaded && startUpAnimation) {
       startThumbAnimation();
     }
-  }, [])
+  }, [loaded])
 
   useEffect(()=>{
     if (autoPlay) {

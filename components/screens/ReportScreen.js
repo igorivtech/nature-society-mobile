@@ -16,7 +16,7 @@ import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../..
 import { uploadImageAsync, useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue } from "../../hooks/helpers";
-import { emptyFunc, errors, safeAreaHeight } from "../../values/consts";
+import { emptyFunc, errors, NAV_DURATION, safeAreaHeight } from "../../values/consts";
 import useIsMounted from "ismounted";
 
 const clean = {
@@ -83,7 +83,7 @@ export const ReportScreen = ({navigation, route}) => {
     }, 1000);
     setTimeout(() => {
       setLoaded(true);
-    }, 300);
+    }, NAV_DURATION);
   }, []);
 
   useEffect(()=>{
