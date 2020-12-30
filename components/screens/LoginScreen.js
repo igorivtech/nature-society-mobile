@@ -167,15 +167,17 @@ export const LoginScreen = ({ navigation, route }) => {
     if (loginVisible) {
       if (validateEmail(loginEmail) && loginPassword.length >= PASSWORD_MIN_LENGTH) {
         setLoadingLogin(true);
-        Auth.signIn(loginEmail.trim(), loginPassword).then((cognitoUser)=>{
-          saveUser(cognitoToUser(cognitoUser));
-          dispatch({
-            type: SAVE_TOKEN,
-            payload: getToken(cognitoUser),
-          });
-        }).catch((error)=>{
-          handleError(error);
-        }).finally(()=>setLoadingLogin(false));
+        Auth.signIn(loginEmail.trim(), loginPassword)
+          .then(()=>Auth.currentAuthenticatedUser({bypassCache: true}))
+          .then((cognitoUser)=>{
+            saveUser(cognitoToUser(cognitoUser));
+            dispatch({
+              type: SAVE_TOKEN,
+              payload: getToken(cognitoUser),
+            });
+          })
+          .catch((error)=>handleError(error))
+          .finally(()=>setLoadingLogin(false));
       } else {
         if (!validateEmail(loginEmail)) {
           handleError(errors.invalidEmail);
