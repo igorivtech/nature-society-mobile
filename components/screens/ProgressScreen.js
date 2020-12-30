@@ -47,6 +47,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const alreadyAnimatedPath = useRef(false);
+  const pathOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(()=> {
     // DEBUG
@@ -69,6 +70,13 @@ export const ProgressScreen = ({ navigation, route }) => {
         setCurrentIndex(i);
       }
     });
+    //
+    Animated.timing(pathOpacity, {
+      toValue: 1,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+      delay: 500
+    }).start();
   }, [])
 
   useEffect(()=>{
@@ -198,7 +206,7 @@ export const ProgressScreen = ({ navigation, route }) => {
             { useNativeDriver: true }    
           )}
           ref={scrollView}
-          style={styles.scrollView}
+          style={styles.scrollView(pathOpacity)}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index})=><PathSegment currentIndex={currentIndex} popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />}
          />
@@ -435,11 +443,12 @@ const pStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
 
-  scrollView: {
+  scrollView: (opacity) => ({
     // overflow: 'visible',
+    opacity,
     flex: 1,
     width: "100%",
-  },
+  }),
   
   bottomButtonContainer: {
     bottom: 16,
