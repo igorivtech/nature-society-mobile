@@ -221,7 +221,7 @@ export const TextCard = ({ item, showItem, index, searchTerm }) => {
         searchWords={searchTerm.length === 0 ? [] : [searchTerm]}
         textToHighlight={item.title}
       />
-      <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>
+      <Text minimumFontScale={0.8} adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>
     </TouchableOpacity>
   )
 }
