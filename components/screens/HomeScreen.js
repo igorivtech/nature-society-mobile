@@ -14,6 +14,7 @@ import {
 import { MAP_STYLE } from "../../values/map_style";
 import {
   CARD_TRANSLATE_Y,
+  ITEM_HEIGHT,
   ITEM_WIDTH,
   PlaceCard,
   spacerStyle,
@@ -244,7 +245,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
-      toValue: hideList ? height * 0.3 : 0,
+      toValue: hideList ? ITEM_HEIGHT + CARD_TRANSLATE_Y + 47 : 0,
       duration: 700,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
