@@ -129,6 +129,10 @@ export const ProfileScreen = ({ navigation }) => {
   const updateChanges = useCallback(async () => {
     let attributes = {}
     if (name !== user.name) {
+      if (name.trim().length === 0) {
+        handleError(errors.enterName);
+        return;
+      }
       attributes.name = name;
     }
     if (signupEmail !== user.email) {
