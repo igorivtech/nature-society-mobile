@@ -8,7 +8,7 @@ const isAndroid = Platform.OS === 'android'
 export const UserMarker = ({ user, location }) => {
   const [trackNumber, setTrackNumber] = useState(0);
   const [trackChanges, setTrackChanges] = useState(0);
-  
+
   const updateTrackChanged = useCallback(() => {
     setTrackChanges(v=>(v + 1));
   }, [setTrackChanges]);
@@ -65,7 +65,7 @@ export const markerStyles = StyleSheet.create({
 
   profilePic: {
     marginTop: 11,
-    marginRight: 0.5,
+    transform: [{translateX: -0.1}],
     backgroundColor: colors.clear,
     width: 31.2,
     height: 31.2,

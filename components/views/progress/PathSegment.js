@@ -299,7 +299,7 @@ export const markerStyles = StyleSheet.create({
 
   profilePic: {
     marginTop: 11,
-    marginRight: 0.5,
+    transform: [{translateX: -0.1}],
     backgroundColor: colors.clear,
     width: 31.2,
     height: 31.2,
