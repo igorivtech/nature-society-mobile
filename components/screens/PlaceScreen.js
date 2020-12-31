@@ -171,7 +171,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             delay={600}
             style={{...globalStyles.fullWidth, marginBottom: VERTICAL_MARGIN}}
           >
-            <Text style={textStyles.boldOfSize(24)}>{place.title}</Text>
+            <Text style={textStyles.boldOfSize(24)}>{place.title.trim()}</Text>
 
             <Text style={textStyles.normalOfSize(24)}>
               {strings.distanceFromYou(place.distance)}
@@ -244,7 +244,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             ref={descRef}
             style={s.desc}
           >
-            {place.description}
+            {place.description.trim()}
           </Animatable.Text>
 
           <Animatable.View
