@@ -169,7 +169,7 @@ export const globalStyles = StyleSheet.create({
     borderBottomRightRadius: 15,
     width: "33%",
     height: "100%",
-    backgroundColor: "#ccc",
+    backgroundColor: colors.imageBg,
   },
 
   ratingContainer: {

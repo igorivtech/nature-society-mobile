@@ -8,5 +8,6 @@ export const colors = {
   lighterShade: "#737B83",
   userHeader: '#222222',
   path: "#737B83",
-  pathNotDone: "#818181"
+  pathNotDone: "#818181",
+  imageBg: "#ccc"
 };
