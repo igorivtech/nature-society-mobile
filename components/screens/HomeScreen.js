@@ -41,7 +41,7 @@ const rightSpacer = { key: "right-spacer" };
 const MAP_ANIMATION_DURATION = 700;
 
 const calcRadius = (region) => {
-  return 111.045 * region.longitudeDelta / 2;
+  return 90 * region.longitudeDelta / 2;
 }
 
 const EPSILON = 0.01;
@@ -222,7 +222,7 @@ export const HomeScreen = ({ navigation, route }) => {
           const item = serverPlaces[i];
           if (selectedPlace == null || item.key !== selectedPlace.key) {
             setSelectedPlace(item);
-            animateToItem(item, true);
+            animateToItem(item);
           }
         }, 10);
       })
@@ -340,21 +340,23 @@ export const HomeScreen = ({ navigation, route }) => {
     }, SCREEN_WAIT_DURATION);
   }, [navigation, location])
 
-  const animateToItem = (item, noZoom = false) => {
-    const paddedLD = item.position.longitudeDelta + 0.2;
-    // if (noZoom) {
-    //   mapRef.current.animateToRegion({
-    //     ...mapRef.current.__lastRegion,
-    //     longitude: item.position.longitude,
-    //     latitude: item.position.latitude,
-    //   }, MAP_ANIMATION_DURATION);
-    // } else {
+  const animateToItem = (item) => {
+    const ld = mapRef.current.__lastRegion.longitudeDelta;
+    const noZoom = ld < 0.3;
+    if (noZoom) {
+      mapRef.current.animateToRegion({
+        ...mapRef.current.__lastRegion,
+        longitude: item.position.longitude,
+        latitude: item.position.latitude,
+      }, MAP_ANIMATION_DURATION);
+    } else {
+      const paddedLD = item.position.longitudeDelta + 0.2;
       mapRef.current.animateToRegion({
         ...item.position,
         longitudeDelta: paddedLD,
         latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
       }, MAP_ANIMATION_DURATION);
-    // }
+    }
   };
 
   const showPlace = useCallback((place) => {
