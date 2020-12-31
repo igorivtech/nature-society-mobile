@@ -1,14 +1,27 @@
 import React from "react";
-import { Share } from "react-native";
+import { Platform, Share } from "react-native";
 
 export const useShare = () => {
   const share = async (title, url) => {
     try {
       const result = await Share.share({
-        title,
-        url,
+        ...Platform.select({
+          ios: {
+            message: title,
+            url,
+          },
+          android: {
+            message: url
+          }
+        }),
+        title
       }, {
-        subject: title
+        ...Platform.select({
+          ios: {},
+          android: {
+            dialogTitle: title
+          }
+        })
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
