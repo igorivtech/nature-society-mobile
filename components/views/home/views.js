@@ -66,7 +66,7 @@ export const RecentVisitor = ({ title, details, image, large = false }) => {
         <Text style={textStyles.cardTitle}>{title}</Text>
         <Text style={textStyles.cardDetail}>{details}</Text>
       </View>
-      <Image style={globalStyles.cardVisitorPic(large)} source={{ uri: image }} />
+      <Image style={globalStyles.cardVisitorPic(large)} source={image != null ? { uri: image } : require("../../../assets/images/default_profile_pic.png")} />
     </View>
   );
 };
