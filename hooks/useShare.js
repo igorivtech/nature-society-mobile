@@ -11,7 +11,7 @@ export const useShare = () => {
             url,
           },
           android: {
-            message: url
+            message: `${title}\n${url}`
           }
         }),
         title
@@ -19,7 +19,7 @@ export const useShare = () => {
         ...Platform.select({
           ios: {},
           android: {
-            dialogTitle: title
+            dialogTitle: `${title}\n${url}`
           }
         })
       });
