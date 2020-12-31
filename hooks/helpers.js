@@ -121,7 +121,9 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     res[i].crowdness = place.crowdness;
     res[i].crowdnessColor = siteColor(res[i].crowdness);
     //
-    // res[i].image = `https://sites-images83243-prod.s3.amazonaws.com/public/images/${place.image}`
+    if (!place.image.startsWith("http")) {
+      res[i].image = `https://sites-images83243-prod.s3.amazonaws.com/public/images/${place.image}`
+    }
   })
 
   if (specialSort) {
