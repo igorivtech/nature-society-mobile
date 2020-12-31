@@ -342,7 +342,7 @@ export const PlaceRating = ({
           )}
         </View>
         
-        <Image style={locked ? {} : {tintColor: color}} source={locked ? (small ? require("../../assets/images/place_locked_icon_small.png") : require("../../assets/images/place_locked_icon_large.png")) : image} />
+        <Image style={{tintColor: locked ? '#80868D' : color}} source={image} />
       </View>
       
       
