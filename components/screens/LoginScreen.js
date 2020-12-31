@@ -286,7 +286,7 @@ export const LoginScreen = ({ navigation, route }) => {
 
   const restorePassword = useCallback(() => {
     if (restoreEmail.length > 0) {
-      if (validateEmail(restoreEmail)) {
+      if (!validateEmail(restoreEmail)) {
         handleError(errors.invalidEmail);
       } else {
         setLoadingRestorePassword(true);
