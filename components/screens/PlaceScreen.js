@@ -456,6 +456,7 @@ const s = StyleSheet.create({
   },
 
   imageStyle: {
+    backgroundColor: "#ccc",
     resizeMode: "cover",
     borderRadius: 15,
     width: "100%",
