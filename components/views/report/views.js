@@ -14,7 +14,7 @@ import { textStyles } from "../../../values/textStyles";
 import * as Permissions from "expo-permissions";
 import { Popup } from "../Popup";
 import { askSettings } from "../../../hooks/usePermissions";
-import { DEFAULT_IMAGE_QUALITY } from "../../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, smallScreen } from "../../../values/consts";
 import { resizeImage } from "../../../hooks/helpers";
 
 export const TakePicView = ({ image, setImage }) => {
@@ -153,7 +153,7 @@ const cameraStyle = StyleSheet.create({
     alignItems: "center",
   },
   indicator: {
-    transform: [{ translateY: 60 }],
+    transform: [{ translateY: smallScreen ? 5.5 : 60 }],
   },
   image: {
     ...StyleSheet.absoluteFill,
