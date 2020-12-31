@@ -124,12 +124,10 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     // res[i].image = `https://sites-images83243-prod.s3.amazonaws.com/public/images/${place.image}`
   })
 
-  if (location) {
-    if (specialSort) {
-      res = specialSortPlaces(res, location);
-    } else {
-      res.sort((p1, p2) => p1.distance > p2.distance);
-    }
+  if (specialSort) {
+    res = specialSortPlaces(res, location);
+  } else if (location) {
+    res.sort((p1, p2) => p1.distance > p2.distance);
   }
 
   return res
