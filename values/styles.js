@@ -188,6 +188,8 @@ export const globalStyles = StyleSheet.create({
   },
 
   cardVisitorPic: (large) => ({
+    borderWidth: 0.4,
+    borderColor: '#202224',
     width: large ? 27 : 22,
     height: large ? 27 :22,
     borderRadius: large ? (27/2) : 11,
