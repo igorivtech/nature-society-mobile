@@ -113,9 +113,9 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
             </View>
           </View>
 
-          <SharedElement style={globalStyles.cardMainImage} id={`place.${item.key}.image`}>
+          <View style={globalStyles.cardMainImage}>
             <Image style={styles.image} source={{ uri: item.image }} />
-          </SharedElement>
+          </View>
         </Animated.View>
       </TapGestureHandler>
     </View>
