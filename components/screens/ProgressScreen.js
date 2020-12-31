@@ -28,6 +28,7 @@ import { Popup } from "../views/Popup";
 import { shouldAskUser } from "../../hooks/useNotifications";
 import { Auth } from "aws-amplify";
 import AsyncStorage from "@react-native-community/async-storage";
+import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 
 export const ProgressScreen = ({ navigation, route }) => {
 
@@ -187,47 +188,60 @@ export const ProgressScreen = ({ navigation, route }) => {
     })
   }
 
+  const handleSwipeLeft = (event) => {
+    if (event.nativeEvent.state === State.END) {
+      goBack();
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={goBack} style={styles.tap}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
 
-      <View style={styles.progressScreenContainer}>
-        <Animated.FlatList
-          extraData={currentIndex}
-          data={data}
-          bounces={false}
-          scrollEventThrottle={16}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {y: scrollY}}}],
-            { useNativeDriver: true }    
-          )}
-          ref={scrollView}
-          style={styles.scrollView(pathOpacity)}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index})=><PathSegment currentIndex={currentIndex} popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />}
-         />
-        
-        <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
-          {user ? (
-            <Image source={require("../../assets/images/settings_icon.png")} />
-          ) : (
-            <Text style={styles.bottomText}>{strings.progressScreen.signup}</Text>
-          )}
-        </TouchableOpacity>
+      <FlingGestureHandler
+        direction={Directions.LEFT}
+        onHandlerStateChange={handleSwipeLeft}
+      >
 
-        <UserHeader restartApp={restartApp} />
-        <ProgressPopup />
-        <Popup
-          permissions={true}
-          textData={strings.popups.pushPermissions}
-          action={askPush}
-          popupVisible={pushPopupVisible}
-          setPopupVisible={setPushPopupVisible}
-        />
+        <View style={styles.progressScreenContainer}>
+          <Animated.FlatList
+            extraData={currentIndex}
+            data={data}
+            bounces={false}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{nativeEvent: {contentOffset: {y: scrollY}}}],
+              { useNativeDriver: true }    
+            )}
+            ref={scrollView}
+            style={styles.scrollView(pathOpacity)}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index})=><PathSegment currentIndex={currentIndex} popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />}
+          />
+          
+          <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
+            {user ? (
+              <Image source={require("../../assets/images/settings_icon.png")} />
+            ) : (
+              <Text style={styles.bottomText}>{strings.progressScreen.signup}</Text>
+            )}
+          </TouchableOpacity>
 
-      </View>
+          <UserHeader restartApp={restartApp} />
+          <ProgressPopup />
+          <Popup
+            permissions={true}
+            textData={strings.popups.pushPermissions}
+            action={askPush}
+            popupVisible={pushPopupVisible}
+            setPopupVisible={setPushPopupVisible}
+          />
+
+        </View>
+
+      </FlingGestureHandler>
 
       <SafeAreaView style={styles.bottomSafeAreaStyle} />
     </View>
