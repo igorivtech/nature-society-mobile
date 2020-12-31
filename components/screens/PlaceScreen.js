@@ -320,7 +320,7 @@ export const PlaceRating = ({
       
       <View style={s.ratingInnerContainer}>
         {locked ? (
-          <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
+          <TouchableOpacity style={s.fixedHeight} disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
             <View style={s.buyIndicatorContainer}>
               <ActivityIndicator color={colors.treeBlues} style={s.buyIndicator} animating={loading}/>
             </View>
@@ -335,7 +335,7 @@ export const PlaceRating = ({
             </View>
           </TouchableOpacity>
         ) : (
-          <Text style={s.ratingStyle(small, color)}>
+          <Text style={[s.ratingStyle(small, color), s.fixedHeight]}>
             {rating.toFixed(1)}
           </Text>
         )}
@@ -349,6 +349,10 @@ export const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  fixedHeight: {
+    height: 31.3333
+  },
 
   buyIndicator: {
     transform: [{translateX: -24}]
