@@ -25,7 +25,7 @@ const clean = {
   titles: strings.reportScreen.cleanTitles,
   animation: require("../../assets/animations/clean.json"),
   introAnimation: require("../../assets/animations/clean_intro.json"),
-  outputRange: [0, 0.281, 0.514, 0.747, 1]
+  outputRange: [0, 0.27184466019, 0.50485436893, 0.73786407767, 1]
 }
 
 const crowd = {
