@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
+
+const isAndroid = Platform.OS === 'android'
 
 export const UserMarker = ({ user, location }) => {
   const [trackChanges, setTrackChanges] = useState(0);
@@ -11,7 +13,7 @@ export const UserMarker = ({ user, location }) => {
     setTrackChanges(0);
   }, [user])
   return (
-    <Marker style={markerStyles.markerContainer} zIndex={4} tracksViewChanges={trackChanges < 2} coordinate={location}>
+    <Marker style={markerStyles.markerContainer} zIndex={4} tracksViewChanges={isAndroid ? true : trackChanges < 2} coordinate={location}>
       <View style={markerStyles.markerInnerContainer}>
         <Image
           onLoad={updateTrackChanged}
