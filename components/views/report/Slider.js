@@ -377,7 +377,9 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Animated.View style={sliderStyles.animation(animationOpacity)}>
               <LottieView style={StyleSheet.absoluteFill} source={animation} progress={animationProgress} resizeMode='contain' />
               {item.bg && (
-                <Image source={item.bg} style={StyleSheet.absoluteFill} />
+                <View style={sliderStyles.overlay}>
+                  <Image style={StyleSheet.absoluteFill} source={item.bg} style={StyleSheet.absoluteFill} />
+                </View>
               )}
             </Animated.View>
             <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
@@ -475,6 +477,11 @@ const pagStyles = StyleSheet.create({
 });
 
 const sliderStyles = StyleSheet.create({
+  
+  overlay:  {
+    ...StyleSheet.absoluteFill,
+    borderRadius: 22.5, overflow: 'hidden'
+  },
 
   thumbBg: (color) => ({
     ...StyleSheet.absoluteFill,
