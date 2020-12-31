@@ -376,6 +376,9 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
           <View style={StyleSheet.absoluteFill}>
             <Animated.View style={sliderStyles.animation(animationOpacity)}>
               <LottieView style={StyleSheet.absoluteFill} source={animation} progress={animationProgress} resizeMode='contain' />
+              {item.bg && (
+                <Image source={item.bg} style={StyleSheet.absoluteFill} />
+              )}
             </Animated.View>
             <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
               <LottieView style={StyleSheet.absoluteFill} ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode='contain' onAnimationFinish={onIntroFinish} />
@@ -485,7 +488,8 @@ const sliderStyles = StyleSheet.create({
 
   animation: (opacity) => ({
     ...StyleSheet.absoluteFill,
-    opacity
+    opacity,
+    overflow: 'hidden'
   }),
 
   titlePaginationContainer: {
