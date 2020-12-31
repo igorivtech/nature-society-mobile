@@ -326,10 +326,8 @@ export const PlaceRating = ({
                 <ActivityIndicator color={colors.treeBlues} style={s.buyIndicator} animating={loading}/>
               </View>
               <View style={s.buyContainer(small, loading)}>
-                {pointsToUnlock && (
-                  <Text style={s.buyPoints}>{pointsToUnlock}</Text>
-                )}
-                <Image source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
+                <Text style={s.buyPoints}>{pointsToUnlock}</Text>
+                <Image style={globalStyles.imageContain} source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
                 {!small && (
                   <Text style={s.buyTitle}>{strings.showInfo}</Text>
                 )}

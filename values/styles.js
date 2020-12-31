@@ -211,4 +211,8 @@ export const globalStyles = StyleSheet.create({
     opacity,
     transform: [{ translateX }, { scale }],
   }),
+
+  imageContain: {
+    resizeMode: 'contain'
+  },
 });
