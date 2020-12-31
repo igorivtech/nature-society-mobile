@@ -62,6 +62,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const [loadingBuy, setLoadingBuy] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(true);
 
   const textRef = useRef();
   const ratingRef = useRef();
@@ -206,8 +207,13 @@ export const PlaceScreen = ({ navigation, route }) => {
           </Animatable.View>
 
           <View style={[s.imageStyle, globalStyles.centerChildren, {overflow: 'hidden'}]}>
-            <Image source={require("../../assets/images/default_place_bg.png")} />
-            <Image style={StyleSheet.absoluteFill} source={{ uri: place.image }} />
+            {!loadingImage && (
+              <Image source={require("../../assets/images/default_place_bg.png")} />
+            )}
+            <View style={globalStyles.centerChildren}>
+              <ActivityIndicator animating={loadingImage} />
+            </View>
+            <Image onError={()=>setLoadingImage(false)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ uri: place.image }} />
           </View>
 
           <Animatable.View
