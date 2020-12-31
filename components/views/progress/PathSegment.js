@@ -177,7 +177,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
         {currentIndex === index && (
           <View style={markerStyles.markerContainer} ref={markerRef}>
             <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
-            <Image source={(user !== null && user.image !==null) ? {uri: user.image} : require("../../../assets/images/default_profile_pic.png")} style={markerStyles.profilePic} />
+            <Image source={(user !== null && user.image != null) ? {uri: user.image} : require("../../../assets/images/default_profile_pic.png")} style={markerStyles.profilePic} />
           </View>
         )}
         <Image style={styles.marker} ref={markerSmallRef} source={topIcon} />
