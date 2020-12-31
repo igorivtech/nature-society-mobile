@@ -127,16 +127,16 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
   if (location) {
     if (specialSort && res.length > 2) {
       let newRes = [];
-      const currentLocation = {position: location}
-      const iDistances = res.map(p=>distancePlaces(p, currentLocation));
-      const iIndexOfMin = iDistances.indexOf(Math.min(...iDistances));
       let notMapped = [...res];
-      newRes.push(notMapped.splice(iIndexOfMin, 1)[0]);
+      const currentLocation = {position: location}
+      let distances = res.map(p=>distancePlaces(p, currentLocation));
+      let indexOfMin = distances.indexOf(Math.min(...distances));
+      newRes.push(notMapped.splice(indexOfMin, 1)[0]);
       let curr = newRes[0];
       let i;
       for (i = 1; i < res.length; i++) {
-        const distances = notMapped.map(p=>distancePlaces(p, curr));
-        const indexOfMin = distances.indexOf(Math.min(...distances));
+        distances = notMapped.map(p=>distancePlaces(p, curr));
+        indexOfMin = distances.indexOf(Math.min(...distances));
         curr = notMapped.splice(indexOfMin, 1)[0];
         newRes.push(curr);
       }
