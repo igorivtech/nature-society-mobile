@@ -319,26 +319,28 @@ export const PlaceRating = ({
 
       
       <View style={s.ratingInnerContainer}>
-        {locked ? (
-          <TouchableOpacity style={s.fixedHeight} disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
-            <View style={s.buyIndicatorContainer}>
-              <ActivityIndicator color={colors.treeBlues} style={s.buyIndicator} animating={loading}/>
-            </View>
-            <View style={s.buyContainer(small, loading)}>
-              {pointsToUnlock && (
-                <Text style={s.buyPoints}>{pointsToUnlock}</Text>
-              )}
-              <Image source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
-              {!small && (
-                <Text style={s.buyTitle}>{strings.showInfo}</Text>
-              )}
-            </View>
-          </TouchableOpacity>
-        ) : (
-          <Text style={[s.ratingStyle(small, color), s.fixedHeight]}>
-            {rating.toFixed(1)}
-          </Text>
-        )}
+        <View style={s.fixedHeight}>
+          {locked ? (
+            <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
+              <View style={s.buyIndicatorContainer}>
+                <ActivityIndicator color={colors.treeBlues} style={s.buyIndicator} animating={loading}/>
+              </View>
+              <View style={s.buyContainer(small, loading)}>
+                {pointsToUnlock && (
+                  <Text style={s.buyPoints}>{pointsToUnlock}</Text>
+                )}
+                <Image source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
+                {!small && (
+                  <Text style={s.buyTitle}>{strings.showInfo}</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <Text style={s.ratingStyle(small, color)}>
+              {rating.toFixed(1)}
+            </Text>
+          )}
+        </View>
         
         <Image style={locked ? {} : {tintColor: color}} source={locked ? (small ? require("../../assets/images/place_locked_icon_small.png") : require("../../assets/images/place_locked_icon_large.png")) : image} />
       </View>
