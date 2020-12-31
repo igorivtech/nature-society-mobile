@@ -43,6 +43,7 @@ export const markerStyles = StyleSheet.create({
 
   profilePic: {
     marginTop: 11,
+    marginRight: 0.5,
     backgroundColor: 'white',
     width: 31.2,
     height: 31.2,
