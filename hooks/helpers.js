@@ -89,7 +89,7 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
   return output
 }
 
-export const convertServerPlaces = (serverPlaces, location) => {
+export const convertServerPlaces = (serverPlaces, location, specialSort = false) => {
 
   let res = [...serverPlaces];
 
@@ -125,7 +125,11 @@ export const convertServerPlaces = (serverPlaces, location) => {
   })
 
   if (location) {
-    res.sort((p1, p2) => p1.distance > p2.distance);
+    if (specialSort) {
+      res.sort((p1, p2) => p1.distance > p2.distance); // special sort
+    } else {
+      res.sort((p1, p2) => p1.distance > p2.distance);
+    }
   }
 
   return res

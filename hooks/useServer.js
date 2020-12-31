@@ -76,7 +76,7 @@ export const useServer = () => {
           if (Array.isArray(data)) {
             resolve({
               searchId,
-              pp: convertServerPlaces(data, location)
+              pp: convertServerPlaces(data, location, true)
             })
           } else {
             resolve(null);
