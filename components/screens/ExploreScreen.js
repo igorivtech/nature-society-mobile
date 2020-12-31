@@ -483,6 +483,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: INNER_BORDER_RADIUS,
     borderTopRightRadius: INNER_BORDER_RADIUS,
     flexGrow: 1,
+    backgroundColor: "#ccc",
   },
 
   cardDetailsContainer: {
