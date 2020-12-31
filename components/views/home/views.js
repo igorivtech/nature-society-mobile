@@ -77,7 +77,7 @@ export const RatingView = ({ settings, rating, color, image, locked = false, ite
       {locked ? (
         <View style={ratingStyles.buyContainer(true)}>
           <Text style={ratingStyles.buyPoints}>{settings.pointsForUnlock}</Text>
-          <Image style={globalStyles.imageContain} source={require("../../../assets/images/buy_it_small.png")} />
+          <Image style={globalStyles.imageContain(true)} source={require("../../../assets/images/buy_it_small.png")} />
         </View>
       ): (
         <Text style={textStyles.rating(color)}>{rating.toFixed(1)}</Text>

@@ -327,7 +327,7 @@ export const PlaceRating = ({
               </View>
               <View style={s.buyContainer(small, loading)}>
                 <Text style={s.buyPoints}>{pointsToUnlock}</Text>
-                <Image style={globalStyles.imageContain} source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
+                <Image style={globalStyles.imageContain(small)} source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
                 {!small && (
                   <Text style={s.buyTitle}>{strings.showInfo}</Text>
                 )}

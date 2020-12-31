@@ -212,7 +212,11 @@ export const globalStyles = StyleSheet.create({
     transform: [{ translateX }, { scale }],
   }),
 
-  imageContain: {
+  imageContain: (small) => ({
+    // s - 19 × 20
+    // k - 25 × 25
+    width: small ? 19 : 25,
+    height: small ? 20 : 25,
     resizeMode: 'contain'
-  },
+  }),
 });
