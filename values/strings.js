@@ -207,7 +207,11 @@ export const strings = {
       , "ריק מאדם"
     ],
     otherPeople: (num) => {
-      return `${num} מדווחים דומים\nתיארו מצב דומה`;
+      if (num === 0) {
+        return 'אתם המדווחים הראשונים, כל הכבוד!'
+      } else {
+        return `${num} אנשים דיווחו כמוך`
+      }
     },
   },
 };
