@@ -33,8 +33,7 @@ const crowd = {
   titles: strings.reportScreen.crowdTitles,
   animation: require('../../assets/animations/crowd.json'),
   bg: require("../../assets/images/crowd_bg.png"),
-  // introAnimation: require('../../assets/animations/crowd_intro.json'),
-  introAnimation: require("../../assets/animations/clean_intro.json"),
+  introAnimation: require('../../assets/animations/crowd_intro.json'),
   outputRange: [0, 0.27184466019, 0.50485436893, 0.73786407767, 1]
 }
 
