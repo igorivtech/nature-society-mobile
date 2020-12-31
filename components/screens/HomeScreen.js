@@ -8,7 +8,6 @@ import {
   height,
   DEFAULT_NOTIFICATION,
   INITIAL_REGION,
-  DEFAULT_COOR_DELTA,
   width,
 } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
@@ -158,7 +157,8 @@ export const HomeScreen = ({ navigation, route }) => {
         setHideList(true);
         const region = {
           ...location,
-          ...DEFAULT_COOR_DELTA
+          longitudeDelta: 0.7, // 1 is 111 kilometers
+          latitudeDelta: 0.7*SCREEN_ASPECT_RATIO
         }
         console.log("actuallyGetPlaces: first time location fetched - useEffect");
         actuallyGetPlaces(region, location);
