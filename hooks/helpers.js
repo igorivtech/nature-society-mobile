@@ -105,7 +105,7 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
       latitudeDelta: 0.15 * SCREEN_ASPECT_RATIO,
       longitudeDelta: 0.15,
     }
-    if (place.title.trim() === "") {
+    if (place.title == null || place.title.trim() === "") {
       res[i].title = "אין שם";
     }
     if (location) {
