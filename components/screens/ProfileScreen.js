@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { ProfileView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_IMAGE_QUALITY, height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, errors, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
@@ -21,7 +21,7 @@ import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
 import { cognitoToUser } from "../../hooks/useUser";
-import { objectLength, resizeImage } from "../../hooks/helpers";
+import { objectLength, resizeImage, validateEmail } from "../../hooks/helpers";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import _ from "lodash";
 
@@ -132,7 +132,11 @@ export const ProfileScreen = ({ navigation }) => {
       attributes.name = name;
     }
     if (signupEmail !== user.email) {
-      attributes.email = email;
+      if (!validateEmail(signupEmail)) {
+        handleError(errors.invalidEmail);
+        return;
+      }
+      attributes.email = signupEmail;
     }
     //
     setLoadingUpdate(true);
@@ -155,7 +159,7 @@ export const ProfileScreen = ({ navigation }) => {
           });
           updateUser(cognitoToUser(updatedCognitoUser));
         } else {
-          console.error("cant update details");
+          console.error("cant update details".toUpperCase(), result);
         }
       } catch (error) {
         handleError(error);
