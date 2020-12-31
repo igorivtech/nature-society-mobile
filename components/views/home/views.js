@@ -83,7 +83,7 @@ export const RatingView = ({ settings, rating, color, image, locked = false, ite
         <Text style={textStyles.rating(color)}>{rating.toFixed(1)}</Text>
       )}
 
-      <Image style={locked ? {} : {tintColor: color}} source={locked ? require("../../../assets/images/place_locked_icon_small.png") : image} />
+      <Image style={{tintColor: locked ? colors.lighterShade : color}} source={image} />
     </View>
   );
 };

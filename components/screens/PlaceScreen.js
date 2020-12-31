@@ -342,7 +342,7 @@ export const PlaceRating = ({
           )}
         </View>
         
-        <Image style={{tintColor: locked ? '#80868D' : color}} source={image} />
+        <Image style={{tintColor: locked ? colors.lighterShade : color}} source={image} />
       </View>
       
       
