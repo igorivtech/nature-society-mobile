@@ -208,7 +208,7 @@ export const strings = {
     ],
     otherPeople: (num) => {
       if (num === 0) {
-        return 'אתם המדווחים הראשונים, כל הכבוד!'
+        return 'אתם המדווחים הראשונים,\nכל הכבוד!'
       } else {
         return `${num} אנשים דיווחו כמוך`
       }
