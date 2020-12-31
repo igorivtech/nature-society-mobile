@@ -9,6 +9,7 @@ import {
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
 import { placeLocked } from "../../../hooks/helpers";
+import { colors } from "../../../values/colors";
 import { smallScreen, width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
 import { globalStyles } from "../../../values/styles";
@@ -114,7 +115,11 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
           </View>
 
           <View style={globalStyles.cardMainImage}>
-            <Image style={styles.image} source={{ uri: item.image }} />
+            <Image style={[styles.image, {
+              resizeMode: 'contain',
+              backgroundColor: colors.imageBg
+              }]} source={require("../../../assets/images/default_place_bg.png")} />
+            <Image style={[styles.image, {position: 'absolute'}]} source={{ uri: item.image }} />
           </View>
         </Animated.View>
       </TapGestureHandler>
