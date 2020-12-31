@@ -1,4 +1,8 @@
 const errors = {
+  "AliasExistsException": {
+    title: 'כתובת מייל זו כבר קיימת במערכת.',
+    yes: 'אישור'  
+  },
   "report_lot_logged_in": {
     title: 'קרתה שגיאה, אנא נסו שנית.',
     yes: 'אישור'  
