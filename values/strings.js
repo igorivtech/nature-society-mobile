@@ -122,7 +122,7 @@ export const strings = {
   },
   placeScreen: {
     sharePlace: (name) => {
-      return `מצאתי באפליקציית "בשביל הטבע" את ${name} וחשבתי שיענין אתכם`
+      return `מצאתי באפליקציית "בשביל הטבע" את ${name.trim()} וחשבתי שיענין אתכם`
     },
     recentVisitors: (locked) => {
       return 'מבקר אחרון';
@@ -174,7 +174,7 @@ export const strings = {
   },
   reportScreen: {
     sharePlace: (name) => {
-      return `דיווחתי ועזרתי לשמור על הטבע ב${name} עם אפליקציית בשביל הטבע`
+      return `דיווחתי ועזרתי לשמור על הטבע ב${name.trim()} עם אפליקציית בשביל הטבע`
     },
     scrollHint: "גרירה למטה ולמעלה\nכדי לבחור ציון",
     share: "שיתוף",
