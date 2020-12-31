@@ -60,16 +60,16 @@ export const useServer = () => {
 
   let abortController = useRef();
   const getPlaces = (searchId, coordinate, location, radius) => {
-    if (abortController?.current) {
-      abortController.current.abort();
-    }
-    abortController.current = new AbortController();
+    // if (abortController?.current) {
+    //   abortController.current.abort();
+    // }
+    // abortController.current = new AbortController();
     return new Promise((resolve) => {
       fetch(
         `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=10&radius=${1000 * radius}`,
         { 
           method: "GET",
-          signal: abortController.current.signal,
+          // signal: abortController.current.signal,
         }
       ).then(response => response.json())
         .then(data=>{
