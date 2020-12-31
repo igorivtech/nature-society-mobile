@@ -28,6 +28,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { placeLocked } from "../../hooks/helpers";
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
+import * as Animatable from "react-native-animatable";
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -309,48 +310,51 @@ export const SearchBar = ({
 
 const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
   return (
-    <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
-      <Image style={styles.cardImage} source={{ uri: item.image }} />
-      <View style={styles.cardDetailsContainer}>
-        <View style={styles.cardLocationContainer}>
-          {item.distance && (
-            <Text style={textStyles.normalOfSize(14)}>
-              {strings.distanceFromYou(hasLocation ? item.distance : null)}
-            </Text>  
-          )}
-          <View style={{flexGrow: 1, minWidth: 4}} />
-          <View style={styles.titleContainer}>
-            <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.boldOfSize(16)}>{item.title}</Text>
+    <Animatable.View animation='fadeIn'>
+      <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
+        <Image style={styles.cardImage} source={{ uri: item.image }} />
+        <View style={styles.cardDetailsContainer}>
+          <View style={styles.cardLocationContainer}>
+            {item.distance && (
+              <Text style={textStyles.normalOfSize(14)}>
+                {strings.distanceFromYou(hasLocation ? item.distance : null)}
+              </Text>  
+            )}
+            <View style={{flexGrow: 1, minWidth: 4}} />
+            <View style={styles.titleContainer}>
+              <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.boldOfSize(16)}>{item.title}</Text>
 
-            <Image
-              style={styles.translateY(-2)}
-              source={require("../../assets/images/marker_small.png")}
+              <Image
+                style={styles.translateY(-2)}
+                source={require("../../assets/images/marker_small.png")}
+              />
+            </View>
+          </View>
+
+          <View style={styles.ratingContainer}>
+            <PlaceRating
+              pointsToUnlock={settings.pointsForUnlock}
+              small
+              locked={placeLocked(user, item)}
+              title={strings.placeScreen.crowdnessTitle(true)}
+              image={require("../../assets/images/HowBusy.png")}
+              color={item.crowdnessColor}
+              rating={item.crowdness}
+            />
+
+            <PlaceRating
+              small
+              leftMargin={40}
+              title={strings.placeScreen.cleannessTitle(placeLocked(user, item))}
+              image={require("../../assets/images/Heart.png")}
+              color={item.cleannessColor}
+              rating={item.cleanness}
             />
           </View>
         </View>
+      </TouchableOpacity>      
+    </Animatable.View>
 
-        <View style={styles.ratingContainer}>
-          <PlaceRating
-            pointsToUnlock={settings.pointsForUnlock}
-            small
-            locked={placeLocked(user, item)}
-            title={strings.placeScreen.crowdnessTitle(true)}
-            image={require("../../assets/images/HowBusy.png")}
-            color={item.crowdnessColor}
-            rating={item.crowdness}
-          />
-
-          <PlaceRating
-            small
-            leftMargin={40}
-            title={strings.placeScreen.cleannessTitle(placeLocked(user, item))}
-            image={require("../../assets/images/Heart.png")}
-            color={item.cleannessColor}
-            rating={item.cleanness}
-          />
-        </View>
-      </View>
-    </TouchableOpacity>
   );
 };
 
