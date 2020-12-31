@@ -119,7 +119,7 @@ export const ProfileScreen = ({ navigation }) => {
   }, []);
 
   const onSignupEmailChanged = useCallback((value) => {
-    setSignupEmail(value);
+    setSignupEmail(value.trim());
   }, []);
 
   const goBack = () => {
