@@ -125,22 +125,8 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
   })
 
   if (location) {
-    if (specialSort && res.length > 2) {
-      let newRes = [];
-      let notMapped = [...res];
-      const currentLocation = {position: location}
-      let distances = res.map(p=>distancePlaces(p, currentLocation));
-      let indexOfMin = distances.indexOf(Math.min(...distances));
-      newRes.push(notMapped.splice(indexOfMin, 1)[0]);
-      let curr = newRes[0];
-      let i;
-      for (i = 1; i < res.length; i++) {
-        distances = notMapped.map(p=>distancePlaces(p, curr));
-        indexOfMin = distances.indexOf(Math.min(...distances));
-        curr = notMapped.splice(indexOfMin, 1)[0];
-        newRes.push(curr);
-      }
-      res = [...newRes];
+    if (specialSort) {
+      res = specialSortPlaces(res, location);
     } else {
       res.sort((p1, p2) => p1.distance > p2.distance);
     }
@@ -163,6 +149,28 @@ export const placeLocked = (user, place) => {
   }
   const unlockedPlaces = user.unlockedPlaces;
   return unlockedPlaces[place._id] == null
+}
+
+export const specialSortPlaces = (res, location) => {
+  if (res.length > 2) {
+    let newRes = [];
+    let notMapped = [...res];
+    const currentLocation = {position: location}
+    let distances = res.map(p=>distancePlaces(p, currentLocation));
+    let indexOfMin = distances.indexOf(Math.min(...distances));
+    newRes.push(notMapped.splice(indexOfMin, 1)[0]);
+    let curr = newRes[0];
+    let i;
+    for (i = 1; i < res.length; i++) {
+      distances = notMapped.map(p=>distancePlaces(p, curr));
+      indexOfMin = distances.indexOf(Math.min(...distances));
+      curr = notMapped.splice(indexOfMin, 1)[0];
+      newRes.push(curr);
+    }
+    return [...newRes];
+  } else {
+    return res;
+  }
 }
 
 const firstNameOnly = (fullName) => {
