@@ -9,5 +9,5 @@ export const colors = {
   userHeader: '#222222',
   path: "#737B83",
   pathNotDone: "#818181",
-  imageBg: "#ccc"
+  imageBg: "#eee"
 };
