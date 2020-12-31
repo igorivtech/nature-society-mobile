@@ -353,6 +353,7 @@ export const PlaceRating = ({
 const s = StyleSheet.create({
 
   fixedHeight: {
+    justifyContent: 'center',
     height: 31.3333
   },
 
