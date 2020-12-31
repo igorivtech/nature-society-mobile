@@ -205,9 +205,10 @@ export const PlaceScreen = ({ navigation, route }) => {
             />
           </Animatable.View>
 
-          <SharedElement style={s.imageStyle} id={`place.${place.key}.image`}>
-            <Image style={s.imageStyle} source={{ uri: place.image }} />
-          </SharedElement>
+          <View style={[s.imageStyle, globalStyles.centerChildren, {overflow: 'hidden'}]}>
+            <Image source={require("../../assets/images/default_place_bg.png")} />
+            <Image style={StyleSheet.absoluteFill} source={{ uri: place.image }} />
+          </View>
 
           <Animatable.View
             useNativeDriver
