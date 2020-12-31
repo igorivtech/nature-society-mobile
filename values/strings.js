@@ -172,7 +172,10 @@ export const strings = {
     restorePassword: "שחזור סיסמה",
     restorePasswordButton: "שחזר סיסמה",
     emailSentButton: "אוקיי, אבדוק",
-    emailSentDesc: "לינק ליצירת סיסמה חדשה נשלח\nאליך לאימייל.",
+    emailSentDesc: 
+    "קוד אימות נשלח אליכם למייל," +
+    "\n" + 
+    "אנא הזינו אותו בשלב הבא ובחרו סיסמה חדשה.",
     chooseNewPasswordTitle: "בחר סיסמה חדשה",
     chooseNewPasswordTitle: "החלף סיסמה",
   },
