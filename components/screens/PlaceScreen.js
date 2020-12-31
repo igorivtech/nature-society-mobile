@@ -197,7 +197,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             />
 
             <PlaceRating
-              leftMargin={40}
+              leftMargin={smallScreen ? 30 : 40}
               title={strings.placeScreen.cleannessTitle(placeLocked(user, place))}
               image={require("../../assets/images/HeartL.png")}
               color={place.cleannessColor}
