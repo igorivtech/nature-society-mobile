@@ -79,7 +79,6 @@ export const useServer = () => {
               pp: convertServerPlaces(data, location)
             })
           } else {
-            console.error("PLACES ERROR: big error. result is not an array.");
             resolve(null);
           }
         })
