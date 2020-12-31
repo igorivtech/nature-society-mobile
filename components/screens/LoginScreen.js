@@ -123,7 +123,7 @@ export const LoginScreen = ({ navigation, route }) => {
   }, []);
 
   const onLoginEmailChanged = useCallback((value) => {
-    setLoginEmail(value);
+    setLoginEmail(value.trim());
   }, []);
 
   const onLoginPasswordChanged = useCallback((value) => {
@@ -131,7 +131,7 @@ export const LoginScreen = ({ navigation, route }) => {
   }, []);
 
   const onSignupEmailChanged = useCallback((value) => {
-    setSignupEmail(value);
+    setSignupEmail(value.trim());
   }, []);
 
   const onSignupPasswordChanged = useCallback((value) => {
