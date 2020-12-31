@@ -22,7 +22,7 @@ export const UserMarker = ({ user, location }) => {
         />
         <Image
           onLoad={updateTrackChanged}
-          source={(user !== null && user.image !==null) ? { uri: user.image } : require("../../../assets/images/default_profile_pic.png")}
+          source={(user !== null && user.image != null) ? { uri: user.image } : require("../../../assets/images/default_profile_pic.png")}
           style={markerStyles.profilePic}
         />
       </View>
