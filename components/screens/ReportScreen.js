@@ -35,7 +35,7 @@ const crowd = {
   // introAnimation: require('../../assets/animations/crowd_intro.json'),
   animation: require("../../assets/animations/clean.json"),
   introAnimation: require("../../assets/animations/clean_intro.json"),
-  outputRange: [0, 0.2173, 0.565, 0.77, 1]
+  outputRange: [0, 0.27184466019, 0.50485436893, 0.73786407767, 1]
 }
 
 export const ReportScreen = ({navigation, route}) => {
