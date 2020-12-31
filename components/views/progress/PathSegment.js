@@ -177,7 +177,10 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
         {currentIndex === index && (
           <View style={markerStyles.markerContainer} ref={markerRef}>
             <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
-            <Image source={(user !== null && user.image != null) ? {uri: user.image} : require("../../../assets/images/default_profile_pic.png")} style={markerStyles.profilePic} />
+            <Image style={markerStyles.avatar} source={require("../../../assets/images/default_profile_pic.png")} />
+            {(user !== null && user.image != null) && (
+              <Image source={{uri: user.image}} style={markerStyles.profilePic} />
+            )}
           </View>
         )}
         <Image style={styles.marker} ref={markerSmallRef} source={topIcon} />
@@ -284,10 +287,20 @@ export const markerStyles = StyleSheet.create({
     position: 'absolute'
   },
 
+  avatar: {
+    position: 'absolute',
+    top: 11,
+    transform: [{translateX: -0.1}],
+    backgroundColor: 'white',
+    width: 31.2,
+    height: 31.2,
+    borderRadius: 31.2/2
+  },
+
   profilePic: {
     marginTop: 11,
     marginRight: 0.5,
-    backgroundColor: 'white',
+    backgroundColor: colors.clear,
     width: 31.2,
     height: 31.2,
     borderRadius: 31.2/2
