@@ -151,11 +151,16 @@ export const placeLocked = (user, place) => {
   return unlockedPlaces[place._id] == null
 }
 
-export const specialSortPlaces = (res, location) => {
+export const specialSortPlaces = (res, location = null) => {
   if (res.length > 2) {
     let newRes = [];
     let notMapped = [...res];
-    const currentLocation = {position: location}
+    let currentLocation;
+    if (location == null) {
+      currentLocation = {...res[0]};
+    } else {
+      currentLocation = {position: location};
+    }
     let distances = res.map(p=>distancePlaces(p, currentLocation));
     let indexOfMin = distances.indexOf(Math.min(...distances));
     newRes.push(notMapped.splice(indexOfMin, 1)[0]);
