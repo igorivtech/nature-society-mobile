@@ -148,7 +148,7 @@ export const placeLocked = (user, place) => {
     return true;
   }
   const unlockedPlaces = user.unlockedPlaces;
-  return unlockedPlaces[place._id] == null
+  return unlockedPlaces[place._id] == null // TODO: HERE
 }
 
 export const specialSortPlaces = (res, location = null) => {
