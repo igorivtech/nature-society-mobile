@@ -122,7 +122,7 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     res[i].crowdnessColor = siteColor(res[i].crowdness);
     //
     if (!place.image.startsWith("http")) {
-      res[i].image = `https://sites-images83243-prod.s3.amazonaws.com/public/images/${place.image}`
+      res[i].image = `https://d2hi055ukb5xv2.cloudfront.net/public/images/${place.image}`
     }
   })
 
