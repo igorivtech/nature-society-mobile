@@ -115,11 +115,12 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
           </View>
 
           <View style={globalStyles.cardMainImage}>
-            <Image style={[styles.image, {
+            {/* <Image style={[styles.image, {
               resizeMode: 'contain',
               backgroundColor: colors.imageBg
               }]} source={require("../../../assets/images/default_place_bg.png")} />
-            <Image style={[styles.image, {position: 'absolute'}]} source={{ uri: item.image }} />
+            <Image style={[styles.image, {position: 'absolute'}]} source={{ uri: item.image }} /> */}
+            <Image style={styles.image} source={{ uri: item.image }} />
           </View>
         </Animated.View>
       </TapGestureHandler>
