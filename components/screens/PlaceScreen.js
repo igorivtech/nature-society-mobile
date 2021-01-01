@@ -111,7 +111,7 @@ export const PlaceScreen = ({ navigation, route }) => {
         setLoadingBuy(true);
         let attributes = {}
         let unlockedPlaces = {...user.unlockedPlaces};
-        unlockedPlaces[place._id] = 1 // TODO: HERE - siteDocumentId instead
+        unlockedPlaces[`${place.siteDocumentId}`] = 1
         attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(unlockedPlaces);
         attributes[ATTRIBUTE_POINTS] = `${user.points - settings.pointsForUnlock}`;
         let cognitoUser = await Auth.currentAuthenticatedUser({

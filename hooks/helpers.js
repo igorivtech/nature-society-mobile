@@ -124,7 +124,7 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     if (!place.image.startsWith("http")) {
       res[i].image = `https://d2hi055ukb5xv2.cloudfront.net/public/images/${place.image}`
     }
-    // place.siteDocumentId
+    console.log(place.siteDocumentId);
   })
 
   if (specialSort) {
@@ -149,7 +149,7 @@ export const placeLocked = (user, place) => {
     return true;
   }
   const unlockedPlaces = user.unlockedPlaces;
-  return unlockedPlaces[place._id] == null // TODO: HERE - && unlockedPlaces[place.siteDocumentId] == null
+  return unlockedPlaces[place._id] == null && unlockedPlaces[`${place.siteDocumentId}`] == null
 }
 
 export const specialSortPlaces = (res, location = null) => {
