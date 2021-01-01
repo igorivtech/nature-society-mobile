@@ -232,7 +232,8 @@ const flStyles = StyleSheet.create({
 
   notDoneInnerText: {
     ...textStyles.normalOfSize(10),
-    color: colors.pathNotDone
+    color: colors.pathNotDone,
+    transform: [{translateY: 1}]
   },
 
   notDoneInnerContainer: {
