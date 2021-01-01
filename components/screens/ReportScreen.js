@@ -231,7 +231,7 @@ export const ReportScreen = ({navigation, route}) => {
     <View style={styles.container}>
       <TapView onPress={tapClose} />
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
-        <Animatable.View animation='fadeIn' delay={400} style={StyleSheet.absoluteFill}>
+        <Animatable.View animation='fadeIn' delay={400} style={styles.innerScrollViewContent}>
           <Animated.ScrollView 
             ref={scrollView}
             showsVerticalScrollIndicator={false}
@@ -257,6 +257,12 @@ export const ReportScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+
+  innerScrollViewContent: {
+    ...StyleSheet.absoluteFill, 
+    borderRadius: 22.5, 
+    overflow: 'hidden'
+  },
 
   scrollViewContent: {
     height: '300%'
