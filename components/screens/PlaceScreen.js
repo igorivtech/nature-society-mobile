@@ -34,7 +34,7 @@ import {
 import {UserContext} from "../../context/context"
 import {SAVE_PLACES, SAVE_USER} from "../../context/userReducer";
 import { Auth } from "aws-amplify";
-import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser} from '../../hooks/useUser';
+import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} from '../../hooks/useUser';
 import { placeLocked } from "../../hooks/helpers";
 
 const fadeOutDuration = 100;
@@ -112,7 +112,7 @@ export const PlaceScreen = ({ navigation, route }) => {
         let attributes = {}
         let unlockedPlaces = {...user.unlockedPlaces};
         unlockedPlaces[`${place.siteDocumentId}`] = 1
-        attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(unlockedPlaces);
+        attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(dicToArray(unlockedPlaces));
         attributes[ATTRIBUTE_POINTS] = `${user.points - settings.pointsForUnlock}`;
         let cognitoUser = await Auth.currentAuthenticatedUser({
           bypassCache: true,

@@ -46,14 +46,34 @@ export const useUser = (dispatch) => {
   return { loadingUser };
 };
 
+export const dicToArray = (dic) => {
+  let array = []
+  Object.keys(dic).forEach(key => {
+    array.push(key);
+  });
+  return array;
+}
+
+const arrayToDic = (array) => {
+  let dic = {}
+  array.forEach(e => {
+    dic[`${e}`] = 1;
+  });
+  return dic
+}
+
 export const cognitoToUser = (cognitoUser) => {
   const { attributes } = cognitoUser;
+  let unlockedPlaces = JSON.parse(attributes[ATTRIBUTE_UNLOCKED_PLACES]);
+  if (Array.isArray(unlockedPlaces)) {
+    unlockedPlaces = arrayToDic(unlockedPlaces);
+  }
   const user = {
     name: attributes.name,
     email: attributes.email,
     points: parseInt(attributes[ATTRIBUTE_POINTS]),
     numOfReports: parseInt(attributes[ATTRIBUTE_NUM_OF_REPORTS]),
-    unlockedPlaces: JSON.parse(attributes[ATTRIBUTE_UNLOCKED_PLACES]),
+    unlockedPlaces,
   };
   if (attributes.picture) {
     user.image = attributes["picture"];

@@ -28,7 +28,7 @@ import _ from "lodash";
 const PASSWORD_MIN_LENGTH = 8;
 const DEFAULT_POINTS = 50;
 const DEFAULT_NUM_OF_REPORTS = 0;
-const DEFAULT_UNLOCKED_PLACES = {};
+const DEFAULT_UNLOCKED_PLACES = [];
 
 export const LoginScreen = ({ navigation, route }) => {
 
