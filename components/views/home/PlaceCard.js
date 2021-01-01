@@ -1,5 +1,6 @@
-import React, {useCallback, memo} from "react";
+import React, {useCallback, memo, useState} from "react";
 import {
+  ActivityIndicator,
   Animated,
   Image,
   StyleSheet,
@@ -48,6 +49,11 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
       callback(item);
     }
   });
+
+  const [loadingImage, setLoadingImage] = useState(true);
+  const turnOffLoading = () => {
+    setLoadingImage(false);
+  }
 
   return (
     <View style={styles.card}>
@@ -120,7 +126,10 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
               backgroundColor: colors.imageBg
               }]} source={require("../../../assets/images/default_place_bg.png")} />
             <Image style={[styles.image, {position: 'absolute'}]} source={{ uri: item.image }} /> */}
-            <Image style={styles.image} source={{ uri: item.image }} />
+            <Image onLoad={turnOffLoading} onError={turnOffLoading} style={styles.image} source={{ uri: item.image }} />
+            <View style={[StyleSheet.absoluteFill, globalStyles.centerChildren]}>
+              <ActivityIndicator animating={loadingImage} />
+            </View>
           </View>
         </Animated.View>
       </TapGestureHandler>
