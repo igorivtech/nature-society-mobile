@@ -124,7 +124,6 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     if (!place.image.startsWith("http")) {
       res[i].image = `https://d2hi055ukb5xv2.cloudfront.net/public/images/${place.image}`
     }
-    console.log(place.siteDocumentId);
   })
 
   if (specialSort) {
