@@ -450,6 +450,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const onPanDrag = useCallback(()=>{
     lockAutoSearching.current = false
+    currSearchId.current = null;
   }, [])
 
   const onRegionChange = useCallback(()=>{
