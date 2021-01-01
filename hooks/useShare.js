@@ -1,6 +1,8 @@
 import React from "react";
 import { Platform, Share } from "react-native";
 
+export const appWebsite = ""
+
 export const useShare = () => {
   const share = async (title, url) => {
     try {

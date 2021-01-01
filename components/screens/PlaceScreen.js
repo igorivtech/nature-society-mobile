@@ -15,7 +15,7 @@ import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { Popup } from "../views/Popup"
-import { useShare } from "../../hooks/useShare";
+import { appWebsite, useShare } from "../../hooks/useShare";
 
 import * as Animatable from "react-native-animatable";
 import { RecentVisitor } from "../views/home/views";
@@ -75,7 +75,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const sharePressed = () => {
-    share(strings.placeScreen.sharePlace(place.title), "https://www.teva.org.il");
+    share(strings.placeScreen.sharePlace(place.title), appWebsite);
   };
 
   const report = () => {
