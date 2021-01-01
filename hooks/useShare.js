@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform, Share } from "react-native";
 
-export const appWebsite = ""
+export const appWebsite = "https://dev.d39prj9hryszvg.amplifyapp.com/"
 
 export const useShare = () => {
   const share = async (title, url) => {
