@@ -9,6 +9,7 @@ import {
   DEFAULT_NOTIFICATION,
   INITIAL_REGION,
   width,
+  SPLASH_HIDE_DELAY,
 } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import {
@@ -162,11 +163,13 @@ export const HomeScreen = ({ navigation, route }) => {
         }
         console.log("actuallyGetPlaces: first time location fetched - useEffect");
         actuallyGetPlaces(region, location);
-        mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
+        setTimeout(() => {
+          mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
+        }, SPLASH_HIDE_DELAY/2);
         setTimeout(() => {
           ignoreCardsListener.current = false;
           lockAutoSearching.current = false;
-        }, MAP_ANIMATION_DURATION+1000);
+        }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY/2+1000);
         Location.watchPositionAsync({
           timeInterval: 60*1000,
           distanceInterval: 100 // meters
