@@ -222,7 +222,7 @@ export const SitesHeader = memo(({onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.headerInnerContainer}>
       <Image source={require("../../assets/images/left_arrow.png")} />
-      <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.9} style={styles.headerTitle}>{strings.exploreScreen.globalSites}</Text>
+      <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.8} style={styles.headerTitle}>{strings.exploreScreen.globalSites}</Text>
       <Image source={require("../../assets/images/trophy.png")} />
     </TouchableOpacity>
   )
