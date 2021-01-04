@@ -337,7 +337,7 @@ export const HomeScreen = ({ navigation, route }) => {
     setTimeout(() => {
       setHideList(true);
       navigation.navigate("Explore", {
-        location: location ?? mapRef.current.__lastRegion,
+        location: {...location} ?? mapRef.current.__lastRegion,
         hasLocation: location != null
       });
     }, SCREEN_WAIT_DURATION);
