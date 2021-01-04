@@ -150,6 +150,7 @@ export const strings = {
     },
   },
   exploreScreen: {
+    globalSites: 'מדד בשביל הטבע ברשויות המקומיות',
     searchPlaceholder: "חפש",
   },
   progressScreen: {

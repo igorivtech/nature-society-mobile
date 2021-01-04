@@ -196,12 +196,25 @@ export const ExploreScreen = ({ navigation, route }) => {
               }}
               ListHeaderComponent={()=><TouchableOpacity onPress={showGlobalSites} style={{
                 backgroundColor: 'white',
-                height: 44,
                 borderRadius: 15,
                 borderWidth: 1,
                 borderColor: colors.treeBlues,
-                padding: 4,
-              }} />}
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}>
+                <Image source={require("../../assets/images/left_arrow.png")} />
+                <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.9} style={{
+                  ...textStyles.normalOfSize(16),
+                  flexGrow: 1,
+                  flexShrink: 1,
+                  paddingRight: 8,
+                  paddingLeft: 4,
+                }}>{strings.exploreScreen.globalSites}</Text>
+                <Image source={require("../../assets/images/trophy.png")} />
+              </TouchableOpacity>}
               ListFooterComponent={()=>{
                 return (
                   <View style={styles.paginationIndicatorContainer} key='indicator'>
