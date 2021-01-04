@@ -30,6 +30,7 @@ import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 import * as Animatable from "react-native-animatable";
 import * as WebBrowser from 'expo-web-browser';
+import { appWebsite } from "../../hooks/useShare";
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -158,7 +159,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   };
 
   const showGlobalSites = useCallback(() => {
-    WebBrowser.openBrowserAsync('https://expo.io');
+    WebBrowser.openBrowserAsync(appWebsite);
   }, []);
 
   return (
