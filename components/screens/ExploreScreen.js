@@ -381,7 +381,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 const styles = StyleSheet.create({
 
   headerTitle: {
-    ...textStyles.normalOfSize(smallScreen ? 15 : 16),
+    ...textStyles.normalOfSize(smallScreen ? 14 : 16),
     flexGrow: 1,
     flexShrink: 1,
     paddingRight: 8,
