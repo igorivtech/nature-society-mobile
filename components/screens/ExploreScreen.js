@@ -197,7 +197,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               ListHeaderComponent={()=><TouchableOpacity onPress={showGlobalSites} style={{
                 backgroundColor: 'white',
                 height: 44,
-                borderRadius: 12,
+                borderRadius: 15,
                 borderWidth: 1,
                 borderColor: colors.treeBlues,
                 padding: 4,
