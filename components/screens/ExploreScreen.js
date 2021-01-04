@@ -158,9 +158,9 @@ export const ExploreScreen = ({ navigation, route }) => {
     }
   };
 
-  const showGlobalSites = () => {
+  const showGlobalSites = useCallback(() => {
     WebBrowser.openBrowserAsync('https://expo.io');
-  }
+  }, []);
 
   return (
     <View style={styles.container}>
