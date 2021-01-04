@@ -58,6 +58,10 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const cardListAlpha = useRef(new Animated.Value(1)).current;
+  const textListOpacity = cardListAlpha.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0]
+  })
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
   const listTranslateX = leftMargin.interpolate({
     inputRange: [0, EXIT_SIZE],
@@ -142,11 +146,6 @@ export const ExploreScreen = ({ navigation, route }) => {
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
   };
-
-  const textListOpacity = cardListAlpha.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0]
-  })
 
   const handleSwipeRight = (event) => {
     if (event.nativeEvent.state === State.END) {
