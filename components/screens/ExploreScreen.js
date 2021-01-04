@@ -189,11 +189,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               contentContainerStyle={styles.flatListContainer}
               data={places}
               keyExtractor={(item) => item.key}
-              ListHeaderComponentStyle={{
-                paddingTop: 0,
-                paddingBottom: 23,
-                backgroundColor: 'white'
-              }}
+              ListHeaderComponentStyle={styles.headerContainer}
               ListHeaderComponent={()=><SitesHeader onPress={showGlobalSites} />}
               ListFooterComponent={()=>{
                 return (
@@ -224,25 +220,9 @@ export const ExploreScreen = ({ navigation, route }) => {
 
 export const SitesHeader = memo(({onPress}) => {
   return (
-    <TouchableOpacity onPress={onPress} style={{
-      backgroundColor: 'white',
-      borderRadius: 15,
-      borderWidth: 1,
-      borderColor: colors.treeBlues,
-      paddingHorizontal: 16,
-      paddingVertical: 8,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    }}>
+    <TouchableOpacity onPress={onPress} style={styles.headerInnerContainer}>
       <Image source={require("../../assets/images/left_arrow.png")} />
-      <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.9} style={{
-        ...textStyles.normalOfSize(16),
-        flexGrow: 1,
-        flexShrink: 1,
-        paddingRight: 8,
-        paddingLeft: 4,
-      }}>{strings.exploreScreen.globalSites}</Text>
+      <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.9} style={styles.headerTitle}>{strings.exploreScreen.globalSites}</Text>
       <Image source={require("../../assets/images/trophy.png")} />
     </TouchableOpacity>
   )
@@ -399,6 +379,32 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  headerTitle: {
+    ...textStyles.normalOfSize(16),
+    flexGrow: 1,
+    flexShrink: 1,
+    paddingRight: 8,
+    paddingLeft: 4,
+  },
+
+  headerInnerContainer: {
+    backgroundColor: 'white',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+
+  headerContainer: {
+    paddingTop: 0,
+    paddingBottom: 23,
+    backgroundColor: 'white'
+  },
 
   bottomBorder: (height) => ({ 
     transform: [{scaleY: height}, {translateY: 1}],
