@@ -49,7 +49,11 @@ export const useUser = (dispatch) => {
 export const dicToArray = (dic) => {
   let array = []
   Object.keys(dic).forEach(key => {
-    array.push(key);
+    if (isNumeric(key)) {
+      array.push(parseInt(key));
+    } else {
+      array.push(key);
+    }
   });
   return array;
 }
@@ -60,6 +64,10 @@ const arrayToDic = (array) => {
     dic[`${e}`] = 1;
   });
   return dic
+}
+
+function isNumeric(value) {
+  return /^\d+$/.test(value);
 }
 
 export const cognitoToUser = (cognitoUser) => {
