@@ -184,6 +184,19 @@ export const ExploreScreen = ({ navigation, route }) => {
               contentContainerStyle={styles.flatListContainer}
               data={places}
               keyExtractor={(item) => item.key}
+              ListHeaderComponentStyle={{
+                paddingTop: 0,
+                paddingBottom: 16,
+                backgroundColor: 'white'
+              }}
+              ListHeaderComponent={()=><View style={{
+                backgroundColor: 'white',
+                height: 44,
+                borderRadius: 12,
+                borderWidth: 1,
+                borderColor: colors.treeBlues,
+                padding: 4,
+              }} />}
               ListFooterComponent={()=>{
                 return (
                   <View style={styles.paginationIndicatorContainer} key='indicator'>
