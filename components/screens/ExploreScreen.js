@@ -312,7 +312,10 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
   return (
     <Animatable.View animation='fadeIn'>
       <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
-        <Image style={styles.cardImage} source={{ uri: item.image }} />
+        <Image style={styles.cardImage} source={{ 
+          uri: item.image,
+          cache: 'force-cache'
+           }} />
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
             {item.distance && (

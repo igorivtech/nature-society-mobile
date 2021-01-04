@@ -213,7 +213,10 @@ export const PlaceScreen = ({ navigation, route }) => {
             <View style={globalStyles.centerChildren}>
               <ActivityIndicator animating={loadingImage} />
             </View>
-            <Image onError={()=>setLoadingImage(false)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ uri: place.image }} />
+            <Image onError={()=>setLoadingImage(false)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ 
+              uri: place.image,
+              cache: 'force-cache'
+               }} />
           </View>
 
           <Animatable.View

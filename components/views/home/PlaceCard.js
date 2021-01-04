@@ -127,7 +127,10 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
               }]} source={require("../../../assets/images/default_place_bg.png")} />
             <Image style={[styles.image, {position: 'absolute'}]} source={{ uri: item.image }} /> */}
             {/* <Image onLoad={turnOffLoading} onError={turnOffLoading} style={styles.image} source={{ uri: item.image }} /> */}
-            <Image style={styles.image} source={{ uri: item.image }} />
+            <Image style={styles.image} source={{ 
+              uri: item.image ,
+              cache: 'force-cache'
+              }} />
             {/* <View style={[StyleSheet.absoluteFill, globalStyles.centerChildren]}>
               <ActivityIndicator animating={loadingImage} />
             </View> */}
