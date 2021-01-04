@@ -142,6 +142,10 @@ export const LoginScreen = ({ navigation, route }) => {
     setNewPassword(value);
   }, []);
 
+  const onRestoreEmailChanged = useCallback((value) => {
+    setRestoreEmail(value.trim());
+  }, []);
+
   useEffect(()=>{
     const params = route.params;
     if (params != null) {
@@ -382,7 +386,7 @@ export const LoginScreen = ({ navigation, route }) => {
             loading={loadingRestorePassword}
             visible={forgotPasswordVisible}
             email={restoreEmail}
-            onEmailChanged={setRestoreEmail}
+            onEmailChanged={onRestoreEmailChanged}
             restorePassword={restorePassword}
           />
 
