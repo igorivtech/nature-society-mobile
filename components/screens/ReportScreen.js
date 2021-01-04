@@ -40,7 +40,7 @@ const crowd = {
 export const ReportScreen = ({navigation, route}) => {
 
   let details = useRef([
-    {id: "1_extra_light", title: "חסרות שקיות בפחים", on: false},
+    {id: "1_extra_light", title: "חסרות שקיות\nבפחים", on: false},
     {id: "0_full_bins", title: "פחים מלאים", on: false},
     {id: "3_fires_marks", title: "סימני מדורות", on: false},
     {id: "2_open_bins", title: "חסרים פחים", on: false},
