@@ -29,6 +29,7 @@ import { placeLocked } from "../../hooks/helpers";
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 import * as Animatable from "react-native-animatable";
+import * as WebBrowser from 'expo-web-browser';
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -157,6 +158,10 @@ export const ExploreScreen = ({ navigation, route }) => {
     }
   };
 
+  const showGlobalSites = () => {
+    WebBrowser.openBrowserAsync('https://expo.io');
+  }
+
   return (
     <View style={styles.container}>
       <FlingGestureHandler
@@ -189,7 +194,7 @@ export const ExploreScreen = ({ navigation, route }) => {
                 paddingBottom: 16,
                 backgroundColor: 'white'
               }}
-              ListHeaderComponent={()=><View style={{
+              ListHeaderComponent={()=><TouchableOpacity onPress={showGlobalSites} style={{
                 backgroundColor: 'white',
                 height: 44,
                 borderRadius: 12,
