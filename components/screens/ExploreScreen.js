@@ -191,7 +191,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               keyExtractor={(item) => item.key}
               ListHeaderComponentStyle={{
                 paddingTop: 0,
-                paddingBottom: 16,
+                paddingBottom: 23,
                 backgroundColor: 'white'
               }}
               ListHeaderComponent={()=><TouchableOpacity onPress={showGlobalSites} style={{
