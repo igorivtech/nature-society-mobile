@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
   },
 
   headerContainer: {
-    paddingTop: 0,
+    paddingTop: 4,
     paddingBottom: 23,
     backgroundColor: 'white'
   },
