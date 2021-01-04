@@ -153,10 +153,10 @@ export const LoginScreen = ({ navigation, route }) => {
   }, [route])
 
   const goBack = useCallback(() => {
-    if (emailSentVisible || newPasswordVisible) {
+    if (emailSentVisible) {
       return;
     }
-    if (forgotPasswordVisible || signupVisible) {
+    if (newPasswordVisible || forgotPasswordVisible || signupVisible) {
       login();
     } else {
       navigation.goBack();
