@@ -20,7 +20,7 @@ import { PlaceRating } from "./PlaceScreen";
 import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
-import { statusBarHeight } from "../../values/consts";
+import { smallScreen, statusBarHeight } from "../../values/consts";
 import { globalStyles } from "../../values/styles";
 import _ from "lodash";
 import { useServer } from "../../hooks/useServer";
@@ -381,7 +381,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 const styles = StyleSheet.create({
 
   headerTitle: {
-    ...textStyles.normalOfSize(16),
+    ...textStyles.normalOfSize(smallScreen ? 15 : 16),
     flexGrow: 1,
     flexShrink: 1,
     paddingRight: 8,
