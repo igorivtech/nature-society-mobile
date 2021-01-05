@@ -531,8 +531,8 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
+        <LogoView />
       </AnimatedSafeAreaView>
-      <LogoView />
       <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
       <Popup
         permissions={true}
