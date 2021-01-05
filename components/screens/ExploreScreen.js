@@ -31,6 +31,7 @@ import { Directions, FlingGestureHandler, State } from "react-native-gesture-han
 import * as Animatable from "react-native-animatable";
 import * as WebBrowser from 'expo-web-browser';
 import { appWebsite } from "../../hooks/useShare";
+import LottieView from 'lottie-react-native';
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -264,8 +265,10 @@ export const SearchBar = ({
     extrapolate: 'clamp'
   })
 
+  const progress = useRef(new Animated.Value(0)).current;
+
   useEffect(()=>{
-    Animated.timing(searchIconOnOpacity, {
+    Animated.timing(progress, {
       toValue: searchOn ? 1 : 0,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease)
@@ -313,8 +316,12 @@ export const SearchBar = ({
       />     
 
       <View>
-        <Animated.Image style={styles.searchOnImage(searchIconOnOpacity)} source={require("../../assets/images/search_icon.png")}/>
-        <Animated.Image style={styles.searchOffImage(searchIconOffOpacity)} source={require("../../assets/images/search_off_icon.png")}/>
+        <LottieView style={styles.lottie} 
+          resizeMode='contain'
+          source={require("../../assets/animations/search.json")} 
+          autoPlay={false} 
+          progress={progress}
+        />
       </View>
 
       <Animated.View style={styles.bottomBorder(bottomLineWidth)} />
@@ -376,6 +383,11 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  lottie: {
+    width: 28,
+    height: 28
+  },
 
   headerTitle: {
     ...textStyles.normalOfSize(smallScreen ? 14 : 16),
