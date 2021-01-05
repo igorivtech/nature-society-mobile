@@ -36,6 +36,7 @@ import { UserMarker } from "../views/home/UserMarker";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { LogoView } from "../views/home/LogoView";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
@@ -68,8 +69,6 @@ const getZoomLevelFromRegion = (region) => {
 
 const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
 
-export const LIST_HIDDEN_Y_VALUE = ITEM_HEIGHT + CARD_TRANSLATE_Y + 47;
-
 export const HomeScreen = ({ navigation, route }) => {
   const { state, dispatch } = useContext(UserContext);
   const { user, notification, serverPlaces, settings } = state;
@@ -101,8 +100,10 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const listYTranslate = useRef(new Animated.Value(LIST_HIDDEN_Y_VALUE)).current;
+  const listYTranslate = useRef(new Animated.Value(height*0.33)).current;
   const buttonsTranslateY = useRef(new Animated.Value(0)).current;
+
+  const insets = useSafeAreaInsets();
 
   const {getPlaces} = useServer();
 
@@ -252,7 +253,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
-      toValue: hideList ? LIST_HIDDEN_Y_VALUE : 0,
+      toValue: hideList ? ITEM_HEIGHT + CARD_TRANSLATE_Y + insets.bottom + 8 : 0,
       duration: 700,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
