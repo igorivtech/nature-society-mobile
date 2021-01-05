@@ -75,12 +75,12 @@ export const ExploreScreen = ({ navigation, route }) => {
     Animated.parallel([
       Animated.timing(cardListAlpha, {
         useNativeDriver: true,
-        duration: 300,
+        duration: 320,
         easing: Easing.inOut(Easing.ease),
         toValue: searchOn ? 0 : 1
       }),
       Animated.timing(leftMargin, {
-        duration: 300,
+        duration: 320,
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease),
         toValue: searchOn ? 0 : EXIT_SIZE
@@ -174,6 +174,7 @@ export const ExploreScreen = ({ navigation, route }) => {
         <Animated.View style={styles.searchScreenContainer(leftMargin)}>
           <Animated.View style={{width: '100%', transform: [{translateX: listTranslateX}]}}>
             <SearchBar
+              leftMargin={leftMargin}
               loadingSearch={loadingSearch}
               searchTerm={searchTerm}
               searchOn={searchOn}
@@ -243,6 +244,7 @@ export const TextCard = ({ item, showItem, index, searchTerm }) => {
 }
 
 export const SearchBar = ({
+  leftMargin = null,
   searchTerm,
   searchOn,
   setSearchOn,
@@ -253,24 +255,17 @@ export const SearchBar = ({
 }) => {
 
   const indicatorOpacity = useRef(new Animated.Value(1)).current;
-  const progress = useRef(new Animated.Value(0)).current;
-  const bottomLineWidth = progress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 2],
-    extrapolate: 'clamp'
-  })
 
-  useEffect(()=>{
-    if (modal) {
-      return;
-    }
-    Animated.timing(progress, {
-      duration: 640,
-      toValue: searchOn ? 1 : 0,
-      useNativeDriver: true,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
-  }, [searchOn])
+  const progress = leftMargin !== null ? leftMargin.interpolate({
+    inputRange: [0, EXIT_SIZE],
+    outputRange: [1, 0]
+  }) : 0
+
+  const bottomLineWidth = leftMargin !== null ? leftMargin.interpolate({
+    inputRange: [0, 1],
+    outputRange: [2, 1],
+    extrapolate: 'clamp'
+  }) : 2
 
   useEffect(()=>{
     Animated.timing(indicatorOpacity, {
