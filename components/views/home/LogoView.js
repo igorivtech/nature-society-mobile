@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SPACER_ITEM_SIZE } from "./PlaceCard";
 import * as WebBrowser from 'expo-web-browser';
+import * as Animatable from "react-native-animatable";
 
 export const LogoView = memo(() => {
   const onPress = () => {
@@ -9,7 +10,7 @@ export const LogoView = memo(() => {
   }
   return (
     <TouchableOpacity style={styles.logo} onPress={onPress}>
-      <Image source={require("../../../assets/images/hala_logo.png")} />
+      <Animatable.Image animation='fadeIn' delay={2000} source={require("../../../assets/images/hala_logo.png")} />
     </TouchableOpacity>
   );
 });
