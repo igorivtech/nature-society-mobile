@@ -159,9 +159,10 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
       {currentIndex === index ? (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke={colors.path} strokeWidth={PATH_WIDTH} />
+          <Path d={line} strokeLinecap='square' stroke={colors.path} strokeWidth={PATH_WIDTH} />
           <Path
             d={line}
+            strokeLinecap='square'
             stroke={colors.path}
             strokeWidth={DONE_WIDTH}
             strokeDasharray={lineLength}
@@ -170,7 +171,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
         </Svg>
       ) : (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} stroke={colors.path} strokeWidth={(item.topDone && item.bottomDone) ? DONE_WIDTH : PATH_WIDTH} />
+          <Path d={line} strokeLinecap='square' stroke={colors.path} strokeWidth={(item.topDone && item.bottomDone) ? DONE_WIDTH : PATH_WIDTH} />
         </Svg>
       )}
 
