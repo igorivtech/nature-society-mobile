@@ -389,7 +389,6 @@ const s = StyleSheet.create({
 
   lottieContainer: {
     transform: [{translateX: -36}],
-    resizeMode: 'contain',
   },
 
   fixedHeight: {
