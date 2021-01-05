@@ -541,7 +541,7 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
-        <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
+        <LogoView listOpacity={listOpacity} bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
       <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
       <Popup

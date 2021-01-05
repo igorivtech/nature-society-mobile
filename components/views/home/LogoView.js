@@ -7,7 +7,7 @@ import {Popup} from "../Popup"
 import { strings } from "../../../values/strings";
 import { smallScreen } from "../../../values/consts";
 
-export const LogoView = memo(({listYTranslate, bottomHeight}) => {
+export const LogoView = memo(({listOpacity, listYTranslate, bottomHeight}) => {
 
   const opacity = listYTranslate.interpolate({
     inputRange: [0, bottomHeight],
