@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, memo } from "react";
 import { Animated, Easing, Image } from "react-native";
 import { UserContext } from "../../../context/context";
 import { globalStyles } from "../../../values/styles";
@@ -10,7 +10,7 @@ const TEXT_DURATION = 600;
 
 const ALREADY_SHOWN = "ALREADY_SHOWN"
 
-export const GrowthPoints = ({isFocused, popupVisible}) => {
+export const GrowthPoints = memo(({isFocused, popupVisible}) => {
   
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -109,4 +109,4 @@ export const GrowthPoints = ({isFocused, popupVisible}) => {
       <Image source={require("../../../assets/images/growth_icon.png")} />
     </Animated.View>
   );
-};
+});
