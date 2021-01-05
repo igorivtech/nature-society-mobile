@@ -151,7 +151,7 @@ const popupStyles = StyleSheet.create({
   },
 
   buttonTitle: (filled) => ({
-    ...textStyles.boldOfSize(24),
+    ...(filled ? textStyles.boldOfSize(24) : textStyles.normalOfSize(24)),
     color: filled ? "white" : colors.treeBlues,
     textAlign: "center",
   }),
