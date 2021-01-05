@@ -59,33 +59,29 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
-  const cardListAlpha = useRef(new Animated.Value(1)).current;
-  const textListOpacity = cardListAlpha.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0]
-  })
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
   const listTranslateX = leftMargin.interpolate({
     inputRange: [0, EXIT_SIZE],
     outputRange: [0, -EXIT_SIZE/2],
     extrapolate: 'clamp',
   });
+  const cardListAlpha = leftMargin.interpolate({
+    inputRange: [0, EXIT_SIZE],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  });
+  const textListOpacity = cardListAlpha.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0]
+  })
 
   useEffect(()=> {
-    Animated.parallel([
-      Animated.timing(cardListAlpha, {
-        useNativeDriver: true,
-        duration: 320,
-        easing: Easing.inOut(Easing.ease),
-        toValue: searchOn ? 0 : 1
-      }),
-      Animated.timing(leftMargin, {
-        duration: 320,
-        useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease),
-        toValue: searchOn ? 0 : EXIT_SIZE
-      }),
-    ]).start();
+    Animated.timing(leftMargin, {
+      duration: 320,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease),
+      toValue: searchOn ? 0 : EXIT_SIZE
+    }).start();
   }, [searchOn])
 
   useEffect(() => {
