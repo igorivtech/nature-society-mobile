@@ -12,9 +12,11 @@ const images = {
 
 const buttonAnimation = 300;
 
+const SMALL_SCALE = 0.66;
+
 export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false }) => {
   const alpha = useRef(new Animated.Value(0)).current;
-  const scale = useRef(new Animated.Value(0.8)).current;
+  const scale = useRef(new Animated.Value(SMALL_SCALE)).current;
 
   useEffect(() => {
     Animated.timing(alpha, {
@@ -24,7 +26,7 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
       useNativeDriver: true,
     }).start();
     Animated.timing(scale, {
-      toValue: selected ? 1 : 0.8,
+      toValue: selected ? 1 : SMALL_SCALE,
       duration: buttonAnimation,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
