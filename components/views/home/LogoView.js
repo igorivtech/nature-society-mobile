@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SPACER_ITEM_SIZE } from "./PlaceCard";
 import * as WebBrowser from 'expo-web-browser';
 
@@ -8,12 +8,9 @@ export const LogoView = memo(() => {
     WebBrowser.openBrowserAsync('https://www.teva.org.il');
   }
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <Image
-        source={require("../../../assets/images/hala_logo.png")}
-        style={styles.logo}
-      />
-    </TouchableWithoutFeedback>
+    <TouchableOpacity style={styles.logo} onPress={onPress}>
+      <Image source={require("../../../assets/images/hala_logo.png")} />
+    </TouchableOpacity>
   );
 });
 
