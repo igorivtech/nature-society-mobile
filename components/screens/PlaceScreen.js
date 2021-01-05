@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Linking,
+  Animated,
+  Easing,
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
@@ -36,6 +38,7 @@ import {SAVE_PLACES, SAVE_USER} from "../../context/userReducer";
 import { Auth } from "aws-amplify";
 import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} from '../../hooks/useUser';
 import { placeLocked } from "../../hooks/helpers";
+import LottieView from 'lottie-react-native';
 
 const fadeOutDuration = 100;
 let VERTICAL_MARGIN = Math.min(35, height*0.015);
@@ -323,6 +326,25 @@ export const PlaceRating = ({
   unlockPlace,
   pointsToUnlock = null
 }) => {
+
+  const lottieOpacity = useRef(new Animated.Value(0)).current;
+
+  const lottie = useRef();
+  useEffect(()=>{
+    if (lottie?.current) {
+      if (loading) {
+        lottie.current.play();
+      } else {
+        lottie.current.reset();
+      }
+      Animated.timing(lottieOpacity, {
+        toValue: loading ? 1 : 0,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }).start();
+    }
+  }, [loading])
+
   return (
     <View style={globalStyles.marginLeft(leftMargin)}>
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
@@ -332,9 +354,14 @@ export const PlaceRating = ({
         <View style={s.fixedHeight}>
           {locked ? (
             <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
-              <View style={s.buyIndicatorContainer}>
-                <ActivityIndicator color={colors.treeBlues} style={s.buyIndicator} animating={loading}/>
-              </View>
+              <Animated.View style={s.buyIndicatorContainer(lottieOpacity)}>
+                <LottieView style={s.lottieContainer} 
+                  ref={lottie}
+                  loop={true}
+                  source={require("../../assets/animations/buy_spin.json")} 
+                  resizeMode='contain'
+                />
+              </Animated.View>
               <View style={s.buyContainer(small, loading)}>
                 <Text style={s.buyPoints}>{pointsToUnlock}</Text>
                 <Image style={globalStyles.imageContain(small)} source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
@@ -360,6 +387,11 @@ export const PlaceRating = ({
 
 const s = StyleSheet.create({
 
+  lottieContainer: {
+    transform: [{translateX: -36}],
+    resizeMode: 'contain',
+  },
+
   fixedHeight: {
     justifyContent: 'center',
     height: 31.3333
@@ -369,9 +401,12 @@ const s = StyleSheet.create({
     transform: [{translateX: -24}]
   },
 
-  buyIndicatorContainer: {
-    ...StyleSheet.absoluteFill, flexDirection: 'row', alignItems: 'center'
-  },
+  buyIndicatorContainer: (opacity) => ({
+    ...StyleSheet.absoluteFill, 
+    flexDirection: 'row', 
+    alignItems: 'center',
+    opacity
+  }),
 
   ratingStyle: (small, color) => ({
     ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 
