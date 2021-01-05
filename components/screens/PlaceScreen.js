@@ -328,6 +328,11 @@ export const PlaceRating = ({
 }) => {
 
   const lottieOpacity = useRef(new Animated.Value(0)).current;
+  const imageOpacity = lottieOpacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+  })
 
   const lottie = useRef();
   useEffect(()=>{
@@ -354,17 +359,22 @@ export const PlaceRating = ({
         <View style={s.fixedHeight}>
           {locked ? (
             <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
-              <Animated.View style={s.buyIndicatorContainer(lottieOpacity)}>
-                <LottieView style={s.lottieContainer} 
-                  ref={lottie}
-                  loop={true}
-                  source={require("../../assets/animations/buy_spin.json")} 
-                  resizeMode='contain'
-                />
-              </Animated.View>
               <View style={s.buyContainer(small, loading)}>
                 <Text style={s.buyPoints}>{pointsToUnlock}</Text>
-                <Image style={globalStyles.imageContain(small)} source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")} />
+                <View>
+                  <Animated.Image 
+                    style={[globalStyles.imageContain(small), {opacity: imageOpacity}]} 
+                    source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")}
+                  />
+                  <Animated.View style={s.buyIndicatorContainer(lottieOpacity)}>
+                    <LottieView
+                      ref={lottie}
+                      loop={true}
+                      source={require("../../assets/animations/buy_spin.json")} 
+                      resizeMode='contain'
+                    />
+                  </Animated.View>
+                </View>
                 {!small && (
                   <Text style={s.buyTitle}>{strings.showInfo}</Text>
                 )}
@@ -386,10 +396,6 @@ export const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
-
-  lottieContainer: {
-    transform: [{translateX: -36}],
-  },
 
   fixedHeight: {
     justifyContent: 'center',
@@ -425,7 +431,7 @@ const s = StyleSheet.create({
   },
 
   buyContainer: (small, loading) => ({
-    opacity: loading ? 0.5 : 1,
+    opacity: loading ? 0.75 : 1,
     marginRight: 12,
     borderWidth: 1,
     borderColor: colors.treeBlues,
