@@ -7,7 +7,7 @@ import {Popup} from "../Popup"
 import { strings } from "../../../values/strings";
 import { smallScreen } from "../../../values/consts";
 
-export const LogoView = memo(({listOpacity, listYTranslate, bottomHeight}) => {
+export const LogoView = memo(({listYTranslate, bottomHeight}) => {
 
   const opacity = listYTranslate.interpolate({
     inputRange: [0, bottomHeight],
@@ -28,7 +28,7 @@ export const LogoView = memo(({listOpacity, listYTranslate, bottomHeight}) => {
   }
   return (
     <TouchableOpacity style={styles.logo} onPress={localOnPress}>
-      <Animated.View style={styles.container(listOpacity, opacity)}>
+      <Animated.View style={{opacity}}>
         <Animatable.Image style={styles.image} animation='fadeIn' delay={2000} source={require("../../../assets/images/hala_logo.png")} />
       </Animated.View>
       <Popup website={true} textData={strings.popups.halaWebsite} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={actionRef} />
@@ -37,9 +37,6 @@ export const LogoView = memo(({listOpacity, listYTranslate, bottomHeight}) => {
 });
 
 const styles = StyleSheet.create({
-  container: (listOpacity, opacity) => ({
-    opacity: listOpacity === 0 ? 0 : opacity
-  }),
   image: {
     resizeMode: 'contain'
   },

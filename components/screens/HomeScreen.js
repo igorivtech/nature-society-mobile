@@ -506,12 +506,12 @@ export const HomeScreen = ({ navigation, route }) => {
           <HomeButton index={0} onPress={explore} />
         </Animated.View>
       </SafeAreaView>
-      <AnimatedSafeAreaView style={globalStyles.cardContainerTranslateY(listYTranslate)}>
+      <AnimatedSafeAreaView style={globalStyles.cardContainerTranslateY(listYTranslate, listOpacity)}>
         <Animated.FlatList
           ref={cardsListRef}
           data={places}
           horizontal
-          style={globalStyles.mainListStyle(0, listOpacity)}
+          style={globalStyles.mainListStyle}
           contentContainerStyle={globalStyles.mainListContainer}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
@@ -541,7 +541,7 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
-        <LogoView listOpacity={listOpacity} bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
+        <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
       <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
       <Popup

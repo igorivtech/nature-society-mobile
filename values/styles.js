@@ -153,15 +153,14 @@ export const globalStyles = StyleSheet.create({
     paddingBottom: 8,
   },
 
-  cardContainerTranslateY: (translateY) => ({
+  cardContainerTranslateY: (translateY, opacity) => ({
+    opacity,
     transform: [{translateY}]
   }),
 
-  mainListStyle: (paddingTop, opacity) => ({
-    opacity,
-    paddingTop,
+  mainListStyle: {
     flexGrow: 0,
-  }),
+  },
 
   cardMainImage: {
     resizeMode: 'cover',
