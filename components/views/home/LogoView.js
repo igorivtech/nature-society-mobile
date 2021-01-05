@@ -22,7 +22,7 @@ export const LogoView = memo(() => {
   return (
     <TouchableOpacity style={styles.logo} onPress={localOnPress}>
       <Animatable.Image animation='fadeIn' delay={2000} source={require("../../../assets/images/hala_logo.png")} />
-      <Popup textData={strings.popups.halaWebsite} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={actionRef} />
+      <Popup permissions={true} textData={strings.popups.halaWebsite} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={actionRef} />
     </TouchableOpacity>
   );
 });
