@@ -5,12 +5,13 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Animatable from "react-native-animatable";
 import {Popup} from "../Popup"
 import { strings } from "../../../values/strings";
+import { smallScreen } from "../../../values/consts";
 
 export const LogoView = memo(({listYTranslate}) => {
 
   const opacity = listYTranslate.interpolate({
-    inputRange: [0, 80, 100],
-    outputRange: [1, 1, 0],
+    inputRange: [0, 200],
+    outputRange: [1, 0],
     extrapolate: 'clamp'
   })
 
@@ -28,7 +29,7 @@ export const LogoView = memo(({listYTranslate}) => {
   return (
     <TouchableOpacity style={styles.logo} onPress={localOnPress}>
       <Animated.View style={{opacity}}>
-        <Animatable.Image animation='fadeIn' delay={2000} source={require("../../../assets/images/hala_logo.png")} />
+        <Animatable.Image style={styles.image} animation='fadeIn' delay={2000} source={require("../../../assets/images/hala_logo.png")} />
       </Animated.View>
       <Popup website={true} textData={strings.popups.halaWebsite} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={actionRef} />
     </TouchableOpacity>
@@ -36,9 +37,12 @@ export const LogoView = memo(({listYTranslate}) => {
 });
 
 const styles = StyleSheet.create({
+  image: {
+    resizeMode: 'contain'
+  },
   logo: {
     position: "absolute",
     top: -(38 + 12),
-    left: SPACER_ITEM_SIZE * 1.25,
+    left: SPACER_ITEM_SIZE * (smallScreen ? 1.5 : 1.25),
   }
 })
