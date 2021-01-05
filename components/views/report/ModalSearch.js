@@ -18,9 +18,11 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 
   const [places, setPlaces] = useState([]);
 
-  useEffect(() => {
-    setPlaces(serverPlaces);
-  }, []);
+  useEffect(()=>{
+    if (places.length === 0 && serverPlaces.length > 0 && searchTerm.length === 0) {
+      setPlaces(serverPlaces);
+    }
+  }, [serverPlaces])
 
   const [keyboardHeight] = useKeyboard();
   const [keyboardBottomPadding, setKeyboardBottomPadding] = useState(40);
