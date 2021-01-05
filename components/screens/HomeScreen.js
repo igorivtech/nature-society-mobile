@@ -18,6 +18,7 @@ import {
   ITEM_WIDTH,
   PlaceCard,
   spacerStyle,
+  SPACER_ITEM_SIZE,
 } from "../views/home/PlaceCard";
 import { GrowthPoints } from "../views/home/GrowthPoints";
 import { UserContext } from "../../context/context";
@@ -34,6 +35,7 @@ import { objectLength } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import { LogoView } from "../views/home/LogoView";
 
 const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
@@ -528,6 +530,7 @@ export const HomeScreen = ({ navigation, route }) => {
           }}
         />
       </AnimatedSafeAreaView>
+      <LogoView />
       <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
       <Popup
         permissions={true}
