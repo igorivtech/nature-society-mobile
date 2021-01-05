@@ -258,7 +258,7 @@ export const SearchBar = ({
   }) : 0
 
   const bottomLineWidth = leftMargin !== null ? leftMargin.interpolate({
-    inputRange: [0, 1],
+    inputRange: [0, EXIT_SIZE],
     outputRange: [2, 1],
     extrapolate: 'clamp'
   }) : 2
