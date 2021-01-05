@@ -9,8 +9,8 @@ import { strings } from "../../../values/strings";
 export const LogoView = memo(({listYTranslate}) => {
 
   const opacity = listYTranslate.interpolate({
-    inputRange: [0, 100],
-    outputRange: [1, 0],
+    inputRange: [0, 80, 100],
+    outputRange: [1, 1, 0],
     extrapolate: 'clamp'
   })
 
