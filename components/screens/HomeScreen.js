@@ -37,6 +37,7 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { LogoView } from "../views/home/LogoView";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useCountRenders} from "../../hooks/useCountRenders"
 
 const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
@@ -107,6 +108,8 @@ export const HomeScreen = ({ navigation, route }) => {
   const listHiddenYHeight = ITEM_HEIGHT + CARD_TRANSLATE_Y + bottomSafeAreaHeight + 8;
 
   const {getPlaces} = useServer();
+
+  useCountRenders();
 
   // STARTUP POINT
   useEffect(() => {
@@ -470,6 +473,15 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }, [])
 
+  const onMomentumScrollEnd = useCallback(()=>{
+    ignoreCardsListener.current=false;
+  }, [])
+
+  const onScrollBeginDrag = useCallback(()=>{
+    lockAutoSearching.current = true;
+    // setGlobalTracksViewChanges(true);
+  }, [])
+
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
@@ -502,15 +514,12 @@ export const HomeScreen = ({ navigation, route }) => {
           horizontal
           style={globalStyles.mainListStyle(0, listOpacity)}
           contentContainerStyle={globalStyles.mainListContainer}
-          onScrollBeginDrag={()=>{
-            lockAutoSearching.current = true;
-            // setGlobalTracksViewChanges(true);
-          }}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
             {useNativeDriver: true}
           )}
-          onMomentumScrollEnd={()=>ignoreCardsListener.current=false}
+          onScrollBeginDrag={onScrollBeginDrag}
+          onMomentumScrollEnd={onMomentumScrollEnd}
           scrollEventThrottle={16}
           keyExtractor={(item) => item.key}
           snapToInterval={ITEM_WIDTH}

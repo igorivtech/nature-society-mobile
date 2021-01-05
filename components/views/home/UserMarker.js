@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, memo } from "react";
 import { Image, Platform, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { colors } from "../../../values/colors";
 
 const isAndroid = Platform.OS === 'android'
 
-export const UserMarker = ({ user, location }) => {
+export const UserMarker = memo(({ user, location }) => {
   const [trackNumber, setTrackNumber] = useState(0);
   const [trackChanges, setTrackChanges] = useState(0);
 
@@ -40,7 +40,7 @@ export const UserMarker = ({ user, location }) => {
       </View>
     </Marker>
   );
-};
+});
 
 export const markerStyles = StyleSheet.create({
 
