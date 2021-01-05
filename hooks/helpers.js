@@ -310,7 +310,7 @@ const distancePlaces = (p1, p2) => {
 
 export const formatRating = (rating, isCleanness) => {
   if (isAlt) {
-    const fixedRating = rating > 4.5 ? 4 : rating
+    const fixedRating = rating >= 4.5 ? 4 : rating
     if (isCleanness) {
       return strings.reportScreen.cleanTitles[Math.round(fixedRating)]
     } else {
