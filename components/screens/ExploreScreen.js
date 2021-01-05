@@ -354,6 +354,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 
           <View style={styles.ratingContainer}>
             <PlaceRating
+              isCleanness={false}
               pointsToUnlock={settings.pointsForUnlock}
               small
               locked={placeLocked(user, item)}
@@ -364,6 +365,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
             />
 
             <PlaceRating
+              isCleanness={true}
               small
               leftMargin={40}
               title={strings.placeScreen.cleannessTitle(placeLocked(user, item))}

@@ -37,7 +37,7 @@ import {UserContext} from "../../context/context"
 import {SAVE_PLACES, SAVE_USER} from "../../context/userReducer";
 import { Auth } from "aws-amplify";
 import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} from '../../hooks/useUser';
-import { placeLocked } from "../../hooks/helpers";
+import { formatRating, placeLocked } from "../../hooks/helpers";
 import LottieView from 'lottie-react-native';
 
 const AnimatedLottie = Animated.createAnimatedComponent(LottieView);
@@ -192,6 +192,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             style={s.ratingContainer}
           >
             <PlaceRating
+              isCleanness={false}
               loading={loadingBuy}
               pointsToUnlock={settings.pointsForUnlock}
               unlockPlace={unlockPlace}
@@ -203,6 +204,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             />
 
             <PlaceRating
+              isCleanness={true}
               leftMargin={smallScreen ? 30 : 40}
               title={strings.placeScreen.cleannessTitle(placeLocked(user, place))}
               image={require("../../assets/images/HeartL.png")}
@@ -317,6 +319,7 @@ const PlaceAction = ({ title, icon, onPress }) => {
 };
 
 export const PlaceRating = ({
+  isCleanness,
   loading = false,
   locked,
   title,
@@ -383,7 +386,7 @@ export const PlaceRating = ({
             </TouchableOpacity>
           ) : (
             <Text style={s.ratingStyle(small, color)}>
-              {rating.toFixed(1)}
+              {formatRating(rating)}
             </Text>
           )}
         </View>

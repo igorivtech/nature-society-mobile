@@ -306,3 +306,11 @@ const distance = (lat1, lon1, lat2, lon2) => {
 const distancePlaces = (p1, p2) => {
 	return distance(p1.position.latitude, p1.position.longitude, p2.position.latitude, p2.position.longitude);
 }
+
+export const formatRating = (rating, isCleanness) => {
+  if (isCleanness) {
+    return rating.toFixed(1);
+  } else {
+    return rating.toFixed(1);
+  }
+}
