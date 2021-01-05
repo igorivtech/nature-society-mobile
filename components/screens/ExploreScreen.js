@@ -253,26 +253,19 @@ export const SearchBar = ({
 }) => {
 
   const indicatorOpacity = useRef(new Animated.Value(1)).current;
-  const searchIconOnOpacity = useRef(new Animated.Value(0)).current;
-  const searchIconOffOpacity = searchIconOnOpacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  })
-  const bottomLineWidth = searchIconOnOpacity.interpolate({
+  const progress = useRef(new Animated.Value(0)).current;
+  const bottomLineWidth = progress.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 2],
     extrapolate: 'clamp'
   })
-
-  const progress = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
     if (modal) {
       return;
     }
     Animated.timing(progress, {
-      duration: 0.64,
+      duration: 640,
       toValue: searchOn ? 1 : 0,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease)
