@@ -68,6 +68,8 @@ const getZoomLevelFromRegion = (region) => {
 
 const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
 
+export const LIST_HIDDEN_Y_VALUE = ITEM_HEIGHT + CARD_TRANSLATE_Y + 47;
+
 export const HomeScreen = ({ navigation, route }) => {
   const { state, dispatch } = useContext(UserContext);
   const { user, notification, serverPlaces, settings } = state;
@@ -99,7 +101,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const cardsListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const listYTranslate = useRef(new Animated.Value(height * 0.25)).current;
+  const listYTranslate = useRef(new Animated.Value(LIST_HIDDEN_Y_VALUE)).current;
   const buttonsTranslateY = useRef(new Animated.Value(0)).current;
 
   const {getPlaces} = useServer();
@@ -250,7 +252,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
-      toValue: hideList ? ITEM_HEIGHT + CARD_TRANSLATE_Y + 47 : 0,
+      toValue: hideList ? LIST_HIDDEN_Y_VALUE : 0,
       duration: 700,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
