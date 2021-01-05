@@ -88,9 +88,10 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
     setUserProgress(0.5);
     if (user && currentIndex === index) {
       if (!item.bottomDone) {
-        setUserProgress(0.1);
+        const p = user !== null ? user.numOfReports : 0;
+        setUserProgress(0.25 * (bottomImageObject.points - p)/bottomImageObject.points);
       } else if (!item.topDone) {
-        const p = user !== null ? user.numOfReports : 0
+        const p = user !== null ? user.numOfReports : 0;
         setUserProgress(1 - (0.25 + 0.5 * (topImageObject.points - p)/topImageObject.points));
       }
     }
