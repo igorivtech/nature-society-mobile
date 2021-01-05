@@ -268,6 +268,9 @@ export const SearchBar = ({
   const progress = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
+    if (modal) {
+      return;
+    }
     Animated.timing(progress, {
       toValue: searchOn ? 1 : 0,
       useNativeDriver: true,
@@ -315,14 +318,14 @@ export const SearchBar = ({
         style={styles.searchInput}
       />     
 
-      <View>
+      <TouchableWithoutFeedback disabled={!searchOn} onPress={closeSearch}>
         <LottieView style={styles.lottie} 
           resizeMode='contain'
           source={require("../../assets/animations/search.json")} 
           autoPlay={false} 
           progress={progress}
         />
-      </View>
+      </TouchableWithoutFeedback>
 
       <Animated.View style={styles.bottomBorder(bottomLineWidth)} />
     </View>
