@@ -88,16 +88,18 @@ export const ExploreScreen = ({ navigation, route }) => {
   }, [searchOn])
 
   useEffect(() => {
-    if (location) {
-      currentPage.current = 0;
-      setPlaces([]);
-      loadMorePlaces();
+    currentPage.current = 0;
+    loadMorePlaces();
+    return () => {
+      debounce.cancel();
+    };
+  }, []);
+
+  useEffect(()=>{
+    if (filteredPlaces.length === 0 && serverPlaces.length > 0 && searchTerm.length === 0) {
       setFilteredPlaces(serverPlaces);
-      return () => {
-        debounce.cancel();
-      };
     }
-  }, [location]);
+  }, [serverPlaces])
 
   const loadMorePlaces = async () => {
     if (currentPage.current === -1) {
@@ -131,7 +133,7 @@ export const ExploreScreen = ({ navigation, route }) => {
     setSearchTerm(value);
     debounce.cancel()
     if (value.length === 0) {
-      setFilteredPlaces(places);
+      setFilteredPlaces(serverPlaces);
     } else {
       debounce(value);
     }
