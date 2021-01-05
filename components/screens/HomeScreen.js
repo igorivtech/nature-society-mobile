@@ -103,7 +103,8 @@ export const HomeScreen = ({ navigation, route }) => {
   const listYTranslate = useRef(new Animated.Value(height*0.33)).current;
   const buttonsTranslateY = useRef(new Animated.Value(0)).current;
 
-  const insets = useSafeAreaInsets();
+  const {bottom: bottomSafeAreaHeight} = useSafeAreaInsets();
+  const listHiddenYHeight = ITEM_HEIGHT + CARD_TRANSLATE_Y + bottomSafeAreaHeight + 8;
 
   const {getPlaces} = useServer();
 
@@ -253,7 +254,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
-      toValue: hideList ? ITEM_HEIGHT + CARD_TRANSLATE_Y + insets.bottom + 8 : 0,
+      toValue: hideList ? listHiddenYHeight : 0,
       duration: 700,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
@@ -532,7 +533,7 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
-        <LogoView bottomHeight={ITEM_HEIGHT + CARD_TRANSLATE_Y + insets.bottom + 8} listYTranslate={listYTranslate} />
+        <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
       <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
       <Popup
