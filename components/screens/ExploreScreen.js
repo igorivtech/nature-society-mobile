@@ -190,14 +190,9 @@ export const ExploreScreen = ({ navigation, route }) => {
               data={places}
               keyExtractor={(item) => item.key}
               ListHeaderComponentStyle={styles.headerContainer}
-              ListHeaderComponent={()=><SitesHeader onPress={showGlobalSites} />}
-              ListFooterComponent={()=>{
-                return (
-                  <View style={styles.paginationIndicatorContainer} key='indicator'>
-                    <ActivityIndicator animating={loadingMorePlaces} color={colors.treeBlues} />
-                  </View>                
-                )
-              }}
+              ListHeaderComponent={()=><SitesHeader key='sites' onPress={showGlobalSites} />}
+              ListFooterComponentStyle={styles.paginationIndicatorContainer}
+              ListFooterComponent={()=><ActivityIndicator key='indicator' animating={loadingMorePlaces} color={colors.treeBlues} />}
               renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
             />
             <AwareFlatList
