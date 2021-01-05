@@ -1,5 +1,6 @@
 import * as ImageManipulator from "expo-image-manipulator";
-import { CLEANNESS_COLORS, height, SCREEN_ASPECT_RATIO, width } from "../values/consts";
+import { CLEANNESS_COLORS, height, isAlt, SCREEN_ASPECT_RATIO, width } from "../values/consts";
+import { strings } from "../values/strings";
 
 export const clamp = (min, value, max) => {
   if (value < min) {
@@ -308,8 +309,13 @@ const distancePlaces = (p1, p2) => {
 }
 
 export const formatRating = (rating, isCleanness) => {
-  if (isCleanness) {
-    return rating.toFixed(1);
+  if (isAlt) {
+    const fixedRating = rating > 4.5 ? 4 : rating
+    if (isCleanness) {
+      return strings.reportScreen.cleanTitles[Math.round(fixedRating)]
+    } else {
+      return strings.reportScreen.crowdTitles[Math.round(fixedRating)]
+    }
   } else {
     return rating.toFixed(1);
   }

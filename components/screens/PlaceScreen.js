@@ -24,6 +24,7 @@ import { RecentVisitor } from "../views/home/views";
 import {
   emptyFunc,
   height,
+  isAlt,
   NAV_CLOSE_TAP_SIZE,
   recentVisitors,
   smallScreen,
@@ -386,7 +387,7 @@ export const PlaceRating = ({
             </TouchableOpacity>
           ) : (
             <Text style={s.ratingStyle(small, color)}>
-              {formatRating(rating)}
+              {formatRating(rating, isCleanness)}
             </Text>
           )}
         </View>
@@ -423,7 +424,7 @@ const s = StyleSheet.create({
   }),
 
   ratingStyle: (small, color) => ({
-    ...textStyles.normalOfSize(small? 22 : 36), color, marginRight: 8 
+    ...textStyles.normalOfSize(isAlt ? (small ? 16 : 24) : (small ? 22 : 36)), color, marginRight: 8 
   }),
 
   buyTitle: {
