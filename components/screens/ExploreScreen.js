@@ -272,6 +272,7 @@ export const SearchBar = ({
       return;
     }
     Animated.timing(progress, {
+      duration: 0.64,
       toValue: searchOn ? 1 : 0,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease)
