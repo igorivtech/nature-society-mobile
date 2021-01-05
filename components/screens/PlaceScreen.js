@@ -40,6 +40,8 @@ import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} 
 import { placeLocked } from "../../hooks/helpers";
 import LottieView from 'lottie-react-native';
 
+const AnimatedLottie = Animated.createAnimatedComponent(LottieView);
+
 const fadeOutDuration = 100;
 let VERTICAL_MARGIN = Math.min(35, height*0.015);
 let CONTAINER_VERTICAL_PADDING = 40;
@@ -366,14 +368,13 @@ export const PlaceRating = ({
                     style={[globalStyles.imageContain(small), {opacity: imageOpacity}]} 
                     source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")}
                   />
-                  <Animated.View style={s.buyIndicatorContainer(lottieOpacity)}>
-                    <LottieView
-                      ref={lottie}
-                      loop={true}
-                      source={require("../../assets/animations/buy_spin.json")} 
-                      resizeMode='contain'
-                    />
-                  </Animated.View>
+                  <AnimatedLottie
+                    style={s.lottie(lottieOpacity)}
+                    ref={lottie}
+                    loop={true}
+                    source={require("../../assets/animations/buy_spin.json")} 
+                    resizeMode='cover'
+                  />
                 </View>
                 {!small && (
                   <Text style={s.buyTitle}>{strings.showInfo}</Text>
@@ -396,6 +397,11 @@ export const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  lottie: (opacity) => ({
+    ...StyleSheet.absoluteFill, 
+    opacity
+  }),
 
   fixedHeight: {
     justifyContent: 'center',
