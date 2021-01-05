@@ -37,7 +37,8 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { LogoView } from "../views/home/LogoView";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {useCountRenders} from "../../hooks/useCountRenders"
+// import {useCountRenders} from "../../hooks/useCountRenders"
+// useCountRenders();
 
 const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
@@ -108,8 +109,6 @@ export const HomeScreen = ({ navigation, route }) => {
   const listHiddenYHeight = ITEM_HEIGHT + CARD_TRANSLATE_Y + bottomSafeAreaHeight + 8;
 
   const {getPlaces} = useServer();
-
-  useCountRenders();
 
   // STARTUP POINT
   useEffect(() => {
