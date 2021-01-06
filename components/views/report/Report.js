@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
 
   titlesContainer: {
-    marginTop: 23
+    marginTop: smallScreen ? 10 : 23
   },
 
   secondContainer: (opacity, zIndex) => ({
