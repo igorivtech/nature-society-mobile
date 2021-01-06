@@ -71,7 +71,7 @@ export default function App() {
 
   useNotifications(state, dispatch);
   useUserUsageTime(state);
-  useDeepLink(state, dispatch);
+  useDeepLink(dispatch);
 
   useEffect(()=>{
     SplashScreen.preventAutoHideAsync();

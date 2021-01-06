@@ -4,7 +4,7 @@ import { SAVE_DEEP_LINK_ID } from "../context/userReducer";
 import { useServer } from "./useServer";
 import { convertServerPlaces } from "./helpers";
 
-export const useDeepLink = (state, dispatch) => {
+export const useDeepLink = (dispatch) => {
   const { getPlace } = useServer();
 
   const handleQueryParams = (queryParams) => {
