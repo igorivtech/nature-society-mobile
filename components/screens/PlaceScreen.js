@@ -10,6 +10,7 @@ import {
   Linking,
   Animated,
   Easing,
+  LayoutAnimation
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
@@ -128,6 +129,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           let updatedCognitoUser = await Auth.currentAuthenticatedUser({
             bypassCache: true,
           });
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
           dispatch({
             type: SAVE_USER,
             payload: cognitoToUser(updatedCognitoUser)
