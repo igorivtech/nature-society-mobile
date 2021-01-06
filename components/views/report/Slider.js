@@ -191,7 +191,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     Animated.timing(progress, {
       toValue: p,
       duration: DURATION,
-      useNativeDriver: true,
+      useNativeDriver: false,
       easing: Easing.inOut(Easing.ease)
     }).start();
   }
