@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import * as Linking from "expo-linking";
 import { SAVE_DEEP_LINK_ID } from "../context/userReducer";
 import { useServer } from "./useServer";
+import { convertServerPlaces } from "./helpers";
 
 export const useDeepLink = (state, dispatch) => {
   const { getPlace } = useServer();
@@ -12,7 +13,7 @@ export const useDeepLink = (state, dispatch) => {
         if (place != null) {
           dispatch({
             type: SAVE_DEEP_LINK_ID,
-            payload: queryParams.id,
+            payload: convertServerPlaces([place])[0],
           });
         }
       });

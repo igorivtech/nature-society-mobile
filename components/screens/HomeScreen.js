@@ -124,6 +124,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(()=>{
     if (deepLinkId != null && isFocused) {
+      showPlace({...deepLinkId})
       dispatch({
         type: SAVE_DEEP_LINK_ID,
         payload: null
