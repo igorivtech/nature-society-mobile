@@ -89,6 +89,23 @@ export const useServer = () => {
     })
   };
 
+  const getPlace = (id) => {
+    return new Promise((resolve) => {
+      fetch(
+        `${BASE_URL}/getSite?id=${id}`,
+        { 
+          method: "GET",
+        }
+      ).then(response => response.json())
+        .then(data=>{
+          resolve(data);
+        })
+        .catch(err=>{
+          resolve(null)
+        })
+    })
+  };
+
   const getSettings = async () => {
     try {
       const response = await fetch(`${BASE_URL}/settings`, {
