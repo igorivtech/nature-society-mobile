@@ -16,24 +16,20 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
   const {user, settings} = state;
 
   const firstContainerOpacity = useRef(new Animated.Value(1)).current;
-  const secondContainerOpacity = useRef(new Animated.Value(0)).current;
+  const secondContainerOpacity = firstContainerOpacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+  });
   const [secondContainerZIndex, setSecondContainerZIndex] = useState(-1);
 
   const submitReport = () => {
-    Animated.parallel([
-      Animated.timing(firstContainerOpacity, {
-        toValue: 0,
-        duration: 500,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: false
-      }),
-      Animated.timing(secondContainerOpacity, {
-        toValue: 1,
-        duration: 500,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: false
-      }),
-    ]).start(()=>{
+    Animated.timing(firstContainerOpacity, {
+      toValue: 0,
+      duration: 500,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: false
+    }).start(()=>{
       setSecondContainerZIndex(1);
     });
   }
