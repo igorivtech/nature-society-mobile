@@ -122,6 +122,16 @@ export const ExploreScreen = ({ navigation, route }) => {
     Keyboard.dismiss();
   };
 
+  const safeCloseSearch = () => {
+    if (searchTerm.length > 0) {
+      debounce.cancel();
+      setSearchTerm("");
+      setFilteredPlaces(serverPlaces);
+    } else {
+      closeSearch();
+    }
+  }
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -175,6 +185,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               searchTerm={searchTerm}
               searchOn={searchOn}
               setSearchOn={setSearchOn}
+              safeCloseSearch={safeCloseSearch}
               closeSearch={closeSearch}
               textChanged={textChanged}
             />
@@ -245,6 +256,7 @@ export const SearchBar = ({
   searchOn,
   setSearchOn,
   closeSearch,
+  safeCloseSearch,
   textChanged,
   modal = false,
   loadingSearch = false
@@ -286,7 +298,7 @@ export const SearchBar = ({
       </Animated.View>
 
       {searchOn ? (
-        <TouchableOpacity onPress={closeSearch}>
+        <TouchableOpacity onPress={safeCloseSearch ?? closeSearch}>
           <Image
             source={require("../../assets/images/search_close_icon.png")}
           />
