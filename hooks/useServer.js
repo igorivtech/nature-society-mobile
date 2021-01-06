@@ -138,9 +138,9 @@ export const useServer = () => {
           Authorization: token
         }
       });
-      console.log("SUCCESS SENDING USAGE TIME", data);
+      // console.log("SUCCESS SENDING USAGE TIME", data);
     } catch (error) {
-      console.log("ERROR SENDING USAGE TIME", error);
+      // console.log("ERROR SENDING USAGE TIME", error);
     }
   }
 
