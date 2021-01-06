@@ -24,25 +24,27 @@ export const GrowthPoints = memo(({isFocused, popupVisible}) => {
   const textOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(()=>{
-    (async()=>{
-      if (user !== null) {
-        const shown = await AsyncStorage.getItem(ALREADY_SHOWN);
-        if (shown === null) {
-          await AsyncStorage.setItem(ALREADY_SHOWN, '1');
-          setReady(true);
-        } else {
-          setPoints(user.points);
-          show(true, 1000).start(()=>{
-            show(false, 3500).start(()=>{
-              setReady(true);
-            });
-          })
-        }
-      } else {
-        setReady(true);
-      }
-    })()
+    setup();
   }, [])
+
+  const setup = async () => {
+    if (user !== null) {
+      const shown = await AsyncStorage.getItem(ALREADY_SHOWN);
+      if (shown === null) {
+        await AsyncStorage.setItem(ALREADY_SHOWN, '1');
+        setReady(true);
+      } else {
+        setPoints(user.points);
+        show(true, 1000).start(()=>{
+          show(false, 3500).start(()=>{
+            setReady(true);
+          });
+        })
+      }
+    } else {
+      setReady(true);
+    }
+  }
 
   useEffect(()=>{
     if (!isFocused || popupVisible || !ready) {
