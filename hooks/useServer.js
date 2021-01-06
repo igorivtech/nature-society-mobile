@@ -102,19 +102,18 @@ export const useServer = () => {
     }
   };
 
-  const sendUsageTime = async (milliseconds) => {
+  const sendUsageTime = async (data) => {
     try {
       await fetch(`${BASE_URL}/insertTime`, {
         method: "POST",
         body: {
-          time: milliseconds/1000
+          time: data.duration/1000,
+          // endDate: data.endDate
         }
       });
-      // const data = await response.json();
-      // return data;
+      console.log("SUCCESS SENDING USAGE TIME", data);
     } catch (error) {
-      // console.log({ error });
-      // return null;
+      console.log("ERROR SENDING USAGE TIME", error);
     }
   }
 
