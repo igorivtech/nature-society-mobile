@@ -53,6 +53,10 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
         }
       })
     }
+    //
+    progress.addListener(({value})=>{
+      colorsProgress.setValue(value);
+    })
   }, [])
 
   useEffect(()=>{
@@ -99,6 +103,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   const [dragEnabled, setDragEnabled] = useState(true);
   const currentOffset = useRef(initialValue);
   const progress = useRef(new Animated.Value(initialValue)).current;
+  const colorsProgress = useRef(new Animated.Value(initialValue)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const startUpTranslateY = useRef(new Animated.Value(0)).current;
   const lineOpacity = useRef(new Animated.Value(LINE_OPACITY)).current;
@@ -115,7 +120,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     extrapolate: 'clamp'
   })
 
-  const thumbColor = progress.interpolate({
+  const thumbColor = colorsProgress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
     outputRange: THUMB_COLORS,
     extrapolate: 'clamp',
@@ -125,42 +130,36 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     inputRange: [0, 1],
     outputRange: [0, -SLIDER_HEIGHT],
     extrapolate: 'clamp',
-    useNativeDriver: true
   })
 
   const topTextOpacity = progress.interpolate({
     inputRange: [1-TITLES_DELTA, 1],
     outputRange: [0, 1],
     extrapolate: 'clamp',
-    useNativeDriver: true
   })
 
   const centerPlusTextOpacity = progress.interpolate({
     inputRange: [0.75-TITLES_DELTA, 0.75, 0.75+TITLES_DELTA],
     outputRange: [0, 1, 0],
     extrapolate: 'clamp',
-    useNativeDriver: true
   })
 
   const centerTextOpacity = progress.interpolate({
     inputRange: [0.5-TITLES_DELTA, 0.5, 0.5+TITLES_DELTA],
     outputRange: [0, 1, 0],
     extrapolate: 'clamp',
-    useNativeDriver: true
   })
 
   const centerMinusTextOpacity = progress.interpolate({
     inputRange: [0.25-TITLES_DELTA, 0.25, 0.25+TITLES_DELTA],
     outputRange: [0, 1, 0],
     extrapolate: 'clamp',
-    useNativeDriver: true
   })
 
   const bottomTextOpacity = progress.interpolate({
     inputRange: [0, 0+TITLES_DELTA],
     outputRange: [1, 0],
     extrapolate: 'clamp',
-    useNativeDriver: true
   })
 
   const continueButtonOpacity = useRef(new Animated.Value(1)).current;
@@ -197,7 +196,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     Animated.timing(progress, {
       toValue: p,
       duration: DURATION,
-      useNativeDriver: false,
+      useNativeDriver: true,
       easing: Easing.inOut(Easing.ease)
     }).start();
   }
