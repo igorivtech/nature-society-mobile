@@ -1,11 +1,18 @@
 import React from "react";
 import { Platform, Share } from "react-native";
+import * as Linking from 'expo-linking';
 
 export const appWebsite = "https://dev.d39prj9hryszvg.amplifyapp.com/"
 
 export const useShare = () => {
-  const share = async (title, url) => {
+  const share = async (title, url, id) => {
     try {
+
+
+
+
+
+
       const result = await Share.share({
         ...Platform.select({
           ios: {

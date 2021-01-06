@@ -82,7 +82,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const sharePressed = () => {
-    share(strings.placeScreen.sharePlace(place.title), appWebsite);
+    share(strings.placeScreen.sharePlace(place.title), appWebsite, place._id);
   };
 
   const report = () => {

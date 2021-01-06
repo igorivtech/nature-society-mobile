@@ -160,7 +160,7 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const sharePressed = () => {
-    share(strings.reportScreen.sharePlace(location.title), appWebsite);
+    share(strings.reportScreen.sharePlace(location.title), appWebsite, location._id);
   }
 
   const tapClose = () => {

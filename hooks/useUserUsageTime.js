@@ -31,11 +31,11 @@ export const useUserUsageTime = (state) => {
       if (startTime?.current) {
         const endTime = new Date();
         const usage = endTime - startTime.current;
-        startTime.current = null;
         AsyncStorage.setItem(LAST_USAGE_TIME, JSON.stringify({
           duration: usage,
-          endDate: endTime
+          startDate: startTime.current
         })).then(()=>{}).catch((err)=>console.log("DIDN'T SAVE USAGE TIME, ", err))
+        startTime.current = null;
       }
     }
     setAppState(nextAppState);
