@@ -18,7 +18,7 @@ import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { Popup } from "../views/Popup"
-import { appWebsite, useShare } from "../../hooks/useShare";
+import { useShare } from "../../hooks/useShare";
 
 import * as Animatable from "react-native-animatable";
 import { RecentVisitor } from "../views/home/views";
@@ -82,7 +82,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   };
 
   const sharePressed = () => {
-    share(strings.placeScreen.sharePlace(place.title), appWebsite, place._id);
+    share(strings.placeScreen.sharePlace(place.title), place._id);
   };
 
   const report = () => {

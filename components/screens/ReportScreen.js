@@ -18,7 +18,7 @@ import { useServer } from "../../hooks/useServer";
 import { convertSliderValue } from "../../hooks/helpers";
 import { emptyFunc, errors, NAV_DURATION, safeAreaHeight } from "../../values/consts";
 import useIsMounted from "ismounted";
-import { appWebsite, useShare } from "../../hooks/useShare";
+import { useShare } from "../../hooks/useShare";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -160,7 +160,7 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const sharePressed = () => {
-    share(strings.reportScreen.sharePlace(location.title), appWebsite, location._id);
+    share(strings.reportScreen.sharePlace(location.title), location._id);
   }
 
   const tapClose = () => {
