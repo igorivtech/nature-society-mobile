@@ -9,17 +9,11 @@ export const ASK_PUSH = "ASK_PUSH";
 
 export const initialState = {
   token: null,
-  // user: null,
   user: null,
   notification: null,
   serverPlaces: [],
   settings: DEFAULT_SETTINGS,
   askPush: false,
-  // fetchingUser: false,
-  // pushToken: null,
-  // isSignout: false,
-  // pushOn: null,
-  // liveUpdatesOn: false
 };
 
 export const reducer = (state, action) => {
