@@ -57,6 +57,7 @@ Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
 TextInput.defaultProps = TextInput.defaultProps || {};
 TextInput.defaultProps.allowFontScaling = false;
+// maxFontSizeMultiplier
 Image.defaultProps = Image.defaultProps || {};
 Image.defaultProps.accessible = false;
 
