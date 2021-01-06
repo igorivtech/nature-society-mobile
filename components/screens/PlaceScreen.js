@@ -414,7 +414,6 @@ export const PlaceRating = ({
         </View>
       </View>
       
-      
     </View>
   );
 };
