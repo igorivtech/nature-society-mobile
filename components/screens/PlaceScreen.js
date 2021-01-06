@@ -358,6 +358,20 @@ export const PlaceRating = ({
     }
   }, [loading])
 
+  const lockedOpacity = useRef(new Animated.Value(locked ? 1 : 0)).current;
+  const openOpacity = lockedOpacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0]
+  })
+  useEffect(()=>{
+    Animated.timing(lockedOpacity, {
+      duration: 100,
+      toValue: locked ? 1 : 0,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  }, [locked])
+
   return (
     <View style={globalStyles.marginLeft(leftMargin)}>
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
@@ -394,7 +408,10 @@ export const PlaceRating = ({
           )}
         </View>
         
-        <Image style={{tintColor: locked ? colors.lighterShade : color, resizeMode: 'contain'}} source={image} />
+        <View>
+          <Animated.Image style={s.openImage(openOpacity, color)} source={image} />
+          <Animated.Image style={s.lockedImage(lockedOpacity)} source={image} />
+        </View>
       </View>
       
       
@@ -403,6 +420,19 @@ export const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  lockedImage: (opacity) => ({
+    tintColor: colors.lighterShade, 
+    resizeMode: 'contain', 
+    position: 'absolute', 
+    opacity
+  }),
+
+  openImage: (opacity, tintColor) => ({
+    tintColor, 
+    resizeMode: 'contain', 
+    opacity
+  }),
 
   lottie: (opacity) => ({
     ...StyleSheet.absoluteFill, 
