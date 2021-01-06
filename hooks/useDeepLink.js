@@ -1,13 +1,20 @@
 import { useEffect } from "react";
 import * as Linking from "expo-linking";
 import { SAVE_DEEP_LINK_ID } from "../context/userReducer";
+import { useServer } from "./useServer";
 
 export const useDeepLink = (state, dispatch) => {
+  const { getPlace } = useServer();
+
   const handleQueryParams = (queryParams) => {
     if (queryParams != null && queryParams.id != null) {
-      dispatch({
-        type: SAVE_DEEP_LINK_ID,
-        payload: queryParams.id,
+      getPlace(queryParams.id).then((place) => {
+        if (place != null) {
+          dispatch({
+            type: SAVE_DEEP_LINK_ID,
+            payload: queryParams.id,
+          });
+        }
       });
     }
   };
