@@ -33,6 +33,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 
   const closeSearch = () => {
     if (searchTerm.length > 0) {
+      debounce.cancel();
       setSearchTerm("");
       setPlaces(serverPlaces);
     } else {
