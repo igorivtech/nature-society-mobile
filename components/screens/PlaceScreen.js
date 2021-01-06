@@ -363,13 +363,18 @@ export const PlaceRating = ({
     inputRange: [0, 1],
     outputRange: [1, 0]
   })
+  const [ratingAnimation, setRatingAnimation] = useState(null);
   useEffect(()=>{
-    Animated.timing(lockedOpacity, {
-      duration: 100,
-      toValue: locked ? 1 : 0,
-      useNativeDriver: true,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
+    const newOpacity = locked ? 1 : 0;
+    if (newOpacity != lockedOpacity._value) {
+      setRatingAnimation('fadeIn');
+      Animated.timing(lockedOpacity, {
+        duration: 100,
+        toValue: locked ? 1 : 0,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }).start();
+    }
   }, [locked])
 
   return (
@@ -402,9 +407,9 @@ export const PlaceRating = ({
               </View>
             </TouchableOpacity>
           ) : (
-            <Text style={s.ratingStyle(small, color)}>
+            <Animatable.Text animation={ratingAnimation} style={s.ratingStyle(small, color)}>
               {formatRating(rating, isCleanness)}
-            </Text>
+            </Animatable.Text>
           )}
         </View>
         
