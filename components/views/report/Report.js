@@ -28,7 +28,7 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
       toValue: 0,
       duration: 500,
       easing: Easing.inOut(Easing.ease),
-      useNativeDriver: false
+      useNativeDriver: true
     }).start(()=>{
       setSecondContainerZIndex(1);
     });
