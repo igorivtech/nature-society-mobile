@@ -89,8 +89,10 @@ export const useServer = () => {
     })
   };
 
+  const [loadingGetPlace, setLoadingGetPlace] = useState(false);
   const getPlace = (id) => {
     return new Promise((resolve) => {
+      setLoadingGetPlace(true);
       fetch(
         `${BASE_URL}/getSite?id=${id}`,
         { 
@@ -103,6 +105,7 @@ export const useServer = () => {
         .catch(err=>{
           resolve(null)
         })
+        .finally(()=>setLoadingGetPlace(false));
     })
   };
 
@@ -163,7 +166,7 @@ export const useServer = () => {
     }
   }
 
-  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport, getPlace };
+  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport, getPlace, loadingGetPlace };
 };
 
 //
