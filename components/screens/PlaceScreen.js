@@ -129,7 +129,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           let updatedCognitoUser = await Auth.currentAuthenticatedUser({
             bypassCache: true,
           });
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+          // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
           dispatch({
             type: SAVE_USER,
             payload: cognitoToUser(updatedCognitoUser)
