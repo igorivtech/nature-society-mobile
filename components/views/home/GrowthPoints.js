@@ -4,6 +4,7 @@ import { Animated, Easing, Image } from "react-native";
 import { UserContext } from "../../../context/context";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
+import useIsMounted from "ismounted";
 
 const HIDDEN_TRANSLATE_X = 130/2;
 const TEXT_DURATION = 600;
@@ -22,6 +23,8 @@ export const GrowthPoints = memo(({isFocused, popupVisible}) => {
   const opacity = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0)).current;
   const textOpacity = useRef(new Animated.Value(1)).current;
+
+  const isMounted = useIsMounted();
 
   useEffect(()=>{
     setup();

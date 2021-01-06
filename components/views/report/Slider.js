@@ -83,7 +83,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   };
 
   const resetTitles = () => {
-    if (!isMounted) {
+    if (!isMounted.current) {
       return;
     }
     setTopText(titles[4]);
@@ -203,7 +203,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }
 
   const startThumbAnimation = async () => {
-    if (!isMounted) {return}
+    if (!isMounted.current) {return}
     const alreadyShown = await AsyncStorage.getItem(ALREADY_SHOWN);
     if (alreadyShown === null) {
       if (token != null) {
@@ -278,7 +278,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
         toValue: 1,
         useNativeDriver: true
       }).start(()=>{
-        if (!isMounted) {return}
+        if (!isMounted.current) {return}
         setDragEnabled(true);
         setContinueEnabled(true);
       })
@@ -348,7 +348,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }
 
   const backToNormal = () => {
-    if (!isMounted) {return}
+    if (!isMounted.current) {return}
     animationOpacity.setValue(1);
     setTitleTranslateY(TITLE_TRANSLATE_Y);
     resetTitles();

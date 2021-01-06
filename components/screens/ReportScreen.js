@@ -83,7 +83,7 @@ export const ReportScreen = ({navigation, route}) => {
     scrollY.addListener(({value})=>{});
     //
     setTimeout(() => {
-      if (isMounted) {
+      if (isMounted.current) {
         setAutoPlayFirst(true);
       }
     }, 1000);
@@ -180,7 +180,7 @@ export const ReportScreen = ({navigation, route}) => {
         })
         if (scrollY?._value == 0 && !autoPlaySecond) {
           setTimeout(() => {
-            if (isMounted) {
+            if (isMounted.current) {
               setAutoPlaySecond(true);
             }
           }, 500);
