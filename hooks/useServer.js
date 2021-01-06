@@ -108,7 +108,7 @@ export const useServer = () => {
         method: "POST",
         body: {
           time: data.duration/1000,
-          // endDate: data.endDate
+          endDate: data.endDate
         }
       });
       console.log("SUCCESS SENDING USAGE TIME", data);
