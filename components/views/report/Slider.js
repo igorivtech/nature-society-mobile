@@ -125,7 +125,6 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     outputRange: THUMB_COLORS,
     extrapolate: 'clamp',
   })
-
   const thumbTranslateY = progress.interpolate({
     inputRange: [0, 1],
     outputRange: [0, -SLIDER_HEIGHT],
