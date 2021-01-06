@@ -115,14 +115,14 @@ export const ExploreScreen = ({ navigation, route }) => {
     }
   }
 
-  const closeSearch = () => {
+  const closeSearch = useCallback(() => {
     debounce.cancel();
     setSearchTerm("");
     setSearchOn(false);
     Keyboard.dismiss();
-  };
+  }, []);
 
-  const safeCloseSearch = () => {
+  const safeCloseSearch = useCallback(() => {
     if (searchTerm.length > 0) {
       debounce.cancel();
       setSearchTerm("");
@@ -130,13 +130,13 @@ export const ExploreScreen = ({ navigation, route }) => {
     } else {
       closeSearch();
     }
-  }
+  }, [searchTerm, serverPlaces])
 
   const goBack = () => {
     navigation.goBack();
   };
 
-  const textChanged = (value) => {
+  const textChanged = useCallback((value) => {
     setSearchTerm(value);
     debounce.cancel()
     if (value.length === 0) {
@@ -144,7 +144,7 @@ export const ExploreScreen = ({ navigation, route }) => {
     } else {
       debounce(value);
     }
-  };
+  }, [serverPlaces]);
 
   const debounce = useCallback(_.debounce(async(searchVal) => {
     const p = await searchPlaces(searchVal, location);
@@ -250,7 +250,7 @@ export const TextCard = ({ item, showItem, index, searchTerm }) => {
   )
 }
 
-export const SearchBar = ({
+export const SearchBar = memo(({
   leftMargin = null,
   searchTerm,
   searchOn,
@@ -327,7 +327,7 @@ export const SearchBar = ({
       <Animated.View style={styles.bottomBorder(bottomLineWidth)} />
     </View>
   );
-};
+});
 
 const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
   return (
