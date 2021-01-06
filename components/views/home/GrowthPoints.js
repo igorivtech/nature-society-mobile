@@ -66,15 +66,17 @@ export const GrowthPoints = memo(({isFocused, popupVisible}) => {
           duration: TEXT_DURATION,
           easing: Easing.inOut(Easing.ease)
         }).start(()=>{
-          setPoints(user.points);
-          Animated.timing(textOpacity, {
-            toValue: 1,
-            useNativeDriver: true,
-            duration: TEXT_DURATION,
-            easing: Easing.inOut(Easing.ease)
-          }).start(()=>{
-            show(false, 3500).start();
-          })
+          if (isMounted.current) {
+            setPoints(user.points);
+            Animated.timing(textOpacity, {
+              toValue: 1,
+              useNativeDriver: true,
+              duration: TEXT_DURATION,
+              easing: Easing.inOut(Easing.ease)
+            }).start(()=>{
+              show(false, 3500).start();
+            })
+          }
         })
       })
     }
