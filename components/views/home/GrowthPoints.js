@@ -35,16 +35,20 @@ export const GrowthPoints = memo(({isFocused, popupVisible}) => {
       const shown = await AsyncStorage.getItem(ALREADY_SHOWN);
       if (shown === null) {
         await AsyncStorage.setItem(ALREADY_SHOWN, '1');
+        if (!isMounted.current) {return}
         setReady(true);
       } else {
+        if (!isMounted.current) {return}
         setPoints(user.points);
         show(true, 1000).start(()=>{
           show(false, 3500).start(()=>{
+            if (!isMounted.current) {return}
             setReady(true);
           });
         })
       }
     } else {
+      if (!isMounted.current) {return}
       setReady(true);
     }
   }
