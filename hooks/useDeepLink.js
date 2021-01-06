@@ -3,7 +3,11 @@ import * as Linking from "expo-linking";
 import { SAVE_DEEP_LINK_ID } from "../context/userReducer";
 
 export const useDeepLink = (state, dispatch) => {
+
   const handleUrl = ({ url }) => {
+    if (url == null) {
+      return;
+    }
     const { queryParams } = Linking.parse(url);
     if (queryParams != null && queryParams.id != null) {
       dispatch({
