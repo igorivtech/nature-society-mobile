@@ -129,10 +129,10 @@ export const useServer = () => {
     try {
       await fetch(`${BASE_URL}/insertTime`, {
         method: "POST",
-        body: {
+        body: JSON.stringify({
           duration: data.duration/1000,
           startDate: data.startDate
-        },
+        }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: token
