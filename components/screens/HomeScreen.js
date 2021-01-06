@@ -22,7 +22,7 @@ import {
 } from "../views/home/PlaceCard";
 import { GrowthPoints } from "../views/home/GrowthPoints";
 import { UserContext } from "../../context/context";
-import { SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
+import { SAVE_DEEP_LINK_ID, SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { useLocationPermissions } from "../../hooks/usePermissions";
@@ -73,7 +73,7 @@ const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
 
 export const HomeScreen = ({ navigation, route }) => {
   const { state, dispatch } = useContext(UserContext);
-  const { user, notification, serverPlaces, settings } = state;
+  const { user, notification, serverPlaces, settings, deepLinkId } = state;
 
   const { askLocation, locationPermission } = useLocationPermissions();
 
@@ -121,6 +121,15 @@ export const HomeScreen = ({ navigation, route }) => {
     //   })
     // }, 2000);
   }, []);
+
+  useEffect(()=>{
+    if (deepLinkId != null && isFocused) {
+      dispatch({
+        type: SAVE_DEEP_LINK_ID,
+        payload: null
+      })
+    }
+  }, [deepLinkId, isFocused])
 
   const tryFetchLocation = async () => {
     let { status } = await Location.getPermissionsAsync();
