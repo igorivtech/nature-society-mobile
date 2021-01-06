@@ -57,7 +57,7 @@ export default function App() {
   const {loadingUser} = useUser(dispatch);
 
   useNotifications(state, dispatch);
-  useUserUsageTime();
+  useUserUsageTime(state);
 
   useEffect(()=>{
     SplashScreen.preventAutoHideAsync();

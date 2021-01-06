@@ -5,11 +5,12 @@ import { useServer } from "./useServer";
 
 const LAST_USAGE_TIME = 'LAST_USAGE_TIME'
 
-export const useUserUsageTime = () => {
+export const useUserUsageTime = (state) => {
   const [appState, setAppState] = useState(AppState.currentState);
   const startTime = useRef();
 
   const {sendUsageTime} = useServer();
+  const {token} = state;
 
   const handleAppStateChange = (nextAppState) => {
     if (nextAppState === "active") {
@@ -20,7 +21,7 @@ export const useUserUsageTime = () => {
         if (stringData != null) {
           const data = JSON.parse(stringData);
           if (data != null) {
-            sendUsageTime(data);
+            sendUsageTime(token, data);
           }
         }
       })

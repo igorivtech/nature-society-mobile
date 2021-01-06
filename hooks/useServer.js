@@ -102,13 +102,20 @@ export const useServer = () => {
     }
   };
 
-  const sendUsageTime = async (data) => {
+  const sendUsageTime = async (token, data) => {
+    if (token == null) {
+      return; // ?
+    }
     try {
       await fetch(`${BASE_URL}/insertTime`, {
         method: "POST",
         body: {
           time: data.duration/1000,
           endDate: data.endDate
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token
         }
       });
       console.log("SUCCESS SENDING USAGE TIME", data);
