@@ -31,7 +31,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
     setKeyboardBottomPadding(40 + keyboardHeight);
   }, [keyboardHeight]);
 
-  const closeSearch = () => {
+  const closeSearch = useCallback(() => {
     if (searchTerm.length > 0) {
       debounce.cancel();
       setSearchTerm("");
@@ -39,9 +39,9 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
     } else {
       setSearchVisible(false);
     }
-  };
+  }, [searchTerm, serverPlaces]);
 
-  const textChanged = (value) => {
+  const textChanged = useCallback((value) => {
     setSearchTerm(value);
     debounce.cancel()
     if (value.length === 0) {
@@ -49,7 +49,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
     } else {
       debounce(value);
     }
-  };
+  }, [serverPlaces]);
 
   const debounce = useCallback(_.debounce(async(searchVal) => {
     const p = await searchPlaces(searchVal, location);
