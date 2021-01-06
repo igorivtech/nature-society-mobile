@@ -163,7 +163,7 @@ export const useServer = () => {
     }
   }
 
-  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport };
+  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport, getPlace };
 };
 
 //
