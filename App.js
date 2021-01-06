@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useReducer, useEffect } from "react";
-import {I18nManager} from 'react-native';
+import {I18nManager, Platform, UIManager} from 'react-native';
 //
 import { AppLoading } from "expo";
 import * as SplashScreen from 'expo-splash-screen';
@@ -35,6 +35,10 @@ import { useNotifications } from "./hooks/useNotifications";
 import NetInfo from '@react-native-community/netinfo';
 import { SPLASH_HIDE_DELAY } from "./values/consts";
 import * as Updates from 'expo-updates';
+
+if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 if (I18nManager.isRTL) {
   try {
