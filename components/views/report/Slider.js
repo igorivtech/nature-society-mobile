@@ -137,25 +137,21 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     outputRange: [0, 1],
     extrapolate: 'clamp',
   })
-
   const centerPlusTextOpacity = progress.interpolate({
     inputRange: [0.75-TITLES_DELTA, 0.75, 0.75+TITLES_DELTA],
     outputRange: [0, 1, 0],
     extrapolate: 'clamp',
   })
-
   const centerTextOpacity = progress.interpolate({
     inputRange: [0.5-TITLES_DELTA, 0.5, 0.5+TITLES_DELTA],
     outputRange: [0, 1, 0],
     extrapolate: 'clamp',
   })
-
   const centerMinusTextOpacity = progress.interpolate({
     inputRange: [0.25-TITLES_DELTA, 0.25, 0.25+TITLES_DELTA],
     outputRange: [0, 1, 0],
     extrapolate: 'clamp',
   })
-
   const bottomTextOpacity = progress.interpolate({
     inputRange: [0, 0+TITLES_DELTA],
     outputRange: [1, 0],
