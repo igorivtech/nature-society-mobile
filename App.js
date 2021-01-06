@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useReducer, useEffect } from "react";
-import {I18nManager, Platform, UIManager} from 'react-native';
+import {I18nManager, Platform, UIManager, Text, TextInput, Image} from 'react-native';
 //
 import { AppLoading } from "expo";
 import * as SplashScreen from 'expo-splash-screen';
@@ -52,6 +52,13 @@ if (I18nManager.isRTL) {
 Amplify.configure(awsconfig);
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
+
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
+Image.defaultProps = Image.defaultProps || {};
+Image.defaultProps.accessible = false;
 
 export default function App() {
 
