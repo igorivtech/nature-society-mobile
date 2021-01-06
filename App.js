@@ -35,6 +35,7 @@ import { useNotifications } from "./hooks/useNotifications";
 import NetInfo from '@react-native-community/netinfo';
 import { SPLASH_HIDE_DELAY } from "./values/consts";
 import * as Updates from 'expo-updates';
+import { useDeepLink } from "./hooks/useDeepLink";
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -70,6 +71,7 @@ export default function App() {
 
   useNotifications(state, dispatch);
   useUserUsageTime(state);
+  useDeepLink(state, dispatch);
 
   useEffect(()=>{
     SplashScreen.preventAutoHideAsync();
