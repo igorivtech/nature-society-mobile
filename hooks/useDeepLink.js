@@ -13,9 +13,9 @@ export const useDeepLink = (dispatch) => {
       Promise.all([
         Location.getLastKnownPositionAsync({}),
         getPlace(queryParams.id)
-      ]).then((result) => {
-        const location = result[0];
-        const place = result[1];
+      ]).then((results) => {
+        const location = results[0];
+        const place = results[1];
         if (place != null) {
           dispatch({
             type: SAVE_DEEP_LINK_ID,
