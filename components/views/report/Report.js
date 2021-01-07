@@ -10,7 +10,7 @@ import { colors } from "../../../values/colors";
 import { useEffect } from "react";
 import { smallScreen } from "../../../values/consts";
 
-export const Report = ({goBack, image, setImage, finishReport, details, iHelped, loadingSendReport, sharePressed}) => {
+export const Report = ({goBack, useImageData, finishReport, details, iHelped, loadingSendReport, sharePressed}) => {
 
   const {state} = useContext(UserContext);
   const {user, settings} = state;
@@ -45,7 +45,7 @@ export const Report = ({goBack, image, setImage, finishReport, details, iHelped,
           <Text style={textStyles.normalOfSize(12)}>{strings.reportScreen.takePic1}</Text>
           <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.takePic2}</Text>
         </View>
-        <TakePicView image={image} setImage={setImage} />
+        <TakePicView useImageData={useImageData} />
 
         <View style={styles.bottomContainer}>
           <DetailsView details={details} iHelped={iHelped} />

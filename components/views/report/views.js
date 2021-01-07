@@ -17,38 +17,9 @@ import { askSettings } from "../../../hooks/usePermissions";
 import { DEFAULT_IMAGE_QUALITY, smallScreen } from "../../../values/consts";
 import { resizeImage } from "../../../hooks/helpers";
 
-export const TakePicView = ({ image, setImage }) => {
-  const [loadingImage, setLoadingImage] = useState(false);
+export const TakePicView = ({ useImageData }) => {
 
-  const [popupVisible, setPopupVisible] = useState(false);
-
-  const selectImage = async () => {
-    setLoadingImage(true);
-    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA);
-    if (status === 'granted') {
-      ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        // allowsEditing: true,
-        // aspect: [4, 3],
-        quality: DEFAULT_IMAGE_QUALITY,
-      })
-        .then(async(result) => {
-          if (!result.cancelled) {
-            const resized = await resizeImage(result);
-            setImage(resized);
-          }
-        })
-        .catch((error) => {
-          console.log({ error });
-        })
-        .finally(() => {
-          setLoadingImage(false);
-        });
-    } else {
-      setLoadingImage(false);
-      setPopupVisible(true);
-    }
-  };
+  const {image, loadingImage, selectImage, imagePopupvisible, setPopupVisible} = useImageData;
 
   return (
     <View style={styles.outerContainer}>
@@ -68,7 +39,7 @@ export const TakePicView = ({ image, setImage }) => {
         )}
         {image && <Image style={cameraStyle.image} source={{ uri: image.uri }} />}
       </TouchableOpacity>
-      <Popup textData={strings.popups.camera} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup textData={strings.popups.camera} action={askSettings} popupVisible={imagePopupvisible} setPopupVisible={setPopupVisible} />
     </View>
   );
 };

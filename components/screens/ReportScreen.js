@@ -19,6 +19,7 @@ import { convertSliderValue } from "../../hooks/helpers";
 import { emptyFunc, errors, NAV_DURATION, safeAreaHeight } from "../../values/consts";
 import useIsMounted from "ismounted";
 import { useShare } from "../../hooks/useShare";
+import { useImage } from "../../hooks/useImage";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -102,7 +103,8 @@ export const ReportScreen = ({navigation, route}) => {
   const scrollView = useRef();
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const [image, setImage] = useState(null);
+  const useImageData = useImage();
+  const {image} = useImageData;
   const [popupVisible, setPopupVisible] = useState(false);
   const [loadingSendReport, setLoadingSendReport] = useState(false);
 
@@ -245,7 +247,7 @@ export const ReportScreen = ({navigation, route}) => {
             style={StyleSheet.absoluteFill}>
             <Slider loaded={loaded} autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} notLoggedInError={notLoggedInError} token={token} />
             <Slider loaded={loaded} autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
-            <Report sharePressed={sharePressed} image={image} setImage={setImage} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
+            <Report sharePressed={sharePressed} useImageData={useImageData} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
           </Animated.ScrollView>
         </Animatable.View>
       </View>
