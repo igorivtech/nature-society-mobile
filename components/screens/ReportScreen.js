@@ -177,7 +177,8 @@ export const ReportScreen = ({navigation, route}) => {
       Animated.timing(translateY, {
         toValue: translateY._value - scrollViewHeight.current,
         useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease)
+        easing: Easing.inOut(Easing.ease),
+        duration: 500
       }).start(()=>{
         if (translateY._value === -scrollViewHeight.current && !autoPlaySecond) {
           if (isMounted.current) {
@@ -193,7 +194,8 @@ export const ReportScreen = ({navigation, route}) => {
       Animated.timing(translateY, {
         toValue: translateY._value + scrollViewHeight.current,
         useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease)
+        easing: Easing.inOut(Easing.ease),
+        duration: 400
       }).start();
     }
   }
