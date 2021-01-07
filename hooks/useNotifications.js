@@ -3,6 +3,7 @@ import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import {ASK_PUSH} from "../context/userReducer"
+import AsyncStorage from "@react-native-community/async-storage";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -12,13 +13,22 @@ Notifications.setNotificationHandler({
   }),
 });
 
+const LAST_SAVED_TOKEN = "LAST_SAVED_TOKEN"
+const LAST_SENT_TOKEN = "LAST_SENT_TOKEN"
+
 export const useNotifications = (state, dispatch) => {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const {askPush} = state;
+  const {askPush, user} = state;
+
+  useEffect(()=>{
+    if (expoPushToken != null) {
+      AsyncStorage.setItem(LAST_SAVED_TOKEN, expoPushToken).then(()=>{})
+    }
+  }, [expoPushToken, user])
 
   useEffect(()=>{
     if (askPush) {
