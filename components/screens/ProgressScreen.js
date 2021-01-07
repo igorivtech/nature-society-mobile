@@ -149,9 +149,17 @@ export const ProgressScreen = ({ navigation, route }) => {
         }
         setTimeout(() => {
           if (scrollView?.current) {
-            scrollView?.current.scrollToOffset({
-              offset: pathHeight * currentIndex,
+            let viewOffset = 200;
+            if (!data[currentIndex].bottomDone) {
+              viewOffset = -200;
+            }
+            if (user == null) {
+              viewOffset = 0;
+            }
+            scrollView?.current.scrollToIndex({
+              index: currentIndex,
               animated: true,
+              viewOffset
             })
           }
         }, 1000);
