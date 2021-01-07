@@ -130,16 +130,16 @@ export const ProgressScreen = ({ navigation, route }) => {
       }).start();
       //
       const currentIndex = data.findIndex(achievement=>achievement.current);
-      if (alreadyAnimatedPath.current) {
-        setTimeout(() => {
-          if (scrollView?.current) {
-            scrollView?.current.scrollToOffset({
-              offset: pathHeight * currentIndex,
-              animated: true,
-            })  
-          }
-        }, 700);
-      } else {
+      // if (alreadyAnimatedPath.current) {
+      //   setTimeout(() => {
+      //     if (scrollView?.current) {
+      //       scrollView?.current.scrollToOffset({
+      //         offset: pathHeight * currentIndex,
+      //         animated: true,
+      //       })  
+      //     }
+      //   }, 700);
+      // } else {
         alreadyAnimatedPath.current = true;
         if (scrollView?.current) {
           scrollView?.current.scrollToOffset({
@@ -154,8 +154,8 @@ export const ProgressScreen = ({ navigation, route }) => {
               animated: true,
             })
           }
-        }, 700);
-      }
+        }, 1000);
+      // }
     }
   }, [data])
 
