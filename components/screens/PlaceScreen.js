@@ -41,6 +41,17 @@ import { Auth } from "aws-amplify";
 import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} from '../../hooks/useUser';
 import { formatRating, placeLocked } from "../../hooks/helpers";
 import LottieView from 'lottie-react-native';
+import posed, {Transition as PosedTransition} from 'react-native-pose';
+
+const PosedText = posed.Text({
+  enter: {opacity: 1},
+  exit: {opacity: 0}
+})
+
+const PosedtouchableOpacity = posed(TouchableOpacity)({
+  enter: {opacity: 1},
+  exit: {opacity: 0}
+})
 
 const AnimatedLottie = Animated.createAnimatedComponent(LottieView);
 
