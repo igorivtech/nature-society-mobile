@@ -3,27 +3,25 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   Keyboard,
 } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
-import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_IMAGE_QUALITY, errors, height, width } from "../../values/consts";
+import { errors, height, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
-import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
 import { Auth } from 'aws-amplify';
 import { useUploadImage } from "../../hooks/aws";
-import { resizeImage, validateEmail } from "../../hooks/helpers";
+import { validateEmail } from "../../hooks/helpers";
 import { ATTRIBUTE_NUM_OF_REPORTS, ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, getToken } from "../../hooks/useUser";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import _ from "lodash";
+import { useImage } from "../../hooks/useImage";
 
 const PASSWORD_MIN_LENGTH = 8;
 const DEFAULT_POINTS = 100;
@@ -58,14 +56,12 @@ export const LoginScreen = ({ navigation, route }) => {
   const [newPassword, setNewPassword] = useState("");
   const [code, onCodeChanged] = useState('');
 
-  const [image, setImage] = useState(null);
-  const [loadingImage, setLoadingImage] = useState(false);
+  const {image, loadingImage, selectImage, imagePopupvisible, setPopupVisible} = useImage();
   
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [keyboardHeight] = useKeyboard();
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
 
-  const [popupVisible, setPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const {uploadImage} = useUploadImage();
@@ -85,34 +81,6 @@ export const LoginScreen = ({ navigation, route }) => {
       scrollRef?.current.scrollToPosition(0, height*0.15);
     }
   }, 250), []);
-
-  const selectImage = useCallback(async () => {
-    setLoadingImage(true);
-    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        // allowsEditing: true,
-        // aspect: [4, 3],
-        quality: DEFAULT_IMAGE_QUALITY,
-      })
-        .then(async (result) => {
-          if (!result.cancelled) {
-            const resized = await resizeImage(result);
-            setImage(resized);
-          }
-        })
-        .catch((error) => {
-          console.log({ error });
-        })
-        .finally(() => {
-          setLoadingImage(false);
-        });
-    } else {
-      setPopupVisible(true);
-      setLoadingImage(false);
-    }
-  }, []);
 
   const onSafeAreaLayout = (event) => {
     setSafeAreaHeight(event.nativeEvent.layout.height);
@@ -404,7 +372,7 @@ export const LoginScreen = ({ navigation, route }) => {
 
         </View>
       </KeyboardAwareScrollView>
-      <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={imagePopupvisible} setPopupVisible={setPopupVisible} />
       <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>
   );

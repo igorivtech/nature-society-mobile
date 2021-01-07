@@ -9,13 +9,10 @@ import {
 } from "react-native";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
-import * as ImagePicker from "expo-image-picker";
 import { textStyles } from "../../../values/textStyles";
-import * as Permissions from "expo-permissions";
 import { Popup } from "../Popup";
 import { askSettings } from "../../../hooks/usePermissions";
-import { DEFAULT_IMAGE_QUALITY, smallScreen } from "../../../values/consts";
-import { resizeImage } from "../../../hooks/helpers";
+import { smallScreen } from "../../../values/consts";
 
 export const TakePicView = ({ useImageData }) => {
 

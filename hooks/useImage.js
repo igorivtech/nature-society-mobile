@@ -82,5 +82,5 @@ export const useImage = () => {
     ], { cancelable: true })
   }
 
-  return { image, loadingImage, selectImage, selectImageCamera, selectImageGallery, imagePopupvisible };
+  return { image, loadingImage, selectImage, selectImageCamera, selectImageGallery, imagePopupvisible, setPopupVisible };
 };
