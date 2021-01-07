@@ -351,7 +351,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 
               <Image
                 style={styles.translateY(-2)}
-                source={require("../../assets/images/marker_small.png")}
+                source={item.cleanness >= 3 ? require("../../assets/images/marker_explore_green.png") : require("../../assets/images/marker_explore_orange.png")}
               />
             </View>
           </View>
