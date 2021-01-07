@@ -5,6 +5,7 @@ import { UserContext } from "../../../context/context";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 import useIsMounted from "ismounted";
+import Portal from '@burstware/react-native-portal';
 
 const HIDDEN_TRANSLATE_X = 130/2;
 const TEXT_DURATION = 600;
@@ -54,7 +55,7 @@ export const GrowthPoints = memo(({isFocused, popupVisible}) => {
   }
 
   useEffect(()=>{
-    if (!isFocused || popupVisible || !ready) {
+    if (popupVisible || !ready) {
       return;
     }
     if (user && user.points !== points) {
@@ -109,16 +110,18 @@ export const GrowthPoints = memo(({isFocused, popupVisible}) => {
   }
 
   return (
-    <Animated.View style={globalStyles.pointsGrowthContainer(opacity, scale, translateX)}>
-      <Animated.Text
-        adjustsFontSizeToFit={true}
-        numberOfLines={1}
-        style={textStyles.pointsGrowthText(textOpacity)}
-      >
-        {points}
-      </Animated.Text>
-      <Image source={require("../../../assets/images/growth_icon.png")} />
-    </Animated.View>
+    <Portal>
+      <Animated.View style={globalStyles.pointsGrowthContainer(opacity, scale, translateX)}>
+        <Animated.Text
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+          style={textStyles.pointsGrowthText(textOpacity)}
+        >
+          {points}
+        </Animated.Text>
+        <Image source={require("../../../assets/images/growth_icon.png")} />
+      </Animated.View>
+    </Portal>
   );
 });
 
