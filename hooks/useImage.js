@@ -3,12 +3,19 @@ import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import { DEFAULT_IMAGE_QUALITY } from "../values/consts";
 import { resizeImage } from "./helpers";
-import { Alert } from "react-native";
+import { useActionSheet } from '@expo/react-native-action-sheet'
+
+const options = [
+  'מצלמה', 
+  'גלריה', 
+  'ביטול'
+];
 
 export const useImage = () => {
   const [image, setImage] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
   const [imagePopupvisible, setPopupVisible] = useState(false);
+  const { showActionSheetWithOptions } = useActionSheet();
 
   const selectImageCamera = useCallback(async () => {
     setLoadingImage(true);
@@ -70,16 +77,19 @@ export const useImage = () => {
   }, []);
 
   const selectImage = () => {
-    Alert.alert("take image", 'from?', [
+    showActionSheetWithOptions(
       {
-        text: 'camera',
-        onPress: selectImageCamera
-      }, 
-      {
-        text: 'gallery',
-        onPress: selectImageGallery
+        options,
+        cancelButtonIndex: 2,
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          selectImageCamera();
+        } else if (buttonIndex === 1) {
+          selectImageGallery();
+        }
       }
-    ], { cancelable: true })
+    )
   }
 
   return { image, setImage, loadingImage, setLoadingImage, selectImage, selectImageCamera, selectImageGallery, imagePopupvisible, setPopupVisible };

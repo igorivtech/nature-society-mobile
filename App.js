@@ -36,6 +36,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { SPLASH_HIDE_DELAY } from "./values/consts";
 import * as Updates from 'expo-updates';
 import { useDeepLink } from "./hooks/useDeepLink";
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -105,19 +106,21 @@ export default function App() {
   }
 
   return (
-    <UserContext.Provider value={contextValue}>
-      <NavigationContainer>
-        <HomeStack.Navigator initialRouteName={onboardingShown ? "Home" : "Onboarding"} headerMode="none">
-          <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
-          <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
-          <HomeStack.Screen name="Place" component={PlaceScreen} options={slideFromBottomOptions} />
-          <HomeStack.Screen name="Explore" component={ExploreScreen} options={slideFromRightOptions} />
-          <HomeStack.Screen name="Progress" component={ProgressScreen} options={slideFromLeftOptions} />
-          <HomeStack.Screen name="Report" component={ReportScreen} options={slideFromBottomOptions} />
-          <HomeStack.Screen name="Login" component={LoginScreen} options={fadeOptions} />
-          <HomeStack.Screen name="Profile" component={ProfileScreen} options={fadeOptions} />
-        </HomeStack.Navigator>
-      </NavigationContainer>
-    </UserContext.Provider>
+    <ActionSheetProvider>
+      <UserContext.Provider value={contextValue}>
+        <NavigationContainer>
+          <HomeStack.Navigator initialRouteName={onboardingShown ? "Home" : "Onboarding"} headerMode="none">
+            <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
+            <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
+            <HomeStack.Screen name="Place" component={PlaceScreen} options={slideFromBottomOptions} />
+            <HomeStack.Screen name="Explore" component={ExploreScreen} options={slideFromRightOptions} />
+            <HomeStack.Screen name="Progress" component={ProgressScreen} options={slideFromLeftOptions} />
+            <HomeStack.Screen name="Report" component={ReportScreen} options={slideFromBottomOptions} />
+            <HomeStack.Screen name="Login" component={LoginScreen} options={fadeOptions} />
+            <HomeStack.Screen name="Profile" component={ProfileScreen} options={fadeOptions} />
+          </HomeStack.Navigator>
+        </NavigationContainer>
+      </UserContext.Provider>
+    </ActionSheetProvider>
   );
 }
