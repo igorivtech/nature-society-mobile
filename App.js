@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 import {I18nManager, Platform, UIManager, Text, TextInput, Image} from 'react-native';
 //
 import { AppLoading } from "expo";
@@ -68,6 +68,7 @@ export default function App() {
   const { onboardingShown, loadingOnboarding } = useOnboarding();
   const [state, dispatch] = useReducer(reducer, initialState);
   const {loadingUser} = useUser(dispatch);
+  const splashShown = useRef(false);
 
   useNotifications(state, dispatch);
   useUserUsageTime(state);
@@ -85,9 +86,12 @@ export default function App() {
 
   useEffect(()=>{
     if (fontsLoaded && !loadingOnboarding && !loadingUser) {
-      setTimeout(() => {
-        SplashScreen.hideAsync()
-      }, SPLASH_HIDE_DELAY);
+      if (!splashShown.current) {
+        splashShown.current = true;
+        setTimeout(() => {
+          SplashScreen.hideAsync()
+        }, SPLASH_HIDE_DELAY);
+      }
     }
   },[fontsLoaded, loadingOnboarding, loadingUser])
 
