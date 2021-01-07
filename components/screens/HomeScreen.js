@@ -183,11 +183,11 @@ export const HomeScreen = ({ navigation, route }) => {
         actuallyGetPlaces(region, location);
         setTimeout(() => {
           mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
-        }, SPLASH_HIDE_DELAY/2);
+        }, SPLASH_HIDE_DELAY*0.7);
         setTimeout(() => {
           ignoreCardsListener.current = false;
           lockAutoSearching.current = false;
-        }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY/2+1000);
+        }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.7+1000);
         Location.watchPositionAsync({
           timeInterval: 60*1000,
           distanceInterval: 100 // meters
