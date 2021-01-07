@@ -4,6 +4,7 @@ import { colors } from "../../../values/colors";
 import { isAlt } from "../../../values/consts";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
+import * as Animatable from "react-native-animatable";
 
 const images = {
   0: require("../../../assets/images/Explore.png"),
@@ -14,6 +15,18 @@ const images = {
 const buttonAnimation = 300;
 
 const SMALL_SCALE = 0.66;
+
+const animations = {
+  0: null,
+  1: 'swing',
+  2: 'wobble'
+}
+
+const delays = {
+  0: 0,
+  1: 2000,
+  2: 3000
+}
 
 export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false }) => {
   const alpha = useRef(new Animated.Value(0)).current;
@@ -45,13 +58,15 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
 
   return (
     <Pressable onPress={onPress}>
-      <Animated.Image
-        style={{
-          opacity: alpha,
-          transform: [{ scale: scale }],
-        }}
-        source={images[index]}
-      />
+      <Animatable.View delay={delays[index]} animation={animations[index]}>
+        <Animated.Image
+          style={{
+            opacity: alpha,
+            transform: [{ scale: scale }],
+          }}
+          source={images[index]}
+        />
+      </Animatable.View>
     </Pressable>
   );
 };
