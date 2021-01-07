@@ -73,6 +73,7 @@ export const useImage = () => {
         });
     } else {
       setLoadingImage(false);
+      setPopupVisible(true);
     }
   }, []);
 
