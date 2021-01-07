@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import { DEFAULT_IMAGE_QUALITY } from "../values/consts";
@@ -10,7 +10,7 @@ export const useImage = () => {
   const [loadingImage, setLoadingImage] = useState(false);
   const [imagePopupvisible, setPopupVisible] = useState(false);
 
-  const selectImageCamera = async () => {
+  const selectImageCamera = useCallback(async () => {
     setLoadingImage(true);
     const { status, permissions } = await Permissions.askAsync(
       Permissions.CAMERA
@@ -38,9 +38,9 @@ export const useImage = () => {
       setLoadingImage(false);
       setPopupVisible(true);
     }
-  };
+  }, []);
 
-  const selectImageGallery = async () => {
+  const selectImageGallery = useCallback(async () => {
     setLoadingImage(true);
     const { status, permissions } = await Permissions.askAsync(
       Permissions.CAMERA_ROLL
@@ -67,7 +67,7 @@ export const useImage = () => {
     } else {
       setLoadingImage(false);
     }
-  };
+  }, []);
 
   const selectImage = () => {
     Alert.alert("take image", 'from?', [
