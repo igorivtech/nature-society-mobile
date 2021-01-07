@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import { View, StyleSheet, Animated, SafeAreaView } from "react-native";
+import { View, StyleSheet, Animated, SafeAreaView, Easing } from "react-native";
 import { globalStyles } from "../../values/styles";
 import { colors } from "../../values/colors";
 import { TapView } from "../views/general";
@@ -81,7 +81,7 @@ export const ReportScreen = ({navigation, route}) => {
     setLocation(location);
     details.forEach(d=>d.on=false);
     iHelped.on = false;
-    scrollY.addListener(({value})=>{});
+    translateY.addListener(({value})=>{})
     //
     setTimeout(() => {
       if (isMounted.current) {
@@ -100,15 +100,14 @@ export const ReportScreen = ({navigation, route}) => {
   }, [errorPopupVisible])
 
   const scrollViewHeight = useRef(0);
-  const scrollView = useRef();
-  const scrollY = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
 
   const useImageData = useImage();
   const {image} = useImageData;
   const [popupVisible, setPopupVisible] = useState(false);
   const [loadingSendReport, setLoadingSendReport] = useState(false);
 
-  const {sendReport} = useServer();
+  const {sendReport} = useServer();  
 
   const finishReport = async () => {
     try {
@@ -174,31 +173,28 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const nextSegment = () => {
-    if (scrollY?._value <= scrollViewHeight.current*2) {
-      if (scrollView?.current) {
-        scrollView?.current.scrollTo({
-          animated: true,
-          y: scrollY._value+scrollViewHeight.current
-        })
-        if (scrollY?._value == 0 && !autoPlaySecond) {
-          setTimeout(() => {
-            if (isMounted.current) {
-              setAutoPlaySecond(true);
-            }
-          }, 500);
+    if (translateY._value >= -scrollViewHeight.current*2) {
+      Animated.timing(translateY, {
+        toValue: translateY._value - scrollViewHeight.current,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }).start(()=>{
+        if (translateY._value === -scrollViewHeight.current && !autoPlaySecond) {
+          if (isMounted.current) {
+            setAutoPlaySecond(true);
+          }   
         }
-      }
+      });
     }
   }
 
   const previousSegment = () => {
-    if (scrollY?._value > 0) {
-      if (scrollView?.current) {
-        scrollView?.current.scrollTo({
-          animated: true,
-          y: scrollY._value-scrollViewHeight.current
-        })
-      }
+    if (translateY._value < 0) {
+      Animated.timing(translateY, {
+        toValue: translateY._value + scrollViewHeight.current,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }).start();
     }
   }
 
@@ -234,21 +230,11 @@ export const ReportScreen = ({navigation, route}) => {
       <TapView onPress={tapClose} />
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
         <Animatable.View animation='fadeIn' delay={400} style={styles.innerScrollViewContent}>
-          <Animated.ScrollView 
-            ref={scrollView}
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
-            onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {y: scrollY}}}],
-              {useNativeDriver: true}
-            )}
-            scrollEventThrottle={16}
-            contentContainerStyle={styles.scrollViewContent}
-            style={StyleSheet.absoluteFill}>
+          <Animated.View style={[StyleSheet.absoluteFill, styles.scrollViewContent, {transform: [{translateY}]}]}>
             <Slider loaded={loaded} autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} notLoggedInError={notLoggedInError} token={token} />
             <Slider loaded={loaded} autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
             <Report sharePressed={sharePressed} useImageData={useImageData} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
-          </Animated.ScrollView>
+          </Animated.View>
         </Animatable.View>
       </View>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
