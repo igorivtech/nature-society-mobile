@@ -22,13 +22,29 @@ export const useNotifications = (state, dispatch) => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const {askPush, user} = state;
+  const {askPush, token} = state;
 
   useEffect(()=>{
     if (expoPushToken != null) {
       AsyncStorage.setItem(LAST_SAVED_TOKEN, expoPushToken).then(()=>{})
     }
-  }, [expoPushToken, user])
+  }, [expoPushToken])
+
+  useEffect(()=>{
+    if (token != null) {
+      Promise.all([
+        AsyncStorage.getItem(LAST_SAVED_TOKEN),
+        AsyncStorage.getItem(LAST_SENT_TOKEN)
+      ]).then(results => {
+        const lastSavedToken = results[0];
+        const lastSentToken = results[1];
+        if (lastSavedToken != null && lastSavedToken != lastSentToken) {
+          // send lastSavedToken
+          AsyncStorage.setItem(LAST_SENT_TOKEN, lastSavedToken).then(()=>{});
+        }
+      })
+    }
+  }, [token])
 
   useEffect(()=>{
     if (askPush) {
