@@ -149,9 +149,9 @@ export const ProgressScreen = ({ navigation, route }) => {
         }
         setTimeout(() => {
           if (scrollView?.current) {
-            let viewOffset = 200;
+            let viewOffset = pathHeight/3;
             if (!data[currentIndex].bottomDone) {
-              viewOffset = -200;
+              viewOffset = -pathHeight/3;
             }
             if (user == null) {
               viewOffset = 0;
