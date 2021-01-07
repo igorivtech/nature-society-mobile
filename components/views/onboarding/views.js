@@ -18,7 +18,7 @@ const SMALL_SCALE = 0.66;
 
 const animations = {
   0: null,
-  1: 'swing',
+  1: 'tada',
   2: 'wobble'
 }
 
