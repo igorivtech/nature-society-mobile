@@ -336,6 +336,7 @@ const styles = StyleSheet.create({
   },
 
   trees: (pathHeight, pathWidth, opacity, scale) => ({
+    resizeMode: 'contain',
     position: 'absolute',
     top: pathHeight/2,
     left: pathWidth / 2 + 52/2,
