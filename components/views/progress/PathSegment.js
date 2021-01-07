@@ -345,6 +345,7 @@ const styles = StyleSheet.create({
 
   marker: {
     position: "absolute",
+    resizeMode: 'contain'
   },
 
   pathContainer: (height, width) => ({
