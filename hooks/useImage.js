@@ -4,6 +4,8 @@ import * as ImagePicker from "expo-image-picker";
 import { DEFAULT_IMAGE_QUALITY } from "../values/consts";
 import { resizeImage } from "./helpers";
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import {colors} from '../values/colors'
+// import {textStyles} from '../values/textStyles'
 
 const options = [
   'מצלמה', 
@@ -82,6 +84,7 @@ export const useImage = () => {
       {
         options,
         cancelButtonIndex: 2,
+        tintColor: colors.treeBlues,
       },
       buttonIndex => {
         if (buttonIndex === 0) {
