@@ -209,7 +209,6 @@ export const ProgressScreen = ({ navigation, route }) => {
           <Animated.FlatList
             extraData={currentIndex}
             data={data}
-            bounces={false}
             scrollEventThrottle={16}
             onScroll={Animated.event(
               [{nativeEvent: {contentOffset: {y: scrollY}}}],
