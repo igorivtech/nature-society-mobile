@@ -26,11 +26,15 @@ export const useNotifications = (state, dispatch) => {
 
   useEffect(()=>{
     if (expoPushToken != null) {
-      AsyncStorage.setItem(LAST_SAVED_TOKEN, expoPushToken).then(()=>{})
+      AsyncStorage.setItem(LAST_SAVED_TOKEN, expoPushToken).then(()=>{
+        handleToken();
+      })
+    } else {
+      handleToken();
     }
-  }, [expoPushToken])
+  }, [expoPushToken, token])
 
-  useEffect(()=>{
+  const handleToken = () => {
     if (token != null) {
       Promise.all([
         AsyncStorage.getItem(LAST_SAVED_TOKEN),
@@ -44,7 +48,7 @@ export const useNotifications = (state, dispatch) => {
         }
       })
     }
-  }, [token])
+  }
 
   useEffect(()=>{
     if (askPush) {
