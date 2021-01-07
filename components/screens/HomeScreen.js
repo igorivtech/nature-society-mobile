@@ -183,11 +183,11 @@ export const HomeScreen = ({ navigation, route }) => {
         actuallyGetPlaces(region, location);
         setTimeout(() => {
           mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
-        }, SPLASH_HIDE_DELAY*0.7);
+        }, SPLASH_HIDE_DELAY*0.6);
         setTimeout(() => {
           ignoreCardsListener.current = false;
           lockAutoSearching.current = false;
-        }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.7+1000);
+        }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.6+1000);
         Location.watchPositionAsync({
           timeInterval: 60*1000,
           distanceInterval: 100 // meters
@@ -240,10 +240,12 @@ export const HomeScreen = ({ navigation, route }) => {
         const i = clamp(0, Math.round(value/ITEM_WIDTH), serverPlaces.length - 1);
         clearTimeout(animationTimeout);
         animationTimeout = setTimeout(()=>{
-          const item = serverPlaces[i];
-          if (selectedPlace == null || item.key !== selectedPlace.key) {
-            setSelectedPlace(item);
-            animateToItem(item);
+          if (i >= 0 && i < serverPlaces.length) {
+            const item = serverPlaces[i];
+            if (selectedPlace == null || item.key !== selectedPlace.key) {
+              setSelectedPlace(item);
+              animateToItem(item);
+            }
           }
         }, 10);
       })
