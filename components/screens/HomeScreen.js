@@ -31,7 +31,7 @@ import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
 // import _ from "lodash";
-import { objectLength } from "../../hooks/helpers";
+import { clamp, objectLength } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -237,7 +237,7 @@ export const HomeScreen = ({ navigation, route }) => {
         if (ignoreCardsListener.current) {
           return;
         }
-        const i = Math.round(value/ITEM_WIDTH);
+        const i = clamp(0, Math.round(value/ITEM_WIDTH), serverPlaces.length - 1);
         clearTimeout(animationTimeout);
         animationTimeout = setTimeout(()=>{
           const item = serverPlaces[i];
@@ -533,7 +533,6 @@ export const HomeScreen = ({ navigation, route }) => {
           keyExtractor={(item) => item.key}
           snapToInterval={ITEM_WIDTH}
           decelerationRate={0}
-          bounces={false}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
             if (index === 0 || index === places.length - 1) {
