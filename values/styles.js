@@ -208,6 +208,14 @@ export const globalStyles = StyleSheet.create({
     maxWidth: 130,
     opacity,
     transform: [{ translateX }, { scale }],
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+    shadowColor: "rgba(0, 0, 0, 0.3)",
+    shadowRadius: 10,
+    shadowOpacity: 1,
+    elevation: 4
   }),
 
   imageContain: (small) => ({
