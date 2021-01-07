@@ -83,7 +83,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
               </View>
               <Image
                 style={globalStyles.cardDetailIcon}
-                source={require("../../../assets/images/Marker.png")}
+                source={item.cleanness >= 3 ? require("../../../assets/images/marker_card_green.png") : require("../../../assets/images/Marker.png")}
               />
             </View>
 
