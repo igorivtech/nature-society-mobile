@@ -24,6 +24,7 @@ import { cognitoToUser } from "../../hooks/useUser";
 import { objectLength, resizeImage, validateEmail } from "../../hooks/helpers";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import _ from "lodash";
+import { useImage } from "../../hooks/useImage";
 
 export const ProfileScreen = ({ navigation }) => {
 
@@ -38,14 +39,11 @@ export const ProfileScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
 
-  const [image, setImage] = useState(null);
-  const [loadingImage, setLoadingImage] = useState(false);
+  const {image, setImage, loadingImage, selectImage, imagePopupvisible, setPopupVisible, setLoadingImage} = useImage();
   
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [keyboardHeight] = useKeyboard();
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
-
-  const [popupVisible, setPopupVisible] = useState(false);
 
   const scrollRef = useRef();
 
@@ -81,34 +79,6 @@ export const ProfileScreen = ({ navigation }) => {
       scrollRef?.current.scrollToPosition(0, height*0.15);
     }
   }, 250), []);
-
-  const selectImage = useCallback(async () => {
-    setLoadingImage(true);
-    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        // allowsEditing: true,
-        // aspect: [4, 3],
-        quality: DEFAULT_IMAGE_QUALITY,
-      })
-        .then(async(result) => {
-          if (!result.cancelled) {
-            const resized = await resizeImage(result);
-            setImage(resized);
-          }
-        })
-        .catch((error) => {
-          console.log({ error });
-        })
-        .finally(() => {
-          setLoadingImage(false);
-        });
-    } else {
-      setPopupVisible(true);
-      setLoadingImage(false);
-    }
-  }, []);
 
   const onSafeAreaLayout = (event) => {
     setSafeAreaHeight(event.nativeEvent.layout.height);
@@ -241,7 +211,7 @@ export const ProfileScreen = ({ navigation }) => {
 
         </View>
       </KeyboardAwareScrollView>
-      <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={popupVisible} setPopupVisible={setPopupVisible} />
+      <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={imagePopupvisible} setPopupVisible={setPopupVisible} />
       <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
     </SafeAreaView>
   );
