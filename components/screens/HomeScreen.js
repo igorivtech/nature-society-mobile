@@ -554,7 +554,7 @@ export const HomeScreen = ({ navigation, route }) => {
         />
         <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
-      <GrowthPoints isFocused={isFocused} popupVisible={popupVisible} />
+      <GrowthPoints popupVisible={popupVisible} />
       <Popup
         permissions={true}
         textData={strings.popups.locationPermissions}
