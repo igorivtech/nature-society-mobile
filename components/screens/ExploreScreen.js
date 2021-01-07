@@ -306,6 +306,7 @@ export const SearchBar = memo(({
       ) : null}
 
       <TextInput
+        autoFocus={modal}
         onFocus={onFocus}
         onChangeText={textChanged}
         value={searchTerm}
