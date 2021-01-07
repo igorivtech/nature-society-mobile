@@ -195,6 +195,8 @@ export const globalStyles = StyleSheet.create({
   }),
 
   pointsGrowthContainer: (opacity, scale, translateX) => ({
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
     position: 'absolute',
     top: height * 0.22,
     right: 10,
