@@ -21,9 +21,12 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     inputRange: [0, 0.7],
     outputRange: [64*0.8/2, 0],
     extrapolate: 'clamp'
-  });  
+  });
 
   useEffect(()=>{
+    if (loadingImage) {
+      return;
+    }
     const delay = firstTime.current ? index * 100 : 0;
     firstTime.current = false;
     setLoadingScale(true);
@@ -36,7 +39,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     }).start(()=>{
       setLoadingScale(false);
     });
-  }, [selected])
+  }, [selected, loadingImage])
 
   // useEffect(()=>{
   //   if (globalShow !== null) {
@@ -66,8 +69,11 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
 
   useEffect(()=>{
     if (place) {
-      setLoadingImage(true);
-      setImage(place.cleanness >= 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png"))
+      const newImage = place.cleanness >= 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png");
+      if (image !== newImage) {
+        setLoadingImage(true);
+        setImage(newImage)
+      }
     }
   }, [place])
 
