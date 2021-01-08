@@ -4,6 +4,7 @@ import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import {ASK_PUSH} from "../context/userReducer"
 import AsyncStorage from "@react-native-community/async-storage";
+import { Auth } from "aws-amplify";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
