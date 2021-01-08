@@ -1,7 +1,9 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import { Auth } from "aws-amplify";
 import React, { useState, useEffect, useRef } from "react";
 import { AppState } from "react-native";
 import { useServer } from "./useServer";
+import { ATTRIBUTE_LAST_USED_DATE } from "./useUser";
 
 const LAST_USAGE_TIME = 'LAST_USAGE_TIME'
 
@@ -11,6 +13,27 @@ export const useUserUsageTime = (state) => {
 
   const {sendUsageTime} = useServer();
   const {token} = state;
+  const sent = useRef(false);
+
+  useEffect(()=>{
+    handleLastUse();
+  }, [token])
+
+  const handleLastUse = async () => {
+    if (token != null && !sent.current) {
+      try {
+        let attributes = {}
+        attributes[ATTRIBUTE_LAST_USED_DATE] = (new Date()).toUTCString();
+        let cognitoUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+        if (result === 'SUCCESS') {
+          sent.current = true;
+        }
+      } catch (error) {}
+    }
+  }
 
   const handleAppStateChange = (nextAppState) => {
     if (nextAppState === "active") {

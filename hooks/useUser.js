@@ -7,6 +7,7 @@ export const ATTRIBUTE_POINTS = "custom:points";
 export const ATTRIBUTE_NUM_OF_REPORTS = "custom:numOfReports";
 export const ATTRIBUTE_UNLOCKED_PLACES = "custom:unlockedPlaces";
 export const ATTRIBUTE_PUSH_TOKEN = "custom:pushToken";
+export const ATTRIBUTE_LAST_USED_DATE = "custom:lastUsedDate";
 
 export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(false);
