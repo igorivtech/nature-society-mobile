@@ -507,7 +507,19 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces && serverPlaces.map((p, index) => <PlaceMarker keepMarkerAlive={keepMarkerAlive} globalShow={globalShow} selectedPlace={selectedPlace} globalTracksViewChanges={globalTracksViewChanges} index={index} scrollX={scrollX} onPress={markerPressed} key={index} place={p} />)}
+        {serverPlaces.map((p, index) => (
+          <PlaceMarker 
+            keepMarkerAlive={keepMarkerAlive} 
+            globalShow={globalShow} 
+            selected={selectedPlace?.key === p.key} 
+            globalTracksViewChanges={globalTracksViewChanges} 
+            index={index} 
+            scrollX={scrollX} 
+            onPress={markerPressed} 
+            key={index} 
+            place={p} 
+          />
+        ))}
         {location && (<UserMarker user={user} location={location} />)}
       </MapView>
       
