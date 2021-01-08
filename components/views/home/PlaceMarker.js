@@ -9,6 +9,8 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingScale, setLoadingScale] = useState(false);
 
+  const firstTime = useRef(true);
+
   const scale = useRef(new Animated.Value(0)).current;
   const opacity = scale.interpolate({
     inputRange: [0.7, 0.8],
@@ -26,9 +28,11 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
       toValue: selected ? 0.8 : 0.7,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
-      duration: 200
+      duration: 300,
+      delay: firstTime.current ? index * 100 : 0,
     }).start(()=>{
       setLoadingScale(false);
+      firstTime.current = false;
     });
   }, [selected])
 
