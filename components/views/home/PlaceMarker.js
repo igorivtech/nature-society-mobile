@@ -6,8 +6,8 @@ import { ITEM_WIDTH } from "./PlaceCard";
 export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, scrollX, index, selected}) => {
 
   const [image, setImage] = useState(null);
-  const [loadingImage, setLoadingImage] = useState(false);
-  const [loadingScale, setLoadingScale] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(true);
+  const [loadingScale, setLoadingScale] = useState(true);
 
   const firstTime = useRef(true);
 
@@ -18,8 +18,9 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     extrapolate: 'clamp'
   })  
   const translateY = scale.interpolate({
-    inputRange: [0, 1],
-    outputRange: [64*0.8/2, 0]
+    inputRange: [0, 0.7],
+    outputRange: [64*0.8/2, 0],
+    extrapolate: 'clamp'
   });  
 
   useEffect(()=>{
