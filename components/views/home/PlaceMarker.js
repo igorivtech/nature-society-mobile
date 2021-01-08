@@ -4,49 +4,33 @@ import { Marker } from "react-native-maps";
 import { ITEM_WIDTH } from "./PlaceCard";
 
 export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, scrollX, index, selected}) => {
-  const [trackChanges, setTrackChanges] = useState(0)
+
   const [image, setImage] = useState(null);
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [loadingScale, setLoadingScale] = useState(false);
 
-  // const scale = scrollX.interpolate({
-  //   inputRange: [ (index - 1) * ITEM_WIDTH, index*ITEM_WIDTH, (index+1)*ITEM_WIDTH ],
-  //   // outputRange: [0.75, 1, 0.75],
-  //   outputRange: [0.75, 0.75, 0.75],
-  //   extrapolate: 'clamp'
-  // })
   const scale = useRef(new Animated.Value(0)).current;
-  const firstTime = useRef(true);
-
-  const lock = useRef(false);
+  const opacity = scale.interpolate({
+    inputRange: [0.7, 0.8],
+    outputRange: [0.7, 1],
+    extrapolate: 'clamp'
+  })  
+  const translateY = scale.interpolate({
+    inputRange: [0, 1],
+    outputRange: [64*0.8/2, 0]
+  });  
 
   useEffect(()=>{
-    if (firstTime.current) {
-      firstTime.current = false;
-      return;
-    }
-    lock.current = true;
-    setTrackChanges(v=>v-1);
+    setLoadingScale(true);
     Animated.timing(scale, {
       toValue: selected ? 0.8 : 0.7,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
       duration: 200
     }).start(()=>{
-      setTrackChanges(v=>v+1);
-      lock.current = false;
+      setLoadingScale(false);
     });
   }, [selected])
-
-  const opacity = scale.interpolate({
-    inputRange: [0.7, 0.8],
-    outputRange: [0.7, 1],
-    extrapolate: 'clamp'
-  })
-
-  
-  const translateY = scale.interpolate({
-    inputRange: [0, 1],
-    outputRange: [64*0.8/2, 0]
-  });
 
   // useEffect(()=>{
   //   if (globalShow !== null) {
@@ -66,26 +50,8 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
   //   }
   // }, [globalShow])
 
-  useEffect(()=>{
-    if (lock.current) {
-      return;
-    }
-    if (trackChanges === 1) {
-      Animated.timing(scale, {
-        delay: index * 100,
-        duration: 300,
-        useNativeDriver: true,
-        toValue: selected ? 0.8 : 0.6,
-        easing: Easing.inOut(Easing.ease)
-      }).start(()=>{
-        setTrackChanges(2);
-      })
-    }
-  }, [trackChanges])
-  
-
   const turnOffTrackChanged = useCallback(()=>{
-    setTrackChanges(1);
+    setLoadingImage(false);
   }, []);
 
   const p = useCallback(()=>{
@@ -94,7 +60,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
 
   useEffect(()=>{
     if (place) {
-      setTrackChanges(0);
+      setLoadingImage(true);
       setImage(place.cleanness >= 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png"))
     }
   }, [place])
@@ -103,7 +69,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     <Marker
       // key={`key_${place.position.longitude}_${place.position.latitude}`} 
       zIndex={selected ? 2 : 1} 
-      tracksViewChanges={trackChanges < 2} 
+      tracksViewChanges={loadingImage || loadingScale} 
       onPress={p} 
       coordinate={place.position}
     >
