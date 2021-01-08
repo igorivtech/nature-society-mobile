@@ -35,7 +35,6 @@ export const useNotifications = (state, dispatch) => {
         getExpoToken(),
         AsyncStorage.getItem(LAST_SENT_TOKEN)
       ]).then(async results => {
-        console.log({results});
         const lastKnownToken = results[0];
         const lastSentToken = results[1];
         if (lastKnownToken != null && lastKnownToken != lastSentToken) {
