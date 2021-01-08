@@ -10,7 +10,7 @@ import { ATTRIBUTE_PUSH_TOKEN } from "./useUser";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
@@ -90,7 +90,6 @@ export const useNotifications = (state, dispatch) => {
     };
   }, []);
 
-  return {};
 };
 
 async function getExpoToken() {
