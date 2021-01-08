@@ -13,12 +13,12 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
 
   const scale = useRef(new Animated.Value(0)).current;
   const opacity = scale.interpolate({
-    inputRange: [0.7, 0.8],
-    outputRange: [0.7, 1],
+    inputRange: [0, 0.7, 0.8],
+    outputRange: [0, 0.7, 1],
     extrapolate: 'clamp'
   })  
   const translateY = scale.interpolate({
-    inputRange: [0, 0.7],
+    inputRange: [0, 0.8],
     outputRange: [64*0.8/2, 0],
     extrapolate: 'clamp'
   });
