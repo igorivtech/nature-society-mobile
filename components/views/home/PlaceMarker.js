@@ -23,16 +23,17 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
   });  
 
   useEffect(()=>{
+    const delay = firstTime.current ? index * 100 : 0;
+    firstTime.current = false;
     setLoadingScale(true);
     Animated.timing(scale, {
       toValue: selected ? 0.8 : 0.7,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
       duration: 300,
-      delay: firstTime.current ? index * 100 : 0,
+      delay,
     }).start(()=>{
       setLoadingScale(false);
-      firstTime.current = false;
     });
   }, [selected])
 
