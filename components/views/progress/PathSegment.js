@@ -80,7 +80,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
 
   const opacity = scrollY.interpolate({
     inputRange,
-    outputRange: [0, 1, 1, 1, 0],
+    outputRange: [0, 0.9, 1, 0.9, 0],
     extrapolate: 'clamp'
   })
 
