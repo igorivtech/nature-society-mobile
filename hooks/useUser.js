@@ -10,26 +10,13 @@ export const ATTRIBUTE_PUSH_TOKEN = "custom:pushToken";
 export const ATTRIBUTE_LAST_USED_DATE = "custom:lastUsedDate";
 
 export const useUser = (dispatch) => {
-  const [loadingUser, setLoadingUser] = useState(false);
-  const {getSettings} = useServer();
+  const [loadingUser, setLoadingUser] = useState(true);
+  // const {getSettings} = useServer();
   useEffect(() => {
-    (async () => {
-      setLoadingUser(true);
-      // try {
-      //   const settings = await getSettings();
-      //   if (settings) {
-      //     dispatch({
-      //       type: SAVE_SETTINGS,
-      //       payload: settings
-      //     })
-      //   }
-      // } catch (error) {
-      //   console.log(error) || console.log(null);
-      // }
-      try {
-        const cognitoUser = await Auth.currentAuthenticatedUser({
-          // bypassCache: true,
-        })
+    Auth.currentAuthenticatedUser({
+      // bypassCache: true,
+    })
+      .then((cognitoUser) => {
         dispatch({
           type: SAVE_TOKEN,
           payload: getToken(cognitoUser),
@@ -38,19 +25,20 @@ export const useUser = (dispatch) => {
           type: SAVE_USER,
           payload: cognitoToUser(cognitoUser),
         });
-      } catch (error) {
+      })
+      .catch((error) => {
         console.log(error) || console.log(null);
-      } finally {
+      })
+      .finally(() => {
         setLoadingUser(false);
-      }
-    })()
+      });
   }, []);
   return { loadingUser };
 };
 
 export const dicToArray = (dic) => {
-  let array = []
-  Object.keys(dic).forEach(key => {
+  let array = [];
+  Object.keys(dic).forEach((key) => {
     if (isNumeric(key)) {
       array.push(parseInt(key));
     } else {
@@ -58,15 +46,15 @@ export const dicToArray = (dic) => {
     }
   });
   return array;
-}
+};
 
 const arrayToDic = (array) => {
-  let dic = {}
-  array.forEach(e => {
+  let dic = {};
+  array.forEach((e) => {
     dic[`${e}`] = 1;
   });
-  return dic
-}
+  return dic;
+};
 
 function isNumeric(value) {
   return /^\d+$/.test(value);
@@ -113,3 +101,15 @@ export const getToken = (cognitoUser) => {
 //     "name": "Nimrod",
 //     "sub": "efda898a-a161-4630-958a-3c48320b4ac1",
 //   },
+
+// try {
+//   const settings = await getSettings();
+//   if (settings) {
+//     dispatch({
+//       type: SAVE_SETTINGS,
+//       payload: settings
+//     })
+//   }
+// } catch (error) {
+//   console.log(error) || console.log(null);
+// }
