@@ -78,9 +78,15 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
     (index + 1) * pathHeight - animationPadding
   ]
 
-  const opacity = scrollY.interpolate({
+  const scale = scrollY.interpolate({
     inputRange,
     outputRange: [0, 0.9, 1, 0.9, 0],
+    extrapolate: 'clamp'
+  })
+
+  const opacity = scale.interpolate({
+    inputRange: [0, 0.9],
+    outputRange: [0, 1],
     extrapolate: 'clamp'
   })
 
@@ -195,7 +201,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
         </Animatable.View>
       </View>
       
-      <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={item.landscape} />
+      <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, scale)} source={item.landscape} />
       
     </View>
   );
