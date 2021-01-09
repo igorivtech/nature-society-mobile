@@ -164,3 +164,23 @@ let tt = tempRankImages.map((item, index) => ({
 tt.reverse();
 
 export const rankImages = tt;
+
+
+export const landscapeImages = [
+  require("../assets/images/ls_0"),
+  require("../assets/images/ls_1"),
+  require("../assets/images/ls_2"),
+  require("../assets/images/ls_3"),
+  require("../assets/images/ls_4"),
+  require("../assets/images/ls_5"),
+  require("../assets/images/ls_6"),
+  require("../assets/images/ls_7"),
+  require("../assets/images/ls_8"),
+  require("../assets/images/ls_9"),
+  require("../assets/images/ls_10"),
+  require("../assets/images/ls_11"),
+  require("../assets/images/ls_12"),
+  require("../assets/images/ls_13"),
+  require("../assets/images/ls_14"),
+  require("../assets/images/ls_15"),
+]
