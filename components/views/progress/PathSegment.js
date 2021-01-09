@@ -41,6 +41,8 @@ const TOP_CONTAINER_MARGIN = smallScreen ? 4 : 14;
 const BOTTOM_CONTAINER_WIDTH = 70;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
+const MAX_SCALE = smallScreen ? 0.9 : 1
+
 export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
 
   const realIndex = index*2;
@@ -80,12 +82,12 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
 
   const scale = scrollY.interpolate({
     inputRange,
-    outputRange: [0, 0.9, 1, 0.9, 0],
+    outputRange: [0, MAX_SCALE - 0.1, MAX_SCALE, MAX_SCALE - 0.1, 0],
     extrapolate: 'clamp'
   })
 
   const opacity = scale.interpolate({
-    inputRange: [0, 0.9],
+    inputRange: [0, MAX_SCALE - 0.1],
     outputRange: [0, 1],
     extrapolate: 'clamp'
   })
@@ -347,7 +349,7 @@ const styles = StyleSheet.create({
     top: pathHeight/2,
     left: pathWidth / 2, //  + 52/2
     opacity,
-    transform: [ {scale} ]
+    transform: [ {scale}, {translateY: smallScreen ? -40 : 0}, {translateX: smallScreen ? -20 : 0} ]
   }),
 
   marker: {
