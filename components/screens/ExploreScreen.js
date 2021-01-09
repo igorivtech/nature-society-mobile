@@ -238,6 +238,7 @@ export const TextCard = ({ item, showItem, index, searchTerm }) => {
   return (
     <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
       <Highlighter
+        minimumFontScale={0.8}
         adjustsFontSizeToFit={true} 
         numberOfLines={2}
         style={styles.smallCardTitle}
