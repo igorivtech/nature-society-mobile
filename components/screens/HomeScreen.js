@@ -79,7 +79,6 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const [globalShow, setGlobalShow] = useState(null);
   const [places, setPlaces] = useState([]);
-  let animationTimeout = null;
   const [listOpacity, setListOpacity] = useState(1);
   const [hideList, setHideList] = useState(true);
   const [hideButtons, setHideButtons] = useState(false);
@@ -231,23 +230,19 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(()=>{ // setup cards listener
     scrollX.removeAllListeners();
-    clearTimeout(animationTimeout);
     if (serverPlaces && serverPlaces.length > 0) {
       scrollX.addListener(({value}) => {
         if (ignoreCardsListener.current) {
           return;
         }
         const i = clamp(0, Math.round(value/ITEM_WIDTH), serverPlaces.length - 1);
-        clearTimeout(animationTimeout);
-        animationTimeout = setTimeout(()=>{
-          if (i >= 0 && i < serverPlaces.length) {
-            const item = serverPlaces[i];
-            if (selectedPlace == null || item.key !== selectedPlace.key) {
-              setSelectedPlace(item);
-              animateToItem(item);
-            }
+        if (i >= 0 && i < serverPlaces.length) {
+          const item = serverPlaces[i];
+          if (item.key !== selectedPlace?.key) {
+            setSelectedPlace(item);
+            animateToItem(item);
           }
-        }, 10);
+        }
       })
     }
   }, [serverPlaces, selectedPlace])
