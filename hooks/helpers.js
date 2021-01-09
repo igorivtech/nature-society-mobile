@@ -66,6 +66,7 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
   var i;
   let currentSet = false;
   let landscapeIndex = 0;
+  let tempLandscapeImages = shuffle([...landscapeImages]);
   for (i = 0; i < serverAchievements.length; i++) { 
     if (i % 2 == 0) {
       const bottom = serverAchievements[i];
@@ -78,7 +79,7 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
         bottomTitle: bottom.title,
         topPoints: top.score,
         bottomPoints: bottom.score,
-        landscape: landscapeImages[landscapeIndex++]
+        landscape: tempLandscapeImages[landscapeIndex++]
       }
       if (!currentSet) {
         if (!item.topDone || !item.bottomDone) {
@@ -91,6 +92,17 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
   }
   output.reverse();
   return output
+}
+
+function shuffle(a) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+  }
+  return a;
 }
 
 export const convertServerPlaces = (serverPlaces, location, specialSort = false) => {
