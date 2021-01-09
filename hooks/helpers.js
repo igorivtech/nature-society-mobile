@@ -1,5 +1,6 @@
 import * as ImageManipulator from "expo-image-manipulator";
 import { CLEANNESS_COLORS, height, isAlt, SCREEN_ASPECT_RATIO, width } from "../values/consts";
+import { landscapeImages } from "../values/images";
 import { strings } from "../values/strings";
 
 export const clamp = (min, value, max) => {
@@ -64,6 +65,7 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
   let output = [];
   var i;
   let currentSet = false;
+  let landscapeIndex = 0;
   for (i = 0; i < serverAchievements.length; i++) { 
     if (i % 2 == 0) {
       const bottom = serverAchievements[i];
@@ -76,6 +78,7 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
         bottomTitle: bottom.title,
         topPoints: top.score,
         bottomPoints: bottom.score,
+        landscape: landscapeImages[landscapeIndex++]
       }
       if (!currentSet) {
         if (!item.topDone || !item.bottomDone) {

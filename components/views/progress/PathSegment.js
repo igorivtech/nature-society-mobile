@@ -195,7 +195,7 @@ export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible 
         </Animatable.View>
       </View>
       
-      <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={require("../../../assets/images/trees.png")} />
+      <Animated.Image style={styles.trees(pathHeight, pathWidth, opacity, opacity)} source={item.landscape} />
       
     </View>
   );
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     position: 'absolute',
     top: pathHeight/2,
-    left: pathWidth / 2 + 52/2,
+    left: pathWidth / 2, //  + 52/2
     opacity,
     transform: [ {scale} ]
   }),
