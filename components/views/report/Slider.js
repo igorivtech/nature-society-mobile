@@ -44,8 +44,6 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
 
   const isMounted = useIsMounted();
 
-  const looping = useRef(false);
-
   useEffect(()=>{
     if (startUpAnimation) {
       AsyncStorage.getItem(ALREADY_SHOWN).then(alreadyShown => {
@@ -99,6 +97,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     setBottomText(titles[0]);
   }
 
+  const looping = useRef(false);
   const alreadyAnswered = useRef(false);
 
   const [continueEnabled, setContinueEnabled] = useState(true);
