@@ -378,13 +378,15 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     animationOpacity.setValue(1);
   }, [])
 
+  const onTouchStart = useCallback(()=>{
+    if (looping.current) {
+      looping.current = false;
+      finishLoop();
+    }
+  }, [])
+
   return (
-    <View onTouchStart={()=>{
-      if (looping.current) {
-        looping.current = false;
-        finishLoop();
-      }
-    }} style={sliderStyles.container}>
+    <View style={sliderStyles.container}>
 
       <Animated.View style={sliderStyles.topContainer(bottomTopContainersOpacity)}>
         {showLocation && (
@@ -425,7 +427,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Animated.Text style={sliderStyles.text(centerMinusTextOpacity, -titleTranslateY/2)}>{middleMinusText}</Animated.Text>
             <Animated.Text style={sliderStyles.text(bottomTextOpacity, -titleTranslateY)}>{bottomText}</Animated.Text>
           </Animated.View>
-          <View style={sliderStyles.sliderContainer}>
+          <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer}>
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
             <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
               <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
