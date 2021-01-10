@@ -228,21 +228,26 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }, [serverPlaces]);
 
+  let animationTimeout = null;
   useEffect(()=>{ // setup cards listener
     scrollX.removeAllListeners();
+    clearTimeout(animationTimeout);
     if (serverPlaces && serverPlaces.length > 0) {
       scrollX.addListener(({value}) => {
         if (ignoreCardsListener.current) {
           return;
         }
         const i = clamp(0, Math.round(value/ITEM_WIDTH), serverPlaces.length - 1);
-        if (i >= 0 && i < serverPlaces.length) {
-          const item = serverPlaces[i];
-          if (item.key !== selectedPlace?.key) {
-            setSelectedPlace(item);
-            animateToItem(item);
+        clearTimeout(animationTimeout);
+        animationTimeout = setTimeout(()=>{
+          if (i >= 0 && i < serverPlaces.length) {
+            const item = serverPlaces[i];
+            if (item.key !== selectedPlace?.key) {
+              setSelectedPlace(item);
+              animateToItem(item);
+            }
           }
-        }
+        }, 10);
       })
     }
   }, [serverPlaces, selectedPlace])
