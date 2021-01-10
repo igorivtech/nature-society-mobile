@@ -212,7 +212,7 @@ export const globalStyles = StyleSheet.create({
       height: 0,
       width: 0,
     },
-    shadowColor: "rgba(0, 0, 0, 0.3)",
+    shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowRadius: 10,
     shadowOpacity: 1,
     elevation: 4
