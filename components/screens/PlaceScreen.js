@@ -88,8 +88,14 @@ export const PlaceScreen = ({ navigation, route }) => {
   const descRef = useRef();
   const actionsRef = useRef();
 
-  const waze = () => {
+  const openWaze = () => {
     Linking.openURL(`https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`)
+  }
+
+  const waze = () => {
+    popupAction.current = openWaze;
+    setPopupTextData(strings.popups.waze)
+    setPopupVisible(true);
   };
 
   const sharePressed = () => {

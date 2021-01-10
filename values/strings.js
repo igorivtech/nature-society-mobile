@@ -50,6 +50,11 @@ export const strings = {
   code: 'קוד',
   showInfo: 'הצג\nמידע',
   popups: {
+    waze: {
+      title: 'לפתוח הוראות ניווט עם Waze?',
+      yes: "יאללה, מגניב",
+      no: 'פעם אחרת',
+    },
     halaWebsite: {
       title: 'לעבור לאתר החברה להגנת הטבע?',
       yes: "יאללה, מגניב",
