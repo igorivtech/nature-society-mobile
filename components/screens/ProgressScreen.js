@@ -36,11 +36,8 @@ export const ProgressScreen = ({ navigation, route }) => {
   const {user, notification, settings} = state;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const isFocused = useIsFocused();
 
   const [popupVisible, setPopupVisible] = useState(false);
-  const [pushPopupVisible, setPushPopupVisible] = useState(false);
-  const [showPushPopup, setShowPushPopup] = useState(false);
   const [data, setData] = useState([]);
   const scrollView = useRef();
 
@@ -56,13 +53,6 @@ export const ProgressScreen = ({ navigation, route }) => {
     //     payload: DEFAULT_NOTIFICATION
     //   })
     // }, 4000);
-    shouldAskUser().then(should => {
-      if (should) {
-        setTimeout(() => {
-          setShowPushPopup(true);
-        }, 5000);
-      }
-    })
     //
     calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0).then(output=>{
       output.forEach((elem, i) => {
@@ -73,13 +63,6 @@ export const ProgressScreen = ({ navigation, route }) => {
       setData(output);
     });
   }, [])
-
-  useEffect(()=>{
-    if (showPushPopup && isFocused) {
-      setShowPushPopup(false);
-      setPushPopupVisible(true);
-    }
-  }, [showPushPopup, isFocused])
 
   useEffect(()=>{
     setPopupVisible(notification != null);
@@ -189,13 +172,6 @@ export const ProgressScreen = ({ navigation, route }) => {
   //   }
   // }, [route]);
 
-  const askPush = () => {
-    dispatch({
-      type: ASK_PUSH,
-      payload: true
-    })
-  }
-
   const handleSwipeLeft = (event) => {
     if (event.nativeEvent.state === State.END) {
       goBack();
@@ -238,13 +214,6 @@ export const ProgressScreen = ({ navigation, route }) => {
 
           <UserHeader restartApp={restartApp} />
           <ProgressPopup />
-          <Popup
-            permissions={true}
-            textData={strings.popups.pushPermissions}
-            action={askPush}
-            popupVisible={pushPopupVisible}
-            setPopupVisible={setPushPopupVisible}
-          />
 
         </View>
 

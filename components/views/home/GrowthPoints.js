@@ -12,7 +12,7 @@ const TEXT_DURATION = 600;
 
 const ALREADY_SHOWN = "ALREADY_SHOWN"
 
-export const GrowthPoints = memo(({popupVisible}) => {
+export const GrowthPoints = memo(() => {
   
   const {state} = useContext(UserContext);
   const {user} = state;
@@ -55,7 +55,7 @@ export const GrowthPoints = memo(({popupVisible}) => {
   }
 
   useEffect(()=>{
-    if (popupVisible || !ready) {
+    if (!ready) {
       return;
     }
     if (user && user.points !== points) {
@@ -81,7 +81,7 @@ export const GrowthPoints = memo(({popupVisible}) => {
         })
       })
     }
-  }, [user, popupVisible, ready]);
+  }, [user, ready]);
 
   const show = (show, delay) => {
     return Animated.parallel([

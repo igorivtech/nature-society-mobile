@@ -22,7 +22,7 @@ import {
 } from "../views/home/PlaceCard";
 import { GrowthPoints } from "../views/home/GrowthPoints";
 import { UserContext } from "../../context/context";
-import { SAVE_DEEP_LINK_ID, SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
+import { ASK_PUSH, SAVE_DEEP_LINK_ID, SAVE_NOTIFICATION, SAVE_PLACES } from "../../context/userReducer";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { useLocationPermissions } from "../../hooks/usePermissions";
@@ -37,6 +37,7 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { LogoView } from "../views/home/LogoView";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { shouldAskUser } from "../../hooks/useNotifications";
 // import {useCountRenders} from "../../hooks/useCountRenders"
 // useCountRenders();
 
@@ -84,6 +85,8 @@ export const HomeScreen = ({ navigation, route }) => {
   const [hideButtons, setHideButtons] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [requestPermissions, setRequestPermissions] = useState(false);
+  const [pushPopupVisible, setPushPopupVisible] = useState(false);
+  const [showPushPopup, setShowPushPopup] = useState(false);
 
   const isFocused = useIsFocused();
   const firstTime = useRef(true);
@@ -149,11 +152,27 @@ export const HomeScreen = ({ navigation, route }) => {
       if (status === 'undetermined') {
         setTimeout(() => {
           setRequestPermissions(true);
-        }, 1000*14);
+        }, 1000*12);
       }
     }
   }
 
+  useEffect(()=>{ // push popup
+    shouldAskUser().then(should => {
+      if (should) {
+        setTimeout(() => {
+          setShowPushPopup(true);
+        }, (12+30)*1000);
+      }
+    })
+  }, [])
+  useEffect(()=>{
+    // !popupVisible is location popup
+    if (showPushPopup && isFocused && !popupVisible) {
+      setShowPushPopup(false);
+      setPushPopupVisible(true);
+    }
+  }, [showPushPopup, isFocused, popupVisible])
   useEffect(() => { // permissions popup
     if (requestPermissions && isFocused) {
       setRequestPermissions(false);
@@ -394,6 +413,13 @@ export const HomeScreen = ({ navigation, route }) => {
     askLocation();
   }, []);
 
+  const askPush = () => {
+    dispatch({
+      type: ASK_PUSH,
+      payload: true
+    })
+  }
+
   // const debounce = useCallback(_.debounce((region) => {
   //   console.log("actuallyGetPlaces: debounce");
   //   actuallyGetPlaces(region, location)
@@ -566,13 +592,20 @@ export const HomeScreen = ({ navigation, route }) => {
         />
         <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
-      <GrowthPoints popupVisible={popupVisible} />
+      <GrowthPoints />
       <Popup
         permissions={true}
         textData={strings.popups.locationPermissions}
         action={askLocationPermissions}
         popupVisible={popupVisible}
         setPopupVisible={setPopupVisible}
+      />
+      <Popup
+        permissions={true}
+        textData={strings.popups.pushPermissions}
+        action={askPush}
+        popupVisible={pushPopupVisible}
+        setPopupVisible={setPushPopupVisible}
       />
     </View>
   );
