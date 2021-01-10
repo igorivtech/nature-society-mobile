@@ -238,7 +238,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     Animated.sequence([
       Animated.timing(startUpTranslateY, {
         delay: 200,
-        toValue: -60,
+        toValue: -50,
         duration: 400,
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
@@ -246,13 +246,13 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
       Animated.loop(
         Animated.sequence([
           Animated.timing(startUpTranslateY, {
-            toValue: 60,
+            toValue: 50,
             duration: 700,
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease)
           }),
           Animated.timing(startUpTranslateY, {
-            toValue: -60,
+            toValue: -50,
             duration: 700,
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease)
