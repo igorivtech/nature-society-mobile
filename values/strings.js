@@ -175,6 +175,7 @@ export const strings = {
     finishSignup: "סיום הרשמה",
     updateDetails: "עדכון שינויים",
     profilePic: "תמונת פרופיל",
+    notMandatory: '(לא חובה)',
     restorePassword: "שחזור סיסמה",
     restorePasswordButton: "שחזר סיסמה",
     emailSentButton: "אוקיי, אבדוק",

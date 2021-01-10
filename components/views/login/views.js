@@ -278,6 +278,9 @@ export const SignupView = memo(
             </TouchableOpacity>
             <Text style={styles.profilePicTitle}>
               {strings.loginScreen.profilePic}
+              <Text style={styles.profilePicDetail}>
+                {"\n"+strings.loginScreen.notMandatory}
+              </Text>
             </Text>
           </View>
 
@@ -383,10 +386,17 @@ export const SmallButton = memo(({ title, onPress }) => {
 });
 
 const styles = StyleSheet.create({
+  profilePicDetail: {
+    ...textStyles.normalOfSize(12),
+    color: colors.treeBlues,
+    lineHeight: 16
+  },
   profilePicTitle: {
     ...textStyles.normalOfSize(18),
-    textAlign: "center",
     color: colors.treeBlues,
+    flexGrow: 1, 
+    flexShrink: 1,
+    paddingRight: 8
   },
 
   profilePic: {
