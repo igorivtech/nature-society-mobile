@@ -191,6 +191,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
         <View style={styles.progressScreenContainer}>
           <Animated.FlatList
+            showsVerticalScrollIndicator={false}
             extraData={currentIndex}
             data={data}
             scrollEventThrottle={16}
