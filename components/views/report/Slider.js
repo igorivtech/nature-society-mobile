@@ -418,7 +418,6 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
         </View>
       </View>
       
-      
       <Animated.View style={sliderStyles.continueButton(bottomTopContainersOpacity)}>
         <TouchableOpacity disabled={(showLocation && location == null) || !continueEnabled || !autoPlay} onPress={localOnPress}>
           <Animated.View style={sliderStyles.buttonContainer(continueButtonOpacity)}>
@@ -537,7 +536,7 @@ const sliderStyles = StyleSheet.create({
 
   topContainer: (opacity) => ({
     opacity,
-    marginBottom: 16,
+    marginBottom: 8,
     marginTop: 44,
     marginLeft: 30,
     marginRight: 30,
@@ -581,7 +580,7 @@ const sliderStyles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 22,
     marginHorizontal: 30,
-    marginTop: 16,
+    marginTop: 8,
     justifyContent: 'center'
   }),
 
