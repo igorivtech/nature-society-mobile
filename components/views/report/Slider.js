@@ -44,6 +44,8 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
 
   const isMounted = useIsMounted();
 
+  const looping = useRef(false);
+
   useEffect(()=>{
     if (startUpAnimation) {
       AsyncStorage.getItem(ALREADY_SHOWN).then(alreadyShown => {
@@ -232,36 +234,49 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     setContinueEnabled(false);
     lineOpacity.setValue(0);
     startUpTranslateY.setValue(0);
-    // animationOpacity.setValue(ANIMATION_OPACITY);
+    //
+    looping.current = true;
     Animated.sequence([
       Animated.timing(startUpTranslateY, {
         delay: 200,
-        toValue: -40,
+        toValue: -60,
         duration: 400,
-        useNativeDriver: true
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
       }),
-      Animated.timing(startUpTranslateY, {
-        toValue: 60,
-        duration: 500,
-        useNativeDriver: true
-      }),
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(startUpTranslateY, {
+            toValue: 60,
+            duration: 700,
+            useNativeDriver: true,
+            easing: Easing.inOut(Easing.ease)
+          }),
+          Animated.timing(startUpTranslateY, {
+            toValue: -60,
+            duration: 700,
+            useNativeDriver: true,
+            easing: Easing.inOut(Easing.ease)
+          }),
+        ])
+      )
+    ]).start();
+  }
+
+  const finishLoop = () => {
+    startUpTranslateY.stopAnimation();
+    Animated.sequence([
       Animated.timing(startUpTranslateY, {
         toValue: 0,
-        duration: 500,
+        duration: 300,
+        easing: Easing.out(Easing.ease),
         useNativeDriver: true
       }),
-      Animated.parallel([
-        Animated.timing(lineOpacity, {
-          toValue: LINE_OPACITY,
-          useNativeDriver: true,
-          easing: Easing.inOut(Easing.ease)
-        }),
-        // Animated.timing(animationOpacity, {
-        //   toValue: 1,
-        //   useNativeDriver: true,
-        //   easing: Easing.inOut(Easing.ease)
-        // }),
-      ]),
+      Animated.timing(lineOpacity, {
+        toValue: LINE_OPACITY,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
       Animated.timing(textContainerOpacity, {
         toValue: 0,
         useNativeDriver: true
@@ -364,7 +379,12 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }, [])
 
   return (
-    <View style={sliderStyles.container}>
+    <View onTouchStart={()=>{
+      if (looping.current) {
+        looping.current = false;
+        finishLoop();
+      }
+    }} style={sliderStyles.container}>
 
       <Animated.View style={sliderStyles.topContainer(bottomTopContainersOpacity)}>
         {showLocation && (
