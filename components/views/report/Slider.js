@@ -536,7 +536,7 @@ const sliderStyles = StyleSheet.create({
 
   topContainer: (opacity) => ({
     opacity,
-    marginBottom: 8,
+    marginBottom: 0,
     marginTop: 44,
     marginLeft: 30,
     marginRight: 30,
@@ -580,7 +580,7 @@ const sliderStyles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 22,
     marginHorizontal: 30,
-    marginTop: 8,
+    marginTop: 0,
     justifyContent: 'center'
   }),
 
