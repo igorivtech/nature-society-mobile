@@ -118,16 +118,17 @@ export const ProgressScreen = ({ navigation, route }) => {
   useEffect(()=>{
     if (data.length > 0) {
       const currentIndex = data.findIndex(achievement=>achievement.current);
-      if (currentIndex > 0) {
-        translateY.addListener(({value})=>{
-          scrollY.setValue(-value);
-        })
-        Animated.timing(pathOpacity, {
-          delay: 500,
-          toValue: 1,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }).start(()=>{
+      Animated.timing(pathOpacity, {
+        delay: 500,
+        toValue: 1,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }).start(()=>{
+        if (!isMounted?.current) {return}
+        if (currentIndex > 0) {
+          translateY.addListener(({value})=>{
+            scrollY.setValue(-value);
+          })
           Animated.timing(translateY, {
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
@@ -141,11 +142,10 @@ export const ProgressScreen = ({ navigation, route }) => {
             translateY.removeAllListeners();
             setScrollEnabled(true);
           })
-        });
-      } else {
-        setScrollEnabled(true);
-      }
-      
+        } else {
+          setScrollEnabled(true);
+        }
+      });
       // if (alreadyAnimatedPath.current) {
       //   setTimeout(() => {
       //     if (scrollView?.current) {
@@ -234,10 +234,9 @@ export const ProgressScreen = ({ navigation, route }) => {
             )}
             ref={scrollView}
             style={styles.scrollView(pathOpacity, pathHeight)}
+            contentContainerStyle={styles.contentContainerStyle(pathHeight*(settings.achievements.length/2))}
           >
-            <Animated.View style={{
-              transform: [{translateY}],
-            }}>
+            <Animated.View style={styles.pathContainer(translateY, pathHeight*(settings.achievements.length/2))}>
               {data.map((item, index) => <PathSegment pathHeight={pathHeight} key={index.toString()} currentIndex={currentIndex} popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />)}  
             </Animated.View>
           </AnimatedScrollView>
@@ -469,6 +468,15 @@ const pStyles = StyleSheet.create({
 
 
 const styles = StyleSheet.create({
+
+  contentContainerStyle: (height) => {
+    height
+  },
+
+  pathContainer: (translateY, height) => ({
+    transform: [{translateY}],
+    height
+  }),
 
   scrollView: (opacity, height) => ({
     // overflow: 'visible',
