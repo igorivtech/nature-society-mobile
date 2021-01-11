@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     color: colors.treeBlues,
     flexGrow: 1, 
     flexShrink: 1,
-    paddingRight: 8
+    paddingRight: smallScreen ? 2 : 8
   },
 
   profilePic: {
