@@ -17,9 +17,6 @@ import { UserContext } from "../../../context/context";
 import * as Animatable from "react-native-animatable";
 import { rankImages } from "../../../values/images";
 
-const topMarkerPosition = 0.15;
-const bottomMarkerPosition = 0.8;
-//
 const markerHeight = 72;
 const markerWidth = 65;
 //
@@ -61,15 +58,31 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
   const topContainerRef = useRef();
   const bottomContainerRef = useRef();
 
+  const topMarkerPosition = 0.2;
+  const bottomMarkerPosition = 0.8;
+
   const line = useRef(`
     M${pathTWidth/2},0
-    C${pathTWidth},${pathHeight * 0.25}
-    ${0},${pathHeight * 0.75}
+    C${pathTWidth},${pathHeight * 0.33}
+    ${0},${pathHeight * 0.66}
     ${pathTWidth/2},${pathHeight}
   `).current;
 
   const properties = useRef(path.svgPathProperties(line)).current;
   const lineLength = useRef(properties.getTotalLength()).current;
+
+  useEffect(()=>{
+    setUserProgress(0.5);
+    if (user && currentIndex === index) {
+      if (!item.bottomDone) {
+        const p = user !== null ? user.numOfReports : 0;
+        setUserProgress(0.33 * (bottomImageObject.points - p)/bottomImageObject.points);
+      } else if (!item.topDone) {
+        const p = user !== null ? user.numOfReports : 0;
+        setUserProgress(1 - (0.33 + 0.33 * (topImageObject.points - p)/topImageObject.points));
+      }
+    }
+  }, [user, currentIndex])
 
   const inputRange = [
     (index - 1) * pathHeight + animationPadding, 
@@ -91,19 +104,6 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
     outputRange: [0, 1],
     extrapolate: 'clamp'
   })
-
-  useEffect(()=>{
-    setUserProgress(0.5);
-    if (user && currentIndex === index) {
-      if (!item.bottomDone) {
-        const p = user !== null ? user.numOfReports : 0;
-        setUserProgress(0.25 * (bottomImageObject.points - p)/bottomImageObject.points);
-      } else if (!item.topDone) {
-        const p = user !== null ? user.numOfReports : 0;
-        setUserProgress(1 - (0.25 + 0.5 * (topImageObject.points - p)/topImageObject.points));
-      }
-    }
-  }, [user, currentIndex])
 
   useEffect(() => {
     if (currentIndex === index) {
