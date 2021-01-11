@@ -206,6 +206,10 @@ export const HomeScreen = ({ navigation, route }) => {
           ignoreCardsListener.current = false;
           lockAutoSearching.current = false;
         }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.6+1000);
+        //
+        if (locationListener?.current != null) {
+          locationListener?.current();
+        }
         Location.watchPositionAsync({
           timeInterval: 60*1000,
           distanceInterval: 100 // meters
@@ -216,12 +220,15 @@ export const HomeScreen = ({ navigation, route }) => {
         }).then(r=>locationListener.current=r.remove);
       }
     }
+  }, [location])
+
+  useEffect(()=>{
     return () => {
       if (locationListener?.current != null) {
         locationListener?.current();
       }
     }
-  }, [location])
+  }, [])
 
   useEffect(() => {
     if (serverPlaces && serverPlaces.length > 0) {
