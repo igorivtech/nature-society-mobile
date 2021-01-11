@@ -81,7 +81,8 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
 
   const scale = scrollY.interpolate({
     inputRange,
-    outputRange: [0, MAX_SCALE - 0.1, MAX_SCALE, MAX_SCALE - 0.1, 0],
+    // outputRange: [0, MAX_SCALE - 0.1, MAX_SCALE, MAX_SCALE - 0.1, 0],
+    outputRange: [0, MAX_SCALE, MAX_SCALE, MAX_SCALE, 0],
     extrapolate: 'clamp'
   })
 
