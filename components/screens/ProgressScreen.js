@@ -146,40 +146,6 @@ export const ProgressScreen = ({ navigation, route }) => {
           setScrollEnabled(true);
         }
       });
-      // if (alreadyAnimatedPath.current) {
-      //   setTimeout(() => {
-      //     if (scrollView?.current) {
-      //       scrollView?.current.scrollToOffset({
-      //         offset: pathHeight * currentIndex,
-      //         animated: true,
-      //       })  
-      //     }
-      //   }, 700);
-      // } else {
-        // alreadyAnimatedPath.current = true;
-        // if (scrollView?.current) {
-        //   scrollView?.current.scrollToOffset({
-        //     offset: pathHeight * currentIndex + 400,
-        //     animated: false,
-        //   });  
-        // }
-        // setTimeout(() => {
-        //   if (scrollView?.current) {
-        //     let viewOffset = pathHeight/3;
-        //     if (!data[currentIndex].bottomDone) {
-        //       viewOffset = -pathHeight/3;
-        //     }
-        //     if (user == null) {
-        //       viewOffset = 0;
-        //     }
-        //     scrollView?.current.scrollToIndex({
-        //       index: currentIndex,
-        //       animated: true,
-        //       viewOffset
-        //     })
-        //   }
-        // }, 1000);
-      // }
     }
   }, [data])
 
