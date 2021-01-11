@@ -32,7 +32,7 @@ const TOP_CONTAINER_MARGIN = smallScreen ? 4 : 14;
 const BOTTOM_CONTAINER_WIDTH = 70;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
-const MAX_SCALE = smallScreen ? 0.9 : 1
+const MAX_SCALE = 0.7; // smallScreen ? 0.6 : 0.7
 
 export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, popupVisible }) => {
 
