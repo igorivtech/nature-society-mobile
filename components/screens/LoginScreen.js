@@ -9,7 +9,7 @@ import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
-import { errors, height, width } from "../../values/consts";
+import { errors, height, smallScreen, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
 import { Popup } from "../views/Popup";
@@ -74,7 +74,7 @@ export const LoginScreen = ({ navigation, route }) => {
   }, [keyboardHeight]);
 
   const debounce = useCallback(_.debounce((keyboardHeight) => {
-    setScrollEnabled(keyboardHeight > 0);
+    setScrollEnabled(smallScreen && keyboardHeight > 0);
     if (keyboardHeight === 0) {
       scrollRef?.current.scrollToPosition(0, 0);
     } else {

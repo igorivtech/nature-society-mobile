@@ -11,7 +11,7 @@ import { colors } from "../../values/colors";
 import {useKeyboard} from '../../hooks/useKeyboard'
 import { ProfileView } from "../views/login/views";
 import * as ImagePicker from 'expo-image-picker';
-import { DEFAULT_IMAGE_QUALITY, errors, height, width } from "../../values/consts";
+import { DEFAULT_IMAGE_QUALITY, errors, height, smallScreen, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
 import * as Permissions from "expo-permissions";
@@ -72,7 +72,7 @@ export const ProfileScreen = ({ navigation }) => {
   }, [keyboardHeight]);
 
   const debounce = useCallback(_.debounce((keyboardHeight) => {
-    setScrollEnabled(keyboardHeight > 0);
+    setScrollEnabled(smallScreen && keyboardHeight > 0);
     if (keyboardHeight === 0) {
       scrollRef?.current.scrollToPosition(0, 0);
     } else {
