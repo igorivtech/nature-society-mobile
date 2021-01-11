@@ -17,15 +17,6 @@ import { UserContext } from "../../../context/context";
 import * as Animatable from "react-native-animatable";
 import { rankImages } from "../../../values/images";
 
-export const pathHeight = height-2*Constants.statusBarHeight - 2*30;
-const pathPadding = 0;
-const animationPadding = height * 0.4;
-const animationCenterExtra = 70;
-//
-const pathWidth = width - EXIT_SIZE;
-const pathXCenter = pathWidth*0.3
-const pathTWidth = pathHeight * 0.3;
-//
 const topMarkerPosition = 0.15;
 const bottomMarkerPosition = 0.8;
 //
@@ -43,7 +34,15 @@ const BOTTOM_CONTAINER_MARGIN = 12;
 
 const MAX_SCALE = smallScreen ? 0.9 : 1
 
-export const PathSegment = (({ currentIndex, scrollY, index, item, popupVisible }) => {
+export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, popupVisible }) => {
+
+  const pathPadding = 0;
+  const animationPadding = height * 0.4;
+  const animationCenterExtra = 70;
+  //
+  const pathWidth = width - EXIT_SIZE;
+  const pathXCenter = pathWidth*0.3
+  const pathTWidth = pathHeight * 0.3;
 
   const realIndex = index*2;
   const topImageObject = item.topDone ? rankImages[realIndex].on : rankImages[realIndex].off;
