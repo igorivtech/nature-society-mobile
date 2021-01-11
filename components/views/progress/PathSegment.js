@@ -37,8 +37,8 @@ const MAX_SCALE = smallScreen ? 0.9 : 1
 export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, popupVisible }) => {
 
   const pathPadding = 0;
-  const animationPadding = height * 0.4;
-  const animationCenterExtra = 70;
+  const animationPadding = pathHeight * 0.4;
+  const animationCenterExtra = 120;
   //
   const pathWidth = width - EXIT_SIZE;
   const pathXCenter = pathWidth*0.3
