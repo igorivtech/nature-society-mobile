@@ -119,7 +119,7 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
     }
     setupTop();
     setupBottom();
-  });
+  }, [userProgress]);
 
   const setupTop = () => {
     const pSmall = properties.getPointAtLength(lineLength * topMarkerPosition);
