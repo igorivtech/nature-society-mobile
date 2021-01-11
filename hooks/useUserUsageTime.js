@@ -8,7 +8,7 @@ import { ATTRIBUTE_LAST_USED_DATE } from "./useUser";
 const LAST_USAGE_TIME = 'LAST_USAGE_TIME'
 
 export const useUserUsageTime = (state) => {
-  const [appState, setAppState] = useState(AppState.currentState);
+  const appState = useRef(AppState.currentState);
   const startTime = useRef();
 
   const {sendUsageTime} = useServer();
@@ -49,7 +49,7 @@ export const useUserUsageTime = (state) => {
         }
       })
     }
-    if (appState === "active" && nextAppState.match(/inactive|background/)) {
+    if (appState.current === "active" && nextAppState.match(/inactive|background/)) {
       // App has gone to the background!
       if (startTime?.current) {
         const endTime = new Date();
@@ -61,7 +61,7 @@ export const useUserUsageTime = (state) => {
         startTime.current = null;
       }
     }
-    setAppState(nextAppState);
+    appState.current = nextAppState;
   };
 
   useEffect(() => {
