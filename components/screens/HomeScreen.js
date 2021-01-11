@@ -122,6 +122,11 @@ export const HomeScreen = ({ navigation, route }) => {
     //     payload: DEFAULT_NOTIFICATION
     //   })
     // }, 2000);
+    return () => {
+      if (locationListener?.current != null) {
+        locationListener?.current();
+      }
+    }
   }, []);
 
   useEffect(()=>{
@@ -221,14 +226,6 @@ export const HomeScreen = ({ navigation, route }) => {
       }
     }
   }, [location])
-
-  useEffect(()=>{
-    return () => {
-      if (locationListener?.current != null) {
-        locationListener?.current();
-      }
-    }
-  }, [])
 
   useEffect(() => {
     if (serverPlaces && serverPlaces.length > 0) {
