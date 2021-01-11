@@ -38,6 +38,7 @@ import { v4 as uuidv4 } from "uuid";
 import { LogoView } from "../views/home/LogoView";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { shouldAskUser } from "../../hooks/useNotifications";
+import useIsMounted from "ismounted";
 // import {useCountRenders} from "../../hooks/useCountRenders"
 // useCountRenders();
 
@@ -91,6 +92,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const [showPushPopup, setShowPushPopup] = useState(false);
 
+  const isMounted = useIsMounted();
   const isFocused = useIsFocused();
   const firstTime = useRef(true);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -169,7 +171,16 @@ export const HomeScreen = ({ navigation, route }) => {
     shouldAskUser().then(should => {
       if (should) {
         setTimeout(() => {
-          setShowPushPopup(true);
+          if (!isMounted.current) {return}
+          if (popupVisible) {
+            setPopupVisible(false);
+            setTimeout(() => {
+              if (!isMounted.current) {return}
+              setShowPushPopup(true);
+            }, 1000);
+          } else {
+            setShowPushPopup(true);
+          }
         }, LOCATION_POPUP_SECONDS_DELAY+PUSH_POPUP_SECONDS_DELAY);
       }
     })
