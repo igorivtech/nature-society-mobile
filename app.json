@@ -39,7 +39,19 @@
     },
     "android": {
       "package": "com.ivtech.hala",
-      "versionCode": 1
+      "versionCode": 1,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [{
+            "scheme": "halaapp"
+          }],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "description": ""
   }
