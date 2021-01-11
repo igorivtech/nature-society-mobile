@@ -10,6 +10,7 @@ import {
   Animated,
   Easing,
   Alert,
+  ScrollView,
 } from "react-native";
 import { UserContext } from "../../context/context";
 import { ASK_PUSH, SAVE_NOTIFICATION, SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
@@ -19,7 +20,7 @@ import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { EXIT_SIZE } from "../screens/ExploreScreen";
-import { PathSegment, pathHeight } from "../views/progress/PathSegment";
+import { PathSegment } from "../views/progress/PathSegment";
 import { UserHeader } from "../views/progress/views";
 import { calcCustomAchievements } from "../../hooks/helpers"
 import { useIsFocused } from "@react-navigation/native";
@@ -29,21 +30,31 @@ import { shouldAskUser } from "../../hooks/useNotifications";
 import { Auth } from "aws-amplify";
 import AsyncStorage from "@react-native-community/async-storage";
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
+import Constants from "expo-constants";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 export const ProgressScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
   const {user, notification, settings} = state;
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [scrollEnabled, setScrollEnabled] = useState(false);
 
   const [popupVisible, setPopupVisible] = useState(false);
   const [data, setData] = useState([]);
   const scrollView = useRef();
 
+  const isMounted = useIsMounted();
+
+  const translateY = useRef(new Animated.Value(0)).current;
   const scrollY = useRef(new Animated.Value(0)).current;
   const alreadyAnimatedPath = useRef(false);
   const pathOpacity = useRef(new Animated.Value(0)).current;
+
+  const {bottom, top} = useSafeAreaInsets();
+  const pathHeight = height-(bottom+top) - (30+15);
 
   useEffect(()=> {
     // DEBUG
@@ -106,13 +117,35 @@ export const ProgressScreen = ({ navigation, route }) => {
 
   useEffect(()=>{
     if (data.length > 0) {
-      Animated.timing(pathOpacity, {
-        toValue: 1,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
-      }).start();
-      //
       const currentIndex = data.findIndex(achievement=>achievement.current);
+      if (currentIndex > 0) {
+        translateY.addListener(({value})=>{
+          scrollY.setValue(-value);
+        })
+        Animated.timing(pathOpacity, {
+          delay: 500,
+          toValue: 1,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }).start(()=>{
+          Animated.timing(translateY, {
+            useNativeDriver: true,
+            easing: Easing.inOut(Easing.ease),
+            duration: 2500,
+            toValue: -pathHeight*currentIndex
+          }).start(()=>{
+            if (!isMounted?.current) {return}
+            translateY.setValue(0);
+            scrollView.current.scrollTo({x: 0, y: pathHeight*currentIndex, animated: false})
+            scrollY.setValue(pathHeight*currentIndex);
+            translateY.removeAllListeners();
+            setScrollEnabled(true);
+          })
+        });
+      } else {
+        setScrollEnabled(true);
+      }
+      
       // if (alreadyAnimatedPath.current) {
       //   setTimeout(() => {
       //     if (scrollView?.current) {
@@ -123,29 +156,29 @@ export const ProgressScreen = ({ navigation, route }) => {
       //     }
       //   }, 700);
       // } else {
-        alreadyAnimatedPath.current = true;
-        if (scrollView?.current) {
-          scrollView?.current.scrollToOffset({
-            offset: pathHeight * currentIndex + 400,
-            animated: false,
-          });  
-        }
-        setTimeout(() => {
-          if (scrollView?.current) {
-            let viewOffset = pathHeight/3;
-            if (!data[currentIndex].bottomDone) {
-              viewOffset = -pathHeight/3;
-            }
-            if (user == null) {
-              viewOffset = 0;
-            }
-            scrollView?.current.scrollToIndex({
-              index: currentIndex,
-              animated: true,
-              viewOffset
-            })
-          }
-        }, 1000);
+        // alreadyAnimatedPath.current = true;
+        // if (scrollView?.current) {
+        //   scrollView?.current.scrollToOffset({
+        //     offset: pathHeight * currentIndex + 400,
+        //     animated: false,
+        //   });  
+        // }
+        // setTimeout(() => {
+        //   if (scrollView?.current) {
+        //     let viewOffset = pathHeight/3;
+        //     if (!data[currentIndex].bottomDone) {
+        //       viewOffset = -pathHeight/3;
+        //     }
+        //     if (user == null) {
+        //       viewOffset = 0;
+        //     }
+        //     scrollView?.current.scrollToIndex({
+        //       index: currentIndex,
+        //       animated: true,
+        //       viewOffset
+        //     })
+        //   }
+        // }, 1000);
       // }
     }
   }, [data])
@@ -190,21 +223,26 @@ export const ProgressScreen = ({ navigation, route }) => {
       >
 
         <View style={styles.progressScreenContainer}>
-          <Animated.FlatList
+
+          <AnimatedScrollView
+            scrollEnabled={scrollEnabled}
             showsVerticalScrollIndicator={false}
-            extraData={currentIndex}
-            data={data}
             scrollEventThrottle={16}
             onScroll={Animated.event(
               [{nativeEvent: {contentOffset: {y: scrollY}}}],
-              { useNativeDriver: true }    
+              {useNativeDriver: true}    
             )}
             ref={scrollView}
-            style={styles.scrollView(pathOpacity)}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item, index})=><PathSegment currentIndex={currentIndex} popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />}
-          />
-          
+            style={styles.scrollView(pathOpacity, pathHeight)}
+          >
+            <Animated.View style={{
+              transform: [{translateY}],
+            }}>
+              {data.map((item, index) => <PathSegment pathHeight={pathHeight} key={index.toString()} currentIndex={currentIndex} popupVisible={popupVisible} index={index} scrollY={scrollY} item={item} />)}  
+            </Animated.View>
+          </AnimatedScrollView>
+
+
           <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
             {user ? (
               <Image source={require("../../assets/images/settings_icon.png")} />
@@ -432,10 +470,10 @@ const pStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
 
-  scrollView: (opacity) => ({
+  scrollView: (opacity, height) => ({
     // overflow: 'visible',
     opacity,
-    flex: 1,
+    height,
     width: "100%",
   }),
   
