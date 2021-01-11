@@ -14,12 +14,20 @@ import { emptyFunc, height, smallScreen, width } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
+import {useAppState} from "../../hooks/useAppState"
+import useIsMounted from "ismounted";
 
 const DURATION = 300;
 
 export const Popup = ({ website = false, permissions = false, textData, popupVisible, setPopupVisible, actionRef, action = emptyFunc, reverseActions = false }) => {
 
   const applyAction = useRef(false);
+  const isMounted = useIsMounted();
+
+  useAppState(()=>{
+    if (!isMounted.current) {return}
+    setPopupVisible(false);
+  });
   
   const close = () => {
     setPopupVisible(false);

@@ -9,9 +9,8 @@ export const useAppState = (onBackground) => {
       // App has come to the foreground!
     }
     if (appState.current === "active" && nextAppState.match(/inactive|background/)) {
-      if (onBackground?.current) {
-        console.log('onBackground?.current();');
-        onBackground?.current();
+      if (onBackground) {
+        onBackground();
       }
     }
     appState.current = nextAppState;
