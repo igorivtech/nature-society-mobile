@@ -46,6 +46,9 @@ const leftSpacer = { key: "left-spacer" };
 const rightSpacer = { key: "right-spacer" };
 const MAP_ANIMATION_DURATION = 700;
 
+const LOCATION_POPUP_SECONDS_DELAY = 12*1000;
+const PUSH_POPUP_SECONDS_DELAY = 30*1000;
+
 const calcRadius = (region) => {
   return 90 * region.longitudeDelta / 2;
 }
@@ -157,7 +160,7 @@ export const HomeScreen = ({ navigation, route }) => {
       if (status === 'undetermined') {
         setTimeout(() => {
           setRequestPermissions(true);
-        }, 1000*12);
+        }, LOCATION_POPUP_SECONDS_DELAY);
       }
     }
   }
@@ -167,7 +170,7 @@ export const HomeScreen = ({ navigation, route }) => {
       if (should) {
         setTimeout(() => {
           setShowPushPopup(true);
-        }, (12+30)*1000);
+        }, LOCATION_POPUP_SECONDS_DELAY+PUSH_POPUP_SECONDS_DELAY);
       }
     })
   }, [])
