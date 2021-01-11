@@ -205,14 +205,18 @@ export const OnboardingScreen = ({ navigation }) => {
           />
         </Animated.View>
 
-        <Animated.Text numberOfLines={3} adjustsFontSizeToFit={true} style={{
-          ...textStyles.onboardingText, 
-          opacity: textAlpha,
-          height: 80,
-          transform: [
-            {scale: textScale}
-          ]
-          }}>{currText}</Animated.Text>
+        <View pointerEvents='none'>
+          <Animated.Text numberOfLines={3} adjustsFontSizeToFit={true} style={{
+            ...textStyles.onboardingText, 
+            opacity: textAlpha,
+            height: 80,
+            transform: [
+              {scale: textScale}
+            ]
+          }}>
+            {currText}
+          </Animated.Text>
+        </View>
 
         {doneVisible ? (
           <Animated.View
