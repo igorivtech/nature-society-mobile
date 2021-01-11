@@ -131,7 +131,7 @@ export const ProgressScreen = ({ navigation, route }) => {
           Animated.timing(translateY, {
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
-            duration: 2500,
+            duration: 250*(currentIndex+1),
             toValue: -pathHeight*currentIndex
           }).start(()=>{
             if (!isMounted?.current) {return}
