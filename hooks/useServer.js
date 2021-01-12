@@ -43,7 +43,7 @@ export const useServer = () => {
         url = `${BASE_URL}/searchByName?text=${name}`;
       }
       const response = await fetch(
-        `${BASE_URL}/searchByName?lat=${location.latitude}&lng=${location.longitude}&text=${name}`,
+        url,
         {
           method: "GET",
         }
