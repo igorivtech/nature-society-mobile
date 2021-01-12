@@ -29,7 +29,11 @@ const clean = {
   outputRange: [0, 0.27184466019, 0.50485436893, 0.73786407767, 1],
   resizeMode: 'contain',
   thumb: require("../../assets/images/slider_thumb_clean.png"),
-  translateX: 2
+  thumbBg: require("../../assets/images/slider_thumb_clean_bg.png"),
+  thumbSize: {
+    height: 23,
+    width: 21
+  }
 }
 
 const crowd = {
@@ -41,7 +45,11 @@ const crowd = {
   outputRange: [0, 0.21621621621, 0.56756756756, 0.78378378378, 1],
   resizeMode: 'cover',
   thumb: require("../../assets/images/slider_thumb_crowd.png"),
-  translateX: -2
+  thumbBg: require("../../assets/images/slider_thumb_crowd_bg.png"),
+  thumbSize: {
+    height: 20,
+    width: 31
+  }
 }
 
 export const ReportScreen = ({navigation, route}) => {
@@ -90,18 +98,9 @@ export const ReportScreen = ({navigation, route}) => {
     iHelped.on = false;
     translateY.addListener(({value})=>{})
     //
-    setTimeout(() => {
-      if (isMounted.current) {
-        setAutoPlayFirst(true);
-      }
-    }, 1000);
-    setTimeout(() => {
-      setLoaded(true);
-    }, NAV_DURATION+300);
-    //
     setLocation(location);
     // fetching current location:?!!!
-    if (currentPosition != null) {
+    if (currentPosition != null) { // got physical location
       navigation.setParams({
         currentPosition: null
       });
@@ -113,14 +112,22 @@ export const ReportScreen = ({navigation, route}) => {
           showNoPlaceUI();
         }
       })
-    }
-    if (location == null && currentPosition == null) {
+    } else if (location == null && currentPosition == null) { // got nothing
       showNoPlaceUI();
     }
+    // what here?
+    setTimeout(() => {
+      if (isMounted.current) {
+        setAutoPlayFirst(true);
+      }
+    }, 1000);
+    setTimeout(() => {
+      setLoaded(true);
+    }, NAV_DURATION+300);
   }, []);
 
   const showNoPlaceUI = () => {
-    // setSearchVisible(true);
+    setSearchVisible(true);
   }
 
   useEffect(()=>{

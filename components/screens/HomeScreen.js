@@ -253,10 +253,11 @@ export const HomeScreen = ({ navigation, route }) => {
         lockAutoSearching.current = false;
       }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.6+1000);
     } else {
+      lockAutoSearching.current = false;
       mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
       setTimeout(() => {
         ignoreCardsListener.current = false;
-      }, MAP_ANIMATION_DURATION);
+      }, MAP_ANIMATION_DURATION+1);
     }
   }
 

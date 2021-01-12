@@ -10,13 +10,15 @@ import { colors } from "../../../values/colors";
 import useIsMounted from 'ismounted';
 import AsyncStorage from "@react-native-community/async-storage";
 import { globalStyles } from "../../../values/styles";
+import MaskedView from '@react-native-community/masked-view';
+
 
 const THUMB_RADIUS = 26.5 / 2;
 let SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
 if (smallScreen) {
   SLIDER_HEIGHT = 220;
 }
-const SLIDER_CONTAINER_HEIGHT = SLIDER_HEIGHT + 2*THUMB_RADIUS;
+
 const DURATION = 200;
 const LINE_OPACITY = 0.15;
 const TITLE_TRANSLATE_Y = 4;
@@ -427,15 +429,24 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Animated.Text style={sliderStyles.text(centerMinusTextOpacity, -titleTranslateY/2)}>{middleMinusText}</Animated.Text>
             <Animated.Text style={sliderStyles.text(bottomTextOpacity, -titleTranslateY)}>{bottomText}</Animated.Text>
           </Animated.View>
-          <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer}>
+          <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer(item.thumbSize.width, SLIDER_HEIGHT + item.thumbSize.height)}>
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
             <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
-              <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
-                <Animated.Image style={{
-                  resizeMode: 'contain',
-                  ...StyleSheet.absoluteFill,
-                  transform: [{scale}, {translateY: startUpTranslateY}, {translateX: item.translateX}]
-                }} source={item.thumb} />
+              <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
+                <Animated.View style={[StyleSheet.absoluteFill, {
+                    transform: [{scale}, {translateY: startUpTranslateY}]
+                  }]}>
+                  <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
+                  <MaskedView 
+                    maskElement={
+                      <Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />
+                    }>
+                      <Animated.View style={{
+                        ...item.thumbSize,
+                        backgroundColor: thumbColor
+                      }} />
+                  </MaskedView>
+                </Animated.View>
                 {/* <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
                   <Animated.View style={sliderStyles.thumbBg(thumbColor)} />
                 </Animated.View> */}
@@ -460,16 +471,22 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Text style={sliderStyles.goBack}>{strings.reportScreen.goBack}</Text>
           </TouchableOpacity>
         ) : (
-          <View style={sliderStyles.newReportContainer}>
-            <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
-            <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
-          </View>
+          <NewReportLabel />
         )}
       </Animated.View>
       
     </View>
   )
 });
+
+export const NewReportLabel = () => {
+  return (
+    <View style={sliderStyles.newReportContainer}>
+      <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
+      <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
+    </View>
+  )
+}
 
 const PAG_SIZE = 6.5;
 const indices = [0, 1, 2];
@@ -643,12 +660,12 @@ const sliderStyles = StyleSheet.create({
     opacity
   }),
 
-  sliderContainer: {
-    height: SLIDER_CONTAINER_HEIGHT,
-    width: THUMB_RADIUS*2,
+  sliderContainer: (width, height) => ({
+    height,
+    width: 31, // the max of the two slider thumbs
     alignItems: 'center',
     justifyContent: 'center'
-  },
+  }),
 
   middleLine: (opacity) => ({
     // zIndex: -1,
@@ -657,12 +674,12 @@ const sliderStyles = StyleSheet.create({
     backgroundColor: '#202224',
     width: 1,
   }),
-  thumbContainer: (thumbTranslateY) => ({
+  thumbContainer: (thumbTranslateY, thumbSize) => ({
     // zIndex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 2*THUMB_RADIUS,
-    width: 2*THUMB_RADIUS,
+    height: thumbSize.height,
+    width: thumbSize.width,
     position: 'absolute',
     bottom: 0,
     transform: [

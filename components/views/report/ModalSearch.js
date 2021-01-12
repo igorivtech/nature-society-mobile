@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
-import { StyleSheet, Animated, SafeAreaView, Modal } from "react-native";
+import { StyleSheet, Animated, SafeAreaView, Modal, View } from "react-native";
 import { globalStyles } from "../../../values/styles";
 import { SearchBar, TextCard } from "../../screens/ExploreScreen";
 import { useKeyboard } from "../../../hooks/useKeyboard";
 import { UserContext } from "../../../context/context";
 import { useServer } from "../../../hooks/useServer";
 import _ from "lodash";
+import { NewReportLabel } from "./Slider";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const ModalSearch = ({ visible, setSearchVisible, selectItem, location }) => {
 
@@ -17,6 +19,8 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
   const [searchTerm, setSearchTerm] = useState("");
 
   const [places, setPlaces] = useState([]);
+
+  const {top: topSafeAreaHeight} = useSafeAreaInsets();
 
   useEffect(()=>{
     if (places.length === 0 && serverPlaces.length > 0 && searchTerm.length === 0) {
@@ -58,7 +62,11 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 
   return (
     <Modal visible={visible} animationType="fade">
+      <View style={styles.newReportLabelContainer(topSafeAreaHeight)}>
+          <NewReportLabel />
+        </View>
       <SafeAreaView style={globalStyles.baseContainer}>
+        <View style={globalStyles.spacer(16)} />
         <SearchBar
           loadingSearch={loadingSearch}
           modal={true}
@@ -73,6 +81,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
           contentContainerStyle={styles.flatListContainer(
             keyboardBottomPadding
           )}
+          keyboardDismissMode='interactive'
           data={places}
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => (
@@ -90,6 +99,13 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 };
 
 const styles = StyleSheet.create({
+  newReportLabelContainer: (topSafeAreaHeight) => ({
+    position: 'absolute',
+    top: topSafeAreaHeight,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  }),
   flatListContainer: (keyboardBottomPadding) => ({
     paddingVertical: 34,
     paddingHorizontal: 40,
