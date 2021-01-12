@@ -98,18 +98,9 @@ export const ReportScreen = ({navigation, route}) => {
     iHelped.on = false;
     translateY.addListener(({value})=>{})
     //
-    setTimeout(() => {
-      if (isMounted.current) {
-        setAutoPlayFirst(true);
-      }
-    }, 1000);
-    setTimeout(() => {
-      setLoaded(true);
-    }, NAV_DURATION+300);
-    //
     setLocation(location);
     // fetching current location:?!!!
-    if (currentPosition != null) {
+    if (currentPosition != null) { // got physical location
       navigation.setParams({
         currentPosition: null
       });
@@ -121,14 +112,22 @@ export const ReportScreen = ({navigation, route}) => {
           showNoPlaceUI();
         }
       })
-    }
-    if (location == null && currentPosition == null) {
+    } else if (location == null && currentPosition == null) { // got nothing
       showNoPlaceUI();
     }
+    // what here?
+    setTimeout(() => {
+      if (isMounted.current) {
+        setAutoPlayFirst(true);
+      }
+    }, 1000);
+    setTimeout(() => {
+      setLoaded(true);
+    }, NAV_DURATION+300);
   }, []);
 
   const showNoPlaceUI = () => {
-    // setSearchVisible(true);
+    setSearchVisible(true);
   }
 
   useEffect(()=>{
