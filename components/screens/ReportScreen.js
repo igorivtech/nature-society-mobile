@@ -69,7 +69,7 @@ export const ReportScreen = ({navigation, route}) => {
 
   const isMounted = useIsMounted();
   
-  const {location} = route.params;
+  const {location, currentPosition} = route.params;
   const [selectedLocation, setLocation] = useState(location);
   const [searchVisible, setSearchVisible] = useState(false);
 
@@ -93,6 +93,10 @@ export const ReportScreen = ({navigation, route}) => {
     setTimeout(() => {
       setLoaded(true);
     }, NAV_DURATION+300);
+    //
+    if (currentPosition) {
+      console.log('currentPosition', currentPosition);
+    }
   }, []);
 
   useEffect(()=>{

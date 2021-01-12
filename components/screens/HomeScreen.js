@@ -408,10 +408,10 @@ export const HomeScreen = ({ navigation, route }) => {
         setHideList(true);
         // const location = selectedPlace;
         // navigation.navigate("Report", { location });
-        navigation.navigate("Report", { location: null });
+        navigation.navigate("Report", { location: null, currentPosition: location });
       }, SCREEN_WAIT_DURATION);
     // }
-  }, [navigation]) // selectedPlace
+  }, [navigation, location]) // selectedPlace
 
   const explore = useCallback(() => {
     setHideList(true);
