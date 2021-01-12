@@ -79,8 +79,9 @@ export const ReportScreen = ({navigation, route}) => {
   const errorActionRef = useRef(emptyFunc);
   const [loaded, setLoaded] = useState(false);
 
+  const {sendReport, getPlaces} = useServer();  
+
   useEffect(()=>{
-    setLocation(location);
     details.forEach(d=>d.on=false);
     iHelped.on = false;
     translateY.addListener(({value})=>{})
@@ -94,8 +95,17 @@ export const ReportScreen = ({navigation, route}) => {
       setLoaded(true);
     }, NAV_DURATION+300);
     //
-    if (currentPosition) {
-      console.log('currentPosition', currentPosition);
+    setLocation(location);
+    // fetching current location:?!!!
+    if (currentPosition != null) {
+      navigation.setParams({
+        currentPosition: null
+      });
+      getPlaces('1', currentPosition, currentPosition, 1500, 4).then(data=>{
+        if (data != null && data.pp.length > 0) {
+          setLocation(data.pp[0]);
+        }
+      })
     }
   }, []);
 
@@ -112,8 +122,6 @@ export const ReportScreen = ({navigation, route}) => {
   const {image} = useImageData;
   const [popupVisible, setPopupVisible] = useState(false);
   const [loadingSendReport, setLoadingSendReport] = useState(false);
-
-  const {sendReport} = useServer();  
 
   const finishReport = async () => {
     try {
