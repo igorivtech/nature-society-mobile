@@ -45,8 +45,8 @@ export const UserMarker = memo(({ user, location }) => {
 export const markerStyles = StyleSheet.create({
 
   markerContainer: {
-    height: 72,
-    width: 65,
+    height: 51,
+    width: 51,
   },
 
   markerIcon: {
@@ -55,21 +55,19 @@ export const markerStyles = StyleSheet.create({
 
   avatar: {
     position: 'absolute',
-    top: 11,
-    transform: [{translateX: -0.1}],
+    top: 7.5,
     backgroundColor: 'white',
-    width: 31.2,
-    height: 31.2,
-    borderRadius: 31.2/2
+    width: 31,
+    height: 31,
+    borderRadius: 31/2
   },
 
   profilePic: {
-    marginTop: 11,
-    transform: [{translateX: -0.1}],
+    marginTop: 7.5,
     backgroundColor: colors.clear,
-    width: 31.2,
-    height: 31.2,
-    borderRadius: 31.2/2
+    width: 31,
+    height: 31,
+    borderRadius: 31/2
   },
 
   markerInnerContainer: {
