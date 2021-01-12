@@ -525,12 +525,11 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [selectedPlace, serverPlaces])
 
   const checkUserMarkerVisible = () => {
-    let visible = false;
     if (location != null && mapRef.current?.__lastRegion != null) {
       const region = mapRef.current.__lastRegion;
-      visible = isPointWithinRadius(location, region, calcRadius(region)*1000);
+      const visible = isPointWithinRadius(location, region, calcRadius(region)*1000);
+      setUserMarkerVisible(visible);
     }
-    setUserMarkerVisible(visible);
   }
 
   const onRegionChangeComplete = async (region) => {
@@ -570,6 +569,9 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const centerMap = useCallback(()=>{
     animateToCurrentLocation();
+    if (location != null) {
+      setUserMarkerVisible(true);
+    }
   }, [location])
 
   return (
