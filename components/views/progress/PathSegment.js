@@ -329,8 +329,8 @@ export const markerStyles = StyleSheet.create({
   markerContainer: {
     zIndex: 2,
     position: 'absolute',
-    height: 72,
-    width: 65,
+    height: markerHeight,
+    width: markerWidth,
     alignItems: 'center'
   },
 })
