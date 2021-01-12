@@ -43,19 +43,19 @@ export const textStyles = StyleSheet.create({
     textAlign: "right",
   }),
 
-  normalOfSize: (size) => ({
+  normalOfSize: (size, color = colors.darkWithTone) => ({
     textAlign: "right",
     fontFamily: fonts.normal,
     fontSize: size,
-    color: colors.darkWithTone,
+    color,
   }),
 
-  boldOfSize: (size) => ({
+  boldOfSize: (size, color = colors.darkWithTone) => ({
     
     textAlign: "right",
     fontFamily: fonts.bold,
     fontSize: size,
-    color: colors.darkWithTone,
+    color: color,
     
   }),
 
