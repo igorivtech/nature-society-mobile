@@ -9,6 +9,7 @@ import { strings } from "../../../values/strings";
 import { colors } from "../../../values/colors";
 import useIsMounted from 'ismounted';
 import AsyncStorage from "@react-native-community/async-storage";
+import { globalStyles } from "../../../values/styles";
 
 const THUMB_RADIUS = 26.5 / 2;
 let SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
@@ -454,7 +455,10 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Text style={sliderStyles.goBack}>{strings.reportScreen.goBack}</Text>
           </TouchableOpacity>
         ) : (
-          <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
+          <View style={sliderStyles.newReportContainer}>
+            <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
+            <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
+          </View>
         )}
       </Animated.View>
       
@@ -529,11 +533,17 @@ const sliderStyles = StyleSheet.create({
     color: colors.lighterShade
   },
 
+  newReportContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 6
+  },
+
   newReport: {
     ...textStyles.normalOfSize(12),
     textAlign: 'center',
     color: colors.lighterShade,
-    paddingTop: 6
+    marginRight: 4
   },
 
   indicatorContainer: (opacity) => ({

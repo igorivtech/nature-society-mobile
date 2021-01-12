@@ -225,4 +225,7 @@ export const globalStyles = StyleSheet.create({
     height: small ? 20 : 25,
     resizeMode: 'contain'
   }),
+  imageJustContain: {
+    resizeMode: 'contain'
+  }
 });
