@@ -556,8 +556,8 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [])
 
   const centerMap = useCallback(()=>{
-    console.log('centerMap');
-  }, [])
+    animateToCurrentLocation();
+  }, [location])
 
   return (
     <View style={globalStyles.homeContainer}>
