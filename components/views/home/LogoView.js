@@ -7,7 +7,7 @@ import {Popup} from "../Popup"
 import { strings } from "../../../values/strings";
 import { smallScreen } from "../../../values/consts";
 
-export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeight}) => {
+export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeight, logoOpacity}) => {
 
   const opacity = listYTranslate.interpolate({
     inputRange: [0, bottomHeight],
@@ -32,7 +32,7 @@ export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeigh
     setPopupVisible(true);
   }
   return (
-    <View pointerEvents='none' style={styles.logo(bottomSafeAreaHeight, bottomHeight)} onPress={localOnPress}>
+    <View pointerEvents='none' style={styles.logo(bottomSafeAreaHeight, bottomHeight, logoOpacity)} onPress={localOnPress}>
       <Animated.Image style={styles.image(opacity, scale)} source={require("../../../assets/images/hala_logo.png")} />
     </View>
   );
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     opacity, 
     transform: [{scale}]
   }),
-  logo: (bottomSafeAreaHeight, bottomHeight) => ({
+  logo: (bottomSafeAreaHeight, bottomHeight, opacity) => ({
+    opacity,
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',

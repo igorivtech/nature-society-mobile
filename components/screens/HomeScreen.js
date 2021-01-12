@@ -87,6 +87,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [globalShow, setGlobalShow] = useState(null);
   const [places, setPlaces] = useState([]);
   const [listOpacity, setListOpacity] = useState(1);
+  const [logoOpacity, setLogoOpacity] = useState(0);
   const [hideList, setHideList] = useState(true);
   const [hideButtons, setHideButtons] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -327,7 +328,11 @@ export const HomeScreen = ({ navigation, route }) => {
       duration: 700,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
-    }).start();
+    }).start(()=>{
+      if (!hideList) {
+        setLogoOpacity(0);
+      }
+    });
   }, [hideList]);
 
   useEffect(() => {
@@ -546,6 +551,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const onPanDrag = useCallback(()=>{
     lockAutoSearching.current = false
     currSearchId.current = null;
+    setLogoOpacity(1);
   }, [])
 
   const onRegionChange = useCallback(()=>{
@@ -606,7 +612,7 @@ export const HomeScreen = ({ navigation, route }) => {
           <HomeButton index={0} onPress={explore} />
         </Animated.View>
       </SafeAreaView>
-      <LogoView bottomHeight={listHiddenYHeight} bottomSafeAreaHeight={bottomSafeAreaHeight} listYTranslate={listYTranslate} />
+      <LogoView logoOpacity={logoOpacity} bottomHeight={listHiddenYHeight} bottomSafeAreaHeight={bottomSafeAreaHeight} listYTranslate={listYTranslate} />
       <AnimatedSafeAreaView style={globalStyles.cardContainerTranslateY(listYTranslate, listOpacity)}>
         <Animated.FlatList
           ref={cardsListRef}
