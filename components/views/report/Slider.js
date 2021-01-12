@@ -654,7 +654,7 @@ const sliderStyles = StyleSheet.create({
 
   sliderContainer: (width, height) => ({
     height,
-    width,
+    width: 31, // the max of the two slider thumbs
     alignItems: 'center',
     justifyContent: 'center'
   }),
