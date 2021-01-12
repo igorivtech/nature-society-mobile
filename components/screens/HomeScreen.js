@@ -406,8 +406,9 @@ export const HomeScreen = ({ navigation, route }) => {
       setHideButtons(true);
       setTimeout(() => {
         setHideList(true);
-        const location = selectedPlace;
-        navigation.navigate("Report", { location });
+        // const location = selectedPlace;
+        // navigation.navigate("Report", { location });
+        navigation.navigate("Report", { location: null });
       }, SCREEN_WAIT_DURATION);
     // }
   }, [selectedPlace, navigation])
