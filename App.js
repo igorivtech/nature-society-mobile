@@ -108,6 +108,7 @@ export default function App() {
 
   return (
     <UserContext.Provider value={contextValue}>
+      <StatusBar style='auto' />
       <Portal.Host>
         <ActionSheetProvider>
           <NavigationContainer>
