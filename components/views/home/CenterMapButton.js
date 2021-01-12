@@ -19,7 +19,7 @@ export const CenterMapButton = memo(({ onPress, userMarkerVisible }) => {
   }, [userMarkerVisible]);
   return (
     <Animated.View style={styles.container(opacity)}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         <Image source={require("../../../assets/images/center_map_icon.png")} />
       </TouchableOpacity>
     </Animated.View>
