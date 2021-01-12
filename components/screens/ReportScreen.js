@@ -104,6 +104,8 @@ export const ReportScreen = ({navigation, route}) => {
       getPlaces('1', currentPosition, currentPosition, 3, 4).then(data=>{
         if (data != null && data.pp.length > 0) {
           setLocation(data.pp[0]);
+        } else {
+          showNoPlaceUI();
         }
       })
     }
@@ -113,7 +115,7 @@ export const ReportScreen = ({navigation, route}) => {
   }, []);
 
   const showNoPlaceUI = () => {
-    console.log('showNoPlaceUI');
+    setSearchVisible(true);
   }
 
   useEffect(()=>{
