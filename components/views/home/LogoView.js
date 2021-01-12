@@ -32,22 +32,24 @@ export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeigh
     setPopupVisible(true);
   }
   return (
-    <View pointerEvents='none' style={styles.logo(bottomSafeAreaHeight)} onPress={localOnPress}>
-      <Animated.Image style={[styles.image, {opacity, transform: [{scale}]}]} source={require("../../../assets/images/hala_logo.png")} />
+    <View pointerEvents='none' style={styles.logo(bottomSafeAreaHeight, bottomHeight)} onPress={localOnPress}>
+      <Animated.Image style={styles.image(opacity, scale)} source={require("../../../assets/images/hala_logo.png")} />
     </View>
   );
 });
 
 const styles = StyleSheet.create({
-  image: {
-    resizeMode: 'contain'
-  },
-  logo: (bottomSafeAreaHeight) => ({
+  image: (opacity, scale) => ({
+    resizeMode: 'contain',
+    opacity, 
+    transform: [{scale}]
+  }),
+  logo: (bottomSafeAreaHeight, bottomHeight) => ({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     left: 0,
     right: 0,
-    bottom: bottomSafeAreaHeight + 48
+    bottom: bottomSafeAreaHeight + bottomHeight/2 - 67/2
   })
 })
