@@ -401,17 +401,13 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [navigation])
 
   const report = useCallback(() => {
-    // if (selectedPlace != null) {
-      setHideList(true);
+    setHideList(true);
       setHideButtons(true);
       setTimeout(() => {
         setHideList(true);
-        // const location = selectedPlace;
-        // navigation.navigate("Report", { location });
         navigation.navigate("Report", { location: null, currentPosition: location });
       }, SCREEN_WAIT_DURATION);
-    // }
-  }, [navigation, location]) // selectedPlace
+  }, [navigation, location])
 
   const explore = useCallback(() => {
     setHideList(true);
