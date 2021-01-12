@@ -29,6 +29,7 @@ const clean = {
   outputRange: [0, 0.27184466019, 0.50485436893, 0.73786407767, 1],
   resizeMode: 'contain',
   thumb: require("../../assets/images/slider_thumb_clean.png"),
+  thumbBg: require("../../assets/images/slider_thumb_clean_bg.png"),
   thumbSize: {
     height: 23,
     width: 21
@@ -44,6 +45,7 @@ const crowd = {
   outputRange: [0, 0.21621621621, 0.56756756756, 0.78378378378, 1],
   resizeMode: 'cover',
   thumb: require("../../assets/images/slider_thumb_crowd.png"),
+  thumbBg: require("../../assets/images/slider_thumb_crowd_bg.png"),
   thumbSize: {
     height: 20,
     width: 31

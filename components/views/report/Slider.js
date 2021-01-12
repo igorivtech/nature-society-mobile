@@ -434,6 +434,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
             <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
               <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
+                <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
                 <AnimatedMaskedView style={[StyleSheet.absoluteFill, {
                     transform: [{scale}, {translateY: startUpTranslateY}]
                   }]} 
