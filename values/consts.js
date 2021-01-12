@@ -23,7 +23,7 @@ export const NAV_CLOSE_TAP_SIZE = 64;
 export const CARD_RADIUS = 24;
 
 const releaseChannel = Constants.manifest.releaseChannel;
-export const isAlt = releaseChannel === 'alt';
+export const isAlt = true; // releaseChannel === 'alt';
 
 // export const recentVisitors = [
 //   {name: "איגור", role: "לקט", image: "https://yt3.ggpht.com/ytc/AAUvwngMp380bo6VdFqO0Y81qDqJKsedWvTosxGAAZwp=s900-c-k-c0x00ffffff-no-rj"},

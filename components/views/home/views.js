@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, memo } from "react";
 import { View, TouchableOpacity, Image, Text, Animated, StyleSheet, Easing } from "react-native";
 import { colors } from "../../../values/colors";
-import { isAlt } from "../../../values/consts";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 
 const images = {
   0: require("../../../assets/images/Explore.png"),
-  1: isAlt ? require("../../../assets/images/ReportAlt.png") : require("../../../assets/images/Report.png"),
+  1: require("../../../assets/images/Report.png"),
   2: require("../../../assets/images/Progress.png"),
 };
 
