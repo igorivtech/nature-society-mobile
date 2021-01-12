@@ -231,6 +231,9 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [location])
 
   const animateToCurrentLocation = (firstTime = false) => {
+    if (location == null) {
+      return;
+    }
     ignoreCardsListener.current = true;
     setHideList(true);
     const region = {
