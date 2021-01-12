@@ -116,7 +116,7 @@ export const ReportScreen = ({navigation, route}) => {
   }, []);
 
   const showNoPlaceUI = () => {
-    setSearchVisible(true);
+    // setSearchVisible(true);
   }
 
   useEffect(()=>{
