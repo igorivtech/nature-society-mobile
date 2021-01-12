@@ -40,10 +40,10 @@ export const useServer = () => {
       if (location) {
         url = `${BASE_URL}/searchByName?lat=${location.latitude}&lng=${location.longitude}&text=${name}`;
       } else {
-        url = `${BASE_URL}/searchByName?text=${name}`;
+        url = `${BASE_URL}/searchByName?lat=${0}&lng=${0}&text=${name}`;
       }
       const response = await fetch(
-        `${BASE_URL}/searchByName?lat=${location.latitude}&lng=${location.longitude}&text=${name}`,
+        url,
         {
           method: "GET",
         }
