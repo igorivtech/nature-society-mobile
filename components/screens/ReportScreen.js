@@ -136,7 +136,7 @@ export const ReportScreen = ({navigation, route}) => {
       let data = {
         cleanness: convertSliderValue(cleannessRef.current),
         crowdness: convertSliderValue(crowdnessRef.current),
-        placeId: location._id,
+        placeId: selectedLocation._id,
         checkboxes: {
           'i_helped': iHelped.on,
           '1_extra_light': details[0].on,
