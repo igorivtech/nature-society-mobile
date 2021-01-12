@@ -24,7 +24,13 @@ const animations = {
 const delays = {
   0: 0,
   1: 2000,
-  2: 4000
+  2: 3000
+}
+
+const iterationDelay = {
+  0: 0,
+  1: 0,
+  2: 500
 }
 
 export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false }) => {
@@ -63,7 +69,7 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
 
   return (
     <Pressable onPress={onPress}>
-      <Animatable.View ref={ref} easing='ease-in-out' iterationCount='infinite' direction='alternate' delay={delays[index]} animation={animations[index]}>
+      <Animatable.View ref={ref} easing='ease-in-out' iterationCount='infinite' direction='alternate' iterationDelay={iterationDelay[index]} delay={delays[index]} animation={animations[index]}>
         <Animated.Image
           style={styles.buttonContainer(alpha, scale)}
           source={images[index]}
