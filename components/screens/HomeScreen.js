@@ -40,6 +40,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { shouldAskUser } from "../../hooks/useNotifications";
 import useIsMounted from "ismounted";
 import { CenterMapButton } from "../views/home/CenterMapButton";
+import { isPointWithinRadius } from 'geolib';
 // import {useCountRenders} from "../../hooks/useCountRenders"
 // useCountRenders();
 
@@ -92,6 +93,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [requestPermissions, setRequestPermissions] = useState(false);
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const [showPushPopup, setShowPushPopup] = useState(false);
+  const [userMarkerVisible, setUserMarkerVisible] = useState(false);
 
   const isMounted = useIsMounted();
   const isFocused = useIsFocused();
@@ -207,6 +209,7 @@ export const HomeScreen = ({ navigation, route }) => {
   useEffect(()=>{ // current location fetched
     if (objectLength(location) > 0) {
       if (firstTimeSettingLocation.current) {
+        checkUserMarkerVisible()
         firstTimeSettingLocation.current = false;
         ignoreCardsListener.current = true;
         lockAutoSearching.current = true;
@@ -505,7 +508,17 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }, [selectedPlace, serverPlaces])
 
+  const checkUserMarkerVisible = () => {
+    let visible = false;
+    if (location != null && mapRef.current?.__lastRegion != null) {
+      const region = mapRef.current.__lastRegion;
+      visible = isPointWithinRadius(location, region, calcRadius(region)*1000);
+    }
+    setUserMarkerVisible(visible);
+  }
+
   const onRegionChangeComplete = async (region) => {
+    checkUserMarkerVisible();
     // setGlobalTracksViewChanges(false);
     if (lockAutoSearching.current || specialLockForInitialFetch.current) {
       return;
@@ -616,7 +629,7 @@ export const HomeScreen = ({ navigation, route }) => {
         <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
       <GrowthPoints />
-      <CenterMapButton onPress={centerMap} />
+      <CenterMapButton userMarkerVisible={userMarkerVisible} onPress={centerMap} />
       <Popup
         permissions={true}
         textData={strings.popups.locationPermissions}
