@@ -438,10 +438,10 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
                     transform: [{scale}, {translateY: startUpTranslateY}]
                   }]} 
                   maskElement={
-                    <Image style={globalStyles.imageJustContain} source={item.thumb} />
+                    <Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />
                   }>
                     <Animated.View style={{
-                      ...StyleSheet.absoluteFill,
+                      ...item.thumbSize,
                       backgroundColor: thumbColor
                     }} />
                 </AnimatedMaskedView>
