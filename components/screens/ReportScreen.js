@@ -91,7 +91,9 @@ export const ReportScreen = ({navigation, route}) => {
   const errorActionRef = useRef(emptyFunc);
   const [loaded, setLoaded] = useState(false);
 
-  const {sendReport, getPlaces} = useServer();  
+  useAndroidOnBack(tapClose);
+
+  const {sendReport, getPlaces} = useServer();
 
   useEffect(()=>{
     details.forEach(d=>d.on=false);
