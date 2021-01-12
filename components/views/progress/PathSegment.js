@@ -30,6 +30,7 @@ const BOTTOM_CONTAINER_WIDTH = 70;
 const BOTTOM_CONTAINER_MARGIN = 12;
 
 const MAX_SCALE = 0.7; // smallScreen ? 0.6 : 0.7
+const C = -0.4;
 
 export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, popupVisible }) => {
 
@@ -84,12 +85,20 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
     }
   }, [user, currentIndex])
 
+  // const inputRange = [
+  //   (index - 1) * pathHeight + animationPadding, 
+  //   index * pathHeight - animationCenterExtra, 
+  //   index * pathHeight, 
+  //   index * pathHeight + animationCenterExtra, 
+  //   (index + 1) * pathHeight - animationPadding
+  // ]
+
   const inputRange = [
-    (index - 1) * pathHeight + animationPadding, 
-    index * pathHeight - animationCenterExtra, 
-    index * pathHeight, 
-    index * pathHeight + animationCenterExtra, 
-    (index + 1) * pathHeight - animationPadding
+    (index+0+C) * pathHeight,
+    (index+0.25+C) * pathHeight,
+    (index+0.5+C) * pathHeight,
+    (index+0.75+C) * pathHeight,
+    (index+1+C) * pathHeight,
   ]
 
   const scale = scrollY.interpolate({
