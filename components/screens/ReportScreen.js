@@ -107,7 +107,14 @@ export const ReportScreen = ({navigation, route}) => {
         }
       })
     }
+    if (location == null && currentPosition == null) {
+      showNoPlaceUI();
+    }
   }, []);
+
+  const showNoPlaceUI = () => {
+    console.log('showNoPlaceUI');
+  }
 
   useEffect(()=>{
     if (!errorPopupVisible) {
