@@ -431,9 +431,14 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
             <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
               <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
-                <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
+                <Animated.Image style={{
+                  resizeMode: 'contain',
+                  ...StyleSheet.absoluteFill,
+                  transform: [{scale}, {translateY: startUpTranslateY}, {translateX: item.translateX}]
+                }} source={item.thumb} />
+                {/* <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
                   <Animated.View style={sliderStyles.thumbBg(thumbColor)} />
-                </Animated.View>
+                </Animated.View> */}
               </Animated.View>
             </PanGestureHandler>
           </View>

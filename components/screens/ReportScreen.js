@@ -27,7 +27,9 @@ const clean = {
   animation: require("../../assets/animations/clean.json"),
   introAnimation: require("../../assets/animations/clean_intro.json"),
   outputRange: [0, 0.27184466019, 0.50485436893, 0.73786407767, 1],
-  resizeMode: 'contain'
+  resizeMode: 'contain',
+  thumb: require("../../assets/images/slider_thumb_clean.png"),
+  translateX: 2
 }
 
 const crowd = {
@@ -37,7 +39,9 @@ const crowd = {
   bg: require("../../assets/images/crowd_bg.png"),
   introAnimation: require('../../assets/animations/crowd_intro.json'),
   outputRange: [0, 0.21621621621, 0.56756756756, 0.78378378378, 1],
-  resizeMode: 'cover'
+  resizeMode: 'cover',
+  thumb: require("../../assets/images/slider_thumb_crowd.png"),
+  translateX: -2
 }
 
 export const ReportScreen = ({navigation, route}) => {
