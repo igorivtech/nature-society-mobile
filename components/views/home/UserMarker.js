@@ -57,6 +57,7 @@ export const markerStyles = StyleSheet.create({
     position: 'absolute',
     top: 7.5,
     backgroundColor: 'white',
+    transform: [{translateX: -0.05}, {translateY: 0.2}],
     width: 31,
     height: 31,
     borderRadius: 31/2
@@ -65,6 +66,7 @@ export const markerStyles = StyleSheet.create({
   profilePic: {
     marginTop: 7.5,
     backgroundColor: colors.clear,
+    transform: [{translateX: -0.05}, {translateY: 0.2}],
     width: 31,
     height: 31,
     borderRadius: 31/2
