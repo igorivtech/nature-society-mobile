@@ -16,7 +16,7 @@ export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeigh
   })
   const scale = opacity.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 1],
+    outputRange: [0.4, 1],
     extrapolate: 'clamp'
   })
 
