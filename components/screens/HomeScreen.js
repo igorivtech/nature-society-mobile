@@ -211,24 +211,9 @@ export const HomeScreen = ({ navigation, route }) => {
       if (firstTimeSettingLocation.current) {
         checkUserMarkerVisible()
         firstTimeSettingLocation.current = false;
-        ignoreCardsListener.current = true;
-        lockAutoSearching.current = true;
         specialLockForInitialFetch.current = true;
-        setHideList(true);
-        const region = {
-          ...location,
-          longitudeDelta: 0.7, // 1 is 111 kilometers
-          latitudeDelta: 0.7*SCREEN_ASPECT_RATIO
-        }
         console.log("actuallyGetPlaces: first time location fetched - useEffect");
-        actuallyGetPlaces(region, location);
-        setTimeout(() => {
-          mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
-        }, SPLASH_HIDE_DELAY*0.6);
-        setTimeout(() => {
-          ignoreCardsListener.current = false;
-          lockAutoSearching.current = false;
-        }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.6+1000);
+        animateToCurrentLocation();
         //
         if (locationListener?.current != null) {
           locationListener?.current();
@@ -244,6 +229,25 @@ export const HomeScreen = ({ navigation, route }) => {
       }
     }
   }, [location])
+
+  const animateToCurrentLocation = () => {
+    ignoreCardsListener.current = true;
+    lockAutoSearching.current = true;
+    setHideList(true);
+    const region = {
+      ...location,
+      longitudeDelta: 0.7, // 1 is 111 kilometers
+      latitudeDelta: 0.7*SCREEN_ASPECT_RATIO
+    }
+    actuallyGetPlaces(region, location);
+    setTimeout(() => {
+      mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
+    }, SPLASH_HIDE_DELAY*0.6);
+    setTimeout(() => {
+      ignoreCardsListener.current = false;
+      lockAutoSearching.current = false;
+    }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.6+1000);
+  }
 
   useEffect(() => {
     if (serverPlaces && serverPlaces.length > 0) {
