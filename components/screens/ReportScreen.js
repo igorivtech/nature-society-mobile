@@ -101,7 +101,7 @@ export const ReportScreen = ({navigation, route}) => {
       navigation.setParams({
         currentPosition: null
       });
-      getPlaces('1', currentPosition, currentPosition, 1500, 4).then(data=>{
+      getPlaces('1', currentPosition, currentPosition, 3, 4).then(data=>{
         if (data != null && data.pp.length > 0) {
           setLocation(data.pp[0]);
         }
