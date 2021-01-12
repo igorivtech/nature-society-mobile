@@ -69,7 +69,16 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
 
   return (
     <Pressable onPress={onPress}>
-      <Animatable.View ref={ref} easing='ease-in-out' iterationCount='infinite' direction='alternate' iterationDelay={iterationDelay[index]} delay={delays[index]} animation={animations[index]}>
+      <Animatable.View 
+        ref={ref} 
+        useNativeDriver={true}
+        easing='ease-in-out' 
+        iterationCount='infinite' 
+        direction='alternate' 
+        iterationDelay={iterationDelay[index]} 
+        delay={delays[index]} 
+        animation={animations[index]}
+      >
         <Animated.Image
           style={styles.buttonContainer(alpha, scale)}
           source={images[index]}
