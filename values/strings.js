@@ -136,7 +136,7 @@ export const strings = {
   },
   placeScreen: {
     sharePlace: (name) => {
-      return `מצאתי באפליקציית "בשביל הטבע" את ${name.trim()} וחשבתי שיענין אתכם`
+      return `מצאתי באפליקציית "בשביל הטבע" את ${name.trim()} וחשבתי שיעניין אתכם`
     },
     recentVisitors: (locked) => {
       return 'מבקר אחרון';
