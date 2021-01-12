@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
-import { StyleSheet, Animated, SafeAreaView, Modal } from "react-native";
+import { StyleSheet, Animated, SafeAreaView, Modal, View } from "react-native";
 import { globalStyles } from "../../../values/styles";
 import { SearchBar, TextCard } from "../../screens/ExploreScreen";
 import { useKeyboard } from "../../../hooks/useKeyboard";
 import { UserContext } from "../../../context/context";
 import { useServer } from "../../../hooks/useServer";
 import _ from "lodash";
+import { NewReportLabel } from "./Slider";
 
 export const ModalSearch = ({ visible, setSearchVisible, selectItem, location }) => {
 
@@ -59,6 +60,9 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
   return (
     <Modal visible={visible} animationType="fade">
       <SafeAreaView style={globalStyles.baseContainer}>
+        <View style={styles.newReportLabelContainer}>
+          <NewReportLabel />
+        </View>
         <SearchBar
           loadingSearch={loadingSearch}
           modal={true}
@@ -90,6 +94,13 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 };
 
 const styles = StyleSheet.create({
+  newReportLabelContainer: {
+    position: 'absolote',
+    top: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
   flatListContainer: (keyboardBottomPadding) => ({
     paddingVertical: 34,
     paddingHorizontal: 40,

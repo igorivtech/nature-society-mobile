@@ -471,16 +471,22 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Text style={sliderStyles.goBack}>{strings.reportScreen.goBack}</Text>
           </TouchableOpacity>
         ) : (
-          <View style={sliderStyles.newReportContainer}>
-            <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
-            <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
-          </View>
+          <NewReportLabel />
         )}
       </Animated.View>
       
     </View>
   )
 });
+
+export const NewReportLabel = () => {
+  return (
+    <View style={sliderStyles.newReportContainer}>
+      <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
+      <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
+    </View>
+  )
+}
 
 const PAG_SIZE = 6.5;
 const indices = [0, 1, 2];
