@@ -411,7 +411,7 @@ export const HomeScreen = ({ navigation, route }) => {
         navigation.navigate("Report", { location: null });
       }, SCREEN_WAIT_DURATION);
     // }
-  }, [selectedPlace, navigation])
+  }, [navigation]) // selectedPlace
 
   const explore = useCallback(() => {
     setHideList(true);
