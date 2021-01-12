@@ -434,18 +434,20 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
             <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
               <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
-                <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
-                <AnimatedMaskedView style={[StyleSheet.absoluteFill, {
+                <Animated.View style={[StyleSheet.absoluteFill, {
                     transform: [{scale}, {translateY: startUpTranslateY}]
-                  }]} 
-                  maskElement={
-                    <Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />
-                  }>
-                    <Animated.View style={{
-                      ...item.thumbSize,
-                      backgroundColor: thumbColor
-                    }} />
-                </AnimatedMaskedView>
+                  }]}>
+                  <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
+                  <AnimatedMaskedView 
+                    maskElement={
+                      <Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />
+                    }>
+                      <Animated.View style={{
+                        ...item.thumbSize,
+                        backgroundColor: thumbColor
+                      }} />
+                  </AnimatedMaskedView>
+                </Animated.View>
                 {/* <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
                   <Animated.View style={sliderStyles.thumbBg(thumbColor)} />
                 </Animated.View> */}
