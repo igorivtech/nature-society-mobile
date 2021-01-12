@@ -12,7 +12,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { globalStyles } from "../../../values/styles";
 import MaskedView from '@react-native-community/masked-view';
 
-const AnimatedMaskedView = Animated.createAnimatedComponent(MaskedView);
 
 const THUMB_RADIUS = 26.5 / 2;
 let SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
@@ -438,7 +437,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
                     transform: [{scale}, {translateY: startUpTranslateY}]
                   }]}>
                   <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
-                  <AnimatedMaskedView 
+                  <MaskedView 
                     maskElement={
                       <Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />
                     }>
@@ -446,7 +445,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
                         ...item.thumbSize,
                         backgroundColor: thumbColor
                       }} />
-                  </AnimatedMaskedView>
+                  </MaskedView>
                 </Animated.View>
                 {/* <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
                   <Animated.View style={sliderStyles.thumbBg(thumbColor)} />
