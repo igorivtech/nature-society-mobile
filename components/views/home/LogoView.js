@@ -1,5 +1,5 @@
 import React, { memo, useRef, useState } from "react";
-import { Animated, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Animated, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SPACER_ITEM_SIZE } from "./PlaceCard";
 import * as WebBrowser from 'expo-web-browser';
 import * as Animatable from "react-native-animatable";
@@ -7,11 +7,16 @@ import {Popup} from "../Popup"
 import { strings } from "../../../values/strings";
 import { smallScreen } from "../../../values/consts";
 
-export const LogoView = memo(({listYTranslate, bottomHeight}) => {
+export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeight}) => {
 
   const opacity = listYTranslate.interpolate({
     inputRange: [0, bottomHeight],
-    outputRange: [1, 0],
+    outputRange: [0, 1],
+    extrapolate: 'clamp'
+  })
+  const scale = opacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
     extrapolate: 'clamp'
   })
 
@@ -27,12 +32,9 @@ export const LogoView = memo(({listYTranslate, bottomHeight}) => {
     setPopupVisible(true);
   }
   return (
-    <TouchableOpacity style={styles.logo} onPress={localOnPress}>
-      <Animated.View style={{opacity}}>
-        <Animatable.Image style={styles.image} animation='fadeIn' delay={2000} source={require("../../../assets/images/hala_logo.png")} />
-      </Animated.View>
-      <Popup website={true} textData={strings.popups.halaWebsite} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={actionRef} />
-    </TouchableOpacity>
+    <View pointerEvents='none' style={styles.logo(bottomSafeAreaHeight)} onPress={localOnPress}>
+      <Animated.Image style={[styles.image, {opacity, transform: [{scale}]}]} source={require("../../../assets/images/hala_logo.png")} />
+    </View>
   );
 });
 
@@ -40,9 +42,12 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'contain'
   },
-  logo: {
-    position: "absolute",
-    top: -(38 + 12),
-    left: SPACER_ITEM_SIZE * (smallScreen ? 1.5 : 1.25),
-  }
+  logo: (bottomSafeAreaHeight) => ({
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    bottom: bottomSafeAreaHeight + 48
+  })
 })

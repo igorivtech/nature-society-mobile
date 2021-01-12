@@ -606,6 +606,7 @@ export const HomeScreen = ({ navigation, route }) => {
           <HomeButton index={0} onPress={explore} />
         </Animated.View>
       </SafeAreaView>
+      <LogoView bottomHeight={listHiddenYHeight} bottomSafeAreaHeight={bottomSafeAreaHeight} listYTranslate={listYTranslate} />
       <AnimatedSafeAreaView style={globalStyles.cardContainerTranslateY(listYTranslate, listOpacity)}>
         <Animated.FlatList
           ref={cardsListRef}
@@ -640,7 +641,6 @@ export const HomeScreen = ({ navigation, route }) => {
             );
           }}
         />
-        <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
       <GrowthPoints />
       <CenterMapButton userMarkerVisible={userMarkerVisible} onPress={centerMap} />
