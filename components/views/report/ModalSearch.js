@@ -66,6 +66,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
           <NewReportLabel />
         </View>
       <SafeAreaView style={globalStyles.baseContainer}>
+        <View style={globalStyles.spacer(16)} />
         <SearchBar
           loadingSearch={loadingSearch}
           modal={true}
@@ -80,6 +81,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
           contentContainerStyle={styles.flatListContainer(
             keyboardBottomPadding
           )}
+          keyboardDismissMode='interactive'
           data={places}
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => (
@@ -99,7 +101,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 const styles = StyleSheet.create({
   newReportLabelContainer: (topSafeAreaHeight) => ({
     position: 'absolute',
-    top: topSafeAreaHeight-6,
+    top: topSafeAreaHeight,
     left: 0,
     right: 0,
     alignItems: 'center',
