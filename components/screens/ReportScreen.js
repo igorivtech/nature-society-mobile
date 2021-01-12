@@ -104,7 +104,7 @@ export const ReportScreen = ({navigation, route}) => {
       navigation.setParams({
         currentPosition: null
       });
-      getPlaces('1', currentPosition, currentPosition, 3, 4).then(data=>{
+      getPlaces('1', currentPosition, currentPosition, 15, 4).then(data=>{ // 3 km. 15 is just DEBUG
         if (!isMounted?.current) {return}
         if (data != null && data.pp.length > 0) {
           setLocation(data.pp[0]);
