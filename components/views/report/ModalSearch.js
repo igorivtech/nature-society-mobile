@@ -7,6 +7,7 @@ import { UserContext } from "../../../context/context";
 import { useServer } from "../../../hooks/useServer";
 import _ from "lodash";
 import { NewReportLabel } from "./Slider";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const ModalSearch = ({ visible, setSearchVisible, selectItem, location }) => {
 
@@ -18,6 +19,8 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
   const [searchTerm, setSearchTerm] = useState("");
 
   const [places, setPlaces] = useState([]);
+
+  const {top: topSafeAreaHeight} = useSafeAreaInsets();
 
   useEffect(()=>{
     if (places.length === 0 && serverPlaces.length > 0 && searchTerm.length === 0) {
@@ -59,10 +62,10 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 
   return (
     <Modal visible={visible} animationType="fade">
-      <SafeAreaView style={globalStyles.baseContainer}>
-        <View style={styles.newReportLabelContainer}>
+      <View style={styles.newReportLabelContainer(topSafeAreaHeight)}>
           <NewReportLabel />
         </View>
+      <SafeAreaView style={globalStyles.baseContainer}>
         <SearchBar
           loadingSearch={loadingSearch}
           modal={true}
@@ -94,13 +97,13 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 };
 
 const styles = StyleSheet.create({
-  newReportLabelContainer: {
+  newReportLabelContainer: (topSafeAreaHeight) => ({
     position: 'absolute',
-    top: 0,
+    top: topSafeAreaHeight-6,
     left: 0,
     right: 0,
     alignItems: 'center',
-  },
+  }),
   flatListContainer: (keyboardBottomPadding) => ({
     paddingVertical: 34,
     paddingHorizontal: 40,
