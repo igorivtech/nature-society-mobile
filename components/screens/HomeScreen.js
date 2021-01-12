@@ -39,6 +39,7 @@ import { LogoView } from "../views/home/LogoView";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { shouldAskUser } from "../../hooks/useNotifications";
 import useIsMounted from "ismounted";
+import { CenterMapButton } from "../views/home/CenterMapButton";
 // import {useCountRenders} from "../../hooks/useCountRenders"
 // useCountRenders();
 
@@ -537,6 +538,10 @@ export const HomeScreen = ({ navigation, route }) => {
     // setGlobalTracksViewChanges(true);
   }, [])
 
+  const centerMap = useCallback(()=>{
+    console.log('centerMap');
+  }, [])
+
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
@@ -611,6 +616,7 @@ export const HomeScreen = ({ navigation, route }) => {
         <LogoView bottomHeight={listHiddenYHeight} listYTranslate={listYTranslate} />
       </AnimatedSafeAreaView>
       <GrowthPoints />
+      <CenterMapButton onPress={centerMap} />
       <Popup
         permissions={true}
         textData={strings.popups.locationPermissions}
