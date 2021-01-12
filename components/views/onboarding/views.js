@@ -2,7 +2,6 @@ import React, { useEffect, useRef, memo } from "react";
 import { View, Text, Pressable, Animated, Easing, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
 import { colors } from "../../../values/colors";
 import { isAlt } from "../../../values/consts";
-import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import * as Animatable from "react-native-animatable";
 
@@ -18,33 +17,39 @@ const SMALL_SCALE = 0.66;
 
 const animations = {
   0: null,
-  1: 'tada',
+  1: 'pulse',
   2: 'wobble'
 }
 
 const delays = {
   0: 0,
   1: 2000,
-  2: 3000
+  2: 4000
 }
 
 export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false }) => {
   const alpha = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(SMALL_SCALE)).current;
+  const ref = useRef();
 
   useEffect(() => {
-    Animated.timing(alpha, {
-      toValue: selected ? 1 : 0.5,
-      duration: buttonAnimation,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(scale, {
-      toValue: selected ? 1 : SMALL_SCALE,
-      duration: buttonAnimation,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
+    Animated.parallel([
+      Animated.timing(alpha, {
+        toValue: selected ? 1 : 0.5,
+        duration: buttonAnimation,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }),
+      Animated.timing(scale, {
+        toValue: selected ? 1 : SMALL_SCALE,
+        duration: buttonAnimation,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      })
+    ]).start();
+    if (selected) {
+      ref.current?.stopAnimation();
+    }
   }, [selected]);
 
   const onPress = () => {
@@ -58,18 +63,22 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
 
   return (
     <Pressable onPress={onPress}>
-      <Animatable.View delay={delays[index]} animation={animations[index]}>
+      <Animatable.View ref={ref} easing='ease-in-out' iterationCount='infinite' direction='alternate' delay={delays[index]} animation={animations[index]}>
         <Animated.Image
-          style={{
-            opacity: alpha,
-            transform: [{ scale: scale }],
-          }}
+          style={styles.buttonContainer(alpha, scale)}
           source={images[index]}
         />
       </Animatable.View>
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonContainer: (opacity, scale) => ({
+    opacity,
+    transform: [{ scale }],
+  })
+})
 
 export const CoolButton = memo(({ textStyle = {}, title, onPress, loading = false }) => {
 
