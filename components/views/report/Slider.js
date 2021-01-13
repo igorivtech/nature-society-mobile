@@ -421,7 +421,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
           </Animated.View>
           <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer(item.thumbSize.width, SLIDER_HEIGHT + item.thumbSize.height)}>
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
-            <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
+            <PanGestureHandler enabled={location != null && dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
               <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
                 <Animated.View style={sliderStyles.maskedViewContainer(scale, startUpTranslateY)}>
                   <Image style={sliderStyles.backgroundMaskImage(item)} source={item.thumbBg} />
