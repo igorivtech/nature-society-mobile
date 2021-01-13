@@ -267,12 +267,6 @@ export const HomeScreen = ({ navigation, route }) => {
     if (sortedPlaces.length > 0) {
       setPlaces([leftSpacer, ...sortedPlaces, rightSpacer]);
       setSelectedPlace(sortedPlaces[0]);
-    }
-  }, [sortedPlaces])
-
-  useEffect(() => {
-    if (serverPlaces && serverPlaces.length > 0) {
-      setSortedPlaces(specialSortPlaces([...serverPlaces], locationRef.current));
       ignoreCardsListener.current = true;
       cardsListRef.current.scrollToOffset({
         animated: false,
@@ -283,7 +277,12 @@ export const HomeScreen = ({ navigation, route }) => {
       }, 10);
       if (isFocused) {
         setHideList(false);
-      }
+      }    
+    }
+  }, [sortedPlaces])
+  useEffect(() => {
+    if (serverPlaces && serverPlaces.length > 0) {
+      setSortedPlaces(specialSortPlaces([...serverPlaces], locationRef.current));
     } else {
       // somthing i guess?
     }
