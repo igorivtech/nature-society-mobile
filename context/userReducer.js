@@ -11,6 +11,10 @@ export const ASK_PUSH = "ASK_PUSH";
 export const initialState = {
   token: null,
   user: null,
+  offlineUser: {
+    points: 100,
+    numOfReports: 0,
+  },
   notification: null,
   deepLinkId: null,
   serverPlaces: [],

@@ -31,6 +31,7 @@ const DEFAULT_UNLOCKED_PLACES = [];
 export const LoginScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
+  const {offlineUser} = state;
 
   const [errorData, setErrorData] = useState(strings.popups.empty);
 
@@ -174,8 +175,8 @@ export const LoginScreen = ({ navigation, route }) => {
           let attributes = {
             name: name.trim(),
           }
-          attributes[ATTRIBUTE_POINTS] = `${DEFAULT_POINTS}`;
-          attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${DEFAULT_NUM_OF_REPORTS}`;
+          attributes[ATTRIBUTE_POINTS] = `${offlineUser.points}`;
+          attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${offlineUser.numOfReports}`;
           attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(DEFAULT_UNLOCKED_PLACES);
           if (fileName) {
             attributes.picture = fileName;
