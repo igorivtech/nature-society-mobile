@@ -41,7 +41,7 @@ const clampAnimationValue = (p) => {
 const TITLES_DELTA = 1/7;
 const ALREADY_SHOWN = "ALREADY_SHOWN"
 
-export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible, notLoggedInError, token}) => {
+export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
   const {animation, introAnimation, title, titles} = item;
 
@@ -204,9 +204,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
     if (!isMounted.current) {return}
     const alreadyShown = await AsyncStorage.getItem(ALREADY_SHOWN);
     if (alreadyShown === null) {
-      if (token != null) {
-        AsyncStorage.setItem(ALREADY_SHOWN, "1").then(()=>{})
-      }
+      AsyncStorage.setItem(ALREADY_SHOWN, "1").then(()=>{})
       firstTimeAnimation();
     } else {
       regularAnimation();
@@ -305,12 +303,6 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }
 
   const localOnPress = () => {
-    if (token === null) {
-      if (notLoggedInError !== null) {
-        notLoggedInError();
-      }
-      return;
-    }
     if (alreadyAnswered.current) {
       onPress(); // next please
     } else {
