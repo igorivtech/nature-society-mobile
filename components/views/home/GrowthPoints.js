@@ -32,25 +32,21 @@ export const GrowthPoints = memo(() => {
   }, [])
 
   const setup = async () => {
-    if (user !== null) {
-      const shown = await AsyncStorage.getItem(ALREADY_SHOWN);
-      if (shown === null) {
-        await AsyncStorage.setItem(ALREADY_SHOWN, '1');
-        if (!isMounted.current) {return}
-        setReady(true);
-      } else {
-        if (!isMounted.current) {return}
-        setPoints(user.points);
-        show(true, 1000).start(()=>{
-          show(false, 3500).start(()=>{
-            if (!isMounted.current) {return}
-            setReady(true);
-          });
-        })
-      }
-    } else {
+    const points = user != null ? user.points : offlineUser.points
+    const shown = await AsyncStorage.getItem(ALREADY_SHOWN);
+    if (shown === null) {
+      await AsyncStorage.setItem(ALREADY_SHOWN, '1');
       if (!isMounted.current) {return}
       setReady(true);
+    } else {
+      if (!isMounted.current) {return}
+      setPoints(points);
+      show(true, 1000).start(()=>{
+        show(false, 3500).start(()=>{
+          if (!isMounted.current) {return}
+          setReady(true);
+        });
+      })
     }
   }
 
@@ -58,7 +54,8 @@ export const GrowthPoints = memo(() => {
     if (!ready) {
       return;
     }
-    if (user && user.points !== points) {
+    const p = user != null ? user.points : offlineUser.points;
+    if (p !== points) {
       show(true, 1000).start(()=>{
         Animated.timing(textOpacity, {
           delay: 1000,
@@ -68,7 +65,7 @@ export const GrowthPoints = memo(() => {
           easing: Easing.inOut(Easing.ease)
         }).start(()=>{
           if (isMounted.current) {
-            setPoints(user.points);
+            setPoints(p);
             Animated.timing(textOpacity, {
               toValue: 1,
               useNativeDriver: true,
@@ -81,7 +78,7 @@ export const GrowthPoints = memo(() => {
         })
       })
     }
-  }, [user, ready]);
+  }, [user, offlineUser, ready]);
 
   const show = (show, delay) => {
     return Animated.parallel([
