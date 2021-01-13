@@ -17,8 +17,8 @@ import { UserContext } from "../../../context/context";
 import * as Animatable from "react-native-animatable";
 import { rankImages } from "../../../values/images";
 
-const markerHeight = 72;
-const markerWidth = 65;
+const markerHeight = 51;
+const markerWidth = 51;
 //
 const PATH_WIDTH = 1;
 const DONE_WIDTH = 2;
@@ -76,11 +76,12 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
     setUserProgress(0.5);
     if (user && currentIndex === index) {
       if (!item.bottomDone) {
-        const p = user !== null ? user.numOfReports : 0;
-        setUserProgress(0.33 * (bottomImageObject.points - p)/bottomImageObject.points);
+        // const p = user !== null ? user.numOfReports : 0;
+        // setUserProgress(0.33 * (bottomImageObject.points - p)/bottomImageObject.points);
+        setUserProgress(0.1);
       } else if (!item.topDone) {
         const p = user !== null ? user.numOfReports : 0;
-        setUserProgress(1 - (0.33 + 0.33 * (topImageObject.points - p)/topImageObject.points));
+        setUserProgress(Math.min(0.7, 1 - (0.33 + 0.33 * (topImageObject.points - p)/topImageObject.points)));
       }
     }
   }, [user, currentIndex])
@@ -121,8 +122,8 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
         top: y,
         left: x,
         transform: [
-          { translateY: -markerHeight + 12 },
-          { translateX: (-markerWidth / 2) },
+          { translateY: -markerHeight/2 },
+          { translateX: -markerWidth/2 },
         ],
       });
     }
@@ -195,7 +196,7 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
       <View style={StyleSheet.absoluteFill}>
         {currentIndex === index && (
           <View style={markerStyles.markerContainer} ref={markerRef}>
-            <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker_old.png")} />
+            <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
             <Image style={markerStyles.avatar} source={require("../../../assets/images/default_profile_pic.png")} />
             {(user !== null && user.image != null) && (
               <Image source={{uri: user.image}} style={markerStyles.profilePic} />
@@ -304,26 +305,26 @@ const flStyles = StyleSheet.create({
 export const markerStyles = StyleSheet.create({
 
   markerIcon: {
-    position: 'absolute'
+    position: 'absolute',
   },
 
   avatar: {
     position: 'absolute',
-    top: 11,
-    transform: [{translateX: -0.1}],
+    top: 7.5,
+    transform: [{translateX: -0.05}, {translateY: 0.2}],
     backgroundColor: 'white',
-    width: 31.2,
-    height: 31.2,
-    borderRadius: 31.2/2
+    width: 31,
+    height: 31,
+    borderRadius: 31/2
   },
 
   profilePic: {
-    marginTop: 11,
-    transform: [{translateX: -0.1}],
+    marginTop: 7.5,
+    transform: [{translateX: -0.05}, {translateY: 0.2}],
     backgroundColor: colors.clear,
-    width: 31.2,
-    height: 31.2,
-    borderRadius: 31.2/2
+    width: 31,
+    height: 31,
+    borderRadius: 31/2
   },
 
   markerContainer: {
