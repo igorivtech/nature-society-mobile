@@ -204,6 +204,7 @@ export const HomeScreen = ({ navigation, route }) => {
           }
         }).then(r=>locationListener.current=r.remove);
       }
+      locationRef.current = location;
     }
   }, [location])
 
@@ -354,14 +355,13 @@ export const HomeScreen = ({ navigation, route }) => {
           }, 1000);
         }, 200);
       } else if (params.reportNow != null) {
-        const location = {...params.reportNow};
         navigation.setParams({reportNow: null});
         setListOpacity(0);
         setTimeout(() => {
           setListOpacity(0);
           setHideButtons(true);
           setHideList(true);  
-          navigation.navigate("Report", { location });
+          navigation.navigate("Report", { location: {...params.reportNow}, currentPosition: locationRef.current });
           setTimeout(() => {
             setListOpacity(1);
           }, 1000);

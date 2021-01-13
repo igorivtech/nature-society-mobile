@@ -107,7 +107,17 @@ export const ReportScreen = ({navigation, route}) => {
     iHelped.on = false;
     translateY.addListener(({value})=>{})
     // fetching current location:?!!!
-    if (currentPosition != null) { // got physical location
+    if (location != null) { // got site location from card
+      animated.current = true;
+      setTimeout(() => {
+        if (isMounted.current) {
+          setAutoPlayFirst(true);
+        }
+      }, 1000);
+      setTimeout(() => {
+        setLoaded(true);
+      }, NAV_DURATION+300);
+    } else if (currentPosition != null) { // got physical location
       navigation.setParams({
         currentPosition: null
       });
@@ -119,18 +129,8 @@ export const ReportScreen = ({navigation, route}) => {
           showNoPlaceUI();
         }
       })
-    } else if (location == null && currentPosition == null) { // got nothing
+    } else { // got nothing
       showNoPlaceUI();
-    } else { // got site location from card
-      animated.current = true;
-      setTimeout(() => {
-        if (isMounted.current) {
-          setAutoPlayFirst(true);
-        }
-      }, 1000);
-      setTimeout(() => {
-        setLoaded(true);
-      }, NAV_DURATION+300);
     }
     //
     setLocation(location);
@@ -296,7 +296,7 @@ export const ReportScreen = ({navigation, route}) => {
       </View>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
       <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} actionRef={errorActionRef} />
-      <ModalSearch location={location != null ? location.position : null} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
+      <ModalSearch location={currentPosition} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
     </View>
   );
 };
