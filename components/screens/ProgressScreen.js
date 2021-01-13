@@ -221,7 +221,7 @@ export const ProgressScreen = ({ navigation, route }) => {
             ) : (
               <Animatable.Text
                 useNativeDriver={true}
-                easing="ease-out" 
+                easing='ease-out'
                 animation='pulse'
                 iterationCount='infinite'
                 style={styles.bottomText}>

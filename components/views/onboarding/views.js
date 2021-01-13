@@ -71,9 +71,8 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
       <Animatable.View 
         ref={ref} 
         useNativeDriver={true}
-        easing='ease-in-out' 
-        iterationCount='infinite' 
-        direction='alternate' 
+        easing='ease-out'
+        iterationCount='infinite'
         iterationDelay={iterationDelay[index]} 
         delay={delays[index]} 
         animation={animations[index]}
