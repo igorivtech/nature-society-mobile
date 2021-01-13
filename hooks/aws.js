@@ -40,7 +40,7 @@ export const useUploadImage = () => {
 }
 
 export const uploadImageAsync = async (token, reportId, image) => {
-  if (image == null || token == null || reportId == null) {
+  if (image == null || reportId == null) {
     return;
   }
   try {
