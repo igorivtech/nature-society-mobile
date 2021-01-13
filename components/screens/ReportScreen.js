@@ -91,7 +91,13 @@ export const ReportScreen = ({navigation, route}) => {
   const errorActionRef = useRef(emptyFunc);
   const [loaded, setLoaded] = useState(false);
 
-  useAndroidOnBack(tapClose);
+  useAndroidOnBack(()=>{
+    if (popupVisible) {
+      closeReport();
+    } else {
+      setPopupVisible(true);
+    }
+  });
 
   const {sendReport, getPlaces} = useServer();
 
