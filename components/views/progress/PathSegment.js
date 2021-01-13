@@ -176,7 +176,7 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
   }
 
   return (
-    <View style={styles.pathContainer(pathHeight, pathWidth)}>
+    <View style={styles.pathContainer(pathHeight, pathWidth, index)}>
       {currentIndex === index ? (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
           <Path d={line} strokeLinecap='square' stroke={colors.path(false)} strokeWidth={PATH_WIDTH} />
@@ -369,9 +369,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
 
-  pathContainer: (height, width) => ({
+  pathContainer: (height, width, index) => ({
     height,
     width,
+    zIndex: -index
   }),
 
 });
