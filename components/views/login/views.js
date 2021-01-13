@@ -265,6 +265,7 @@ export const SignupView = memo(
             onChange={onPasswordChanged}
             value={password}
             secure={true}
+            passwordHint={true}
           />
 
           <View style={styles.profilePicContainer}>

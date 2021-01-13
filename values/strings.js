@@ -171,6 +171,7 @@ export const strings = {
     pointsTitle: "נק‘ טבע",
   },
   loginScreen: {
+    passwordLength: '(8 תווים)',
     title: "התחברות למדד הטבע",
     signupTitle: "הרשמה למדד הטבע",
     updateDetailsTitle: "שינוי פרטים אישיים",

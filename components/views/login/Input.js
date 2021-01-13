@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, Easing, StyleSheet, TextInput, View } from "react-native";
+import { Animated, Easing, StyleSheet, Text, TextInput, View } from "react-native";
 import { colors } from "../../../values/colors";
 import { smallScreen } from "../../../values/consts";
+import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 
 const DURATION = 300;
 const TEXT_SCALE = 0.7;
 
-export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, value, onChange, secure = false, extraMargin = false }) => {
+export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', title, value, onChange, secure = false, extraMargin = false, passwordHint = false }) => {
   
   const textTranslateY = useRef(new Animated.Value(0)).current;
   const textTranslateX = useRef(new Animated.Value(0)).current;
@@ -75,6 +76,18 @@ export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', titl
     ]).start();
   };
 
+  const passwordHintOpacity = useRef(new Animated.Value(value.length < 8 ? 1 : 0)).current;
+  useEffect(()=>{
+    if (passwordHint) {
+      Animated.timing(passwordHintOpacity, {
+        duration: 200,
+        toValue: value.length < 8 ? 1 : 0,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }).start();
+    }
+  }, [value])
+
   return (
     <View style={styles.animatedTextContainer(extraMargin ? (smallScreen ? 44 : 64) : (smallScreen ? 26 : 32))}>
       <Animated.Text onLayout={(e) => {
@@ -95,12 +108,23 @@ export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', titl
         style={styles.textInput}
         selectionColor={colors.desertRock}
       />
+      {passwordHint && (
+        <Animated.Text style={styles.passwordHint(passwordHintOpacity)}>{strings.loginScreen.passwordLength}</Animated.Text>
+      )}
     </View>
   );
 };
 
 
 const styles = StyleSheet.create({
+
+    passwordHint: (opacity) => ({
+      opacity,
+      position: 'absolute',
+      right: 3,
+      bottom: -22,
+      ...textStyles.normalOfSize(12, colors.treeBlues),
+    }),
 
     textInput: {
       ...textStyles.normalOfSize(18),
