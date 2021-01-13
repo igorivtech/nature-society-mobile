@@ -145,9 +145,6 @@ export const useServer = () => {
   }
 
   const sendReport = async (token, reportData) => {
-    if (!token) {
-      return null;
-    }
     try {
       const response = await fetch(`${BASE_URL}/newReport`, {
         method: "POST",
