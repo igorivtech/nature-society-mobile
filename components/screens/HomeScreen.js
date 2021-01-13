@@ -310,8 +310,8 @@ export const HomeScreen = ({ navigation, route }) => {
       duration: 700,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
-    }).start(()=>{
-      if (!hideList) {
+    }).start((data)=>{
+      if (!hideList && data.finished) {
         setLogoOpacity(0);
       }
     });
