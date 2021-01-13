@@ -189,7 +189,7 @@ export const ReportScreen = ({navigation, route}) => {
           attributes[ATTRIBUTE_POINTS] = `${user.points + settings.reportPoints}`;
           attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
           let cognitoUser = await Auth.currentAuthenticatedUser({
-            bypassCache: true,
+            // bypassCache: true,
           });
           let result = await Auth.updateUserAttributes(cognitoUser, attributes);
           if (result === 'SUCCESS') {
