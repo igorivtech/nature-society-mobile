@@ -142,11 +142,11 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     }
   })
 
-  if (specialSort) {
-    res = specialSortPlaces(res, location);
-  } else if (location) {
-    res.sort((p1, p2) => p1.distance > p2.distance);
-  }
+  // if (specialSort) {
+  //   res = specialSortPlaces(res, location);
+  // } else if (location) {
+  //   res.sort((p1, p2) => p1.distance > p2.distance);
+  // }
 
   return res
 }

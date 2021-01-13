@@ -31,7 +31,7 @@ import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
 // import _ from "lodash";
-import { clamp, objectLength } from "../../hooks/helpers";
+import { clamp, objectLength, specialSortPlaces } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -84,8 +84,10 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const { askLocation, locationPermission } = useLocationPermissions();
 
+  const locationRef = useRef();
   const [globalShow, setGlobalShow] = useState(null);
   const [places, setPlaces] = useState([]);
+  const [sortedPlaces, setSortedPlaces] = useState([]);
   const [listOpacity, setListOpacity] = useState(1);
   const [logoOpacity, setLogoOpacity] = useState(0);
   const [hideList, setHideList] = useState(true);
@@ -261,12 +263,16 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }
 
+  useEffect(()=>{
+    if (sortedPlaces.length > 0) {
+      setPlaces([leftSpacer, ...sortedPlaces, rightSpacer]);
+      setSelectedPlace(sortedPlaces[0]);
+    }
+  }, [sortedPlaces])
+
   useEffect(() => {
     if (serverPlaces && serverPlaces.length > 0) {
-      setPlaces([leftSpacer, ...serverPlaces, rightSpacer]);
-      // setGlobalShow(true);
-      // setTimeout(() => {
-      setSelectedPlace(serverPlaces[0]);
+      setSortedPlaces(specialSortPlaces([...serverPlaces], locationRef.current));
       ignoreCardsListener.current = true;
       cardsListRef.current.scrollToOffset({
         animated: false,
@@ -277,9 +283,7 @@ export const HomeScreen = ({ navigation, route }) => {
       }, 10);
       if (isFocused) {
         setHideList(false);
-        // animateToItem(serverPlaces[0]);
       }
-      // }, 1000);
     } else {
       // somthing i guess?
     }
@@ -289,16 +293,16 @@ export const HomeScreen = ({ navigation, route }) => {
   useEffect(()=>{ // setup cards listener
     scrollX.removeAllListeners();
     clearTimeout(animationTimeout);
-    if (serverPlaces && serverPlaces.length > 0) {
+    if (sortedPlaces && sortedPlaces.length > 0) {
       scrollX.addListener(({value}) => {
         if (ignoreCardsListener.current) {
           return;
         }
-        const i = clamp(0, Math.round(value/ITEM_WIDTH), serverPlaces.length - 1);
+        const i = clamp(0, Math.round(value/ITEM_WIDTH), sortedPlaces.length - 1);
         clearTimeout(animationTimeout);
         animationTimeout = setTimeout(()=>{
-          if (i >= 0 && i < serverPlaces.length) {
-            const item = serverPlaces[i];
+          if (i >= 0 && i < sortedPlaces.length) {
+            const item = sortedPlaces[i];
             if (item.key !== selectedPlace?.key) {
               setSelectedPlace(item);
               animateToItem(item);
@@ -307,21 +311,21 @@ export const HomeScreen = ({ navigation, route }) => {
         }, 10);
       })
     }
-  }, [serverPlaces, selectedPlace])
+  }, [selectedPlace, sortedPlaces])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       if (firstTime.current) {
         firstTime.current = false;
       } else {
-        if (serverPlaces && serverPlaces.length > 0) {
+        if (sortedPlaces && sortedPlaces.length > 0) {
           setHideList(false);
           setHideButtons(false);
         }
       }
     });
     return unsubscribe;
-  }, [navigation, serverPlaces]);
+  }, [navigation, sortedPlaces]);
 
   useEffect(() => {
     Animated.timing(listYTranslate, {
@@ -466,6 +470,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const actuallyGetPlaces = (region, location) => {
     currSearchId.current = uuidv4();
+    locationRef.current = location;
     getPlaces(currSearchId.current, region, location, calcRadius(region)).then(data => {
       if (data !== null) {
         if (data.searchId === currSearchId.current) {
@@ -511,7 +516,7 @@ export const HomeScreen = ({ navigation, route }) => {
         animateToItem(place);
       }
     } else {
-      const index = serverPlaces.findIndex(p=>p.key===place.key);
+      const index = sortedPlaces.findIndex(p=>p.key===place.key);
       if (index > -1) {
         ignoreCardsListener.current = true;
         lockAutoSearching.current = true;
@@ -523,7 +528,7 @@ export const HomeScreen = ({ navigation, route }) => {
         animateToItem(place);
       }
     }
-  }, [selectedPlace, serverPlaces])
+  }, [selectedPlace, sortedPlaces])
 
   const checkUserMarkerVisible = () => {
     if (location != null && mapRef.current?.__lastRegion != null) {
@@ -589,7 +594,7 @@ export const HomeScreen = ({ navigation, route }) => {
         provider={PROVIDER_GOOGLE}
         style={globalStyles.mapStyle}
       >
-        {serverPlaces.map((p, index) => (
+        {sortedPlaces.map((p, index) => (
           <PlaceMarker 
             keepMarkerAlive={keepMarkerAlive} 
             globalShow={globalShow} 
