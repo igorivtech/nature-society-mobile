@@ -122,11 +122,17 @@ export const ReportScreen = ({navigation, route}) => {
       navigation.setParams({
         currentPosition: null
       });
-      getPlaces('1', currentPosition, currentPosition, 15, 4).then(data=>{ // 3 km. 15 is just DEBUG
+      const startTime = new Date();
+      getPlaces('1', currentPosition, currentPosition, 7, 4).then(data=>{ // 1.5 km. 7 is just DEBUG
         if (!isMounted?.current) {return}
         if (data != null && data.pp.length > 0) {
+          const passedTime = (new Date()) - startTime;
+          const delay = Math.max(0, NAV_DURATION+300 - passedTime);
           const sorted = specialSortPlaces([...data.pp], currentPosition);
-          setLocation(sorted[0]);
+          setTimeout(() => {
+            if (!isMounted.current) {return}
+            setLocation(sorted[0]);
+          }, delay);
         } else {
           showNoPlaceUI();
         }
