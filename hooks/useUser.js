@@ -10,11 +10,11 @@ export const ATTRIBUTE_UNLOCKED_PLACES = "custom:unlockedPlaces";
 export const ATTRIBUTE_PUSH_TOKEN = "custom:pushToken";
 export const ATTRIBUTE_LAST_USED_DATE = "custom:lastUsedDate";
 
-const OFFLINE_USER = 'OFFLINE_USER';
+export const OFFLINE_USER_KEY = 'OFFLINE_USER_KEY';
 
-export const useUser = (state, dispatch) => {
+export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(true);
-  const {offlineUser} = state;
+  
   // const {getSettings} = useServer();
   useEffect(() => {
     Auth.currentAuthenticatedUser({
@@ -31,7 +31,7 @@ export const useUser = (state, dispatch) => {
         });
       })
       .catch(async(error) => {
-        const savedOfflineUser = await AsyncStorage.getItem(OFFLINE_USER);
+        const savedOfflineUser = await AsyncStorage.getItem(OFFLINE_USER_KEY);
         const user = JSON.parse(savedOfflineUser);
         if (savedOfflineUser != null && user != null) {
           dispatch({

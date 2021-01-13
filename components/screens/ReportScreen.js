@@ -9,10 +9,10 @@ import { Report } from "../views/report/Report";
 import { Popup } from "../views/Popup";
 import { ModalSearch } from "../views/report/ModalSearch"
 import { UserContext } from "../../context/context";
-import { SAVE_USER } from "../../context/userReducer";
+import { SAVE_OFFLINE_USER, SAVE_USER } from "../../context/userReducer";
 import * as Animatable from "react-native-animatable";
 import { Auth } from "aws-amplify";
-import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../../hooks/useUser";
+import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS, OFFLINE_USER_KEY } from "../../hooks/useUser";
 import { uploadImageAsync, useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue, specialSortPlaces } from "../../hooks/helpers";
@@ -21,6 +21,7 @@ import useIsMounted from "ismounted";
 import { useShare } from "../../hooks/useShare";
 import { useImage } from "../../hooks/useImage";
 import { useAndroidOnBack } from "../../hooks/useAndroidOnBack";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
@@ -76,7 +77,7 @@ export const ReportScreen = ({navigation, route}) => {
   const [autoPlaySecond, setAutoPlaySecond] = useState(false);
 
   const {state, dispatch} = useContext(UserContext);
-  const {user, token, settings} = state;
+  const {user, token, settings, offlineUser} = state;
 
   const {share} = useShare();
 
@@ -205,6 +206,15 @@ export const ReportScreen = ({navigation, route}) => {
             console.error("cant update user");
           }
         } else {
+          const user = {
+            points: offlineUser.points + settings.reportPoints,
+            numOfReports: offlineUser.numOfReports + 1
+          };
+          await AsyncStorage.setItem(OFFLINE_USER_KEY, JSON.stringify(user))
+          dispatch({
+            type: SAVE_OFFLINE_USER,
+            payload: user
+          })
           navigation.navigate("Home");
           uploadImageAsync(token, response.content.id, image);
         }
