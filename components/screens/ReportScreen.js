@@ -120,7 +120,7 @@ export const ReportScreen = ({navigation, route}) => {
       }, NAV_DURATION+300);
     } else if (currentPosition != null) { // got physical location
       const startTime = new Date();
-      getPlaces('1', currentPosition, currentPosition, 7, 4).then(data=>{ // 1.5 km. 7 is just DEBUG
+      getPlaces('1', currentPosition, currentPosition, 15, 4).then(data=>{ // 1.5 km. 15 is just DEBUG
         if (!isMounted?.current) {return}
         if (data != null && data.pp.length > 0) {
           const passedTime = (new Date()) - startTime;
