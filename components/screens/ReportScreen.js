@@ -106,8 +106,6 @@ export const ReportScreen = ({navigation, route}) => {
     details.forEach(d=>d.on=false);
     iHelped.on = false;
     translateY.addListener(({value})=>{})
-    //
-    setLocation(location);
     // fetching current location:?!!!
     if (currentPosition != null) { // got physical location
       navigation.setParams({
@@ -123,17 +121,30 @@ export const ReportScreen = ({navigation, route}) => {
       })
     } else if (location == null && currentPosition == null) { // got nothing
       showNoPlaceUI();
+    } else {
+      animated.current = true;
+      setTimeout(() => {
+        if (isMounted.current) {
+          setAutoPlayFirst(true);
+        }
+      }, 1000);
+      setTimeout(() => {
+        setLoaded(true);
+      }, NAV_DURATION+300);
     }
-    // what here?
-    setTimeout(() => {
-      if (isMounted.current) {
-        setAutoPlayFirst(true);
-      }
-    }, 1000);
-    setTimeout(() => {
-      setLoaded(true);
-    }, NAV_DURATION+300);
+    //
+    setLocation(location);
   }, []);
+
+  const animated = useRef(false);
+
+  useEffect(()=>{
+    if (!animated.current && selectedLocation != null) {
+      animated.current = true;
+      setAutoPlayFirst(true);
+      setLoaded(true);
+    }
+  }, [selectedLocation])
 
   const showNoPlaceUI = () => {
     setSearchVisible(true);
