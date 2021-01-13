@@ -118,7 +118,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const listYTranslate = useRef(new Animated.Value(height*0.33)).current;
   const buttonsTranslateY = useRef(new Animated.Value(0)).current;
 
-  const {bottom: bottomSafeAreaHeight} = useSafeAreaInsets();
+  const {bottom: bottomSafeAreaHeight, top: topSafeAreaHeight} = useSafeAreaInsets();
   const listHiddenYHeight = ITEM_HEIGHT + CARD_TRANSLATE_Y + bottomSafeAreaHeight + 8;
 
   const {getPlaces} = useServer();
@@ -609,13 +609,11 @@ export const HomeScreen = ({ navigation, route }) => {
         {location && (<UserMarker user={user} location={location} />)}
       </MapView>
       
-      <SafeAreaView>
-        <Animated.View style={globalStyles.homeTopContainer(buttonsTranslateY)}>
+      <Animated.View style={globalStyles.homeTopContainer(buttonsTranslateY, topSafeAreaHeight)}>
           <HomeButton index={2} notification={notification} onPress={progress} />
           <HomeButton index={1} onPress={report} />
           <HomeButton index={0} onPress={explore} />
         </Animated.View>
-      </SafeAreaView>
       <LogoView logoOpacity={logoOpacity} bottomHeight={listHiddenYHeight} bottomSafeAreaHeight={bottomSafeAreaHeight} listYTranslate={listYTranslate} />
       <AnimatedSafeAreaView style={globalStyles.cardContainerTranslateY(listYTranslate, listOpacity)}>
         <Animated.FlatList

@@ -112,13 +112,13 @@ export const globalStyles = StyleSheet.create({
     width: "100%",
   },
 
-  homeTopContainer: (translateY) => ({
+  homeTopContainer: (translateY, topSafeAreaHeight) => ({
     transform: [{translateY}],
     alignItems: 'center',
     flexDirection: "row",
     paddingHorizontal: smallScreen ? 44 : 64,
     justifyContent: "space-between",
-    marginTop: 20,
+    marginTop: topSafeAreaHeight + 16,
   }),
 
   mainCardContainer: (translateY) => ({
