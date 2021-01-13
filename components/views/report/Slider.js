@@ -385,7 +385,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }, [])
 
   const handleDown = (e) => {
-    if (e.nativeEvent.state === State.END) {
+    if (e.nativeEvent.state === State.ACTIVE) {
       if (progress._value === 0) {
         return;
       }
@@ -394,7 +394,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   }
 
   const handleUp = (e) => {
-    if (e.nativeEvent.state === State.END) {
+    if (e.nativeEvent.state === State.ACTIVE) {
       if (progress._value === 1) {
         return;
       }
