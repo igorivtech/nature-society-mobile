@@ -20,6 +20,7 @@ import { emptyFunc, errors, NAV_DURATION, safeAreaHeight } from "../../values/co
 import useIsMounted from "ismounted";
 import { useShare } from "../../hooks/useShare";
 import { useImage } from "../../hooks/useImage";
+import { useAndroidOnBack } from "../../hooks/useAndroidOnBack";
 
 const clean = {
   title: strings.reportScreen.cleanTitle,
