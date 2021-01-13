@@ -335,3 +335,26 @@ export const formatRating = (rating, isCleanness) => {
     return rating.toFixed(1);
   }
 }
+
+export const getZoomLevelFromRegion = (region) => {
+  const { longitudeDelta } = region;
+  // Normalize longitudeDelta which can assume negative values near central meridian
+  const lngD = (360 + longitudeDelta) % 360;
+  // Calculate the number of tiles currently visible in the viewport
+  const tiles = width / 256;
+  // Calculate the currently visible portion of the globe
+  const portion = lngD / 360;
+  // Calculate the portion of the globe taken up by each tile
+  const tilePortion = portion / tiles;
+  // Return the zoom level which splits the globe into that number of tiles
+  return Math.log2(1 / tilePortion);
+};
+
+const EPSILON = 0.01;
+export const mapAtPlace = (mapRegion, place) => {
+  return Math.abs(mapRegion.latitude - place.position.latitude) < EPSILON && Math.abs(mapRegion.longitude - place.position.longitude) < EPSILON
+}
+
+export const calcRadius = (region) => {
+  return 90 * region.longitudeDelta / 2;
+}

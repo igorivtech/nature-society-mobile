@@ -31,7 +31,7 @@ import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
 // import _ from "lodash";
-import { clamp, objectLength, specialSortPlaces } from "../../hooks/helpers";
+import { clamp, mapAtPlace, calcRadius, objectLength, specialSortPlaces } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -41,8 +41,6 @@ import { shouldAskUser } from "../../hooks/useNotifications";
 import useIsMounted from "ismounted";
 import { CenterMapButton } from "../views/home/CenterMapButton";
 import { isPointWithinRadius } from 'geolib';
-// import {useCountRenders} from "../../hooks/useCountRenders"
-// useCountRenders();
 
 const SCREEN_WAIT_DURATION = 100;
 const leftSpacer = { key: "left-spacer" };
@@ -51,30 +49,6 @@ const MAP_ANIMATION_DURATION = 700;
 
 const LOCATION_POPUP_SECONDS_DELAY = 12*1000;
 const PUSH_POPUP_SECONDS_DELAY = 30*1000;
-
-const calcRadius = (region) => {
-  return 90 * region.longitudeDelta / 2;
-}
-
-const EPSILON = 0.01;
-
-const mapAtPlace = (mapRegion, place) => {
-  return Math.abs(mapRegion.latitude - place.position.latitude) < EPSILON && Math.abs(mapRegion.longitude - place.position.longitude) < EPSILON
-}
-
-const getZoomLevelFromRegion = (region) => {
-  const { longitudeDelta } = region;
-  // Normalize longitudeDelta which can assume negative values near central meridian
-  const lngD = (360 + longitudeDelta) % 360;
-  // Calculate the number of tiles currently visible in the viewport
-  const tiles = width / 256;
-  // Calculate the currently visible portion of the globe
-  const portion = lngD / 360;
-  // Calculate the portion of the globe taken up by each tile
-  const tilePortion = portion / tiles;
-  // Return the zoom level which splits the globe into that number of tiles
-  return Math.log2(1 / tilePortion);
-};
 
 const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
 
@@ -86,7 +60,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const locationRef = useRef();
   const [globalShow, setGlobalShow] = useState(null);
-  const [places, setPlaces] = useState([]);
+  const [cardsData, setCardsData] = useState([]);
   const [sortedPlaces, setSortedPlaces] = useState([]);
   const [listOpacity, setListOpacity] = useState(1);
   const [logoOpacity, setLogoOpacity] = useState(0);
@@ -265,7 +239,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   useEffect(()=>{
     if (sortedPlaces.length > 0) {
-      setPlaces([leftSpacer, ...sortedPlaces, rightSpacer]);
+      setCardsData([leftSpacer, ...sortedPlaces, rightSpacer]);
       setSelectedPlace(sortedPlaces[0]);
       ignoreCardsListener.current = true;
       cardsListRef.current.scrollToOffset({
@@ -618,7 +592,7 @@ export const HomeScreen = ({ navigation, route }) => {
       <AnimatedSafeAreaView style={globalStyles.cardContainerTranslateY(listYTranslate, listOpacity)}>
         <Animated.FlatList
           ref={cardsListRef}
-          data={places}
+          data={cardsData}
           horizontal
           style={globalStyles.mainListStyle}
           contentContainerStyle={globalStyles.mainListContainer}
@@ -634,7 +608,7 @@ export const HomeScreen = ({ navigation, route }) => {
           decelerationRate={0}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
-            if (index === 0 || index === places.length - 1) {
+            if (index === 0 || index === cardsData.length - 1) {
               return <View style={spacerStyle} />;
             }
             return (
