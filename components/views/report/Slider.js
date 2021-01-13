@@ -427,14 +427,8 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
                     transform: [{scale}, {translateY: startUpTranslateY}]
                   }]}>
                   <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
-                  <MaskedView 
-                    maskElement={
-                      <Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />
-                    }>
-                      <Animated.View style={{
-                        ...item.thumbSize,
-                        backgroundColor: thumbColor
-                      }} />
+                  <MaskedView maskElement={<Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />}>
+                      <Animated.View style={sliderStyles.maskedViewBackground(item, thumbColor)} />
                   </MaskedView>
                 </Animated.View>
                 {/* <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
@@ -508,6 +502,11 @@ const pagStyles = StyleSheet.create({
 });
 
 const sliderStyles = StyleSheet.create({
+
+  maskedViewBackground: (item, thumbColor) => ({
+    ...item.thumbSize,
+    backgroundColor: thumbColor
+  }),
   
   overlay:  {
     ...StyleSheet.absoluteFill,
