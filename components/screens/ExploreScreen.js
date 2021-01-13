@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    ...textStyles.normalOfSize(smallScreen ? 14 : 16),
+    ...textStyles.normalOfSize(16),
     flexGrow: 1,
     flexShrink: 1,
     paddingRight: 8,
