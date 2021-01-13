@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
-import { StyleSheet, Animated, SafeAreaView, Modal, View } from "react-native";
+import { StyleSheet, Animated, SafeAreaView, Modal, View, Text } from "react-native";
 import { globalStyles } from "../../../values/styles";
 import { SearchBar, TextCard } from "../../screens/ExploreScreen";
 import { useKeyboard } from "../../../hooks/useKeyboard";
@@ -8,6 +8,8 @@ import { useServer } from "../../../hooks/useServer";
 import _ from "lodash";
 import { NewReportLabel } from "./Slider";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { strings } from "../../../values/strings";
+import { textStyles } from "../../../values/textStyles";
 
 export const ModalSearch = ({ visible, setSearchVisible, selectItem, location }) => {
 
@@ -22,11 +24,13 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 
   const {top: topSafeAreaHeight} = useSafeAreaInsets();
 
-  useEffect(()=>{
-    if (places.length === 0 && serverPlaces.length > 0 && searchTerm.length === 0) {
-      setPlaces(serverPlaces);
-    }
-  }, [serverPlaces])
+  const [showLabel, setShowLabel] = useState(true);
+
+  // useEffect(()=>{
+  //   if (places.length === 0 && serverPlaces.length > 0 && searchTerm.length === 0) {
+  //     setPlaces(serverPlaces);
+  //   }
+  // }, [serverPlaces])
 
   const [keyboardHeight] = useKeyboard();
   const [keyboardBottomPadding, setKeyboardBottomPadding] = useState(40);
@@ -57,6 +61,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 
   const debounce = useCallback(_.debounce(async(searchVal) => {
     const p = await searchPlaces(searchVal, location);
+    setShowLabel(false);
     setPlaces(p);
   }, 500), [location]);
 
@@ -83,6 +88,13 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
           )}
           keyboardDismissMode='interactive'
           data={places}
+          ListEmptyComponent={()=>{
+            if (showLabel) {
+              return 
+            } else {
+              return null;
+            }
+          }}
           keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => (
             <TextCard
