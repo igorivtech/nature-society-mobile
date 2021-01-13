@@ -426,12 +426,9 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
                 <Animated.View style={sliderStyles.maskedViewContainer(scale, startUpTranslateY)}>
                   <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
                   <MaskedView maskElement={<Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />}>
-                      <Animated.View style={sliderStyles.maskedViewBackground(item, thumbColor)} />
+                    <Animated.View style={sliderStyles.maskedViewBackground(item, thumbColor)} />
                   </MaskedView>
                 </Animated.View>
-                {/* <Animated.View style={sliderStyles.thumb(scale, startUpTranslateY)}>
-                  <Animated.View style={sliderStyles.thumbBg(thumbColor)} />
-                </Animated.View> */}
               </Animated.View>
             </PanGestureHandler>
           </View>
