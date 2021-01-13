@@ -90,9 +90,9 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
           data={places}
           ListEmptyComponent={()=>{
             if (showLabel) {
-              return 
+              return <Text style={textStyles.normalOfSize(30)}>{strings.reportScreen.searchNewPlace}</Text>
             } else {
-              return null;
+              return <View />;
             }
           }}
           keyExtractor={(item) => item.key}
