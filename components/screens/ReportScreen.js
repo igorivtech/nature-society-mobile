@@ -121,7 +121,7 @@ export const ReportScreen = ({navigation, route}) => {
       })
     } else if (location == null && currentPosition == null) { // got nothing
       showNoPlaceUI();
-    } else {
+    } else { // got site location from card
       animated.current = true;
       setTimeout(() => {
         if (isMounted.current) {
