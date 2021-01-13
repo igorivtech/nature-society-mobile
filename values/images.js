@@ -2,121 +2,121 @@ const tempRankImages = [
   {
     on: require("../assets/images/rank_0_on.png"),
     off: require("../assets/images/rank_0_off.png"),
-    title: "אוהב טבע",
+    title: "אוהבי טבע",
     points: 0
   },
   {
     on: require("../assets/images/rank_1_on.png"),
     off: require("../assets/images/rank_1_off.png"),
-    title: "אוהב טבע מתקדם",
+    title: "אוהבי טבע מתקדמים",
     points: 1
   },
   {
     on: require("../assets/images/rank_2_on.png"),
     off: require("../assets/images/rank_2_off.png"),
-    title: "אוהב טבע מקצוען",
+    title: "אוהבי טבע מקצוענים",
     points: 3
   },
   {
     on: require("../assets/images/rank_3_on.png"),
     off: require("../assets/images/rank_3_off.png"),
-    title: "אוהב טבע מומחה",
+    title: "אוהבי טבע מומחים",
     points: 6
   },
   {
     on: require("../assets/images/rank_4_on.png"),
     off: require("../assets/images/rank_4_off.png"),
-    title: "פעיל טבע",
+    title: "פעילי טבע",
     points: 10
   },
   {
     on: require("../assets/images/rank_5_on.png"),
     off: require("../assets/images/rank_5_off.png"),
-    title: "פעיל טבע מתקדם",
+    title: "פעילי טבע מתקדמים",
     points: 16
   },
   {
     on: require("../assets/images/rank_6_on.png"),
     off: require("../assets/images/rank_6_off.png"),
-    title: "פעיל טבע מקצוען",
+    title: "פעילי טבע מקצוענים",
     points: 24
   },
   {
     on: require("../assets/images/rank_7_on.png"),
     off: require("../assets/images/rank_7_off.png"),
-    title: "פעיל טבע מומחה",
+    title: "פעילי טבע מומחים",
     points: 34
   },
   {
     on: require("../assets/images/rank_8_on.png"),
     off: require("../assets/images/rank_8_off.png"),
-    title: "נאמן טבע",
+    title: "נאמני טבע",
     points: 44
   },
   {
     on: require("../assets/images/rank_9_on.png"),
     off: require("../assets/images/rank_9_off.png"),
-    title: "נאמן טבע מתקדם",
+    title: "נאמני טבע מתקדמים",
     points: 56
   },
   {
     on: require("../assets/images/rank_10_on.png"),
     off: require("../assets/images/rank_10_off.png"),
-    title: "נאמן טבע מקצוען",
+    title: "נאמני טבע מקצוענים",
     points: 68
   },
   {
     on: require("../assets/images/rank_11_on.png"),
     off: require("../assets/images/rank_11_off.png"),
-    title: "נאמן טבע מומחה",
+    title: "נאמני טבע מומחים",
     points: 70
   },
   {
     on: require("../assets/images/rank_12_on.png"),
     off: require("../assets/images/rank_12_off.png"),
-    title: "שומר טבע",
+    title: "שומרי טבע",
     points: 84
   },
   {
     on: require("../assets/images/rank_13_on.png"),
     off: require("../assets/images/rank_13_off.png"),
-    title: "שומר טבע מתקדם",
+    title: "שומרי טבע מתקדמים",
     points: 98
   },
   {
     on: require("../assets/images/rank_14_on.png"),
     off: require("../assets/images/rank_14_off.png"),
-    title: "שומר טבע מקצוען",
+    title: "שומרי טבע מקצוענים",
     points: 114
   },
   {
     on: require("../assets/images/rank_15_on.png"),
     off: require("../assets/images/rank_15_off.png"),
-    title: "שומר טבע מומחה",
+    title: "שומרי טבע מומחים",
     points: 130
   },
   {
     on: require("../assets/images/rank_16_on.png"),
     off: require("../assets/images/rank_16_off.png"),
-    title: "לוחם טבע",
+    title: "אלופי טבע",
     points: 148
   },
   {
     on: require("../assets/images/rank_17_on.png"),
     off: require("../assets/images/rank_17_off.png"),
-    title: "לוחם טבע מתקדם",
+    title: "אלופי טבע מתקדמים",
     points: 164
   },
   {
     on: require("../assets/images/rank_18_on.png"),
     off: require("../assets/images/rank_18_off.png"),
-    title: "לוחם טבע מקצוען",
+    title: "אלופי טבע מקצוענים",
     points: 182
   },
   {
     on: require("../assets/images/rank_19_on.png"),
     off: require("../assets/images/rank_19_off.png"),
-    title: "לוחם טבע מומחה",
+    title: "אלופי טבע מומחים",
     points: 200
   },
 ];
