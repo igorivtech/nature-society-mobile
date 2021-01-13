@@ -423,9 +423,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
             <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
             <PanGestureHandler enabled={dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
               <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
-                <Animated.View style={[StyleSheet.absoluteFill, {
-                    transform: [{scale}, {translateY: startUpTranslateY}]
-                  }]}>
+                <Animated.View style={sliderStyles.maskedViewContainer(scale, startUpTranslateY)}>
                   <Image style={StyleSheet.absoluteFill} source={item.thumbBg} />
                   <MaskedView maskElement={<Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />}>
                       <Animated.View style={sliderStyles.maskedViewBackground(item, thumbColor)} />
@@ -502,6 +500,11 @@ const pagStyles = StyleSheet.create({
 });
 
 const sliderStyles = StyleSheet.create({
+
+  maskedViewContainer: (scale, translateY) => ({
+    ...StyleSheet.absoluteFill,
+    transform: [{scale}, {translateY}]
+  }),
 
   maskedViewBackground: (item, thumbColor) => ({
     ...item.thumbSize,
