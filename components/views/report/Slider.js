@@ -114,7 +114,8 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
   const textContainerOpacity = useRef(new Animated.Value(1)).current;
   const bottomTopContainersOpacity = useRef(new Animated.Value(1)).current;
   const indicatorOpacity = useRef(new Animated.Value(1)).current;
-  const animationOpacity = useRef(new Animated.Value(0)).current;
+  const animationsContainerOpacity = useRef(new Animated.Value(1)).current;
+  const [animationOpacity, setAnimationOpacity] = useState(0);
   const [introAnimationOpacity, setIntroAnimationOpacity] = useState(1);
   const introAnimationRef = useRef();
 
@@ -325,7 +326,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
         }, 2500);
       });
       // animation opacity? - yes, probably animation opacity.
-      Animated.timing(animationOpacity, {
+      Animated.timing(animationsContainerOpacity, {
         useNativeDriver: true,
         toValue: ANIMATION_OPACITY,
         duration: 400,
@@ -352,7 +353,9 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
 
   const backToNormal = () => {
     if (!isMounted.current) {return}
-    animationOpacity.setValue(1);
+    setAnimationOpacity(1);
+    setIntroAnimationOpacity(0);
+    animationsContainerOpacity.setValue(1);
     setTitleTranslateY(TITLE_TRANSLATE_Y);
     resetTitles();
     setContinueEnabled(true);
@@ -369,7 +372,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
 
   const onIntroFinish = useCallback(() => {
     setIntroAnimationOpacity(0);
-    animationOpacity.setValue(1);
+    setAnimationOpacity(1);
   }, [])
 
   const onTouchStart = useCallback(()=>{
@@ -399,7 +402,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
 
       <View style={sliderStyles.animationSliderContainer}>
         {loaded && (
-          <View style={StyleSheet.absoluteFill}>
+          <Animated.View style={[StyleSheet.absoluteFill, {opacity: animationsContainerOpacity}]}>
             <Animated.View style={sliderStyles.animation(animationOpacity)}>
               <LottieView source={animation} progress={animationProgress} resizeMode={item.resizeMode} />
             </Animated.View>
@@ -411,7 +414,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
                 <Image style={StyleSheet.absoluteFill} source={item.bg} style={StyleSheet.absoluteFill} />
               </View>
             )} */}
-          </View>
+          </Animated.View>
         )}
         <View style={sliderStyles.sliderTextContainer}>
           <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
