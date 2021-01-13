@@ -80,8 +80,10 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
         // setUserProgress(0.33 * (bottomImageObject.points - p)/bottomImageObject.points);
         setUserProgress(0.1);
       } else if (!item.topDone) {
-        const p = user !== null ? user.numOfReports : 0;
-        setUserProgress(Math.min(0.7, 1 - (0.33 + 0.33 * (topImageObject.points - p)/topImageObject.points)));
+        const userCurrentPoints = user !== null ? user.numOfReports : 0;
+        const pointsNeeded = topImageObject.points - bottomImageObject.points
+        const userMissingPointsToNext = topImageObject.points - userCurrentPoints;
+        setUserProgress(0.3 + 0.4 * ((pointsNeeded - userMissingPointsToNext) / pointsNeeded));
       }
     }
   }, [user, currentIndex])
