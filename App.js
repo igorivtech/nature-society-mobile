@@ -69,7 +69,7 @@ export default function App() {
   const { fontsLoaded } = fontsLoader();
   const { onboardingShown, loadingOnboarding } = useOnboarding();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {loadingUser} = useUser(dispatch);
+  const {loadingUser} = useUser(state, dispatch);
   const splashShown = useRef(false);
 
   useNotifications(state, dispatch);

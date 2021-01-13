@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Amplify, { Auth } from "aws-amplify";
-import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER } from "../context/userReducer";
+import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER, SAVE_OFFLINE_USER } from "../context/userReducer";
 import { useServer } from "./useServer";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const ATTRIBUTE_POINTS = "custom:points";
 export const ATTRIBUTE_NUM_OF_REPORTS = "custom:numOfReports";
@@ -9,8 +10,11 @@ export const ATTRIBUTE_UNLOCKED_PLACES = "custom:unlockedPlaces";
 export const ATTRIBUTE_PUSH_TOKEN = "custom:pushToken";
 export const ATTRIBUTE_LAST_USED_DATE = "custom:lastUsedDate";
 
-export const useUser = (dispatch) => {
+const OFFLINE_USER = 'OFFLINE_USER';
+
+export const useUser = (state, dispatch) => {
   const [loadingUser, setLoadingUser] = useState(true);
+  const {offlineUser} = state;
   // const {getSettings} = useServer();
   useEffect(() => {
     Auth.currentAuthenticatedUser({
@@ -26,8 +30,15 @@ export const useUser = (dispatch) => {
           payload: cognitoToUser(cognitoUser),
         });
       })
-      .catch((error) => {
-        console.log(error) || console.log(null);
+      .catch(async(error) => {
+        const savedOfflineUser = await AsyncStorage.getItem(OFFLINE_USER);
+        const user = JSON.parse(savedOfflineUser);
+        if (savedOfflineUser != null && user != null) {
+          dispatch({
+            type: SAVE_OFFLINE_USER,
+            payload: user
+          })
+        }
       })
       .finally(() => {
         setLoadingUser(false);
