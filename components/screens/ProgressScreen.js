@@ -32,6 +32,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Animatable from "react-native-animatable";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
@@ -218,7 +219,16 @@ export const ProgressScreen = ({ navigation, route }) => {
             {user ? (
               <Image source={require("../../assets/images/settings_icon.png")} />
             ) : (
-              <Text style={styles.bottomText}>{strings.progressScreen.signup}</Text>
+              <Animatable.Text
+                useNativeDriver={true}
+                direction='alternate' 
+                iterationDelay={500}
+                animation='pulse' 
+                iterationCount='infinite' 
+                easing='ease-in-out'
+                style={styles.bottomText}>
+                {strings.progressScreen.signup}
+              </Animatable.Text>
             )}
           </TouchableOpacity>
 
