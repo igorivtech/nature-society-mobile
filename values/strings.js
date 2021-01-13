@@ -160,7 +160,7 @@ export const strings = {
     },
   },
   exploreScreen: {
-    globalSites: 'מדד בשביל הטבע ברשויות המקומיות',
+    globalSites: 'אתר מדד בשביל הטבע',
     searchPlaceholder: "חפש",
   },
   progressScreen: {
