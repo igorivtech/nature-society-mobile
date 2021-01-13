@@ -9,6 +9,7 @@ import {UserContext} from "../../../context/context"
 import { colors } from "../../../values/colors";
 import { useEffect } from "react";
 import { smallScreen } from "../../../values/consts";
+import { globalStyles } from "../../../values/styles";
 
 export const Report = ({goBack, useImageData, finishReport, details, iHelped, loadingSendReport, sharePressed}) => {
 
@@ -62,7 +63,7 @@ export const Report = ({goBack, useImageData, finishReport, details, iHelped, lo
         <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.doneTitle(user)}</Text>
         <View style={styles.pointsContainer}>
           <Text style={styles.pointsText}>{`+${settings.reportPoints}`}</Text>
-          <Image source={require("../../../assets/images/report_done_icon.png")} />
+          <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/report_done_icon.png")} />
         </View>
         <Button title={strings.reportScreen.share} filled={true} onPress={sharePressed} />
         <Button title={strings.reportScreen.done} filled={false} onPress={finishReport} loading={loadingSendReport} />
