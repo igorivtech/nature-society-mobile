@@ -119,9 +119,6 @@ export const ReportScreen = ({navigation, route}) => {
         setLoaded(true);
       }, NAV_DURATION+300);
     } else if (currentPosition != null) { // got physical location
-      navigation.setParams({
-        currentPosition: null
-      });
       const startTime = new Date();
       getPlaces('1', currentPosition, currentPosition, 7, 4).then(data=>{ // 1.5 km. 7 is just DEBUG
         if (!isMounted?.current) {return}
@@ -137,6 +134,9 @@ export const ReportScreen = ({navigation, route}) => {
           showNoPlaceUI();
         }
       })
+      navigation.setParams({
+        currentPosition: null
+      });
     } else { // got nothing
       showNoPlaceUI();
     }
