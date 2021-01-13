@@ -38,7 +38,7 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 export const ProgressScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
-  const {user, notification, settings} = state;
+  const {user, notification, settings, offlineUser} = state;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scrollEnabled, setScrollEnabled] = useState(false);
 
@@ -65,7 +65,8 @@ export const ProgressScreen = ({ navigation, route }) => {
     //   })
     // }, 4000);
     //
-    calcCustomAchievements(settings.achievements, user !== null ? user.numOfReports : 0).then(output=>{
+    const points = user !== null ? user.numOfReports : offlineUser.numOfReports
+    calcCustomAchievements(settings.achievements, points).then(output=>{
       output.forEach((elem, i) => {
         if (elem.current) {
           setCurrentIndex(i);

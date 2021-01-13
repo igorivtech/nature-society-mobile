@@ -9,7 +9,7 @@ import { TapView } from "../general";
 export const UserHeader = memo(({restartApp}) => {
 
     const {state} = useContext(UserContext);
-    const {user, settings} = state;
+    const {user, settings, offlineUser} = state;
 
     const [lastAchievement, setLastAchievement] = useState('');
     const opacity = useRef(new Animated.Value(0)).current;
@@ -25,20 +25,17 @@ export const UserHeader = memo(({restartApp}) => {
     }, [lastAchievement])
 
     useEffect(()=>{
-      if (user) {
-        let last = ''
-        settings.achievements.forEach(achievement => {
-          if (user.numOfReports >= achievement.score) {
-            last = achievement.title;
-          }
-        });
-        if (last.length > 0) {
-          setLastAchievement(last)
+      const numOfReports = user != null ? user.numOfReports : offlineUser.numOfReports
+      let last = ''
+      settings.achievements.forEach(achievement => {
+        if (numOfReports >= achievement.score) {
+          last = achievement.title;
         }
-      } else {
-        setLastAchievement(settings.achievements[0].title)
+      });
+      if (last.length > 0) {
+        setLastAchievement(last)
       }
-    }, [user])
+    }, [user, offlineUser])
   
     return (
       <View style={styles.userHeader}>
@@ -54,8 +51,8 @@ export const UserHeader = memo(({restartApp}) => {
         <View style={{
           marginTop: 24
         }}>
-          <HeaderDetail value={user ? user.numOfReports : 0} title={strings.progressScreen.reportsTitle} icon={require("../../../assets/images/header_reports_icon.png")} />
-          <HeaderDetail value={user ? user.points : 0} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
+          <HeaderDetail value={user ? user.numOfReports : offlineUser.numOfReports} title={strings.progressScreen.reportsTitle} icon={require("../../../assets/images/header_reports_icon.png")} />
+          <HeaderDetail value={user ? user.points : offlineUser.points} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
         </View>
 
         <TapView numberOfTaps={12} onPress={restartApp} />

@@ -49,7 +49,7 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
   const topIcon = topImageObject.image;
 
   const {state} = useContext(UserContext);
-  const {user} = state;
+  const {user, offlineUser} = state;
 
   const [userProgress, setUserProgress] = useState(0.5);
 
@@ -73,21 +73,20 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
   const lineLength = useRef(properties.getTotalLength()).current;
 
   useEffect(()=>{
-    setUserProgress(0.5);
-    if (user && currentIndex === index) {
+    if (currentIndex === index) {
       if (!item.bottomDone) {
         // const p = user !== null ? user.numOfReports : 0;
         // setUserProgress(0.33 * (bottomImageObject.points - p)/bottomImageObject.points);
         // 0.05 - 0.1
         setUserProgress(0.1);
       } else if (!item.topDone) {
-        const userCurrentPoints = user !== null ? user.numOfReports : 0;
+        const userCurrentPoints = user !== null ? user.numOfReports : offlineUser.numOfReports;
         const pointsNeeded = topImageObject.points - bottomImageObject.points
         const userMissingPointsToNext = topImageObject.points - userCurrentPoints;
         setUserProgress(0.3 + 0.4 * ((pointsNeeded - userMissingPointsToNext) / pointsNeeded));
       }
     }
-  }, [user, currentIndex])
+  }, [user, offlineUser, currentIndex])
 
   // const inputRange = [
   //   (index - 1) * pathHeight + animationPadding, 
@@ -225,7 +224,7 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
 const FloatingLabel = ({right, done, points, title}) => {
 
   const {state} = useContext(UserContext);
-  const {user} = state;
+  const {user, offlineUser} = state;
 
   return (
     <View style={flStyles.container(right)}>
@@ -239,7 +238,7 @@ const FloatingLabel = ({right, done, points, title}) => {
           <Text adjustsFontSizeToFit={smallScreen} style={flStyles.notDoneTitle(right)}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={flStyles.notDoneInnerText}>{user ? (points - user.numOfReports) : points}</Text>
+            <Text style={flStyles.notDoneInnerText}>{user ? (points - user.numOfReports) : (points - offlineUser.numOfReports)}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>

@@ -15,7 +15,7 @@ const ALREADY_SHOWN = "ALREADY_SHOWN"
 export const GrowthPoints = memo(() => {
   
   const {state} = useContext(UserContext);
-  const {user} = state;
+  const {user, offlineUser} = state;
 
   const [points, setPoints] = useState(0);
   const [ready, setReady] = useState(false);
