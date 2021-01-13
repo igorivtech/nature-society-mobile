@@ -15,7 +15,7 @@ import {
 import { UserContext } from "../../context/context";
 import { ASK_PUSH, SAVE_NOTIFICATION, SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
 import { colors } from "../../values/colors";
-import { DEFAULT_NOTIFICATION, height, statusBarHeight } from "../../values/consts";
+import { DEFAULT_NOTIFICATION, height, NAV_DURATION, statusBarHeight } from "../../values/consts";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
@@ -65,6 +65,7 @@ export const ProgressScreen = ({ navigation, route }) => {
     //   })
     // }, 4000);
     //
+    const startTime = new Date();
     const points = user !== null ? user.numOfReports : offlineUser.numOfReports
     calcCustomAchievements(settings.achievements, points).then(output=>{
       output.forEach((elem, i) => {
@@ -72,7 +73,12 @@ export const ProgressScreen = ({ navigation, route }) => {
           setCurrentIndex(i);
         }
       });
-      setData(output);
+      const passedTime = (new Date()) - startTime;
+      const delay = Math.max(0, NAV_DURATION+1 - passedTime);
+      setTimeout(() => {
+        if (!isMounted.current) {return}
+        setData(output);
+      }, delay);
     });
   }, [])
 
@@ -120,7 +126,6 @@ export const ProgressScreen = ({ navigation, route }) => {
     if (data.length > 0) {
       const currentIndex = data.findIndex(achievement=>achievement.current);
       Animated.timing(pathOpacity, {
-        delay: 500,
         toValue: 1,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: true,
