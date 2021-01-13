@@ -221,11 +221,9 @@ export const ProgressScreen = ({ navigation, route }) => {
             ) : (
               <Animatable.Text
                 useNativeDriver={true}
-                direction='alternate' 
-                iterationDelay={300}
-                animation='pulse' 
-                iterationCount='infinite' 
-                easing='ease-in-out'
+                easing="ease-out" 
+                animation='pulse'
+                iterationCount='infinite'
                 style={styles.bottomText}>
                 {strings.progressScreen.signup}
               </Animatable.Text>
