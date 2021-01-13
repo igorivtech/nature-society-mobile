@@ -152,7 +152,7 @@ export const useServer = () => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          Authorization: token ?? ''
+          Authorization: token ?? 'guest'
         }
       });
       const content = await response.json();

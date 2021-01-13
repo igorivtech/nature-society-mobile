@@ -64,7 +64,7 @@ export const uploadImageAsync = async (token, reportId, image) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        Authorization: token
+        Authorization: token ?? 'guest'
       }
     });
   } catch (err) {console.error(err)}

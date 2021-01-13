@@ -183,25 +183,30 @@ export const ReportScreen = ({navigation, route}) => {
       }
       const response = await sendReport(token, data);
       if (response.content && response.content.id != null) {
-        let attributes = {}
-        attributes[ATTRIBUTE_POINTS] = `${user.points + settings.reportPoints}`;
-        attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
-        let cognitoUser = await Auth.currentAuthenticatedUser({
-          bypassCache: true,
-        });
-        let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-        if (result === 'SUCCESS') {
-          let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+        if (user != null && token != null) {
+          let attributes = {}
+          attributes[ATTRIBUTE_POINTS] = `${user.points + settings.reportPoints}`;
+          attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${user.numOfReports + 1}`;
+          let cognitoUser = await Auth.currentAuthenticatedUser({
             bypassCache: true,
           });
-          dispatch({
-            type: SAVE_USER,
-            payload: cognitoToUser(updatedCognitoUser)
-          })
+          let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+          if (result === 'SUCCESS') {
+            let updatedCognitoUser = await Auth.currentAuthenticatedUser({
+              bypassCache: true,
+            });
+            dispatch({
+              type: SAVE_USER,
+              payload: cognitoToUser(updatedCognitoUser)
+            })
+            navigation.navigate("Home");
+            uploadImageAsync(token, response.content.id, image);
+          } else {
+            console.error("cant update user");
+          }
+        } else {
           navigation.navigate("Home");
           uploadImageAsync(token, response.content.id, image);
-        } else {
-          console.error("cant update user");
         }
       } else if (response.error) {
         handleError(response.error);
