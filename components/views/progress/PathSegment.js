@@ -20,8 +20,8 @@ import { rankImages } from "../../../values/images";
 const markerHeight = 72;
 const markerWidth = 65;
 //
-const PATH_WIDTH = 1.5;
-const DONE_WIDTH = 3;
+const PATH_WIDTH = 1;
+const DONE_WIDTH = 2;
 
 const CONTAINER_HEIGHT = 44;
 const TOP_CONTAINER_WIDTH = smallScreen ? 45 : 55;
@@ -176,11 +176,11 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
     <View style={styles.pathContainer(pathHeight, pathWidth)}>
       {currentIndex === index ? (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} strokeLinecap='square' stroke={colors.path} strokeWidth={PATH_WIDTH} />
+          <Path d={line} strokeLinecap='square' stroke={colors.path(false)} strokeWidth={PATH_WIDTH} />
           <Path
             d={line}
             strokeLinecap='square'
-            stroke={colors.path}
+            stroke={colors.path(true)}
             strokeWidth={DONE_WIDTH}
             strokeDasharray={lineLength}
             strokeDashoffset={-(1-userProgress) * lineLength}
@@ -188,7 +188,7 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
         </Svg>
       ) : (
         <Svg width={pathWidth} height={pathHeight} viewBox={`0 0 ${pathWidth} ${pathHeight}`}>
-          <Path d={line} strokeLinecap='square' stroke={colors.path} strokeWidth={(item.topDone && item.bottomDone) ? DONE_WIDTH : PATH_WIDTH} />
+          <Path d={line} strokeLinecap='square' stroke={colors.path(item.topDone && item.bottomDone)} strokeWidth={(item.topDone && item.bottomDone) ? DONE_WIDTH : PATH_WIDTH} />
         </Svg>
       )}
 
