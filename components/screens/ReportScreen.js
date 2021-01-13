@@ -15,7 +15,7 @@ import { Auth } from "aws-amplify";
 import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS } from "../../hooks/useUser";
 import { uploadImageAsync, useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
-import { convertSliderValue } from "../../hooks/helpers";
+import { convertSliderValue, specialSortPlaces } from "../../hooks/helpers";
 import { emptyFunc, errors, NAV_DURATION, safeAreaHeight } from "../../values/consts";
 import useIsMounted from "ismounted";
 import { useShare } from "../../hooks/useShare";
@@ -124,7 +124,8 @@ export const ReportScreen = ({navigation, route}) => {
       getPlaces('1', currentPosition, currentPosition, 15, 4).then(data=>{ // 3 km. 15 is just DEBUG
         if (!isMounted?.current) {return}
         if (data != null && data.pp.length > 0) {
-          setLocation(data.pp[0]);
+          const sorted = specialSortPlaces([...data.pp], currentPosition);
+          setLocation(sorted[0]);
         } else {
           showNoPlaceUI();
         }
