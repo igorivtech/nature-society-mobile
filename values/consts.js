@@ -30,6 +30,16 @@ export const isAlt = true; // releaseChannel === 'alt';
 //   {name: "יואב", role: "צייד", image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"},
 // ]
 
+export const MAP_BOUNDARY_NORTHEAST = {
+  longitude: 36.084697,
+  latitude: 33.435642
+}
+
+export const MAP_BOUNDARY_SOUTHWEST = {
+  longitude: 33.960871,
+  latitude: 29.291052
+}
+
 export const INITIAL_REGION = {
   longitude: 34.9916,
   latitude: 31.4561,

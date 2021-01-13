@@ -10,6 +10,8 @@ import {
   INITIAL_REGION,
   width,
   SPLASH_HIDE_DELAY,
+  MAP_BOUNDARY_NORTHEAST,
+  MAP_BOUNDARY_SOUTHWEST,
 } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import {
@@ -100,6 +102,7 @@ export const HomeScreen = ({ navigation, route }) => {
   // STARTUP POINT
   useEffect(() => {
     tryFetchLocation();
+    mapRef.current.setMapBoundaries(MAP_BOUNDARY_NORTHEAST, MAP_BOUNDARY_SOUTHWEST);
     // notification - DEBUG
     // setTimeout(() => {
     //   dispatch({
