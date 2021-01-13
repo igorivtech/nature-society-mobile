@@ -5,21 +5,19 @@ import useIsMounted from "ismounted";
 export const useAndroidOnBack = (onBack) => {
   const isMounted = useIsMounted();
   useEffect(() => {
+    let backHandler = null;
     if (Platform.OS === "android") {
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        () => {
-          if (onBack != null && isMounted?.current) {
-            onBack();
-          }
-          return true;
+      backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+        if (onBack != null && isMounted?.current) {
+          onBack();
         }
-      );
-      return () => {
-        if (Platform.OS === "android") {
-          backHandler.remove();
-        }
-      };
+        return true;
+      });
     }
+    return () => {
+      if (Platform.OS === "android") {
+        backHandler?.remove();
+      }
+    };
   }, []);
 };
