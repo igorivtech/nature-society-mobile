@@ -42,6 +42,7 @@ import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} 
 import { formatRating, placeLocked } from "../../hooks/helpers";
 import LottieView from 'lottie-react-native';
 import posed, {Transition as PosedTransition} from 'react-native-pose';
+import useIsMounted from "ismounted";
 
 const PosedText = posed.Text({
   enter: {opacity: 1},
@@ -72,6 +73,8 @@ export const PlaceScreen = ({ navigation, route }) => {
   const { place } = route.params;
 
   const { share } = useShare();
+
+  const isMounted = useIsMounted();
 
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
@@ -155,6 +158,7 @@ export const PlaceScreen = ({ navigation, route }) => {
       } catch (error) {
         handleError(error)
       } finally {
+        if (!isMounted.current) {return}
         setLoadingBuy(false);
       }
     } else {
@@ -165,6 +169,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   }
 
   const handleError = (error) => {
+    if (!isMounted.current) {return}
     if (error) {
       setErrorData(strings.popups.loginError(error.code));
       setErrorPopupVisible(true);
