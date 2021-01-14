@@ -20,9 +20,17 @@ export const GrowthPoints = memo(() => {
   const [points, setPoints] = useState(0);
   const [ready, setReady] = useState(false);
 
-  const translateX = useRef(new Animated.Value(HIDDEN_TRANSLATE_X)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const scale = useRef(new Animated.Value(0)).current;
+  const scale = opacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+    extrapolate: 'clamp'
+  });
+  const translateX = opacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [HIDDEN_TRANSLATE_X, 0],
+    extrapolate: 'clamp'
+  });
   const textOpacity = useRef(new Animated.Value(1)).current;
 
   const isMounted = useIsMounted();
@@ -81,29 +89,13 @@ export const GrowthPoints = memo(() => {
   }, [user, offlineUser, ready]);
 
   const show = (show, delay) => {
-    return Animated.parallel([
-      Animated.timing(opacity, {
-        delay,
-        toValue: show ? 1 : 0,
-        useNativeDriver: true,
-        duration: 800,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(scale, {
-        delay,
-        toValue: show ? 1 : 0,
-        useNativeDriver: true,
-        duration: 800,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(translateX, {
-        delay,
-        toValue: show ? 0 : HIDDEN_TRANSLATE_X,
-        useNativeDriver: true,
-        duration: 800,
-        easing: Easing.inOut(Easing.ease)
-      })
-    ])
+    return Animated.timing(opacity, {
+      delay,
+      toValue: show ? 1 : 0,
+      useNativeDriver: true,
+      duration: 800,
+      easing: Easing.inOut(Easing.ease)
+    })
   }
 
   return (
