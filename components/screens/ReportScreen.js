@@ -85,6 +85,7 @@ export const ReportScreen = ({navigation, route}) => {
 
   const isMounted = useIsMounted();
   
+  const [fetchingPlace, setFetchingPlace] = useState(false);
   const {location, currentPosition} = route.params;
   const [selectedLocation, setLocation] = useState(location);
   const [searchVisible, setSearchVisible] = useState(false);
@@ -121,6 +122,7 @@ export const ReportScreen = ({navigation, route}) => {
         setLoaded(true);
       }, NAV_DURATION+300);
     } else if (currentPosition != null) { // got physical location
+      setFetchingPlace(true);
       const startTime = new Date();
       getPlaces('1', currentPosition, currentPosition, 15, 4).then(data=>{ // 1.5 km. 15 is just DEBUG
         if (!isMounted?.current) {return}
@@ -130,9 +132,11 @@ export const ReportScreen = ({navigation, route}) => {
           const sorted = specialSortPlaces([...data.pp], currentPosition);
           setTimeout(() => {
             if (!isMounted.current) {return}
+            setFetchingPlace(false);
             setLocation(sorted[0]);
           }, delay);
         } else {
+          setFetchingPlace(false);
           showNoPlaceUI();
         }
       })
