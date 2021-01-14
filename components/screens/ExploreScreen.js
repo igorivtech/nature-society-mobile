@@ -227,9 +227,9 @@ export const ExploreScreen = ({ navigation, route }) => {
 export const SitesHeader = memo(({onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.headerInnerContainer}>
-      <Image source={require("../../assets/images/left_arrow.png")} />
+      <Image style={globalStyles.imageJustContain} source={require("../../assets/images/left_arrow.png")} />
       <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.8} style={styles.headerTitle}>{strings.exploreScreen.globalSites}</Text>
-      <Image source={require("../../assets/images/trophy.png")} />
+      <Image style={globalStyles.imageJustContain} source={require("../../assets/images/trophy.png")} />
     </TouchableOpacity>
   )
 })
