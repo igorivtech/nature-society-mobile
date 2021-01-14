@@ -209,6 +209,8 @@ export const ReportScreen = ({navigation, route}) => {
             navigation.navigate("Home");
             uploadImageAsync(token, response.content.id, image);
           } else {
+            if (!isMounted.current) {return}
+            setLoadingSendReport(false); 
             console.error("cant update user");
           }
         } else {
