@@ -48,7 +48,7 @@ const errors = {
 export const strings = {
   pleaseSelectLocation: (fetchingPlace) => {
     if (fetchingPlace) {
-      return 'מחפשים אתר בקרבתכם...'
+      return 'מחפשים אתר טבע בקרבתכם...'
     } else {
       return 'אנא בחרו אתר טבע'
     }
