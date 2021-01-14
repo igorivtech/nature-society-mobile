@@ -24,6 +24,7 @@ import { useAndroidOnBack } from "../../hooks/useAndroidOnBack";
 import AsyncStorage from "@react-native-community/async-storage";
 
 const clean = {
+  key: 'clean',
   title: strings.reportScreen.cleanTitle,
   titles: strings.reportScreen.cleanTitles,
   animation: require("../../assets/animations/clean.json"),
@@ -39,6 +40,7 @@ const clean = {
 }
 
 const crowd = {
+  key: 'crowd',
   title: strings.reportScreen.crowdTitle,
   titles: strings.reportScreen.crowdTitles,
   animation: require('../../assets/animations/crowd.json'),

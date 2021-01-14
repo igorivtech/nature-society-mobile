@@ -434,8 +434,8 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
         </View>
       </Animated.View>
 
-      <FlingGestureHandler enabled={flingEnabled && location != null && dragEnabled} onHandlerStateChange={handleDown} direction={Directions.DOWN}>
-        <FlingGestureHandler enabled={flingEnabled && location != null && dragEnabled} onHandlerStateChange={handleUp} direction={Directions.UP}>
+      <FlingGestureHandler id={`${item.key}_down`} enabled={flingEnabled && location != null && dragEnabled} onHandlerStateChange={handleDown} direction={Directions.DOWN}>
+        <FlingGestureHandler id={`${item.key}_up`} enabled={flingEnabled && location != null && dragEnabled} onHandlerStateChange={handleUp} direction={Directions.UP}>
           <View style={sliderStyles.animationSliderContainer}>
             {loaded && (
               <Animated.View style={sliderStyles.animationsContainer(animationsContainerOpacity)}>
@@ -457,7 +457,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
               </Animated.View>
               <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer(item.thumbSize.width, SLIDER_HEIGHT + item.thumbSize.height)}>
                 <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
-                <PanGestureHandler enabled={location != null && dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
+                <PanGestureHandler id={`${item.key}_pan`} enabled={location != null && dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
                   <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
                     <Animated.View style={sliderStyles.maskedViewContainer(scale, startUpTranslateY)}>
                       <Image style={sliderStyles.backgroundMaskImage(item)} source={item.thumbBg} />
