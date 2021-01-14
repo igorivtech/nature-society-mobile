@@ -59,14 +59,14 @@ export const useServer = () => {
   };
 
   let abortController = useRef();
-  const getPlaces = (searchId, coordinate, location, radius, limit = 10) => {
+  const getPlaces = (searchId, coordinate, location, radius, limit = 10, ignoreRankings = false) => {
     // if (abortController?.current) {
     //   abortController.current.abort();
     // }
     // abortController.current = new AbortController();
     return new Promise((resolve) => {
       fetch(
-        `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=${limit}&radius=${1000 * radius}`,
+        `${BASE_URL}/getAll?lat=${coordinate.latitude}&lng=${coordinate.longitude}&skip=0&limit=${limit}&radius=${1000 * radius}&ignoreRankings=${ignoreRankings}`,
         { 
           method: "GET",
           // signal: abortController.current.signal,
