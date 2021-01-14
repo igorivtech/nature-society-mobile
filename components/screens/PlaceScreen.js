@@ -139,7 +139,7 @@ export const PlaceScreen = ({ navigation, route }) => {
         attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(dicToArray(unlockedPlaces));
         attributes[ATTRIBUTE_POINTS] = `${user.points - settings.pointsForUnlock}`;
         let cognitoUser = await Auth.currentAuthenticatedUser({
-          bypassCache: true,
+          // bypassCache: true,
         });
         let result = await Auth.updateUserAttributes(cognitoUser, attributes);
         if (result === 'SUCCESS') {
