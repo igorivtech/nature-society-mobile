@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState, useCallback } from "react";
 import { Directions, FlingGestureHandler, PanGestureHandler, State } from "react-native-gesture-handler";
-import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
+import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image, ActivityIndicator } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
 import { height, pureHeight, smallScreen, THUMB_COLORS } from "../../../values/consts";
@@ -41,7 +41,7 @@ const clampAnimationValue = (p) => {
 const TITLES_DELTA = 1/7;
 const ALREADY_SHOWN = "ALREADY_SHOWN"
 
-export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
+export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
   const {animation, introAnimation, title, titles} = item;
 
@@ -423,6 +423,7 @@ export const Slider = memo(({loaded, autoPlay, valueRef, item, location, showLoc
         {showLocation && (
           <TouchableWithoutFeedback onPress={pickLocation}>
             <View style={sliderStyles.locationContainer}>
+              <ActivityIndicator style={globalStyles.scale(0.8)} animating={fetchingPlace} color={colors.treeBlues} />
               <Text numberOfLines={1} style={sliderStyles.locationText}>{location != null ? location.title : strings.pleaseSelectLocation}</Text>
               <Image source={require("../../../assets/images/location_small_marker.png")} /> 
             </View>
@@ -638,6 +639,7 @@ const sliderStyles = StyleSheet.create({
   locationText: {
     ...textStyles.normalOfSize(18),
     color: colors.treeBlues,
+    flexGrow: 1,
     flexShrink: 1
   },
 

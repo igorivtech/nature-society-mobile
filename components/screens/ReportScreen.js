@@ -312,7 +312,7 @@ export const ReportScreen = ({navigation, route}) => {
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
         <Animatable.View animation='fadeIn' delay={400} style={styles.innerScrollViewContent}>
           <Animated.View style={[StyleSheet.absoluteFill, styles.scrollViewContent, {transform: [{translateY}]}]}>
-            <Slider loaded={loaded} autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
+            <Slider fetchingPlace={fetchingPlace} loaded={loaded} autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
             <Slider loaded={loaded} autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
             <Report sharePressed={sharePressed} useImageData={useImageData} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
           </Animated.View>

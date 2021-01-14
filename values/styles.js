@@ -3,6 +3,9 @@ import { colors } from "./colors";
 import { width, height, safeAreaHeight, smallScreen } from "./consts";
 
 export const globalStyles = StyleSheet.create({
+  scale: (scale) => ({
+    transform: [{scale}]
+  }),
   mapStyle: {
     ...StyleSheet.absoluteFill,
     bottom: -(safeAreaHeight+20),
