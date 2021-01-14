@@ -124,16 +124,15 @@ export const ReportScreen = ({navigation, route}) => {
     } else if (currentPosition != null) { // got physical location
       setFetchingPlace(true);
       const startTime = new Date();
-      getPlaces('1', currentPosition, currentPosition, 15, 4, true).then(data=>{ // 1.5 km. 15 is just DEBUG
+      getPlaces('1', currentPosition, currentPosition, 15, 1, true).then(data=>{ // 1.5 km. 15 is just DEBUG
         if (!isMounted?.current) {return}
         if (data != null && data.pp.length > 0) {
           const passedTime = (new Date()) - startTime;
           const delay = Math.max(0, NAV_DURATION+300 - passedTime);
-          const sorted = specialSortPlaces([...data.pp], currentPosition);
           setTimeout(() => {
             if (!isMounted.current) {return}
+            setLocation(data.pp[0]);
             setFetchingPlace(false);
-            setLocation(sorted[0]);
           }, delay);
         } else {
           setFetchingPlace(false);
