@@ -424,7 +424,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
           <TouchableWithoutFeedback onPress={pickLocation}>
             <View style={sliderStyles.locationContainer}>
               <ActivityIndicator style={globalStyles.scale(0.8)} animating={fetchingPlace} color={colors.treeBlues} />
-              <Text numberOfLines={1} style={sliderStyles.locationText}>{location != null ? location.title : strings.pleaseSelectLocation}</Text>
+              <Text numberOfLines={1} style={sliderStyles.locationText}>{location != null ? location.title : strings.pleaseSelectLocation(fetchingPlace)}</Text>
               <Image source={require("../../../assets/images/location_small_marker.png")} /> 
             </View>
           </TouchableWithoutFeedback>
