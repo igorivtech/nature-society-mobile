@@ -12,6 +12,7 @@ import {
   SPLASH_HIDE_DELAY,
   MAP_BOUNDARY_NORTHEAST,
   MAP_BOUNDARY_SOUTHWEST,
+  MAP_MIN_ZOOM,
 } from "../../values/consts";
 import { MAP_STYLE } from "../../values/map_style";
 import {
@@ -560,6 +561,7 @@ export const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={globalStyles.homeContainer}>
       <MapView
+        minZoomLevel={MAP_MIN_ZOOM}
         rotateEnabled={false}
         moveOnMarkerPress={false}
         onPanDrag={onPanDrag}

@@ -41,7 +41,7 @@ export const MAP_BOUNDARY_SOUTHWEST = {
   longitude: 33.960871,
   latitude: 29.291052
 }
-
+export const MAP_MIN_ZOOM = 8;
 export const INITIAL_REGION = {
   longitude: 34.9916,
   latitude: 31.4561,
