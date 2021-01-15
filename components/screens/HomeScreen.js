@@ -220,8 +220,8 @@ export const HomeScreen = ({ navigation, route }) => {
     setHideList(true);
     const region = {
       ...location,
-      longitudeDelta: 0.7, // 1 is 111 kilometers
-      latitudeDelta: 0.7*SCREEN_ASPECT_RATIO
+      longitudeDelta: 0.3, // 1 is 111 kilometers
+      latitudeDelta: 0.3*SCREEN_ASPECT_RATIO
     }
     if (firstTime) {
       actuallyGetPlaces(region, location);
