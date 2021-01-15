@@ -176,6 +176,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
 
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
+      const velocity = event.nativeEvent.velocityY;
       currentOffset.current = progress._value;
       scaleThumb(1);
       clampAnimation();
