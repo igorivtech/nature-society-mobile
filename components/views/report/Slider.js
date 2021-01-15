@@ -33,7 +33,7 @@ const clampAnimationValue = (p) => {
     return 0.5;
   } else if (p < 0.8) {
     return 0.75;
-  } else if (p <= 1) {
+  } else {
     return 1;
   }
 }
@@ -176,10 +176,17 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
 
   const panHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.END) {
-      const velocity = event.nativeEvent.velocityY;
-      currentOffset.current = progress._value;
+      const velocity = event.nativeEvent.velocityY/3000;
+      console.log({p, velocity});
+      currentOffset.current = p;
+      valueRef.current = p;
+      Animated.timing(progress, {
+        toValue: p,
+        duration: DURATION,
+        useNativeDriver: false,
+        easing: Easing.out(Easing.ease)
+      }).start();
       scaleThumb(1);
-      clampAnimation();
     } else if (event.nativeEvent.state === State.BEGAN) {
       scaleThumb(0.8);
       onIntroFinish();
@@ -189,18 +196,6 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
   const panHandlerEvent = (event) => {
     const p = clamp(0, currentOffset.current + (-event.nativeEvent.translationY/SLIDER_HEIGHT), 1);
     progress.setValue(p);
-  }
-
-  const clampAnimation = () => {
-    const p = clampAnimationValue(progress._value);
-    valueRef.current = p;
-    currentOffset.current = p;
-    Animated.timing(progress, {
-      toValue: p,
-      duration: DURATION,
-      useNativeDriver: false,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
   }
 
   const startThumbAnimation = async () => {
@@ -436,8 +431,8 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
         </View>
       </Animated.View>
 
-      <FlingGestureHandler id={`${item.key}_down`} enabled={flingEnabled && location != null && dragEnabled} onHandlerStateChange={handleDown} direction={Directions.DOWN}>
-        <FlingGestureHandler id={`${item.key}_up`} enabled={flingEnabled && location != null && dragEnabled} onHandlerStateChange={handleUp} direction={Directions.UP}>
+      <FlingGestureHandler id={`${item.key}_down`} enabled={flingEnabled && location != null && dragEnabled} direction={Directions.DOWN}>
+        <FlingGestureHandler id={`${item.key}_up`} enabled={flingEnabled && location != null && dragEnabled} direction={Directions.UP}>
           <View style={sliderStyles.animationSliderContainer}>
             {loaded && (
               <Animated.View style={sliderStyles.animationsContainer(animationsContainerOpacity)}>
