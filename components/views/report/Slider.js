@@ -597,6 +597,7 @@ const sliderStyles = StyleSheet.create({
   newReportContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 6,
     width: 66,
   },
