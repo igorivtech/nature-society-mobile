@@ -220,8 +220,8 @@ export const HomeScreen = ({ navigation, route }) => {
     setHideList(true);
     const region = {
       ...location,
-      longitudeDelta: 0.3, // 1 is 111 kilometers
-      latitudeDelta: 0.3*SCREEN_ASPECT_RATIO
+      longitudeDelta: 0.7, // 1 is 111 kilometers
+      latitudeDelta: 0.7*SCREEN_ASPECT_RATIO
     }
     if (firstTime) {
       actuallyGetPlaces(region, location);
@@ -405,7 +405,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const animateToItem = (item) => {
     const ld = mapRef.current.__lastRegion.longitudeDelta;
-    const noZoom = ld <= 0.3;
+    const noZoom = ld < 0.3;
     if (noZoom) {
       mapRef.current.animateToRegion({
         ...mapRef.current.__lastRegion,
@@ -413,10 +413,11 @@ export const HomeScreen = ({ navigation, route }) => {
         latitude: item.position.latitude,
       }, MAP_ANIMATION_DURATION);
     } else {
+      const paddedLD = item.position.longitudeDelta + 0.2;
       mapRef.current.animateToRegion({
         ...item.position,
-        longitudeDelta: item.position.longitudeDelta,
-        latitudeDelta: item.position.longitudeDelta*SCREEN_ASPECT_RATIO
+        longitudeDelta: paddedLD,
+        latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
       }, MAP_ANIMATION_DURATION);
     }
   };
