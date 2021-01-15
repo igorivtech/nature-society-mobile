@@ -200,8 +200,8 @@ export const ExploreScreen = ({ navigation, route }) => {
               contentContainerStyle={styles.flatListContainer}
               data={places}
               keyExtractor={(item) => item.key}
-              ListHeaderComponentStyle={styles.headerContainer}
-              ListHeaderComponent={()=><SitesHeader key='sitesHeader' onPress={showGlobalSites} />}
+              // ListHeaderComponentStyle={styles.headerContainer}
+              // ListHeaderComponent={()=><SitesHeader key='sitesHeader' onPress={showGlobalSites} />}
               ListFooterComponentStyle={styles.paginationIndicatorContainer}
               ListFooterComponent={()=><ActivityIndicator key='indicator' animating={loadingMorePlaces} color={colors.treeBlues} />}
               renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
