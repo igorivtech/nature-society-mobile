@@ -392,38 +392,6 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
     }
   }, [])
 
-  const handleDown = (e) => {
-    if (e.nativeEvent.state === State.ACTIVE) {
-      if (progress._value === 0) {
-        return;
-      }
-      animateFling(progress._value - 0.25);
-    }
-  }
-
-  const handleUp = (e) => {
-    if (e.nativeEvent.state === State.ACTIVE) {
-      if (progress._value === 1) {
-        return;
-      }
-      animateFling(progress._value + 0.25);
-    }
-  }
-
-  const animateFling = (toValue) => {
-    setFlingEnabled(false);
-    Animated.timing(progress, {
-      toValue,
-      useNativeDriver: false,
-      easing: Easing.inOut(Easing.ease)
-    }).start(()=>{
-      currentOffset.current = toValue;
-      progress.setValue(toValue);
-      valueRef.current = toValue;
-      setFlingEnabled(true);
-    });
-  }
-
   return (
     <View style={sliderStyles.container}>
 
