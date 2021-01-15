@@ -518,8 +518,8 @@ const sliderStyles = StyleSheet.create({
 
   smallEye: {
     resizeMode: 'center',
-    height: Math.ceil(9*1.05),
-    width: Math.ceil(15*1.05)
+    // height: Math.ceil(9*1.05),
+    // width: Math.ceil(15*1.05)
   },
 
   backgroundMaskImage: (item) => ({
