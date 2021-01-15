@@ -585,7 +585,6 @@ const sliderStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 6,
     width: 66,
-    paddingBottom: 1,
   },
 
   newReport: {
