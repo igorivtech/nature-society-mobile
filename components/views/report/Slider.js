@@ -501,7 +501,7 @@ export const NewReportLabel = () => {
   return (
     <View style={sliderStyles.newReportContainer}>
       <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
-      <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
+      <Image resizeMode='contain' style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
     </View>
   )
 }
@@ -597,7 +597,8 @@ const sliderStyles = StyleSheet.create({
   newReportContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 6
+    paddingTop: 6,
+    width: 66,
   },
 
   newReport: {
