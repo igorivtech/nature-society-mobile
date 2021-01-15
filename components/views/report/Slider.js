@@ -175,9 +175,17 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
   }, [showLocation, location, continueEnabled, autoPlay]);
 
   const panHandlerStateChange = (event) => {
+    finishGesture(event, true);
+  }
+
+  const panHandlerStateChangeFling = (event) => {
+    finishGesture(event, false);
+  }
+
+  const finishGesture = (event, thumbAnimation) => {
     if (event.nativeEvent.state === State.END) {
-      const velocity = event.nativeEvent.velocityY/3000;
-      console.log({p, velocity});
+      const velocity = event.nativeEvent.velocityY/5000;
+      const p = clampAnimationValue(progress._value-velocity);
       currentOffset.current = p;
       valueRef.current = p;
       Animated.timing(progress, {
@@ -186,9 +194,13 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
         useNativeDriver: false,
         easing: Easing.out(Easing.ease)
       }).start();
-      scaleThumb(1);
+      if (thumbAnimation) {
+        scaleThumb(1);
+      }
     } else if (event.nativeEvent.state === State.BEGAN) {
-      scaleThumb(0.8);
+      if (thumbAnimation) {
+        scaleThumb(0.8);
+      }
       onIntroFinish();
     }
   }
@@ -431,44 +443,47 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
         </View>
       </Animated.View>
 
-      <FlingGestureHandler id={`${item.key}_down`} enabled={flingEnabled && location != null && dragEnabled} direction={Directions.DOWN}>
-        <FlingGestureHandler id={`${item.key}_up`} enabled={flingEnabled && location != null && dragEnabled} direction={Directions.UP}>
-          <View style={sliderStyles.animationSliderContainer}>
-            {loaded && (
-              <Animated.View style={sliderStyles.animationsContainer(animationsContainerOpacity)}>
-                <Animated.View style={sliderStyles.animation(animationOpacity)}>
-                  <LottieView source={animation} progress={animationProgress} resizeMode={item.resizeMode} />
-                </Animated.View>
-                <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
-                  <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode={item.resizeMode} onAnimationFinish={onIntroFinish} />
-                </Animated.View>
+      <PanGestureHandler 
+        id={`${item.key}_down`} 
+        enabled={flingEnabled && location != null && dragEnabled}
+        onHandlerStateChange={panHandlerStateChangeFling}
+        onGestureEvent={panHandlerEvent}
+      >
+        <View style={sliderStyles.animationSliderContainer}>
+          {loaded && (
+            <Animated.View style={sliderStyles.animationsContainer(animationsContainerOpacity)}>
+              <Animated.View style={sliderStyles.animation(animationOpacity)}>
+                <LottieView source={animation} progress={animationProgress} resizeMode={item.resizeMode} />
               </Animated.View>
-            )}
-            <View style={sliderStyles.sliderTextContainer}>
-              <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
-                <Animated.Text style={sliderStyles.text(topTextOpacity, titleTranslateY)}>{topText}</Animated.Text>
-                <Animated.Text style={sliderStyles.text(centerPlusTextOpacity, titleTranslateY/2)}>{middlePlusText}</Animated.Text>
-                <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{middleText}</Animated.Text>
-                <Animated.Text style={sliderStyles.text(centerMinusTextOpacity, -titleTranslateY/2)}>{middleMinusText}</Animated.Text>
-                <Animated.Text style={sliderStyles.text(bottomTextOpacity, -titleTranslateY)}>{bottomText}</Animated.Text>
+              <Animated.View style={sliderStyles.introAnimation(introAnimationOpacity)}>
+                <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode={item.resizeMode} onAnimationFinish={onIntroFinish} />
               </Animated.View>
-              <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer(item.thumbSize.width, SLIDER_HEIGHT + item.thumbSize.height)}>
-                <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
-                <PanGestureHandler id={`${item.key}_pan`} enabled={location != null && dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
-                  <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
-                    <Animated.View style={sliderStyles.maskedViewContainer(scale, startUpTranslateY)}>
-                      <Image style={sliderStyles.backgroundMaskImage(item)} source={item.thumbBg} />
-                      <MaskedView maskElement={<Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />}>
-                        <Animated.View style={sliderStyles.maskedViewBackground(item, thumbColor)} />
-                      </MaskedView>
-                    </Animated.View>
+            </Animated.View>
+          )}
+          <View style={sliderStyles.sliderTextContainer}>
+            <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
+              <Animated.Text style={sliderStyles.text(topTextOpacity, titleTranslateY)}>{topText}</Animated.Text>
+              <Animated.Text style={sliderStyles.text(centerPlusTextOpacity, titleTranslateY/2)}>{middlePlusText}</Animated.Text>
+              <Animated.Text style={sliderStyles.text(centerTextOpacity, 0)}>{middleText}</Animated.Text>
+              <Animated.Text style={sliderStyles.text(centerMinusTextOpacity, -titleTranslateY/2)}>{middleMinusText}</Animated.Text>
+              <Animated.Text style={sliderStyles.text(bottomTextOpacity, -titleTranslateY)}>{bottomText}</Animated.Text>
+            </Animated.View>
+            <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer(item.thumbSize.width, SLIDER_HEIGHT + item.thumbSize.height)}>
+              <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
+              <PanGestureHandler id={`${item.key}_pan`} enabled={location != null && dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
+                <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY, item.thumbSize)}>
+                  <Animated.View style={sliderStyles.maskedViewContainer(scale, startUpTranslateY)}>
+                    <Image style={sliderStyles.backgroundMaskImage(item)} source={item.thumbBg} />
+                    <MaskedView maskElement={<Image style={[item.thumbSize, globalStyles.imageJustContain]} source={item.thumb} />}>
+                      <Animated.View style={sliderStyles.maskedViewBackground(item, thumbColor)} />
+                    </MaskedView>
                   </Animated.View>
-                </PanGestureHandler>
-              </View>
+                </Animated.View>
+              </PanGestureHandler>
             </View>
           </View>
-        </FlingGestureHandler>
-      </FlingGestureHandler>
+        </View>
+      </PanGestureHandler>
       
       <Animated.View style={sliderStyles.continueButton(bottomTopContainersOpacity)}>
         <TouchableOpacity disabled={(showLocation && location == null) || !continueEnabled || !autoPlay} onPress={localOnPress}>
