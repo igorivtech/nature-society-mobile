@@ -184,7 +184,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
 
   const finishGesture = (event, thumbAnimation) => {
     if (event.nativeEvent.state === State.END) {
-      const velocity = event.nativeEvent.velocityY/5000;
+      const velocity = event.nativeEvent.velocityY/7400;
       const p = clampAnimationValue(progress._value-velocity);
       currentOffset.current = p;
       valueRef.current = p;
