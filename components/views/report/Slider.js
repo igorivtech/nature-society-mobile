@@ -253,23 +253,29 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
       }),
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(startUpTranslateY, {
-            toValue: 50,
-            duration: 700,
-            useNativeDriver: true,
-            easing: Easing.inOut(Easing.ease)
-          }),
-          Animated.timing(startUpTranslateY, {
-            toValue: -50,
-            duration: 700,
-            useNativeDriver: true,
-            easing: Easing.inOut(Easing.ease)
-          }),
-        ])
-      )
-    ]).start();
+      createAnimation(true),
+      createAnimation(false),
+      createAnimation(true),
+      createAnimation(false),
+      Animated.timing(startUpTranslateY, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
+    ]).start(()=>{
+      if (!isMounted.current) {return}
+      finishLoop();
+    });
+  }
+
+  const createAnimation = (up) => {
+    return Animated.timing(startUpTranslateY, {
+      toValue: up ? 50 : -50,
+      duration: 700,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease)
+    })
   }
 
   const finishLoop = () => {
@@ -435,7 +441,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
               <Animated.Text style={sliderStyles.text(centerMinusTextOpacity, -titleTranslateY/2)}>{middleMinusText}</Animated.Text>
               <Animated.Text style={sliderStyles.text(bottomTextOpacity, -titleTranslateY)}>{bottomText}</Animated.Text>
             </Animated.View>
-            <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer}>
+            <View style={sliderStyles.sliderContainer}>
               <Animated.View style={sliderStyles.middleLine(lineOpacity)} />
               <PanGestureHandler id={`${item.key}_pan`} enabled={location != null && dragEnabled} onHandlerStateChange={panHandlerStateChange} onGestureEvent={panHandlerEvent}>
                 <Animated.View style={sliderStyles.thumbContainer(thumbTranslateY)}>
@@ -471,6 +477,8 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
     </View>
   )
 });
+
+// <View onTouchStart={onTouchStart} style={sliderStyles.sliderContainer}>
 
 export const NewReportLabel = () => {
   return (
