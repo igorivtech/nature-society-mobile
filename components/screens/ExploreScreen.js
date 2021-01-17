@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
   cardDetailsContainer: {
     justifyContent: "space-between",
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: smallScreen ? 8 : 16,
     height: 80,
     borderBottomLeftRadius: INNER_BORDER_RADIUS,
     borderBottomRightRadius: INNER_BORDER_RADIUS,
