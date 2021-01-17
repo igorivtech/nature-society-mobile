@@ -250,7 +250,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               </View>
             )}
             {place.image != null && (
-              <Image onError={()=>setLoadingImage(false)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ 
+              <Image onLoadStart={()=>setLoadingImage(true)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ 
                 uri: place.image,
                 cache: 'force-cache'
               }} />
