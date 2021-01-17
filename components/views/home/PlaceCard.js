@@ -121,16 +121,21 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
           </View>
 
           <View style={globalStyles.cardMainImage}>
+            {item.image != null && (
+              <Image style={styles.image} source={{ 
+                uri: item.image ,
+                cache: 'force-cache'
+              }} />
+            )}
+            {item.image == null && (
+              <Image style={styles.noImage} source={require("../../../assets/images/default_place_bg.png")} />
+            )}
             {/* <Image style={[styles.image, {
               resizeMode: 'contain',
               backgroundColor: colors.imageBg
               }]} source={require("../../../assets/images/default_place_bg.png")} />
             <Image style={[styles.image, {position: 'absolute'}]} source={{ uri: item.image }} /> */}
             {/* <Image onLoad={turnOffLoading} onError={turnOffLoading} style={styles.image} source={{ uri: item.image }} /> */}
-            <Image style={styles.image} source={{ 
-              uri: item.image ,
-              cache: 'force-cache'
-              }} />
             {/* <View style={[StyleSheet.absoluteFill, globalStyles.centerChildren]}>
               <ActivityIndicator animating={loadingImage} />
             </View> */}
@@ -142,6 +147,11 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
 });
 
 const styles = StyleSheet.create({
+  noImage: {
+    ...globalStyles.cardMainImage, 
+    width: "100%",
+    resizeMode: 'contain'
+  },
   card: {
     width: ITEM_WIDTH,
     height: ITEM_HEIGHT+CARD_TRANSLATE_Y,

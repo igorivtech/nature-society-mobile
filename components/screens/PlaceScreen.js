@@ -83,7 +83,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const [loadingBuy, setLoadingBuy] = useState(false);
-  const [loadingImage, setLoadingImage] = useState(true);
+  const [loadingImage, setLoadingImage] = useState(false);
 
   const textRef = useRef();
   const ratingRef = useRef();
@@ -238,17 +238,23 @@ export const PlaceScreen = ({ navigation, route }) => {
             />
           </Animatable.View>
 
-          <View style={[s.imageStyle, globalStyles.centerChildren, {overflow: 'hidden'}]}>
-            {!loadingImage && (
+          <View style={[s.imageStyle, globalStyles.centerChildren, {
+            overflow: 'hidden',
+            }]}>
+            {place.image == null && (
               <Image source={require("../../assets/images/default_place_bg.png")} />
             )}
-            <View style={globalStyles.centerChildren}>
-              <ActivityIndicator animating={loadingImage} />
-            </View>
-            <Image onError={()=>setLoadingImage(false)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ 
-              uri: place.image,
-              cache: 'force-cache'
-               }} />
+            {place.image != null && (
+              <View style={globalStyles.centerChildren}>
+                <ActivityIndicator animating={loadingImage} />
+              </View>
+            )}
+            {place.image != null && (
+              <Image onError={()=>setLoadingImage(false)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ 
+                uri: place.image,
+                cache: 'force-cache'
+              }} />
+            )}
           </View>
 
           <Animatable.View
