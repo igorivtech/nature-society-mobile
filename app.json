@@ -19,9 +19,6 @@
       "**/*"
     ],
     "ios": {
-      "branch": {
-        "apiKey": "key_live_mmXae4vgjB6jB46XEGcqPoflzrpAdGda"
-      },
       "associatedDomains": [
         "applinks:3k9vj.app.link"
       ],
@@ -40,12 +37,17 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "אנחנו משתמשים במיקום כדי שנוכל להראות לכם אתרים כיפיים מסביבכם."
       },
       "config": {
+        "branch": {
+          "apiKey": "key_live_mmXae4vgjB6jB46XEGcqPoflzrpAdGda"
+        },
         "googleMapsApiKey": "AIzaSyCZWRw4uja13gJHCiIuDtZ7atE4mU8DNAo"
       }
     },
     "android": {
-      "branch": {
-        "apiKey": "key_live_mmXae4vgjB6jB46XEGcqPoflzrpAdGda"
+      "config": {
+        "branch": {
+          "apiKey": "key_live_mmXae4vgjB6jB46XEGcqPoflzrpAdGda"
+        },
       },
       "package": "com.ivtech.hala",
       "versionCode": 1,
