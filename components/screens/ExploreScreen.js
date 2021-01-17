@@ -332,6 +332,7 @@ export const SearchBar = memo(({
 });
 
 const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
+  const [loadingImage, setLoadingImage] = useState(false);
   return (
     <Animatable.View animation='fadeIn'>
       <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
@@ -339,10 +340,13 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
           <Image style={styles.cardImage('contain')} source={require("../../assets/images/default_place_bg.png")} />
         )}
         {item.image != null && (
-          <Image style={styles.cardImage('cover')} source={{ 
-            uri: item.image,
-            cache: 'force-cache'
-          }} />
+          <View style={styles.placeImageContainer}>
+            <Image onLoad={()=>setLoadingImage(false)} onLoadStart={()=>setLoadingImage(true)} style={styles.cardImage('cover')} source={{ 
+              uri: item.image,
+              cache: 'force-cache'
+            }} />
+            <ActivityIndicator style={globalStyles.absolute} animating={loadingImage} />
+          </View>
         )}
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
@@ -392,6 +396,13 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  placeImageContainer: {
+    flexGrow: 1,
+    flexShrink: 1,
+    width: '100%',
+    ...globalStyles.centerChildren
+  },
 
   lottie: {
     width: 28,

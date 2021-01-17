@@ -3,6 +3,9 @@ import { colors } from "./colors";
 import { width, height, safeAreaHeight, smallScreen } from "./consts";
 
 export const globalStyles = StyleSheet.create({
+  absolute: {
+    position: 'absolute'
+  },  
   scale: (scale) => ({
     transform: [{scale}]
   }),
