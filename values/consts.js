@@ -25,6 +25,8 @@ export const CARD_RADIUS = 24;
 const releaseChannel = Constants.manifest.releaseChannel;
 export const isAlt = true; // releaseChannel === 'alt';
 
+export const isStandalone = Constants.appOwnership === 'standalone'
+
 export const isAndroid = Platform.OS === 'android';
 
 // export const recentVisitors = [

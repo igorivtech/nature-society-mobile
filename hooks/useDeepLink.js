@@ -4,6 +4,7 @@ import { SAVE_DEEP_LINK_ID } from "../context/userReducer";
 import { useServer } from "./useServer";
 import { convertServerPlaces } from "./helpers";
 import * as Location from 'expo-location';
+import { isStandalone } from "../values/consts";
 
 export const useDeepLink = (dispatch) => {
   const { getPlace } = useServer();
@@ -32,14 +33,31 @@ export const useDeepLink = (dispatch) => {
   };
 
   useEffect(() => {
-    Linking.parseInitialURLAsync().then((url) => {
-      if (url != null && url.queryParams != null) {
-        handleQueryParams(url.queryParams);
-      }
-    });
-    Linking.addEventListener("url", handleUrl);
-    return () => {
-      Linking.removeEventListener("url", handleUrl);
-    };
+    // if (isStandalone) {
+    //   let unsubscribe = null;
+    //   import('expo-branch').then(ExpoBranch => {
+    //     const Branch = ExpoBranch.default;
+    //     unsubscribe = Branch.subscribe(bundle => {
+    //       if (bundle && bundle.params && !bundle.error) {
+    //         alert(Object.keys(bundle.params).join());
+    //       }
+    //     });
+    //   });
+    //   return () => {
+    //     if (unsubscribe) {
+    //       unsubscribe();
+    //     }
+    //   }
+    // } else {
+      Linking.parseInitialURLAsync().then((url) => {
+        if (url != null && url.queryParams != null) {
+          handleQueryParams(url.queryParams);
+        }
+      });
+      Linking.addEventListener("url", handleUrl);
+      return () => {
+        Linking.removeEventListener("url", handleUrl);
+      };
+    // }
   }, []);
 };

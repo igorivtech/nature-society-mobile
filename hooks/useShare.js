@@ -1,11 +1,12 @@
 import React from "react";
 import { Platform, Share } from "react-native";
 import * as Linking from 'expo-linking';
+import { isStandalone } from "../values/consts";
 
 export const appWebsite = "https://dev.d39prj9hryszvg.amplifyapp.com/"
 
 export const useShare = () => {
-  const share = async (title, id) => {
+  const oldShare = async (title, id) => {
     try {
       const url = Linking.makeUrl('showPlace', {id})
       const result = await Share.share({
@@ -39,6 +40,32 @@ export const useShare = () => {
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  const share = async (title, id) => {
+    // if (isStandalone) {
+    //   try {
+    //     const ExpoBranch = await import('expo-branch');
+    //     const Branch = ExpoBranch.default;
+    //     const shareOptions = {
+    //       messageHeader: title,
+    //     };
+    //     const branchUniversalObject = await Branch.createBranchUniversalObject(
+    //       `place_${id}`,
+    //       {
+    //         title: title,
+    //         metadata: {
+    //           params: JSON.stringify({ id }),
+    //         },
+    //       }
+    //     );
+    //     await branchUniversalObject.showShareSheet(shareOptions);
+    //   } catch (error) {
+    //     alert(JSON.stringify(error));
+    //   }
+    // } else {
+      oldShare(title, id);
+    // }
   };
 
   return { share };
