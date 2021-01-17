@@ -355,7 +355,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
                 {strings.distanceFromYou(hasLocation ? item.distance : null)}
               </Text>  
             )}
-            <View style={{flexGrow: 1, minWidth: 4}} />
+            <View style={styles.titleSpacer} />
             <View style={styles.titleContainer}>
               <Text numberOfLines={1} minimumFontScale={0.9} adjustsFontSizeToFit={true} style={styles.title}>{item.title}</Text>
 
@@ -396,6 +396,10 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  titleSpacer: {
+    flexGrow: 1, minWidth: 4
+  },
 
   title: {
     ...textStyles.boldOfSize(16),
