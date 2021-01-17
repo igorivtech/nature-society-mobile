@@ -335,10 +335,15 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
   return (
     <Animatable.View animation='fadeIn'>
       <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
-        <Image style={styles.cardImage} source={{ 
-          uri: item.image,
-          cache: 'force-cache'
-           }} />
+        {item.image == null && (
+          <Image style={styles.cardImage('contain')} source={require("../../assets/images/default_place_bg.png")} />
+        )}
+        {item.image != null && (
+          <Image style={styles.cardImage('cover')} source={{ 
+            uri: item.image,
+            cache: 'force-cache'
+          }} />
+        )}
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
             {item.distance && (
@@ -538,12 +543,15 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
 
-  cardImage: {
+  cardImage: (resizeMode) => ({
+    resizeMode,
     borderTopLeftRadius: INNER_BORDER_RADIUS,
     borderTopRightRadius: INNER_BORDER_RADIUS,
     flexGrow: 1,
+    flexShrink: 1,
+    width: '100%',
     backgroundColor: colors.imageBg,
-  },
+  }),
 
   cardDetailsContainer: {
     justifyContent: "space-between",
