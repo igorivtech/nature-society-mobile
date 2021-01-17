@@ -13,8 +13,8 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
 
   const scale = useRef(new Animated.Value(0)).current;
   const opacity = scale.interpolate({
-    inputRange: [0, 0.7, 0.8],
-    outputRange: [0, 0.7, 1],
+    inputRange: [0, 0.6, 0.8],
+    outputRange: [0, 0.5, 1],
     extrapolate: 'clamp'
   })  
   const translateY = scale.interpolate({
@@ -31,7 +31,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     firstTime.current = false;
     setLoadingScale(true);
     Animated.timing(scale, {
-      toValue: selected ? 0.8 : 0.7,
+      toValue: selected ? 0.8 : 0.6,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
       duration: 300,
@@ -59,10 +59,6 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
   //   }
   // }, [globalShow])
 
-  const turnOffTrackChanged = useCallback(()=>{
-    setLoadingImage(false);
-  }, []);
-
   const p = useCallback(()=>{
     onPress(place);
   }, [place, onPress])
@@ -71,7 +67,6 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     if (place) {
       const newImage = place.cleanness >= 3 ? require("../../../assets/images/marker_good.png") : require("../../../assets/images/marker_bad.png");
       if (image !== newImage) {
-        setLoadingImage(true);
         setImage(newImage)
       }
     }
@@ -86,7 +81,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
       coordinate={place.position}
     >
       <View style={styles.container}>
-        <Animated.Image style={styles.marker(scale, translateY, opacity)} onLoad={turnOffTrackChanged} source={image} />
+        <Animated.Image onLoadStart={()=>setLoadingImage(true)} onLoadEnd={()=>setLoadingImage(false)} style={styles.marker(scale, translateY, opacity)} source={image} />
       </View>
     </Marker>
   )
