@@ -33,7 +33,7 @@ export const useDeepLink = (dispatch) => {
       .path.split("/showPlace/")
       .filter((e) => e != "");
     if (idInArray.length === 1) {
-      handlePlaceId(idInArray[0]);
+      handlePlaceId(idInArray[0].replace(/\\|\//g,''));
     }
   };
 
