@@ -424,6 +424,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const showPlace = useCallback((place) => {
     setHideList(true);
+    setHideButtons(true);
     setTimeout(() => {
       setHideList(true);
       navigation.navigate("Place", { place });
