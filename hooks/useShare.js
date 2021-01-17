@@ -9,7 +9,7 @@ export const useShare = () => {
   const oldShare = async (title, id) => {
     try {
       // const url = Linking.makeUrl('showPlace', {id})
-      const url = `${appWebsite}/showPlace?id=${id}`;
+      const url = `${appWebsite}/showPlace/${id}`;
       const result = await Share.share({
         ...Platform.select({
           ios: {
