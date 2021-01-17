@@ -5,7 +5,6 @@ import { useServer } from "./useServer";
 import { convertServerPlaces } from "./helpers";
 import * as Location from 'expo-location';
 import { isStandalone } from "../values/consts";
-import Branch from "./branch";
 
 export const useDeepLink = (dispatch) => {
   const { getPlace } = useServer();
@@ -34,18 +33,8 @@ export const useDeepLink = (dispatch) => {
   };
 
   useEffect(() => {
-    if (isStandalone) {
-      const unsubscribe = Branch.subscribe(bundle => {
-        if (bundle && bundle.params && !bundle.error) {
-          alert(Object.keys(bundle.params).join());
-        }
-      });
-      return () => {
-        if (unsubscribe) {
-          unsubscribe();
-        }
-      }
-    } else {
+    // if (isStandalone) {
+    // } else {
       Linking.parseInitialURLAsync().then((url) => {
         if (url != null && url.queryParams != null) {
           handleQueryParams(url.queryParams);
@@ -55,6 +44,6 @@ export const useDeepLink = (dispatch) => {
       return () => {
         Linking.removeEventListener("url", handleUrl);
       };
-    }
+    // }
   }, []);
 };
