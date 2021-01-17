@@ -47,7 +47,7 @@
       "config": {
         "branch": {
           "apiKey": "key_live_mmXae4vgjB6jB46XEGcqPoflzrpAdGda"
-        },
+        }
       },
       "package": "com.ivtech.hala",
       "versionCode": 1,
