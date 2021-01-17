@@ -8,7 +8,8 @@ export const appWebsite = "https://dev.d39prj9hryszvg.amplifyapp.com/"
 export const useShare = () => {
   const oldShare = async (title, id) => {
     try {
-      const url = Linking.makeUrl('showPlace', {id})
+      // const url = Linking.makeUrl('showPlace', {id})
+      const url = `${appWebsite}/showPlace?id=${id}`;
       const result = await Share.share({
         ...Platform.select({
           ios: {
