@@ -30,7 +30,7 @@ export const useDeepLink = (dispatch) => {
       return;
     }
     const idInArray = Linking.parse(url)
-      .path.split("/showPlace/")
+      .path.split("showPlace/")
       .filter((e) => e != "");
     if (idInArray.length === 1) {
       handlePlaceId(idInArray[0].replace(/\\|\//g,''));
