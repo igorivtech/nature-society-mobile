@@ -357,10 +357,10 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
             )}
             <View style={{flexGrow: 1, minWidth: 4}} />
             <View style={styles.titleContainer}>
-              <Text numberOfLines={2} adjustsFontSizeToFit={true} style={textStyles.boldOfSize(16)}>{item.title}</Text>
+              <Text numberOfLines={1} minimumFontScale={0.9} adjustsFontSizeToFit={true} style={styles.title}>{item.title}</Text>
 
               <Image
-                style={styles.translateY(-2)}
+                style={styles.translateY(-1)}
                 source={item.cleanness >= 3 ? require("../../assets/images/marker_explore_green.png") : require("../../assets/images/marker_explore_orange.png")}
               />
             </View>
@@ -396,6 +396,11 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  title: {
+    ...textStyles.boldOfSize(16),
+    flexGrow: 1, flexShrink: 1
+  },
 
   placeImageContainer: {
     flexGrow: 1,
@@ -520,13 +525,15 @@ const styles = StyleSheet.create({
   }),
 
   titleContainer: { 
+    flexGrow: 1,
     flexShrink: 1, 
     flexDirection: "row", 
-    alignItems: "center" 
+    alignItems: "center",
+    justifyContent: 'flex-end'
   },
 
   cardLocationContainer: {
-    flexShrink: 1,
+    flexGrow: 1,
     alignItems: "center",
     flexDirection: "row",
     marginLeft: 16,
