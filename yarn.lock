@@ -4313,6 +4313,13 @@ expo-asset@~8.2.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-branch@~2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/expo-branch/-/expo-branch-2.3.1.tgz#e7a71d12ce694e2490c5c921b639f6e38f856889"
+  integrity sha512-alXACYrDOIRzU9KSBhsmy3Mj5mO/txvb7IvwbTtCpGBhrA8SmZxbWubqWcjXHNW/OmbIvqNXc5MYbPPhyFmoKw==
+  dependencies:
+    react-native-branch "5.0.0"
+
 expo-constants@9.2.0, expo-constants@~9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.2.0.tgz#e86a38793deaff9018878afac65bce2543c80a4c"
@@ -6800,6 +6807,11 @@ react-native-animatable@1.3.3, react-native-animatable@^1.3.3:
   integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-branch@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-5.0.0.tgz#9d2102abb3c9a577ce4327e434151ece2b4c7c78"
+  integrity sha512-6VInx3bvWOfEJ916zdA1yzJhcjB26N0oMUJInW3reFIijsk6KOjyM46UH3/MixdNUOV/nZn1JoRZM+wpLffDWQ==
 
 react-native-gesture-handler@~1.7.0:
   version "1.7.0"
