@@ -28,6 +28,9 @@ export const useDeepLink = (dispatch) => {
   };
 
   const handleUrl = ({ url }) => {
+    if (url == null) {
+      return;
+    }
     const idInArray = Linking.parse(url).path.split('/showPlace/').filter(e=>e != '');
     if (idInArray.length === 1) {
       handleQueryParams({
