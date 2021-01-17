@@ -312,8 +312,8 @@ export const SearchBar = memo(({
         onChangeText={textChanged}
         value={searchTerm}
         selectionColor={colors.desertRock}
-        placeholderTextColor={colors.treeBlues}
-        placeholder={modal ? '' : (searchOn ? strings.exploreScreen.searchPlaceholder : "")}
+        // placeholderTextColor={colors.treeBlues}
+        // placeholder={modal ? '' : (searchOn ? strings.exploreScreen.searchPlaceholder : "")}
         style={styles.searchInput}
       />     
 
