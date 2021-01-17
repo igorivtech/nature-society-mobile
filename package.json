@@ -19,7 +19,6 @@
     "aws-amplify": "^3.3.12",
     "buffer": "^6.0.3",
     "expo": "~39.0.2",
-    "expo-branch": "~2.3.1",
     "expo-constants": "~9.2.0",
     "expo-image-manipulator": "~8.3.0",
     "expo-image-picker": "~9.1.1",
