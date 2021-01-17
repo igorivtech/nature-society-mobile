@@ -20,7 +20,7 @@
     ],
     "ios": {
       "associatedDomains": [
-        "applinks:3k9vj.app.link"
+        "applinks:dev.d39prj9hryszvg.amplifyapp.com"
       ],
       "supportsTablet": false,
       "bundleIdentifier": "com.ivtech.hala",
