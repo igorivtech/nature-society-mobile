@@ -10,7 +10,6 @@ import { colors } from "../../../values/colors";
 import useIsMounted from 'ismounted';
 import AsyncStorage from "@react-native-community/async-storage";
 import { globalStyles } from "../../../values/styles";
-import MaskedView from '@react-native-community/masked-view';
 
 const THUMB_RADIUS = 26.5 / 2;
 let SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);
