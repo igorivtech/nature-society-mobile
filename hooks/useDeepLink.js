@@ -28,16 +28,20 @@ export const useDeepLink = (dispatch) => {
   };
 
   const handleUrl = ({ url }) => {
-    const { queryParams } = Linking.parse(url);
-    handleQueryParams(queryParams);
+    const idInArray = Linking.parse(url).path.split('/showPlace/').filter(e=>e != '');
+    if (idInArray.length === 1) {
+      handleQueryParams({
+        id: idInArray[0]
+      });
+    }
   };
 
   useEffect(() => {
     // if (isStandalone) {
     // } else {
       Linking.parseInitialURLAsync().then((url) => {
-        if (url != null && url.queryParams != null) {
-          handleQueryParams(url.queryParams);
+        if (url != null && url.path != null) {
+          handleUrl({url: url.path});
         }
       });
       Linking.addEventListener("url", handleUrl);
