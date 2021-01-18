@@ -73,7 +73,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [requestPermissions, setRequestPermissions] = useState(false);
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const [showPushPopup, setShowPushPopup] = useState(false);
-  const [userMarkerVisible, setUserMarkerVisible] = useState(true);
+  const [userMarkerVisible, setUserMarkerVisible] = useState(false);
 
   const isMounted = useIsMounted();
   const isFocused = useIsFocused();
