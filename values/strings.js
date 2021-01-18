@@ -149,7 +149,7 @@ export const strings = {
     },
     cleannessTitle: (locked) => {
       // return locked ? "מצב וניקיון הטבע" : "מצב הטבע";
-      return 'מצב ניקיון הטבע';
+      return 'רמת הניקיון באתר';
     },
     crowdnessTitle: (small) => {
       return small ? 
