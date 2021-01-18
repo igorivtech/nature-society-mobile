@@ -46,9 +46,13 @@
       "intentFilters": [
         {
           "action": "VIEW",
-          "data": [{
-            "scheme": "halaapp"
-          }],
+          "data": [
+            {
+              "scheme": "https",
+              "host": "dev.d39prj9hryszvg.amplifyapp.com",
+              "pathPrefix": "/showPlace"
+            }
+          ],
           "category": [
             "BROWSABLE",
             "DEFAULT"
