@@ -19,11 +19,11 @@
     ],
     "ios": {
       "associatedDomains": [
-        "applinks:dev.d39prj9hryszvg.amplifyapp.com"
+        "applinks:d1i8174zhvqsl4.cloudfront.net"
       ],
       "supportsTablet": false,
       "bundleIdentifier": "com.ivtech.hala",
-      "buildNumber": "1.0.6",
+      "buildNumber": "1.0.7",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "waze"
@@ -49,7 +49,7 @@
           "data": [
             {
               "scheme": "https",
-              "host": "dev.d39prj9hryszvg.amplifyapp.com",
+              "host": "d1i8174zhvqsl4.cloudfront.net",
               "pathPrefix": "/showPlace"
             }
           ],

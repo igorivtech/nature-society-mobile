@@ -3,13 +3,13 @@ import { Platform, Share } from "react-native";
 import * as Linking from 'expo-linking';
 import { isStandalone } from "../values/consts";
 
-export const appWebsite = "https://dev.d39prj9hryszvg.amplifyapp.com/"
+export const appWebsite = "https://d1i8174zhvqsl4.cloudfront.net"
 
 export const useShare = () => {
   const oldShare = async (title, id) => {
     try {
       // const url = Linking.makeUrl('showPlace', {id})
-      const url = `${appWebsite}showPlace/${id}`;
+      const url = `${appWebsite}/showPlace/${id}`;
       const result = await Share.share({
         ...Platform.select({
           ios: {
