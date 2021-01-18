@@ -8,6 +8,9 @@ export const useServer = () => {
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [loadingMorePlaces, setLoadingMorePlaces] = useState(false);
 
+  // https://ddaflq8r2a.execute-api.eu-central-1.amazonaws.com/prod/newSiteSuggest
+  // siteName
+
   const getExplorePlaces = async (location, page) => {
     if (loadingMorePlaces) {
       return;
