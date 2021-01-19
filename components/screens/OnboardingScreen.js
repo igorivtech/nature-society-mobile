@@ -52,8 +52,6 @@ const titles = {
   2: strings.onboardingScreen.item3,
 };
 
-let layouts = {}
-
 export const OnboardingScreen = ({ navigation }) => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
   const [currIndex, setIndex] = useState(-1);
@@ -394,10 +392,6 @@ export const OnboardingScreen = ({ navigation }) => {
     setSecondContainerVisible(true);
   }
 
-  const onLayout = (e, index) => {
-    layouts[index] = e.nativeEvent.layout;
-  }
-
   return (
     <View style={styles.container}>
       <Animated.Image style={styles.logo(logoTranslateY, logoScale)} source={require("../../assets/images/splash_top.png")} />
@@ -414,9 +408,6 @@ export const OnboardingScreen = ({ navigation }) => {
           <OnboardingButton
             scale={progressButtonScale}
             transform={progressButtonTransform}
-            onLayout={(e)=>{
-              onLayout(e, 2)
-            }}
             index={2}
             selected={selectedIndex === 2}
             setIndex={setSelectedIndex}
@@ -424,9 +415,6 @@ export const OnboardingScreen = ({ navigation }) => {
           <OnboardingButton
             scale={reportButtonScale}
             transform={reportButtonTransform}
-            onLayout={(e)=>{
-              onLayout(e, 1)
-            }}
             index={1}
             selected={selectedIndex === 1}
             setIndex={setSelectedIndex}
@@ -434,9 +422,6 @@ export const OnboardingScreen = ({ navigation }) => {
           <OnboardingButton
             scale={exploreButtonScale}
             transform={exploreButtonTransform}
-            onLayout={(e)=>{
-              onLayout(e, 0)
-            }}
             index={0}
             selected={selectedIndex === 0}
             setIndex={setSelectedIndex}

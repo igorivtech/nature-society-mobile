@@ -34,7 +34,7 @@ const iterationDelay = {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const OnboardingButton = ({ scale, index, selected, setIndex, doneVisible = false, onLayout, transform }) => {
+export const OnboardingButton = ({ scale, index, selected, setIndex, doneVisible = false, transform }) => {
   const alpha = useRef(new Animated.Value(0)).current;
   const innerScale = useRef(new Animated.Value(SMALL_SCALE)).current;
   const ref = useRef();
@@ -69,7 +69,7 @@ export const OnboardingButton = ({ scale, index, selected, setIndex, doneVisible
   };
 
   return (
-    <AnimatedPressable style={[transform.getLayout(), {position:  'absolute'}]} onLayout={onLayout} onPress={onPress}>
+    <AnimatedPressable style={[transform.getLayout(), {position:  'absolute'}]} onPress={onPress}>
       <Animatable.View 
         ref={ref} 
         useNativeDriver={true}
