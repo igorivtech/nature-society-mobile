@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   left: {
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 4,
     position: "absolute",
     top: 0,
     bottom: 0,
@@ -31,7 +30,6 @@ const styles = StyleSheet.create({
   right: {
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 4,
     position: "absolute",
     top: 0,
     bottom: 0,
