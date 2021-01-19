@@ -229,7 +229,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               keyExtractor={(item) => item.key}
               renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
             />
-            <View style={styles.suggestionContainer(showSuggestion)}>
+            <View style={suggestionStyles.suggestionContainer(showSuggestion)}>
               <SuggestPlaceView loadingSuggestion={loadingSuggestion} searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />
             </View>
           </Animated.View>
@@ -254,22 +254,53 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
     }
   }, [loadingSuggestion])
   if (showSuggestion) {
-    return <View style={{
-      width: '100%',
-      justifyContent: 'center',
-      alignItems: 'stretch'
-    }}>
+    return <View style={suggestionStyles.container}>
       <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
       <View style={globalStyles.spacer(12)} />
       <TouchableOpacity disabled={loadingSuggestion} onPress={suggestPlace}>
-        <Animated.View style={styles.newSuggestionButtonContainer(opacity)}>
-          <Text numberOfLines={2} style={styles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
+        <Animated.View style={suggestionStyles.newSuggestionButtonContainer(opacity)}>
+          <Text numberOfLines={2} style={suggestionStyles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
         </Animated.View>
       </TouchableOpacity>
   </View>
   } else {
     return <View />
   }
+})
+
+const suggestionStyles = StyleSheet.create({
+  container: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'stretch'
+  },
+  suggestionContainer: (showSuggestion) => ({
+    transform: [{translateY: -34}],
+    ...StyleSheet.absoluteFill,
+    zIndex: showSuggestion ? 2 : -2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 40
+  }),
+
+  suggestButton: {
+    ...textStyles.boldOfSize(18, colors.treeBlues, 'center'),
+    flexShrink: 1,
+  },
+
+  newSuggestionButtonContainer: (opacity) => ({
+    opacity,
+    transform: [{scale: opacity}],
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    borderRadius: 15,
+    minHeight: 54
+  }),
 })
 
 export const SitesHeader = memo(({onPress}) => {
@@ -444,35 +475,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
-  
-  suggestionContainer: (showSuggestion) => ({
-    transform: [{translateY: -34}],
-    ...StyleSheet.absoluteFill,
-    zIndex: showSuggestion ? 2 : -2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 40
-  }),
-
-  suggestButton: {
-    ...textStyles.boldOfSize(18, colors.treeBlues, 'center'),
-    flexShrink: 1,
-  },
-
-  newSuggestionButtonContainer: (opacity) => ({
-    opacity,
-    transform: [{scale: opacity}],
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    borderWidth: 1,
-    borderColor: colors.treeBlues,
-    borderRadius: 15,
-    minHeight: 54
-  }),
-
+ 
   titleSpacer: {
     flexGrow: 1, minWidth: 4
   },
