@@ -377,7 +377,7 @@ const TextsView = ({index}) => {
 const Highlight = ({regular, highlight, text, words, position = 'relative'}) => {
   return (
     <Highlighter
-      style={[regular, {position}]}
+      style={[regular, {position, lineHeight: 24}]}
       highlightStyle={highlight}
       searchWords={words}
       textToHighlight={text}
@@ -424,11 +424,11 @@ const Text2 = ({opacity}) => {
       position: 'absolute',
       opacity
     }}>
-      <Highlighter
-        style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}
-        highlightStyle={textStyles.boldOfSize(24, colors.darkWithTone, 'center')}
-        searchWords={['דווחו']}
-        textToHighlight={strings.onboardingScreen.newItem2}
+      <Highlight 
+        regular={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}
+        highlight={textStyles.boldOfSize(24, colors.darkWithTone, 'center')}
+        text={strings.onboardingScreen.newItem2}
+        words={['דווחו']}
       />
     </Animated.View>
   )
@@ -440,11 +440,11 @@ const Text3 = ({opacity}) => {
       position: 'absolute',
       opacity
     }}>
-      <Highlighter
-        style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}
-        highlightStyle={textStyles.boldOfSize(24, colors.darkWithTone, 'center')}
-        searchWords={['התקדמו']}
-        textToHighlight={strings.onboardingScreen.newItem3}
+      <Highlight 
+        regular={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}
+        highlight={textStyles.boldOfSize(24, colors.darkWithTone, 'center')}
+        text={strings.onboardingScreen.newItem3}
+        words={['התקדמו']}
       />
     </Animated.View>
   )
