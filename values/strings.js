@@ -132,6 +132,7 @@ export const strings = {
   },
   onboardingScreen: {
     firstButton: 'בשביל זה אני פה',
+    skipButton: 'דילוג',
     newTitle: 'ברוכים הבאים!',
     newDescription: 'כאן תוכלו לדווח בקלות,\nלהתעדכן, ולהשפיע על מצב\nהניקיון באתרי הטבע היפים\nשל ארצנו.',
     item1: "גלו אתרי טבע שלא הכרתם",

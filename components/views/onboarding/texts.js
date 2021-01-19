@@ -125,6 +125,20 @@ const Text3 = ({ opacity }) => {
   );
 };
 
+export const SkipButton = ({scale, onPress, bottomSafeAreaInset}) => {
+  return (
+    <View style={styles.firstButtonOuterOuterContainer(bottomSafeAreaInset)}>
+      <Animated.View style={styles.firstButtonOuterContainer(scale)}>
+        <TouchableOpacity onPress={onPress}>
+          <Text style={textStyles.normalOfSize(14, colors.darkWithTone, "center")}>
+            {strings.onboardingScreen.skipButton}
+          </Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
+  )
+}
+
 export const FirstButton = ({ scale, onPress, bottomSafeAreaInset }) => {
   return (
     <View style={styles.firstButtonOuterOuterContainer(bottomSafeAreaInset)}>

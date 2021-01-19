@@ -19,7 +19,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Highlighter from 'react-native-highlight-words';
-import { TextsView, FirstButton } from "../views/onboarding/texts";
+import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 
 const doneDuration = 1600;
@@ -199,6 +199,7 @@ export const OnboardingScreen = ({ navigation }) => {
   })
 
   const firstButtonScale = useRef(new Animated.Value(0)).current;
+  const skipButtonScale = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
     Animated.sequence([
@@ -243,6 +244,12 @@ export const OnboardingScreen = ({ navigation }) => {
           useNativeDriver: true,
           easing: Easing.out(Easing.ease),
           duration: 500
+        }),
+        Animated.timing(skipButtonScale, {
+          toValue: 1,
+          useNativeDriver: true,
+          easing: Easing.out(Easing.ease),
+          duration: 300
         }),
       ]).start(({finished})=>{
         if (finished) {
@@ -297,6 +304,7 @@ export const OnboardingScreen = ({ navigation }) => {
           />
         </Animated.View>
         <TextsView scale={textsScale} index={selectedIndex} />
+        <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
       </Animated.View>
     </View>
   )
