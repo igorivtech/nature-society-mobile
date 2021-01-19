@@ -233,12 +233,12 @@ export const OnboardingScreen = ({ navigation }) => {
         duration: 600
       }).start(({finished})=>{
         if (finished) {
-          // setTimeout(() => {
-          //   setSelectedIndex(1);
-          //   setTimeout(() => {
-          //     setSelectedIndex(2);
-          //   }, 4000);
-          // }, 4000);
+          setTimeout(() => {
+            setSelectedIndex(1);
+            setTimeout(() => {
+              setSelectedIndex(2);
+            }, 5000);
+          }, 5000);
         }
       });
     }
@@ -424,9 +424,12 @@ const Text2 = ({opacity}) => {
       position: 'absolute',
       opacity
     }}>
-      <Text style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}>
-        {strings.onboardingScreen.newItem2}
-      </Text>
+      <Highlighter
+        style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}
+        highlightStyle={textStyles.boldOfSize(24, colors.darkWithTone, 'center')}
+        searchWords={['דווחו']}
+        textToHighlight={strings.onboardingScreen.newItem2}
+      />
     </Animated.View>
   )
 }
