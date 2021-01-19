@@ -60,6 +60,8 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
+  const [showSuggestion, setShowSuggestion] = useState(false);
+
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
   const listTranslateX = leftMargin.interpolate({
     inputRange: [0, EXIT_SIZE],
@@ -117,6 +119,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   }
 
   const closeSearch = useCallback(() => {
+    setShowSuggestion(false);
     debounce.cancel();
     setSearchTerm("");
     setSearchOn(false);
@@ -138,6 +141,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   };
 
   const textChanged = useCallback((value) => {
+    setShowSuggestion(false);
     setSearchTerm(value);
     debounce.cancel()
     if (value.length === 0) {
@@ -151,6 +155,9 @@ export const ExploreScreen = ({ navigation, route }) => {
     const p = await searchPlaces(searchVal, location);
     if (isFocused) {
       setFilteredPlaces(p);
+      if (p.length === 0) {
+        setShowSuggestion(true);
+      }
     }
   }, 500), [location]);
 
@@ -171,6 +178,10 @@ export const ExploreScreen = ({ navigation, route }) => {
   const showGlobalSites = useCallback(() => {
     WebBrowser.openBrowserAsync(appWebsite);
   }, []);
+
+  const suggestPlace = useCallback(() => {
+    console.log('suggestPlace:', searchTerm);
+  }, [searchTerm])
 
   return (
     <View style={styles.container}>
@@ -211,6 +222,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
             />
             <AwareFlatList
+              ListEmptyComponent={()=><SuggestPlaceView searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />}
               scrollIndicatorInsets={styles.scrollInsets}
               style={{...StyleSheet.absoluteFill, opacity: textListOpacity}}
               contentContainerStyle={styles.flatListContainer}
@@ -227,6 +239,26 @@ export const ExploreScreen = ({ navigation, route }) => {
     </View>
   );
 };
+
+const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm}) => {
+  if (showSuggestion) {
+    return <View style={{
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'stretch'
+    }}>
+      <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
+      <View style={globalStyles.spacer(12)} />
+      <TouchableOpacity onPress={suggestPlace}>
+        <View style={styles.newSuggestionButtonContainer}>
+          <Text style={styles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm)}</Text>
+        </View>
+      </TouchableOpacity>
+  </View>
+  } else {
+    return <View />
+  }
+})
 
 export const SitesHeader = memo(({onPress}) => {
   return (
@@ -400,6 +432,23 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+
+  suggestButton: {
+    ...textStyles.boldOfSize(18, colors.treeBlues, 'center'),
+    flexShrink: 1,
+  },
+
+  newSuggestionButtonContainer: {
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    borderWidth: 1,
+    borderColor: colors.treeBlues,
+    borderRadius: 15,
+    minHeight: 54
+  },
 
   titleSpacer: {
     flexGrow: 1, minWidth: 4

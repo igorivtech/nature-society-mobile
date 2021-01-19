@@ -166,6 +166,10 @@ export const strings = {
     },
   },
   exploreScreen: {
+    newPlaceSuggestion: (name) => {
+      return `הציעו את ״${name}״ כאתר חדש`
+    },
+    didntFindTitle: 'לא מצאנו במאגר שלנו את אתר הטבע...',
     globalSites: 'אתר מדד בשביל הטבע',
     searchPlaceholder: "חפש",
   },
