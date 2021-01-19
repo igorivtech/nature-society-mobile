@@ -52,6 +52,17 @@ const Text1 = ({ opacity }) => {
     <Animated.View style={{ opacity, ...globalStyles.centerChildren }}>
       <Highlight
         regular={textStyles.normalOfSize(24, colors.darkWithTone, "center")}
+        highlight={textStyles.normalOfSize(24, colors.clear, "center")}
+        text={strings.onboardingScreen.newItem1}
+        words={[
+          'חפשו',
+          "נקיים", "ריקים מאדם",
+          "מלוכלכים", "עמוסים במבקרים"
+        ]}
+      />
+      <Highlight
+        position="absolute"
+        regular={textStyles.normalOfSize(24, colors.clear, "center")}
         highlight={textStyles.boldOfSize(24, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem1}
         words={["חפשו"]}
