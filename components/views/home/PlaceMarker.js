@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef, memo } from "react";
 import { Animated, Easing, Image, StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
+import { isAndroid } from "../../../values/consts";
 import { ITEM_WIDTH } from "./PlaceCard";
 
 export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, scrollX, index, selected}) => {
@@ -76,7 +77,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     <Marker
       // key={`key_${place.position.longitude}_${place.position.latitude}`} 
       zIndex={selected ? 2 : 1} 
-      tracksViewChanges={loadingImage || loadingScale} 
+      tracksViewChanges={isAndroid ? true : loadingImage || loadingScale}
       onPress={p} 
       coordinate={place.position}
     >
