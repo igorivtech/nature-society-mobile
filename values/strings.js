@@ -131,6 +131,9 @@ export const strings = {
     return str;
   },
   onboardingScreen: {
+    firstButton: 'בשביל זה אני פה',
+    newTitle: 'ברוכים הבאים!',
+    newDescription: 'כאן תוכלו לדווח בקלות,\nלהתעדכן, ולהשפיע על מצב\nהניקיון באתרי הטבע היפים\nשל ארצנו.',
     item1: "גלו אתרי טבע שלא הכרתם",
     item2: "דווחו מהשטח והשפיעו על מצב הטבע",
     item3: "צברו נקודות ועלו שלבים",

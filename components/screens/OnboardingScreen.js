@@ -7,6 +7,8 @@ import {
   TouchableWithoutFeedback,
   Animated,
   Easing,
+  StyleSheet,
+  TouchableOpacity
 } from "react-native";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
@@ -16,8 +18,13 @@ import { colors } from "../../values/colors";
 import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 import AsyncStorage from "@react-native-community/async-storage";
 import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 
 const doneDuration = 1600;
+const TRANSLATE_Y_VALUE = -height * 0.2;
+const TEXT_TRANSLATE_Y = 40;
+const inputRange = [TRANSLATE_Y_VALUE, 0];
 
 const titles = {
   0: strings.onboardingScreen.item1,
@@ -32,6 +39,8 @@ export const OnboardingScreen = ({ navigation }) => {
   const [finishVisible, setFinishVisible] = useState(false);
 
   //
+
+  const {bottomSafeAreaInset} = useSafeAreaInsets();
 
   const buttonsYTranslate = useRef(new Animated.Value(0)).current;
   const doneButtonYTranslate = useRef(new Animated.Value(0)).current;
@@ -167,6 +176,69 @@ export const OnboardingScreen = ({ navigation }) => {
     });
   };
 
+  const logoTranslateY = useRef(new Animated.Value(0)).current;
+  const logoScale = logoTranslateY.interpolate({
+    inputRange,
+    outputRange: [0.7, 1],
+    extrapolate: 'clamp'
+  })
+  const labelOpacity = logoTranslateY.interpolate({
+    inputRange,
+    outputRange: [0, 1],
+    extrapolate: 'clamp'
+  })
+
+  const textTranslateY = useRef(new Animated.Value(TEXT_TRANSLATE_Y)).current;
+  const textOpacity = textTranslateY.interpolate({
+    inputRange: [0, TEXT_TRANSLATE_Y],
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+  })
+
+  const firstButtonScale = useRef(new Animated.Value(0)).current;
+
+  useEffect(()=>{
+    logoTranslateY.addListener(({value})=>{});
+    Animated.sequence([
+      Animated.timing(logoTranslateY, {
+        useNativeDriver: true,
+        toValue: TRANSLATE_Y_VALUE,
+        easing: Easing.inOut(Easing.ease),
+        duration: 1000
+      }),
+      Animated.delay(200),
+      Animated.timing(textTranslateY, {
+        useNativeDriver: true,
+        toValue: 0,
+        easing: Easing.inOut(Easing.ease),
+        duration: 600
+      }),
+      Animated.delay(2000),
+      Animated.timing(firstButtonScale, {
+        useNativeDriver: true,
+        toValue: 1,
+        easing: Easing.inOut(Easing.ease),
+      })
+    ]).start()
+  }, [])
+
+  const firstContinue = () => {
+    console.log('firstContinue');
+  }
+
+  return (
+    <View style={styles.container}>
+      <Animated.Image style={styles.logo(logoTranslateY, logoScale)} source={require("../../assets/images/splash_top.png")} />
+      <Animated.Image style={styles.label(labelOpacity)} source={require("../../assets/images/splash_bottom.png")} />
+      <Animated.View style={styles.textContainer(textTranslateY, textOpacity)}>
+        <Text style={textStyles.boldOfSize(25, colors.darkWithTone, 'center')}>{strings.onboardingScreen.newTitle}</Text>
+        <View style={globalStyles.spacer(4)} />
+        <Text style={styles.desc} >{strings.onboardingScreen.newDescription}</Text>
+      </Animated.View>
+      <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
+    </View>
+  )
+
   return (
     <View style={globalStyles.onboardingContainer}>
 
@@ -252,3 +324,71 @@ export const OnboardingScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const FirstButton = ({scale, onPress, bottomSafeAreaInset}) => {
+  return (
+    <View style={{
+      position: 'absolute',
+      bottom: (bottomSafeAreaInset ?? 0) + 75,
+      left: 0,
+      right: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+      
+      <Animated.View style={{
+        transform: [{scale}],
+      }}>
+        <TouchableOpacity onPress={onPress}>
+          <View style={{
+            height: 42,
+            width: 231,
+            borderRadius: 7.5,
+            backgroundColor: colors.treeBlues,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Text style={textStyles.boldOfSize(26, 'white', 'center')}>{strings.onboardingScreen.firstButton}</Text>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
+      
+    </View>
+  )
+}
+
+
+const styles = StyleSheet.create({
+  textContainer: (translateY, opacity) => ({
+    transform: [{translateY}],
+    opacity,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 21,
+  }),
+  label: (opacity) => ({
+    opacity,
+    resizeMode: 'contain',
+    position: 'absolute',
+    height,
+    width
+  }),
+  logo: (translateY, scale) => ({
+    transform: [{translateY}, {scale}],
+    resizeMode: 'contain',
+    position: 'absolute',
+    height,
+    width
+  }),
+  desc: {
+    ...textStyles.normalOfSize(26, colors.darkWithTone, 'center'),
+    lineHeight: 26,
+  },
+  container: {
+    backgroundColor: '#FEFEFE',
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
