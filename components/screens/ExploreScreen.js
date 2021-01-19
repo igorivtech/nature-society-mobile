@@ -79,13 +79,16 @@ export const ExploreScreen = ({ navigation, route }) => {
   })
 
   useEffect(()=> {
+    if (searchOn) {
+      setFilteredPlaces(serverPlaces);
+    }
     Animated.timing(leftMargin, {
       duration: 320,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
       toValue: searchOn ? 0 : EXIT_SIZE
     }).start();
-  }, [searchOn])
+  }, [searchOn, serverPlaces])
 
   useEffect(() => {
     currentPage.current = 0;
@@ -94,12 +97,6 @@ export const ExploreScreen = ({ navigation, route }) => {
       debounce.cancel();
     };
   }, []);
-
-  useEffect(()=>{
-    if (filteredPlaces.length === 0 && serverPlaces.length > 0 && searchTerm.length === 0) {
-      setFilteredPlaces(serverPlaces);
-    }
-  }, [serverPlaces])
 
   const loadMorePlaces = async () => {
     if (currentPage.current === -1) {
