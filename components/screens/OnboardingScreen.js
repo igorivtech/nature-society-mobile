@@ -231,13 +231,24 @@ export const OnboardingScreen = ({ navigation }) => {
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease),
         duration: 600
-      }).start();
+      }).start(({finished})=>{
+        if (finished) {
+          setTimeout(() => {
+            setSelectedIndex(1);
+            setTimeout(() => {
+              setSelectedIndex(2);
+            }, 4000);
+          }, 4000);
+        }
+      });
     }
   }, [secondContainerVisible])
 
   const firstContinue = () => {
     setSecondContainerVisible(true);
   }
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
     <View style={styles.container}>
@@ -250,6 +261,7 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
+        <TextsView index={selectedIndex} />
       </Animated.View>
     </View>
   )
@@ -340,6 +352,39 @@ export const OnboardingScreen = ({ navigation }) => {
   );
 };
 
+const TextsView = ({index}) => {
+  const opacity_0 = useRef((new Animated.Value(1))).current;
+  const opacity_1 = useRef((new Animated.Value(0))).current;
+  const opacity_2 = useRef((new Animated.Value(0))).current;
+  useEffect(()=>{
+    Animated.parallel(
+      [opacity_0, opacity_1, opacity_2].map((v, i) => Animated.timing(v, {
+        useNativeDriver: true,
+        toValue: i === index ? 1 : 0,
+        easing: Easing.inOut(Easing.ease)
+      }))
+    ).start();
+  }, [index])
+  return (
+    <View style={styles.textsContainer}>
+      <Animated.Text style={{
+        ...textStyles.normalOfSize(24, colors.darkWithTone, 'center'),
+        opacity: opacity_0,
+        }}>{strings.onboardingScreen.newItem1}</Animated.Text>
+      <Animated.Text style={{
+        ...textStyles.normalOfSize(24, colors.darkWithTone, 'center'),
+        opacity: opacity_1,
+        position: 'absolute'
+        }}>{strings.onboardingScreen.newItem2}</Animated.Text>
+      <Animated.Text style={{
+        ...textStyles.normalOfSize(24, colors.darkWithTone, 'center'),
+        opacity: opacity_2,
+        position: 'absolute'
+        }}>{strings.onboardingScreen.newItem3}</Animated.Text>
+    </View>
+  )
+}
+
 const FirstButton = ({scale, onPress, bottomSafeAreaInset}) => {
   return (
     <View style={styles.firstButtonOuterOuterContainer(bottomSafeAreaInset)}>
@@ -356,11 +401,22 @@ const FirstButton = ({scale, onPress, bottomSafeAreaInset}) => {
 
 
 const styles = StyleSheet.create({
+  textsContainer: {
+    ...globalStyles.shadow,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    backgroundColor: 'white',
+    borderRadius: 15,
+    paddingVertical: 16
+  },
   secondContainer: (opacity, secondContainerVisible) => ({
     opacity,
     zIndex: secondContainerVisible ? 4 : -4,
     ...StyleSheet.absoluteFill,
-    backgroundColor: colors.grass
+    backgroundColor: colors.grass,
+    justifyContent: 'center',
+    alignItems: 'center'
   }),
   firstButtonOuterOuterContainer: (bottomSafeAreaInset) => ({
     position: 'absolute',
