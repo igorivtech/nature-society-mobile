@@ -217,7 +217,7 @@ export const ProgressScreen = ({ navigation, route }) => {
 
           <TouchableOpacity style={styles.bottomButtonContainer} onPress={loginLogout}>
             {user ? (
-              <Image source={require("../../assets/images/settings_icon.png")} />
+              <Image style={globalStyles.imageJustContain} source={require("../../assets/images/settings_icon.png")} />
             ) : (
               <Animatable.Text
                 useNativeDriver={true}
