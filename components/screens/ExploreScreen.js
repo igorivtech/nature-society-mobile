@@ -12,6 +12,8 @@ import {
   Animated,
   Easing,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform
 } from "react-native";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
@@ -20,7 +22,7 @@ import { PlaceRating } from "./PlaceScreen";
 import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
-import { smallScreen, statusBarHeight } from "../../values/consts";
+import { keyboardAwareBehaviour, smallScreen, statusBarHeight } from "../../values/consts";
 import { globalStyles } from "../../values/styles";
 import _ from "lodash";
 import { useServer } from "../../hooks/useServer";
@@ -227,9 +229,9 @@ export const ExploreScreen = ({ navigation, route }) => {
               keyExtractor={(item) => item.key}
               renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
             />
-            <View style={suggestionStyles.suggestionContainer(showSuggestion)}>
+            <KeyboardAvoidingView behavior={keyboardAwareBehaviour} style={suggestionStyles.suggestionContainer(showSuggestion)}>
               <SuggestPlaceView loadingSuggestion={loadingSuggestion} searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />
-            </View>
+            </KeyboardAvoidingView>
           </Animated.View>
           <TouchableWithoutFeedback onPress={goBack}>
             <View style={styles.tapClose} />

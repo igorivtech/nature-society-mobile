@@ -29,6 +29,8 @@ export const isStandalone = Constants.appOwnership === 'standalone'
 
 export const isAndroid = Platform.OS === 'android';
 
+export const keyboardAwareBehaviour = Platform.OS === "ios" ? "padding" : "height";
+
 // export const recentVisitors = [
 //   {name: "איגור", role: "לקט", image: "https://yt3.ggpht.com/ytc/AAUvwngMp380bo6VdFqO0Y81qDqJKsedWvTosxGAAZwp=s900-c-k-c0x00ffffff-no-rj"},
 //   {name: "יואב", role: "צייד", image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"},
