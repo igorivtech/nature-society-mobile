@@ -222,8 +222,21 @@ export const OnboardingScreen = ({ navigation }) => {
     ]).start()
   }, [])
 
+  const [secondContainerVisible, setSecondContainerVisible] = useState(false);
+  const secondContainerOpacity = useRef(new Animated.Value(0)).current;
+  useEffect(()=>{
+    if (secondContainerVisible) {
+      Animated.timing(secondContainerOpacity, {
+        toValue: 1,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease),
+        duration: 600
+      }).start();
+    }
+  }, [secondContainerVisible])
+
   const firstContinue = () => {
-    console.log('firstContinue');
+    setSecondContainerVisible(true);
   }
 
   return (
@@ -236,6 +249,8 @@ export const OnboardingScreen = ({ navigation }) => {
         <Text style={styles.desc} >{strings.onboardingScreen.newDescription}</Text>
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
+      <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
+      </Animated.View>
     </View>
   )
 
@@ -341,6 +356,12 @@ const FirstButton = ({scale, onPress, bottomSafeAreaInset}) => {
 
 
 const styles = StyleSheet.create({
+  secondContainer: (opacity, secondContainerVisible) => ({
+    opacity,
+    zIndex: secondContainerVisible ? 4 : -4,
+    ...StyleSheet.absoluteFill,
+    backgroundColor: colors.grass
+  }),
   firstButtonOuterOuterContainer: (bottomSafeAreaInset) => ({
     position: 'absolute',
     bottom: (bottomSafeAreaInset ?? 0) + 75,
