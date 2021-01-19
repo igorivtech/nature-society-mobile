@@ -19,7 +19,7 @@ import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 import AsyncStorage from "@react-native-community/async-storage";
 import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
+import Highlighter from 'react-native-highlight-words';
 
 const doneDuration = 1600;
 const TRANSLATE_Y_VALUE = -height * 0.2;
@@ -403,9 +403,12 @@ const Text3 = ({opacity}) => {
       position: 'absolute',
       opacity
     }}>
-      <Text style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}>
-        {strings.onboardingScreen.newItem3}
-      </Text>
+      <Highlighter
+        style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}
+        highlightStyle={textStyles.boldOfSize(24, colors.darkWithTone, 'center')}
+        searchWords={['התקדמו']}
+        textToHighlight={strings.onboardingScreen.newItem3}
+      />
     </Animated.View>
   )
 }
