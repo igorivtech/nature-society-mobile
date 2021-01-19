@@ -224,6 +224,7 @@ export const ProgressScreen = ({ navigation, route }) => {
                 easing='ease-out'
                 animation='pulse'
                 iterationCount='infinite'
+                iterationDelay={200}
                 style={styles.bottomText}>
                 {strings.progressScreen.signup}
               </Animatable.Text>
@@ -474,7 +475,7 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    ...textStyles.normalOfSize(18),
+    ...textStyles.normalOfSize(20),
     textAlign: "center",
     color: colors.treeBlues,
     textDecorationLine: "underline",
