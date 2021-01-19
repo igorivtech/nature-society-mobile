@@ -1,3 +1,4 @@
+import { Auth } from "aws-amplify";
 import React, { useRef, useState } from "react";
 import { convertServerPlaces } from "./helpers";
 
@@ -146,12 +147,20 @@ export const useServer = () => {
   }
 
   const suggestNewPlace = async (siteName) => {
+    setLoadingSuggestion(true);
+    let email = 'guest';
     try {
-      setLoadingSuggestion(true);
+      const cognitoUser = await Auth.currentAuthenticatedUser({
+        bypassCache: false,
+      })
+      email = cognitoUser.attributes.email;
+    } catch {}
+    try {
       await fetch(`${BASE_URL}/newSiteSuggest`, {
         method: "POST",
         body: JSON.stringify({
-          siteName
+          siteName,
+          email
         }),
         headers: {
           'Content-Type': 'application/json',
