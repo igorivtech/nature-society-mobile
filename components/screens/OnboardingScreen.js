@@ -242,19 +242,18 @@ export const OnboardingScreen = ({ navigation }) => {
         }),
       ]).start(({finished})=>{
         if (finished) {
-          setTimeout(() => {
-            setSelectedIndex(1);
-            setTimeout(() => {
-              setSelectedIndex(2);
-              // setTimeout(() => {
-              //   finish();
-              // }, 5000);
-            }, 5000);
-          }, 5000);
+          loopTexts();
         }
       })
     }
   }, [secondContainerVisible])
+
+  const loopTexts = () => {
+    setTimeout(() => {
+      setSelectedIndex(v=>(v+1)%3);
+      loopTexts();
+    }, 6000);
+  }
 
   const firstContinue = () => {
     setSecondContainerVisible(true);
