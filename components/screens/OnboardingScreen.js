@@ -377,7 +377,7 @@ const TextsView = ({index}) => {
 const Highlight = ({regular, highlight, text, words, position = 'relative'}) => {
   return (
     <Highlighter
-      style={[regular, {position, lineHeight: 24}]}
+      style={[regular, {position, lineHeight: regular.fontSize}]}
       highlightStyle={highlight}
       searchWords={words}
       textToHighlight={text}
@@ -422,6 +422,7 @@ const Text2 = ({opacity}) => {
   return (
     <Animated.View style={{
       position: 'absolute',
+      ...globalStyles.centerChildren,
       opacity
     }}>
       <Highlight 
@@ -438,6 +439,7 @@ const Text3 = ({opacity}) => {
   return (
     <Animated.View style={{
       position: 'absolute',
+      ...globalStyles.centerChildren,
       opacity
     }}>
       <Highlight 
