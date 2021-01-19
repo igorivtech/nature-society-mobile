@@ -313,12 +313,7 @@ export const markerStyles = StyleSheet.create({
   avatar: {
     resizeMode: 'center',
     position: 'absolute',
-    top: 7.5,
-    transform: [{translateX: -0.05}, {translateY: 0.2}],
-    backgroundColor: 'white',
-    width: 31,
-    height: 31,
-    borderRadius: 31/2
+    top: 10,
   },
 
   profilePic: {
