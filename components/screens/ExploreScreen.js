@@ -242,7 +242,12 @@ export const ExploreScreen = ({ navigation, route }) => {
 
 const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadingSuggestion}) => {
   const [sent, setSent] = useState(false);
-  const opacity = useRef(new Animated.Value(loadingSuggestion ? 0.9 : 1)).current;
+  const scale = useRef(new Animated.Value(loadingSuggestion ? 0.9 : 1)).current;
+  const opacity = scale.interpolate({
+    inputRange: [0.9, 1],
+    outputRange: [0.8, 1],
+    extrapolate: 'clamp'
+  });
   useEffect(()=>{
     if (showSuggestion === false) {
       setSent(false);
@@ -253,10 +258,11 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
   }, [searchTerm])
   useEffect(()=>{
     if (loadingSuggestion !== null) {
-      Animated.timing(opacity, {
+      Animated.timing(scale, {
         toValue: loadingSuggestion ? 0.9 : 1,
         useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease)
+        duration: loadingSuggestion ? 400 : 300,
+        easing: loadingSuggestion ? Easing.inOut(Easing.ease) : Easing.out(Easing.ease)
       }).start(()=>{
         if (loadingSuggestion === false) {
           setSent(true);
@@ -270,7 +276,7 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
         <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
         <View style={globalStyles.spacer(12)} />
         <TouchableOpacity disabled={loadingSuggestion} onPress={suggestPlace}>
-          <Animated.View style={suggestionStyles.newSuggestionButtonContainer(opacity)}>
+          <Animated.View style={suggestionStyles.newSuggestionButtonContainer(opacity, scale)}>
             <Text numberOfLines={2} style={suggestionStyles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
           </Animated.View>
         </TouchableOpacity>
@@ -310,9 +316,9 @@ const suggestionStyles = StyleSheet.create({
     flexShrink: 1,
   },
 
-  newSuggestionButtonContainer: (opacity) => ({
+  newSuggestionButtonContainer: (opacity, scale) => ({
     opacity,
-    transform: [{scale: opacity}],
+    transform: [{scale}],
     paddingHorizontal: 8,
     paddingVertical: 8,
     justifyContent: 'center',
