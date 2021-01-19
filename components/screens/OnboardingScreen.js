@@ -219,9 +219,30 @@ export const OnboardingScreen = ({ navigation }) => {
   const firstButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
-  const firstButtonTransform = useRef(new Animated.ValueXY(BOTTOM_RIGHT)).current;
-  const secondButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
-  const thirdButtonTransform = useRef(new Animated.ValueXY(BOTTOM_LEFT)).current;
+  const exploreButtonTransform = useRef(new Animated.ValueXY(BOTTOM_RIGHT)).current;
+  const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
+  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_LEFT)).current;
+
+  const fancyAnimate = () => {
+    Animated.sequence([
+      Animated.timing(exploreButtonTransform, {
+        useNativeDriver: false,
+        toValue: TOP_LEFT,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(reportButtonTransform, {
+        useNativeDriver: false,
+        toValue: TOP_MIDDLE,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(progressButtonTransform, {
+        useNativeDriver: false,
+        toValue: TOP_RIGHT,
+        easing: Easing.inOut(Easing.ease)
+      }),
+    ]).start();
+    console.log('fancyAnimate');
+  }
 
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
@@ -278,6 +299,9 @@ export const OnboardingScreen = ({ navigation }) => {
         }),
       ]).start(({finished})=>{
         if (finished) {
+          setTimeout(() => {
+            fancyAnimate();
+          }, 2000);
           // loopTexts();
         }
       })
@@ -320,7 +344,7 @@ export const OnboardingScreen = ({ navigation }) => {
         <TapView onPress={next} />
         <Animated.View style={styles.buttonsContainer(textsScale)}>
           <OnboardingButton
-            transform={thirdButtonTransform}
+            transform={progressButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 2)
             }}
@@ -329,7 +353,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
-            transform={secondButtonTransform}
+            transform={reportButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 1)
             }}
@@ -338,7 +362,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
-            transform={firstButtonTransform}
+            transform={exploreButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 0)
             }}
