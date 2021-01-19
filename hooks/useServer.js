@@ -5,11 +5,9 @@ export const BASE_URL = `https://ddaflq8r2a.execute-api.eu-central-1.amazonaws.c
 
 export const useServer = () => {
 
+  const [loadingSuggestion, setLoadingSuggestion] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [loadingMorePlaces, setLoadingMorePlaces] = useState(false);
-
-  // https://ddaflq8r2a.execute-api.eu-central-1.amazonaws.com/prod/newSiteSuggest
-  // siteName
 
   const getExplorePlaces = async (location, page) => {
     if (loadingMorePlaces) {
@@ -147,6 +145,24 @@ export const useServer = () => {
     }
   }
 
+  const suggestNewPlace = async (siteName) => {
+    try {
+      setLoadingSuggestion(true);
+      await fetch(`${BASE_URL}/newSiteSuggest`, {
+        method: "POST",
+        body: JSON.stringify({
+          siteName
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+    } catch (error) {
+    } finally {
+      setLoadingSuggestion(false);
+    }
+  }
+
   const sendReport = async (token, reportData) => {
     try {
       const response = await fetch(`${BASE_URL}/newReport`, {
@@ -166,7 +182,7 @@ export const useServer = () => {
     }
   }
 
-  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport, getPlace, loadingGetPlace };
+  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport, getPlace, loadingGetPlace, suggestNewPlace, loadingSuggestion };
 };
 
 //

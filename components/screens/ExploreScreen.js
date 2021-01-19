@@ -55,13 +55,12 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
 
-  const {searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces} = useServer();
+  const {searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, suggestNewPlace, loadingSuggestion} = useServer();
 
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const [showSuggestion, setShowSuggestion] = useState(false);
-  const [loadingSuggestion, setLoadingSuggestion] = useState(false);
 
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
   const listTranslateX = leftMargin.interpolate({
@@ -181,7 +180,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   }, []);
 
   const suggestPlace = useCallback(() => {
-    console.log('suggestPlace:', searchTerm);
+    suggestNewPlace(searchTerm.trim());
   }, [searchTerm])
 
   return (
@@ -250,9 +249,9 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
     }}>
       <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
       <View style={globalStyles.spacer(12)} />
-      <TouchableOpacity onPress={suggestPlace}>
+      <TouchableOpacity disabled={loadingSuggestion} onPress={suggestPlace}>
         <View style={styles.newSuggestionButtonContainer}>
-          <Text numberOfLines={2} style={styles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm)}</Text>
+          <Text numberOfLines={2} style={styles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
         </View>
       </TouchableOpacity>
   </View>
