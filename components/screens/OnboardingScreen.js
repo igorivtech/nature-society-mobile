@@ -200,6 +200,7 @@ export const OnboardingScreen = ({ navigation }) => {
   useEffect(()=>{
     logoTranslateY.addListener(({value})=>{});
     Animated.sequence([
+      Animated.delay(1000),
       Animated.timing(logoTranslateY, {
         useNativeDriver: true,
         toValue: TRANSLATE_Y_VALUE,
