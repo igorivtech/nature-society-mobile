@@ -23,6 +23,7 @@ import { useImage } from "../../hooks/useImage";
 import { useAndroidOnBack } from "../../hooks/useAndroidOnBack";
 import AsyncStorage from "@react-native-community/async-storage";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
+import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 
 const clean = {
   key: 'clean',
@@ -306,19 +307,27 @@ export const ReportScreen = ({navigation, route}) => {
     navigation.navigate("Home", {loginLogout: true})
   }
 
+  const onHandlerStateChange = (event) => {
+    if (event.nativeEvent.state === State.END) {
+      tapClose();
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TapView onPress={tapClose} />
       <ClosePanelArrow direction='bottom' topHeight={35} topMargin={statusBarHeight} />
-      <View onLayout={onContainerLayout} style={styles.cardContainer}>
-        <Animatable.View animation='fadeIn' delay={400} style={styles.innerScrollViewContent}>
-          <Animated.View style={[StyleSheet.absoluteFill, styles.scrollViewContent, {transform: [{translateY}]}]}>
-            <Slider fetchingPlace={fetchingPlace} loaded={loaded} autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
-            <Slider loaded={loaded} autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
-            <Report sharePressed={sharePressed} useImageData={useImageData} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
-          </Animated.View>
-        </Animatable.View>
-      </View>
+      <FlingGestureHandler direction={Directions.DOWN} onHandlerStateChange={onHandlerStateChange}>
+        <View onLayout={onContainerLayout} style={styles.cardContainer}>
+          <Animatable.View animation='fadeIn' delay={400} style={styles.innerScrollViewContent}>
+            <Animated.View style={[StyleSheet.absoluteFill, styles.scrollViewContent, {transform: [{translateY}]}]}>
+              <Slider fetchingPlace={fetchingPlace} loaded={loaded} autoPlay={autoPlayFirst} valueRef={cleannessRef} item={clean} onPress={nextSegment} initialValue={0.5} showLocation={true} location={selectedLocation} startUpAnimation={true} setSearchVisible={setSearchVisible} />
+              <Slider loaded={loaded} autoPlay={autoPlaySecond} valueRef={crowdnessRef} item={crowd} onPress={nextSegment} goBack={previousSegment} location={selectedLocation} initialValue={0.5} />
+              <Report sharePressed={sharePressed} useImageData={useImageData} finishReport={finishReport} goBack={previousSegment} details={details} iHelped={iHelped} loadingSendReport={loadingSendReport} />
+            </Animated.View>
+          </Animatable.View>
+        </View>
+      </FlingGestureHandler>
       <Popup textData={strings.popups.exitReport} action={closeReport} popupVisible={popupVisible} setPopupVisible={setPopupVisible} reverseActions={true} />
       <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} actionRef={errorActionRef} />
       <ModalSearch location={currentPosition} selectItem={selectItem} visible={searchVisible} setSearchVisible={setSearchVisible} />
