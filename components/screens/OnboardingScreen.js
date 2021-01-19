@@ -275,6 +275,10 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const onLayout = (e, index) => {
+    console.log('index:', index, e.nativeEvent.layout);
+  }
+
   return (
     <View style={styles.container}>
       <Animated.Image style={styles.logo(logoTranslateY, logoScale)} source={require("../../assets/images/splash_top.png")} />
@@ -288,16 +292,25 @@ export const OnboardingScreen = ({ navigation }) => {
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
         <Animated.View style={styles.buttonsContainer(textsScale)}>
           <OnboardingButton
+            onLayout={(e)=>{
+              onLayout(e, 2)
+            }}
             index={2}
             selected={selectedIndex === 2}
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
+            onLayout={(e)=>{
+              onLayout(e, 1)
+            }}
             index={1}
             selected={selectedIndex === 1}
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
+            onLayout={(e)=>{
+              onLayout(e, 0)
+            }}
             index={0}
             selected={selectedIndex === 0}
             setIndex={setSelectedIndex}

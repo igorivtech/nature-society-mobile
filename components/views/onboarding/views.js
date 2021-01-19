@@ -32,7 +32,7 @@ const iterationDelay = {
   2: 500
 }
 
-export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false }) => {
+export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false, onLayout }) => {
   const alpha = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(SMALL_SCALE)).current;
   const ref = useRef();
@@ -67,7 +67,7 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
   };
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onLayout={onLayout} onPress={onPress}>
       <Animatable.View 
         ref={ref} 
         useNativeDriver={true}
