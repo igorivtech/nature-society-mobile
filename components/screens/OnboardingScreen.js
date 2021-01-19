@@ -327,38 +327,39 @@ export const OnboardingScreen = ({ navigation }) => {
 
 const FirstButton = ({scale, onPress, bottomSafeAreaInset}) => {
   return (
-    <View style={{
-      position: 'absolute',
-      bottom: (bottomSafeAreaInset ?? 0) + 75,
-      left: 0,
-      right: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
-      
-      <Animated.View style={{
-        transform: [{scale}],
-      }}>
+    <View style={styles.firstButtonOuterOuterContainer(bottomSafeAreaInset)}>
+      <Animated.View style={styles.firstButtonOuterContainer(scale)}>
         <TouchableOpacity onPress={onPress}>
-          <View style={{
-            height: 42,
-            width: 231,
-            borderRadius: 7.5,
-            backgroundColor: colors.treeBlues,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          <View style={styles.firstButtonContainer}>
             <Text style={textStyles.boldOfSize(26, 'white', 'center')}>{strings.onboardingScreen.firstButton}</Text>
           </View>
         </TouchableOpacity>
       </Animated.View>
-      
     </View>
   )
 }
 
 
 const styles = StyleSheet.create({
+  firstButtonOuterOuterContainer: (bottomSafeAreaInset) => ({
+    position: 'absolute',
+    bottom: (bottomSafeAreaInset ?? 0) + 75,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  firstButtonOuterContainer: (scale) => ({
+    transform: [{scale}],
+  }),
+  firstButtonContainer: {
+    height: 42,
+    width: 231,
+    borderRadius: 7.5,
+    backgroundColor: colors.treeBlues,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   textContainer: (translateY, opacity) => ({
     transform: [{translateY}],
     opacity,
