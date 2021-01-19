@@ -9,16 +9,16 @@ const images = {
   bottom: require("../../assets/images/close_panel_bottom.png"),
 };
 
-export const ClosePanelArrow = ({ direction }) => {
+export const ClosePanelArrow = ({ direction, topHeight = 0 }) => {
   return (
-    <View pointerEvents='none' style={styles[direction]}>
+    <View pointerEvents='none' style={styles[direction](topHeight)}>
       <Image style={globalStyles.imageJustContain} source={images[direction]} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  left: {
+  left: (_) => ({
     justifyContent: 'center',
     alignItems: 'center',
     position: "absolute",
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: -EXIT_SIZE,
     width: EXIT_SIZE
-  },
-  right: {
+  }),
+  right: (_) => ({
     justifyContent: 'center',
     alignItems: 'center',
     position: "absolute",
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: -EXIT_SIZE,
     width: EXIT_SIZE
-  },
-  bottom: {
+  }),
+  bottom: (height) => ({
     position: "absolute",
-  },
+  }),
 });
