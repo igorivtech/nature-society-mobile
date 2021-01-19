@@ -113,7 +113,7 @@ export const strings = {
     },
   },
   continue: "המשך",
-  guest: "אורח",
+  guest: 'אורח/ת',
   or: "או",
   email: "אימייל",
   fullName: "שם מלא",

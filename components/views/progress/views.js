@@ -3,6 +3,7 @@ import { Animated, Easing, Image, StyleSheet, Text, View } from "react-native";
 import { UserContext } from "../../../context/context";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
+import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 import { TapView } from "../general";
 
@@ -45,7 +46,7 @@ export const UserHeader = memo(({restartApp}) => {
             <Text style={textStyles.boldOfSize(24)}>{user ? user.name : strings.guest}</Text>
             <Animated.Text style={headerDetailsStyles.title(opacity)}>{lastAchievement}</Animated.Text>
           </View>
-          <Image source={require("../../../assets/images/flag_icon.png")} />
+          <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/flag_icon.png")} />
         </View>
   
         <View style={{
