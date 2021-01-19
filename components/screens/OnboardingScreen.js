@@ -238,7 +238,7 @@ export const OnboardingScreen = ({ navigation }) => {
           toValue: 1,
           useNativeDriver: true,
           easing: Easing.out(Easing.ease),
-          duration: 600
+          duration: 500
         }),
       ]).start(({finished})=>{
         if (finished) {
@@ -246,6 +246,9 @@ export const OnboardingScreen = ({ navigation }) => {
             setSelectedIndex(1);
             setTimeout(() => {
               setSelectedIndex(2);
+              setTimeout(() => {
+                finish();
+              }, 5000);
             }, 5000);
           }, 5000);
         }
