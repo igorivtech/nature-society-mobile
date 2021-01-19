@@ -29,6 +29,7 @@ import {
   NAV_CLOSE_TAP_SIZE,
   recentVisitors,
   smallScreen,
+  statusBarHeight,
 } from "../../values/consts";
 import {
   Directions,
@@ -43,6 +44,7 @@ import { formatRating, placeLocked } from "../../hooks/helpers";
 import LottieView from 'lottie-react-native';
 import posed, {Transition as PosedTransition} from 'react-native-pose';
 import useIsMounted from "ismounted";
+import { ClosePanelArrow } from "../views/ClosePanelArrow";
 
 const PosedText = posed.Text({
   enter: {opacity: 1},
@@ -182,7 +184,7 @@ export const PlaceScreen = ({ navigation, route }) => {
       <TouchableWithoutFeedback onPress={goBack} style={s.tap}>
         <View style={StyleSheet.absoluteFill} />
       </TouchableWithoutFeedback>
-
+      <ClosePanelArrow direction='bottom' topMargin={statusBarHeight} topHeight={NAV_CLOSE_TAP_SIZE-statusBarHeight} />
       <FlingGestureHandler
         direction={Directions.DOWN}
         onHandlerStateChange={handleSwipeDown}
