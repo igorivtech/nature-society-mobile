@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { globalStyles } from "../../values/styles";
-import { EXIT_SIZE } from "../screens/ExploreScreen";
 
+const EXIT_SIZE = 26; // must match in "../screens/ExploreScreen"
 const images = {
   left: require("../../assets/images/close_panel_left.png"),
   right: require("../../assets/images/close_panel_right.png"),
