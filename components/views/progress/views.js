@@ -46,7 +46,11 @@ export const UserHeader = memo(({restartApp}) => {
             <Text style={textStyles.boldOfSize(24)}>{user ? user.name : strings.guest}</Text>
             <Animated.Text style={headerDetailsStyles.title(opacity)}>{lastAchievement}</Animated.Text>
           </View>
-          <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/flag_icon.png")} />
+          {user != null && user.image != null ? (
+            <Image style={headerDetailsStyles.userPic} source={{ uri: user.image }} />
+          ) : (
+            <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/flag_icon.png")} />
+          )}
         </View>
   
         <View style={{
@@ -75,6 +79,14 @@ export const UserHeader = memo(({restartApp}) => {
   }
   
   const headerDetailsStyles = StyleSheet.create({
+
+    userPic: {
+      resizeMode: 'cover',
+      height: 41,
+      width: 41,
+      borderRadius: 41/2,
+      backgroundColor: colors.imageBg
+    },
 
     title: (opacity) => ({
       ...textStyles.normalOfSize(18),
@@ -114,7 +126,8 @@ export const UserHeader = memo(({restartApp}) => {
 const styles = StyleSheet.create({
 
     headerNameContainer: {
-      flexDirection: 'row'
+      flexDirection: 'row',
+      alignItems: 'center'
     },
   
     headerTextsContainer: {
