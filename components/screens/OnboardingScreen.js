@@ -233,12 +233,12 @@ export const OnboardingScreen = ({ navigation }) => {
         duration: 600
       }).start(({finished})=>{
         if (finished) {
-          setTimeout(() => {
-            setSelectedIndex(1);
-            setTimeout(() => {
-              setSelectedIndex(2);
-            }, 4000);
-          }, 4000);
+          // setTimeout(() => {
+          //   setSelectedIndex(1);
+          //   setTimeout(() => {
+          //     setSelectedIndex(2);
+          //   }, 4000);
+          // }, 4000);
         }
       });
     }
@@ -374,12 +374,46 @@ const TextsView = ({index}) => {
   )
 }
 
+const Highlight = ({regular, highlight, text, words, position = 'relative'}) => {
+  return (
+    <Highlighter
+      style={[regular, {position}]}
+      highlightStyle={highlight}
+      searchWords={words}
+      textToHighlight={text}
+    />
+  )
+}
+
 const Text1 = ({opacity}) => {
   return (
-    <Animated.View style={{opacity}}>
-      <Text style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}>
-        {strings.onboardingScreen.newItem1}
-      </Text>
+    <Animated.View style={{opacity, ...globalStyles.centerChildren}}>
+      <Highlight 
+        regular={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}
+        highlight={textStyles.boldOfSize(24, colors.darkWithTone, 'center')}
+        text={strings.onboardingScreen.newItem1}
+        words={['חפשו']}
+      />
+      <Highlight 
+        position='absolute'
+        regular={textStyles.normalOfSize(24, colors.clear, 'center')}
+        highlight={textStyles.normalOfSize(24, colors.treeBlues, 'center')}
+        text={strings.onboardingScreen.newItem1}
+        words={[
+          'נקיים',
+          'ריקים מאדם'
+        ]}
+      />
+      <Highlight 
+        position='absolute'
+        regular={textStyles.normalOfSize(24, colors.clear, 'center')}
+        highlight={textStyles.normalOfSize(24, colors.desertRock, 'center')}
+        text={strings.onboardingScreen.newItem1}
+        words={[
+          'מלוכלכים',
+          'עמוסים במבקרים'
+        ]}
+      />
     </Animated.View>
   )
 }
