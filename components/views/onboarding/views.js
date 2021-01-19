@@ -12,7 +12,7 @@ const images = {
 
 const buttonAnimation = 300;
 
-const SMALL_SCALE = 0.66;
+const SMALL_SCALE = 0.8;
 
 const animations = {
   0: null,

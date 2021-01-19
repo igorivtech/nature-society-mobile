@@ -273,6 +273,29 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
+        <Animated.View
+            style={{
+              marginBottom: 16,
+              ...globalStyles.onboardingButtonsContainer,
+              transform: [{ scale: textsScale }],
+            }}
+          >
+          <OnboardingButton
+            index={2}
+            selected={selectedIndex === 2}
+            setIndex={setSelectedIndex}
+          />
+          <OnboardingButton
+            index={1}
+            selected={selectedIndex === 1}
+            setIndex={setSelectedIndex}
+          />
+          <OnboardingButton
+            index={0}
+            selected={selectedIndex === 0}
+            setIndex={setSelectedIndex}
+          />
+        </Animated.View>
         <TextsView scale={textsScale} index={selectedIndex} />
       </Animated.View>
     </View>
