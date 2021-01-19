@@ -297,11 +297,18 @@ export const OnboardingScreen = ({ navigation }) => {
     } else if (selectedIndex === 0 && finishedRound.current) {
       finishedRound.current = false;
       setSelectedIndex(1000);
-      Animated.timing(progressButtonTransform, {
-        useNativeDriver: false,
-        toValue: TOP_LEFT,
-        easing: Easing.inOut(Easing.ease)
-      }).start(()=>finishedRound.current=true);
+      Animated.parallel([
+        Animated.timing(progressButtonTransform, {
+          useNativeDriver: false,
+          toValue: TOP_LEFT,
+          easing: Easing.inOut(Easing.ease)
+        }),
+        Animated.timing(skipButtonScale, {
+          useNativeDriver: true,
+          toValue: 0,
+          easing: Easing.inOut(Easing.ease)
+        })
+      ]).start(()=>finishedRound.current=true);
     }
   }, [selectedIndex])
 
