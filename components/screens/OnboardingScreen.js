@@ -31,11 +31,15 @@ const BOTTOM = {y: 0}
 const TOP = {y: -(height-statusBarHeight)*0.34}
 
 const LEFT = {x: 0};
+const MIDDLE_LEFT = {x:width*0.8*0.33-55/2};
 const MIDDLE = {x:width*0.8/2-55/2};
+const MIDDLE_RIGHT = {x:width*0.8*0.66-55/2};
 const RIGHT = {x:width*0.8-55};
 
 const BOTTOM_LEFT = {...BOTTOM, ...LEFT};
+const BOTTOM_MIDDLE_LEFT = {...BOTTOM, ...MIDDLE_LEFT};
 const BOTTOM_MIDDLE = {...BOTTOM, ...MIDDLE};
+const BOTTOM_MIDDLE_RIGHT = {...BOTTOM, ...MIDDLE_RIGHT};
 const BOTTOM_RIGHT = {...BOTTOM, ...RIGHT};
 
 const TOP_LEFT = {...TOP, ...LEFT};
@@ -223,29 +227,19 @@ export const OnboardingScreen = ({ navigation }) => {
   const progressButtonScale = useRef(new Animated.Value(0)).current;
 
   const exploreButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
-  const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
-  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
+  const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
+  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
 
   const fancyAnimate = () => {
     Animated.parallel([
       Animated.timing(exploreButtonTransform, {
         useNativeDriver: false,
-        toValue: TOP_LEFT,
-        duration: 1000,
+        toValue: BOTTOM_MIDDLE_RIGHT,
         easing: Easing.inOut(Easing.ease)
       }),
-      Animated.timing(reportButtonTransform, {
-        delay: 400,
-        useNativeDriver: false,
-        toValue: TOP_MIDDLE,
-        duration: 1000,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(progressButtonTransform, {
-        delay: 800,
-        useNativeDriver: false,
-        toValue: TOP_RIGHT,
-        duration: 1000,
+      Animated.timing(reportButtonScale, {
+        useNativeDriver: true,
+        toValue: 1,
         easing: Easing.inOut(Easing.ease)
       }),
     ]).start();
@@ -256,6 +250,60 @@ export const OnboardingScreen = ({ navigation }) => {
   const textsScale = useRef(new Animated.Value(0)).current;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const finishedRound = useRef(false);
+
+  useEffect(()=>{
+    if (selectedIndex === 1) {
+      Animated.sequence([
+        Animated.parallel([
+          Animated.timing(exploreButtonTransform, {
+            useNativeDriver: false,
+            toValue: TOP_RIGHT,
+            easing: Easing.inOut(Easing.ease)
+          }),
+          Animated.timing(reportButtonTransform, {
+            useNativeDriver: false,
+            toValue: BOTTOM_MIDDLE,
+            easing: Easing.inOut(Easing.ease)
+          }),
+        ]),
+        Animated.delay(2000),
+        Animated.parallel([
+          Animated.timing(reportButtonTransform, {
+            useNativeDriver: false,
+            toValue: BOTTOM_MIDDLE_RIGHT,
+            easing: Easing.inOut(Easing.ease)
+          }),
+          Animated.timing(progressButtonScale, {
+            useNativeDriver: true,
+            toValue: 1,
+            easing: Easing.inOut(Easing.ease)
+          })
+        ])
+      ]).start();
+    } else if (selectedIndex === 2) {
+      Animated.parallel([
+        Animated.timing(reportButtonTransform, {
+          useNativeDriver: false,
+          toValue: TOP_MIDDLE,
+          easing: Easing.inOut(Easing.ease)
+        }),
+        Animated.timing(progressButtonTransform, {
+          useNativeDriver: false,
+          toValue: BOTTOM_MIDDLE,
+          easing: Easing.inOut(Easing.ease)
+        }),
+      ]).start(()=>finishedRound.current=true);
+    } else if (selectedIndex === 0 && finishedRound.current) {
+      finishedRound.current = false;
+      setSelectedIndex(1000);
+      Animated.timing(progressButtonTransform, {
+        useNativeDriver: false,
+        toValue: TOP_LEFT,
+        easing: Easing.inOut(Easing.ease)
+      }).start(()=>finishedRound.current=true);
+    }
+  }, [selectedIndex])
 
   useEffect(()=>{
     Animated.sequence([
@@ -307,7 +355,7 @@ export const OnboardingScreen = ({ navigation }) => {
       ]).start(({finished})=>{
         if (finished) {
           setTimeout(() => {
-            // fancyAnimate();
+            fancyAnimate();
           }, 2000);
           // loopTexts();
         }
@@ -381,7 +429,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setSelectedIndex}
           />
         </Animated.View>
-        <TextsView scale={textsScale} index={selectedIndex} />
+        <TextsView scale={textsScale} index={selectedIndex === 1000 ? 2 : selectedIndex} />
         <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
       </Animated.View>
     </View>
