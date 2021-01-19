@@ -69,7 +69,7 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
   };
 
   return (
-    <AnimatedPressable style={transform.getLayout()} onLayout={onLayout} onPress={onPress}>
+    <AnimatedPressable style={[transform.getLayout(), {position:  'absolute'}]} onLayout={onLayout} onPress={onPress}>
       <Animatable.View 
         ref={ref} 
         useNativeDriver={true}

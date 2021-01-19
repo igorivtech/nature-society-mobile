@@ -204,8 +204,8 @@ export const OnboardingScreen = ({ navigation }) => {
   const firstButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
-  const firstButtonTransform = useRef(new Animated.ValueXY({x:0, y: 0})).current;
-  const secondButtonTransform = useRef(new Animated.ValueXY({x:0, y: 0})).current;
+  const firstButtonTransform = useRef(new Animated.ValueXY({x:width*0.8-55, y: 0})).current;
+  const secondButtonTransform = useRef(new Animated.ValueXY({x:width*0.8/2-55/2, y: 0})).current;
   const thirdButtonTransform = useRef(new Animated.ValueXY({x:0, y: 0})).current;
 
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
@@ -431,6 +431,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     ...globalStyles.onboardingButtonsContainer,
     transform: [{ scale }],
+    height: 55,
   }),
 
   secondContainer: (opacity, secondContainerVisible) => ({
