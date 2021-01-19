@@ -23,7 +23,11 @@ export const useServer = () => {
         }
       );
       const data = await response.json();
-      return convertServerPlaces(data, location);
+      if (Array.isArray(data)) {
+        return convertServerPlaces(data, location);
+      } else {
+        return [];
+      }
     } catch (error) {
       console.log({ error });
       return [];
