@@ -12,7 +12,7 @@ import {
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
-import { width, height, SPLASH_HIDE_DELAY } from "../../values/consts";
+import { width, height, SPLASH_HIDE_DELAY, statusBarHeight } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -27,6 +27,21 @@ const doneDuration = 1600;
 const TRANSLATE_Y_VALUE = -height * 0.2;
 const TEXT_TRANSLATE_Y = 40;
 const inputRange = [TRANSLATE_Y_VALUE, 0];
+
+const BOTTOM = {y: 0}
+const TOP = {y: -(height-statusBarHeight)*0.34}
+
+const LEFT = {x: 0};
+const MIDDLE = {x:width*0.8/2-55/2};
+const RIGHT = {x:width*0.8-55};
+
+const BOTTOM_LEFT = {...BOTTOM, ...LEFT};
+const BOTTOM_MIDDLE = {...BOTTOM, ...MIDDLE};
+const BOTTOM_RIGHT = {...BOTTOM, ...RIGHT};
+
+const TOP_LEFT = {...TOP, ...LEFT};
+const TOP_MIDDLE = {...TOP, ...MIDDLE};
+const TOP_RIGHT = {...TOP, ...RIGHT};
 
 const titles = {
   0: strings.onboardingScreen.item1,
@@ -204,9 +219,9 @@ export const OnboardingScreen = ({ navigation }) => {
   const firstButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
-  const firstButtonTransform = useRef(new Animated.ValueXY({x:width*0.8-55, y: 0})).current;
-  const secondButtonTransform = useRef(new Animated.ValueXY({x:width*0.8/2-55/2, y: 0})).current;
-  const thirdButtonTransform = useRef(new Animated.ValueXY({x:0, y: 0})).current;
+  const firstButtonTransform = useRef(new Animated.ValueXY(BOTTOM_RIGHT)).current;
+  const secondButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
+  const thirdButtonTransform = useRef(new Animated.ValueXY(BOTTOM_LEFT)).current;
 
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
