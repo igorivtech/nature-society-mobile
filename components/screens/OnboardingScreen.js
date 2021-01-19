@@ -20,6 +20,7 @@ import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Highlighter from 'react-native-highlight-words';
 import { TextsView, FirstButton } from "../views/onboarding/texts";
+import useIsMounted from "ismounted";
 
 const doneDuration = 1600;
 const TRANSLATE_Y_VALUE = -height * 0.2;
@@ -176,6 +177,8 @@ export const OnboardingScreen = ({ navigation }) => {
     });
   };
 
+  const isMounted = useIsMounted();
+
   const logoTranslateY = useRef(new Animated.Value(0)).current;
   const logoScale = logoTranslateY.interpolate({
     inputRange,
@@ -251,6 +254,9 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const loopTexts = () => {
     setTimeout(() => {
+      if (!isMounted.current) {
+        return;
+      }
       setSelectedIndex(v=>(v+1)%3);
       loopTexts();
     }, 6000);
@@ -273,13 +279,7 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
-        <Animated.View
-            style={{
-              marginBottom: 16,
-              ...globalStyles.onboardingButtonsContainer,
-              transform: [{ scale: textsScale }],
-            }}
-          >
+        <Animated.View style={styles.buttonsContainer(textsScale)}>
           <OnboardingButton
             index={2}
             selected={selectedIndex === 2}
@@ -389,6 +389,13 @@ export const OnboardingScreen = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
+
+  buttonsContainer: (scale) => ({
+    marginBottom: 16,
+    ...globalStyles.onboardingButtonsContainer,
+    transform: [{ scale }],
+  }),
+
   secondContainer: (opacity, secondContainerVisible) => ({
     opacity,
     zIndex: secondContainerVisible ? 4 : -4,
