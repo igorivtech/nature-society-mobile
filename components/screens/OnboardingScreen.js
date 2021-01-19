@@ -367,21 +367,46 @@ const TextsView = ({index}) => {
   }, [index])
   return (
     <View style={styles.textsContainer}>
-      <Animated.Text style={{
-        ...textStyles.normalOfSize(24, colors.darkWithTone, 'center'),
-        opacity: opacity_0,
-        }}>{strings.onboardingScreen.newItem1}</Animated.Text>
-      <Animated.Text style={{
-        ...textStyles.normalOfSize(24, colors.darkWithTone, 'center'),
-        opacity: opacity_1,
-        position: 'absolute'
-        }}>{strings.onboardingScreen.newItem2}</Animated.Text>
-      <Animated.Text style={{
-        ...textStyles.normalOfSize(24, colors.darkWithTone, 'center'),
-        opacity: opacity_2,
-        position: 'absolute'
-        }}>{strings.onboardingScreen.newItem3}</Animated.Text>
+      <Text1 opacity={opacity_0} />
+      <Text2 opacity={opacity_1} />
+      <Text3 opacity={opacity_2} />
     </View>
+  )
+}
+
+const Text1 = ({opacity}) => {
+  return (
+    <Animated.View style={{opacity}}>
+      <Text style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}>
+        {strings.onboardingScreen.newItem1}
+      </Text>
+    </Animated.View>
+  )
+}
+
+const Text2 = ({opacity}) => {
+  return (
+    <Animated.View style={{
+      position: 'absolute',
+      opacity
+    }}>
+      <Text style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}>
+        {strings.onboardingScreen.newItem2}
+      </Text>
+    </Animated.View>
+  )
+}
+
+const Text3 = ({opacity}) => {
+  return (
+    <Animated.View style={{
+      position: 'absolute',
+      opacity
+    }}>
+      <Text style={textStyles.normalOfSize(24, colors.darkWithTone, 'center')}>
+        {strings.onboardingScreen.newItem3}
+      </Text>
+    </Animated.View>
   )
 }
 
