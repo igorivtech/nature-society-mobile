@@ -5,7 +5,7 @@ export const BASE_URL = `https://ddaflq8r2a.execute-api.eu-central-1.amazonaws.c
 
 export const useServer = () => {
 
-  const [loadingSuggestion, setLoadingSuggestion] = useState(false);
+  const [loadingSuggestion, setLoadingSuggestion] = useState(null);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [loadingMorePlaces, setLoadingMorePlaces] = useState(false);
 

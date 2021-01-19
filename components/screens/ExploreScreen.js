@@ -222,7 +222,6 @@ export const ExploreScreen = ({ navigation, route }) => {
               renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
             />
             <AwareFlatList
-              ListEmptyComponent={()=><SuggestPlaceView loadingSuggestion={loadingSuggestion} searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />}
               scrollIndicatorInsets={styles.scrollInsets}
               style={{...StyleSheet.absoluteFill, opacity: textListOpacity}}
               contentContainerStyle={styles.flatListContainer}
@@ -230,6 +229,9 @@ export const ExploreScreen = ({ navigation, route }) => {
               keyExtractor={(item) => item.key}
               renderItem={({ item, index }) => <TextCard item={item} showItem={showItem} index={index} searchTerm={searchTerm} />}
             />
+            <View style={styles.suggestionContainer(showSuggestion)}>
+              <SuggestPlaceView loadingSuggestion={loadingSuggestion} searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />
+            </View>
           </Animated.View>
           <TouchableWithoutFeedback onPress={goBack}>
             <View style={styles.tapClose} />
@@ -241,6 +243,16 @@ export const ExploreScreen = ({ navigation, route }) => {
 };
 
 const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadingSuggestion}) => {
+  const opacity = useRef(new Animated.Value(loadingSuggestion ? 0.9 : 1)).current;
+  useEffect(()=>{
+    if (loadingSuggestion !== null) {
+      Animated.timing(opacity, {
+        toValue: loadingSuggestion ? 0.9 : 1,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }).start();
+    }
+  }, [loadingSuggestion])
   if (showSuggestion) {
     return <View style={{
       width: '100%',
@@ -250,9 +262,9 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
       <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
       <View style={globalStyles.spacer(12)} />
       <TouchableOpacity disabled={loadingSuggestion} onPress={suggestPlace}>
-        <View style={styles.newSuggestionButtonContainer}>
+        <Animated.View style={styles.newSuggestionButtonContainer(opacity)}>
           <Text numberOfLines={2} style={styles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
-        </View>
+        </Animated.View>
       </TouchableOpacity>
   </View>
   } else {
@@ -432,13 +444,24 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
 };
 
 const styles = StyleSheet.create({
+  
+  suggestionContainer: (showSuggestion) => ({
+    transform: [{translateY: -34}],
+    ...StyleSheet.absoluteFill,
+    zIndex: showSuggestion ? 2 : -2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 40
+  }),
 
   suggestButton: {
     ...textStyles.boldOfSize(18, colors.treeBlues, 'center'),
     flexShrink: 1,
   },
 
-  newSuggestionButtonContainer: {
+  newSuggestionButtonContainer: (opacity) => ({
+    opacity,
+    transform: [{scale: opacity}],
     paddingHorizontal: 8,
     paddingVertical: 8,
     justifyContent: 'center',
@@ -448,7 +471,7 @@ const styles = StyleSheet.create({
     borderColor: colors.treeBlues,
     borderRadius: 15,
     minHeight: 54
-  },
+  }),
 
   titleSpacer: {
     flexGrow: 1, minWidth: 4
