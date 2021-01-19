@@ -142,14 +142,14 @@ export const SkipButton = ({scale, onPress, bottomSafeAreaInset}) => {
   )
 }
 
-export const FirstButton = ({ scale, onPress, bottomSafeAreaInset }) => {
+export const FirstButton = ({ altTitle=false, scale, onPress, bottomSafeAreaInset }) => {
   return (
     <View style={styles.firstButtonOuterOuterContainer(bottomSafeAreaInset)}>
       <Animated.View style={styles.firstButtonOuterContainer(scale)}>
         <TouchableOpacity onPress={onPress}>
           <View style={styles.firstButtonContainer}>
             <Text style={textStyles.boldOfSize(26, "white", "center")}>
-              {strings.onboardingScreen.firstButton}
+              {altTitle ? strings.onboardingScreen.secondButton : strings.onboardingScreen.firstButton}
             </Text>
           </View>
         </TouchableOpacity>

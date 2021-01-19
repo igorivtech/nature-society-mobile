@@ -220,6 +220,7 @@ export const OnboardingScreen = ({ navigation }) => {
   })
 
   const firstButtonScale = useRef(new Animated.Value(0)).current;
+  const secondButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
   const exploreButtonScale = useRef(new Animated.Value(1)).current;
@@ -306,6 +307,11 @@ export const OnboardingScreen = ({ navigation }) => {
         Animated.timing(skipButtonScale, {
           useNativeDriver: true,
           toValue: 0,
+          easing: Easing.inOut(Easing.ease)
+        }),
+        Animated.timing(secondButtonScale, {
+          useNativeDriver: true,
+          toValue: 1,
           easing: Easing.inOut(Easing.ease)
         })
       ]).start(()=>finishedRound.current=true);
@@ -437,6 +443,7 @@ export const OnboardingScreen = ({ navigation }) => {
           />
         </Animated.View>
         <TextsView scale={textsScale} index={selectedIndex === 1000 ? 2 : selectedIndex} />
+        <FirstButton altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
         <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
       </Animated.View>
     </View>
