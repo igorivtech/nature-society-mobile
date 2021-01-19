@@ -223,24 +223,28 @@ export const OnboardingScreen = ({ navigation }) => {
   const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_LEFT)).current;
 
   const fancyAnimate = () => {
-    Animated.sequence([
+    Animated.parallel([
       Animated.timing(exploreButtonTransform, {
         useNativeDriver: false,
         toValue: TOP_LEFT,
+        duration: 1000,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(reportButtonTransform, {
+        delay: 400,
         useNativeDriver: false,
         toValue: TOP_MIDDLE,
+        duration: 1000,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(progressButtonTransform, {
+        delay: 800,
         useNativeDriver: false,
         toValue: TOP_RIGHT,
+        duration: 1000,
         easing: Easing.inOut(Easing.ease)
       }),
     ]).start();
-    console.log('fancyAnimate');
   }
 
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
