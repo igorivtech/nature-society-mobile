@@ -5,6 +5,7 @@ import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 import { colors } from "../../../values/colors";
 import Highlighter from "react-native-highlight-words";
+import { smallScreen } from "../../../values/consts";
 
 export const TextsView = ({ index, scale }) => {
   const opacity_0 = useRef(new Animated.Value(1)).current;
@@ -30,6 +31,8 @@ export const TextsView = ({ index, scale }) => {
   );
 };
 
+const fontSize = smallScreen ? 22 : 24
+
 const Highlight = ({
   regular,
   highlight,
@@ -53,8 +56,8 @@ const Text1 = ({ opacity }) => {
   return (
     <Animated.View style={{ opacity, ...globalStyles.centerChildren }}>
       <Highlight
-        regular={textStyles.normalOfSize(24, colors.darkWithTone, "center")}
-        highlight={textStyles.normalOfSize(24, colors.clear, "center")}
+        regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
+        highlight={textStyles.normalOfSize(fontSize, colors.clear, "center")}
         text={strings.onboardingScreen.newItem1}
         words={[
           'חפשו',
@@ -64,22 +67,22 @@ const Text1 = ({ opacity }) => {
       />
       <Highlight
         position="absolute"
-        regular={textStyles.normalOfSize(24, colors.clear, "center")}
-        highlight={textStyles.boldOfSize(24, colors.darkWithTone, "center")}
+        regular={textStyles.normalOfSize(fontSize, colors.clear, "center")}
+        highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem1}
         words={["חפשו"]}
       />
       <Highlight
         position="absolute"
-        regular={textStyles.normalOfSize(24, colors.clear, "center")}
-        highlight={textStyles.normalOfSize(24, colors.treeBlues, "center")}
+        regular={textStyles.normalOfSize(fontSize, colors.clear, "center")}
+        highlight={textStyles.normalOfSize(fontSize, colors.treeBlues, "center")}
         text={strings.onboardingScreen.newItem1}
         words={["נקיים", "ריקים מאדם"]}
       />
       <Highlight
         position="absolute"
-        regular={textStyles.normalOfSize(24, colors.clear, "center")}
-        highlight={textStyles.normalOfSize(24, colors.desertRock, "center")}
+        regular={textStyles.normalOfSize(fontSize, colors.clear, "center")}
+        highlight={textStyles.normalOfSize(fontSize, colors.desertRock, "center")}
         text={strings.onboardingScreen.newItem1}
         words={["מלוכלכים", "עמוסים במבקרים"]}
       />
@@ -97,8 +100,8 @@ const Text2 = ({ opacity }) => {
       }}
     >
       <Highlight
-        regular={textStyles.normalOfSize(24, colors.darkWithTone, "center")}
-        highlight={textStyles.boldOfSize(24, colors.darkWithTone, "center")}
+        regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
+        highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem2}
         words={["דווחו"]}
       />
@@ -116,8 +119,8 @@ const Text3 = ({ opacity }) => {
       }}
     >
       <Highlight
-        regular={textStyles.normalOfSize(24, colors.darkWithTone, "center")}
-        highlight={textStyles.boldOfSize(24, colors.darkWithTone, "center")}
+        regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
+        highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem3}
         words={["התקדמו"]}
       />
