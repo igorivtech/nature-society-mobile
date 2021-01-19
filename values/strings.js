@@ -156,9 +156,9 @@ export const strings = {
       "עומס מטיילים" :
       "עומס מבקרים"
     },
-    waze: "הגיעו למקום\nעם Waze",
-    share: "שתפו את המקום\nעם חברים",
-    report: "כתבו דיווח\nמשלכם למקום",
+    waze: 'הגיעו לאתר\nהטבע עם Waze',
+    share: 'שתפו את אתר\nהטבע עם חברים',
+    report: 'צרו דיווח משלכם\nלאתר הטבע',
   },
   homeScreen: {
     recentVisitor: (male) => {

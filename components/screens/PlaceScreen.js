@@ -308,14 +308,14 @@ export const PlaceScreen = ({ navigation, route }) => {
               icon={require("../../assets/images/waze_icon.png")}
             />
             <PlaceAction
-              onPress={sharePressed}
-              title={strings.placeScreen.share}
-              icon={require("../../assets/images/share_icon.png")}
-            />
-            <PlaceAction
               onPress={report}
               title={strings.placeScreen.report}
               icon={require("../../assets/images/report_icon.png")}
+            />
+            <PlaceAction
+              onPress={sharePressed}
+              title={strings.placeScreen.share}
+              icon={require("../../assets/images/share_icon.png")}
             />
           </Animatable.View>
         </View>
@@ -335,7 +335,7 @@ const PlaceAction = ({ title, icon, onPress }) => {
         justifyContent: "flex-start",
       }}
     >
-      <Image source={icon} />
+      <Image style={globalStyles.imageJustContain} source={icon} />
       <Text
         style={{
           ...textStyles.normalOfSize(12),
