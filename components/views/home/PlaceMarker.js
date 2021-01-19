@@ -77,7 +77,7 @@ export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, s
     <Marker
       // key={`key_${place.position.longitude}_${place.position.latitude}`} 
       zIndex={selected ? 2 : 1} 
-      tracksViewChanges={isAndroid ? true : loadingImage || loadingScale}
+      tracksViewChanges={isAndroid || loadingImage || loadingScale}
       onPress={p} 
       coordinate={place.position}
     >
