@@ -5,7 +5,9 @@ import { State, TapGestureHandler } from "react-native-gesture-handler";
 export const TapView = ({ onPress, numberOfTaps = 1 }) => {
   const tapClose = (event) => {
     if (event.nativeEvent.state === State.END) {
-      onPress();
+      if (onPress != null) {
+        onPress();
+      }
     }
   };
   return (

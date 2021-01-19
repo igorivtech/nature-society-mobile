@@ -396,7 +396,7 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
-        <TapView onPress={next} />
+        <TapView onPress={selectedIndex === 1000 ? null : next} />
         <Animated.View style={styles.buttonsContainer(textsScale)}>
           <OnboardingButton
             scale={progressButtonScale}
