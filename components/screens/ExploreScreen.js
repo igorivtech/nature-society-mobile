@@ -61,6 +61,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [loadingSuggestion, setLoadingSuggestion] = useState(false);
 
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
   const listTranslateX = leftMargin.interpolate({
@@ -222,7 +223,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
             />
             <AwareFlatList
-              ListEmptyComponent={()=><SuggestPlaceView searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />}
+              ListEmptyComponent={()=><SuggestPlaceView loadingSuggestion={loadingSuggestion} searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />}
               scrollIndicatorInsets={styles.scrollInsets}
               style={{...StyleSheet.absoluteFill, opacity: textListOpacity}}
               contentContainerStyle={styles.flatListContainer}
@@ -240,7 +241,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   );
 };
 
-const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm}) => {
+const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadingSuggestion}) => {
   if (showSuggestion) {
     return <View style={{
       width: '100%',
@@ -251,7 +252,7 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm}) => {
       <View style={globalStyles.spacer(12)} />
       <TouchableOpacity onPress={suggestPlace}>
         <View style={styles.newSuggestionButtonContainer}>
-          <Text style={styles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm)}</Text>
+          <Text numberOfLines={2} style={styles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm)}</Text>
         </View>
       </TouchableOpacity>
   </View>
@@ -439,7 +440,7 @@ const styles = StyleSheet.create({
   },
 
   newSuggestionButtonContainer: {
-    paddingHorizontal: 4,
+    paddingHorizontal: 8,
     paddingVertical: 8,
     justifyContent: 'center',
     alignItems: 'center',
