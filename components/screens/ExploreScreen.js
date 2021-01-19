@@ -128,6 +128,7 @@ export const ExploreScreen = ({ navigation, route }) => {
 
   const safeCloseSearch = useCallback(() => {
     if (searchTerm.length > 0) {
+      setShowSuggestion(false);
       debounce.cancel();
       setSearchTerm("");
       setFilteredPlaces(serverPlaces);
@@ -243,32 +244,56 @@ export const ExploreScreen = ({ navigation, route }) => {
 };
 
 const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadingSuggestion}) => {
+  const [sent, setSent] = useState(false);
   const opacity = useRef(new Animated.Value(loadingSuggestion ? 0.9 : 1)).current;
+  useEffect(()=>{
+    if (showSuggestion === false) {
+      setSent(false);
+    }
+  }, [showSuggestion])
+  useEffect(()=>{
+    setSent(false);
+  }, [searchTerm])
   useEffect(()=>{
     if (loadingSuggestion !== null) {
       Animated.timing(opacity, {
         toValue: loadingSuggestion ? 0.9 : 1,
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
-      }).start();
+      }).start(()=>{
+        if (loadingSuggestion === false) {
+          setSent(true);
+        }
+      });
     }
   }, [loadingSuggestion])
   if (showSuggestion) {
-    return <View style={suggestionStyles.container}>
-      <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
-      <View style={globalStyles.spacer(12)} />
-      <TouchableOpacity disabled={loadingSuggestion} onPress={suggestPlace}>
-        <Animated.View style={suggestionStyles.newSuggestionButtonContainer(opacity)}>
-          <Text numberOfLines={2} style={suggestionStyles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
-        </Animated.View>
-      </TouchableOpacity>
-  </View>
+    return (
+      <View style={suggestionStyles.container}>
+        <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
+        <View style={globalStyles.spacer(12)} />
+        <TouchableOpacity disabled={loadingSuggestion} onPress={suggestPlace}>
+          <Animated.View style={suggestionStyles.newSuggestionButtonContainer(opacity)}>
+            <Text numberOfLines={2} style={suggestionStyles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
+          </Animated.View>
+        </TouchableOpacity>
+        {sent && (<View style={suggestionStyles.sentContainer}>
+          <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.suggestionSent}</Text>
+        </View>)}
+      </View>
+    )
   } else {
     return <View />
   }
 })
 
 const suggestionStyles = StyleSheet.create({
+  sentContainer: {
+    backgroundColor: 'white',
+    ...StyleSheet.absoluteFill,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   container: {
     width: '100%',
     justifyContent: 'center',
@@ -277,7 +302,7 @@ const suggestionStyles = StyleSheet.create({
   suggestionContainer: (showSuggestion) => ({
     transform: [{translateY: -34}],
     ...StyleSheet.absoluteFill,
-    zIndex: showSuggestion ? 2 : -2,
+    zIndex: showSuggestion ? 4 : -4,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 40

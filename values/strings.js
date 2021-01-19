@@ -166,6 +166,7 @@ export const strings = {
     },
   },
   exploreScreen: {
+    suggestionSent: 'ההצעה נשלחה, תודה!',
     newPlaceSuggestion: (name) => {
       return `הציעו את ״${name}״ כאתר חדש`
     },
