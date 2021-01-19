@@ -206,7 +206,7 @@ export const OnboardingScreen = ({ navigation }) => {
         easing: Easing.inOut(Easing.ease),
         duration: 1000
       }),
-      Animated.delay(200),
+      Animated.delay(300),
       Animated.timing(textTranslateY, {
         useNativeDriver: true,
         toValue: 0,
