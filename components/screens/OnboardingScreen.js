@@ -266,7 +266,7 @@ export const OnboardingScreen = ({ navigation }) => {
       }
       setSelectedIndex(v=>(v+1)%3);
       loopTexts();
-    }, 6000);
+    }, 5000);
   }
 
   const firstContinue = () => {
