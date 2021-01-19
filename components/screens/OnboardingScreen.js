@@ -224,14 +224,23 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
+  const textsScale = useRef(new Animated.Value(0)).current;
   useEffect(()=>{
     if (secondContainerVisible) {
-      Animated.timing(secondContainerOpacity, {
-        toValue: 1,
-        useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease),
-        duration: 600
-      }).start(({finished})=>{
+      Animated.sequence([
+        Animated.timing(secondContainerOpacity, {
+          toValue: 1,
+          useNativeDriver: true,
+          easing: Easing.inOut(Easing.ease),
+          duration: 600
+        }),
+        Animated.timing(textsScale, {
+          toValue: 1,
+          useNativeDriver: true,
+          easing: Easing.out(Easing.ease),
+          duration: 600
+        }),
+      ]).start(({finished})=>{
         if (finished) {
           setTimeout(() => {
             setSelectedIndex(1);
@@ -240,7 +249,7 @@ export const OnboardingScreen = ({ navigation }) => {
             }, 5000);
           }, 5000);
         }
-      });
+      })
     }
   }, [secondContainerVisible])
 
@@ -261,7 +270,7 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
-        <TextsView index={selectedIndex} />
+        <TextsView scale={textsScale} index={selectedIndex} />
       </Animated.View>
     </View>
   )

@@ -6,7 +6,7 @@ import { textStyles } from "../../../values/textStyles";
 import { colors } from "../../../values/colors";
 import Highlighter from "react-native-highlight-words";
 
-export const TextsView = ({ index }) => {
+export const TextsView = ({ index, scale }) => {
   const opacity_0 = useRef(new Animated.Value(1)).current;
   const opacity_1 = useRef(new Animated.Value(0)).current;
   const opacity_2 = useRef(new Animated.Value(0)).current;
@@ -22,11 +22,11 @@ export const TextsView = ({ index }) => {
     ).start();
   }, [index]);
   return (
-    <View style={styles.textsContainer}>
+    <Animated.View style={styles.textsContainer(scale)}>
       <Text1 opacity={opacity_0} />
       <Text2 opacity={opacity_1} />
       <Text3 opacity={opacity_2} />
-    </View>
+    </Animated.View>
   );
 };
 
@@ -140,7 +140,8 @@ export const FirstButton = ({ scale, onPress, bottomSafeAreaInset }) => {
 };
 
 const styles = StyleSheet.create({
-  textsContainer: {
+  textsContainer: (scale) => ({
+    transform: [{scale}],
     ...globalStyles.shadow,
     justifyContent: "center",
     alignItems: "center",
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 15,
     paddingVertical: 16,
-  },
+  }),
   firstButtonOuterOuterContainer: (bottomSafeAreaInset) => ({
     position: 'absolute',
     bottom: (bottomSafeAreaInset ?? 0) + 75,
