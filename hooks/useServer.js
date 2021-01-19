@@ -150,24 +150,17 @@ export const useServer = () => {
     }
   }
 
-  const suggestNewPlace = async (siteName) => {
-    setLoadingSuggestion(true);
-    let email = 'guest';
+  const suggestNewPlace = async (siteName, token) => {
     try {
-      const cognitoUser = await Auth.currentAuthenticatedUser({
-        bypassCache: false,
-      })
-      email = cognitoUser.attributes.email;
-    } catch {}
-    try {
+      setLoadingSuggestion(true);
       await fetch(`${BASE_URL}/newSiteSuggest`, {
         method: "POST",
         body: JSON.stringify({
-          siteName,
-          email
+          siteName
         }),
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token ?? 'guest'
         }
       });
     } catch (error) {

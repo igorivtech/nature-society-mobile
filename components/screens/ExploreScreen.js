@@ -52,7 +52,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   const isFocused = useIsFocused();
 
   const {state} = useContext(UserContext);
-  const {serverPlaces, user, settings} = state;
+  const {serverPlaces, user, settings, token} = state;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
@@ -180,7 +180,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   }, []);
 
   const suggestPlace = useCallback(() => {
-    suggestNewPlace(searchTerm.trim());
+    suggestNewPlace(searchTerm.trim(), token);
   }, [searchTerm])
 
   return (
