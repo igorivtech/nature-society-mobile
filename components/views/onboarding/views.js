@@ -34,9 +34,9 @@ const iterationDelay = {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const OnboardingButton = ({ index, selected, setIndex, doneVisible = false, onLayout, transform }) => {
+export const OnboardingButton = ({ scale, index, selected, setIndex, doneVisible = false, onLayout, transform }) => {
   const alpha = useRef(new Animated.Value(0)).current;
-  const scale = useRef(new Animated.Value(SMALL_SCALE)).current;
+  const innerScale = useRef(new Animated.Value(SMALL_SCALE)).current;
   const ref = useRef();
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: true,
       }),
-      Animated.timing(scale, {
+      Animated.timing(innerScale, {
         toValue: selected ? 1 : SMALL_SCALE,
         duration: buttonAnimation,
         easing: Easing.inOut(Easing.ease),
@@ -79,10 +79,14 @@ export const OnboardingButton = ({ index, selected, setIndex, doneVisible = fals
         delay={delays[index]} 
         animation={animations[index]}
       >
-        <Animated.Image
-          style={styles.buttonContainer(alpha, scale)}
-          source={images[index]}
-        />
+        <Animated.View style={{
+          transform: [{scale}]
+        }}>
+          <Animated.Image
+            style={styles.buttonContainer(alpha, innerScale)}
+            source={images[index]}
+          />
+        </Animated.View>
       </Animatable.View>
     </AnimatedPressable>
   );

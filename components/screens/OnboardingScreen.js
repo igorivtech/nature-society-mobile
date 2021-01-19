@@ -218,9 +218,13 @@ export const OnboardingScreen = ({ navigation }) => {
   const firstButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
-  const exploreButtonTransform = useRef(new Animated.ValueXY(BOTTOM_RIGHT)).current;
+  const exploreButtonScale = useRef(new Animated.Value(1)).current;
+  const reportButtonScale = useRef(new Animated.Value(0)).current;
+  const progressButtonScale = useRef(new Animated.Value(0)).current;
+
+  const exploreButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
   const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
-  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_LEFT)).current;
+  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
 
   const fancyAnimate = () => {
     Animated.parallel([
@@ -303,7 +307,7 @@ export const OnboardingScreen = ({ navigation }) => {
       ]).start(({finished})=>{
         if (finished) {
           setTimeout(() => {
-            fancyAnimate();
+            // fancyAnimate();
           }, 2000);
           // loopTexts();
         }
@@ -347,6 +351,7 @@ export const OnboardingScreen = ({ navigation }) => {
         <TapView onPress={next} />
         <Animated.View style={styles.buttonsContainer(textsScale)}>
           <OnboardingButton
+            scale={progressButtonScale}
             transform={progressButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 2)
@@ -356,6 +361,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
+            scale={reportButtonScale}
             transform={reportButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 1)
@@ -365,6 +371,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
+            scale={exploreButtonScale}
             transform={exploreButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 0)
