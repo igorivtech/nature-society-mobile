@@ -33,6 +33,7 @@ import { Directions, FlingGestureHandler, State } from "react-native-gesture-han
 import Constants from "expo-constants";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Animatable from "react-native-animatable";
+import { ClosePanelArrow } from "../views/ClosePanelArrow";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
@@ -196,6 +197,8 @@ export const ProgressScreen = ({ navigation, route }) => {
       >
 
         <View style={styles.progressScreenContainer}>
+
+          <ClosePanelArrow direction='left' />
 
           <AnimatedScrollView
             scrollEnabled={scrollEnabled}

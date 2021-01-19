@@ -32,6 +32,7 @@ import * as Animatable from "react-native-animatable";
 import * as WebBrowser from 'expo-web-browser';
 import { appWebsite } from "../../hooks/useShare";
 import LottieView from 'lottie-react-native';
+import { ClosePanelArrow } from "../views/ClosePanelArrow";
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -178,6 +179,9 @@ export const ExploreScreen = ({ navigation, route }) => {
         onHandlerStateChange={handleSwipeRight}
       >
         <Animated.View style={styles.searchScreenContainer(leftMargin)}>
+
+          <ClosePanelArrow direction='right' />
+
           <Animated.View style={{width: '100%', transform: [{translateX: listTranslateX}]}}>
             <SearchBar
               leftMargin={leftMargin}
