@@ -39,6 +39,8 @@ const Highlight = ({
 }) => {
   return (
     <Highlighter
+      adjustsFontSizeToFit={true} 
+      numberOfLines={3}
       style={[regular, { position, lineHeight: regular.fontSize }]}
       highlightStyle={highlight}
       searchWords={words}
@@ -149,6 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 15,
     paddingVertical: 16,
+    paddingHorizontal: 16,
   }),
   firstButtonOuterOuterContainer: (bottomSafeAreaInset) => ({
     position: 'absolute',
