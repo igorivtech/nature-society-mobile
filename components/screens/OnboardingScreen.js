@@ -18,7 +18,6 @@ import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 import AsyncStorage from "@react-native-community/async-storage";
 import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Highlighter from 'react-native-highlight-words';
 import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 import {TapView} from "../views/general"
