@@ -198,7 +198,6 @@ export const OnboardingScreen = ({ navigation }) => {
   const firstButtonScale = useRef(new Animated.Value(0)).current;
 
   useEffect(()=>{
-    logoTranslateY.addListener(({value})=>{});
     Animated.sequence([
       Animated.delay(1000),
       Animated.timing(logoTranslateY, {
