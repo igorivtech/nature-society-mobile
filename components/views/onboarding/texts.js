@@ -147,7 +147,7 @@ export const FirstButton = ({ altTitle=false, scale, onPress, bottomSafeAreaInse
     <View style={styles.firstButtonOuterOuterContainer(bottomSafeAreaInset)}>
       <Animated.View style={styles.firstButtonOuterContainer(scale)}>
         <TouchableOpacity onPress={onPress}>
-          <View style={styles.firstButtonContainer}>
+          <View style={styles.firstButtonContainer(altTitle)}>
             <Text style={textStyles.boldOfSize(26, "white", "center")}>
               {altTitle ? strings.onboardingScreen.secondButton : strings.onboardingScreen.firstButton}
             </Text>
@@ -181,12 +181,14 @@ const styles = StyleSheet.create({
   firstButtonOuterContainer: (scale) => ({
     transform: [{scale}],
   }),
-  firstButtonContainer: {
+  firstButtonContainer: (alt) => ({
+    borderWidth: alt ? 1 : 0,
+    borderColor: alt ? 'white' : colors.clear,
     height: 42,
     width: 231,
     borderRadius: 7.5,
     backgroundColor: colors.treeBlues,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  }),
 });
