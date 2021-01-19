@@ -21,6 +21,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Highlighter from 'react-native-highlight-words';
 import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
+import {TapView} from "../views/general"
 
 const doneDuration = 1600;
 const TRANSLATE_Y_VALUE = -height * 0.2;
@@ -32,6 +33,8 @@ const titles = {
   1: strings.onboardingScreen.item2,
   2: strings.onboardingScreen.item3,
 };
+
+let layouts = {}
 
 export const OnboardingScreen = ({ navigation }) => {
   const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
@@ -65,14 +68,14 @@ export const OnboardingScreen = ({ navigation }) => {
     }).start();
   }, []);
   
-  const next = () => {
-    if (doneVisible) {
-      return;
-    }
-    if (currIndex < 2) {
-      setIndex(v=>v+1);
-    }
-  };
+  // const next = () => {
+  //   if (doneVisible) {
+  //     return;
+  //   }
+  //   if (currIndex < 2) {
+  //     setIndex(v=>v+1);
+  //   }
+  // };
 
   const previous = () => {
     if (doneVisible) {
@@ -201,6 +204,16 @@ export const OnboardingScreen = ({ navigation }) => {
   const firstButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
+  const firstButtonTransform = useRef(new Animated.ValueXY({x:0, y: 0})).current;
+  const secondButtonTransform = useRef(new Animated.ValueXY({x:0, y: 0})).current;
+  const thirdButtonTransform = useRef(new Animated.ValueXY({x:0, y: 0})).current;
+
+  const [secondContainerVisible, setSecondContainerVisible] = useState(false);
+  const secondContainerOpacity = useRef(new Animated.Value(0)).current;
+  const textsScale = useRef(new Animated.Value(0)).current;
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   useEffect(()=>{
     Animated.sequence([
       Animated.delay(1000),
@@ -226,9 +239,6 @@ export const OnboardingScreen = ({ navigation }) => {
     ]).start()
   }, [])
 
-  const [secondContainerVisible, setSecondContainerVisible] = useState(false);
-  const secondContainerOpacity = useRef(new Animated.Value(0)).current;
-  const textsScale = useRef(new Animated.Value(0)).current;
   useEffect(()=>{
     if (secondContainerVisible) {
       Animated.sequence([
@@ -253,7 +263,7 @@ export const OnboardingScreen = ({ navigation }) => {
         }),
       ]).start(({finished})=>{
         if (finished) {
-          loopTexts();
+          // loopTexts();
         }
       })
     }
@@ -264,19 +274,21 @@ export const OnboardingScreen = ({ navigation }) => {
       if (!isMounted.current) {
         return;
       }
-      setSelectedIndex(v=>(v+1)%3);
+      next();
       loopTexts();
     }, 5000);
+  }
+
+  const next = () => {
+    setSelectedIndex(v=>(v+1)%3);
   }
 
   const firstContinue = () => {
     setSecondContainerVisible(true);
   }
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
   const onLayout = (e, index) => {
-    console.log('index:', index, e.nativeEvent.layout);
+    layouts[index] = e.nativeEvent.layout;
   }
 
   return (
@@ -290,8 +302,10 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
+        <TapView onPress={next} />
         <Animated.View style={styles.buttonsContainer(textsScale)}>
           <OnboardingButton
+            transform={thirdButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 2)
             }}
@@ -300,6 +314,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
+            transform={secondButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 1)
             }}
@@ -308,6 +323,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setSelectedIndex}
           />
           <OnboardingButton
+            transform={firstButtonTransform}
             onLayout={(e)=>{
               onLayout(e, 0)
             }}
