@@ -16,12 +16,13 @@ import { cognitoToUser, ATTRIBUTE_POINTS, ATTRIBUTE_NUM_OF_REPORTS, OFFLINE_USER
 import { uploadImageAsync, useUploadImage } from "../../hooks/aws";
 import { useServer } from "../../hooks/useServer";
 import { convertSliderValue, specialSortPlaces } from "../../hooks/helpers";
-import { emptyFunc, errors, NAV_DURATION, safeAreaHeight } from "../../values/consts";
+import { emptyFunc, errors, NAV_DURATION, safeAreaHeight, statusBarHeight } from "../../values/consts";
 import useIsMounted from "ismounted";
 import { useShare } from "../../hooks/useShare";
 import { useImage } from "../../hooks/useImage";
 import { useAndroidOnBack } from "../../hooks/useAndroidOnBack";
 import AsyncStorage from "@react-native-community/async-storage";
+import { ClosePanelArrow } from "../views/ClosePanelArrow";
 
 const clean = {
   key: 'clean',
@@ -308,6 +309,7 @@ export const ReportScreen = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <TapView onPress={tapClose} />
+      <ClosePanelArrow direction='bottom' topHeight={35} topMargin={statusBarHeight} />
       <View onLayout={onContainerLayout} style={styles.cardContainer}>
         <Animatable.View animation='fadeIn' delay={400} style={styles.innerScrollViewContent}>
           <Animated.View style={[StyleSheet.absoluteFill, styles.scrollViewContent, {transform: [{translateY}]}]}>
