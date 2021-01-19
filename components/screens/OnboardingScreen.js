@@ -246,9 +246,9 @@ export const OnboardingScreen = ({ navigation }) => {
             setSelectedIndex(1);
             setTimeout(() => {
               setSelectedIndex(2);
-              setTimeout(() => {
-                finish();
-              }, 5000);
+              // setTimeout(() => {
+              //   finish();
+              // }, 5000);
             }, 5000);
           }, 5000);
         }
