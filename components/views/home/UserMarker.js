@@ -54,7 +54,7 @@ export const markerStyles = StyleSheet.create({
   },
 
   avatar: {
-    resizeMode: 'center',
+    resizeMode: 'contain',
     position: 'absolute',
     top: 10,
   },

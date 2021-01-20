@@ -521,7 +521,7 @@ const pagStyles = StyleSheet.create({
 const sliderStyles = StyleSheet.create({
 
   smallEye: {
-    resizeMode: 'center',
+    resizeMode: 'contain',
     // height: Math.ceil(9*1.05),
     // width: Math.ceil(15*1.05)
   },

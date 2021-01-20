@@ -113,7 +113,7 @@ export const UserHeader = memo(({restartApp}) => {
     icon: {
       height: 20,
       width: 20,
-      resizeMode: 'center'
+      resizeMode: 'contain'
     },
     bottomText: {
       marginTop: 4,
