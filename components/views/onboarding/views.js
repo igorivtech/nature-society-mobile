@@ -35,25 +35,10 @@ const iterationDelay = {
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex, doneVisible = false, transform }) => {
-  // const alpha = useRef(new Animated.Value(0)).current;
-  const innerScale = useRef(new Animated.Value(SMALL_SCALE)).current;
+
   const ref = useRef();
 
   useEffect(() => {
-    // Animated.parallel([
-    //   Animated.timing(alpha, {
-    //     toValue: selected ? 1 : 0.5,
-    //     duration: buttonAnimation,
-    //     easing: Easing.inOut(Easing.ease),
-    //     useNativeDriver: true,
-    //   }),
-    //   Animated.timing(innerScale, {
-    //     toValue: selected ? 1 : SMALL_SCALE,
-    //     duration: buttonAnimation,
-    //     easing: Easing.inOut(Easing.ease),
-    //     useNativeDriver: true,
-    //   })
-    // ]).start();
     if (selected) {
       ref.current?.stopAnimation();
     }

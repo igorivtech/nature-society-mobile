@@ -19,7 +19,7 @@ import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 import {TapView} from "../views/general"
 
-const TRAVEL_DURATION = 700;
+const TRAVEL_DURATION = 600;
 
 const TRANSLATE_Y_VALUE = -height * 0.2;
 const TEXT_TRANSLATE_Y = 40;
@@ -100,9 +100,9 @@ export const OnboardingScreen = ({ navigation }) => {
   const buttonsScale = useRef(new Animated.Value(0)).current;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const finishedRound = useRef(false);
   const animating = useRef(true);
   const customAnimating = useRef(false);
+  const allShown = useRef(false);
 
   // SPLASH
   useEffect(()=>{
@@ -150,6 +150,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   useEffect(()=>{
     if (customAnimating.current) {return}
+    if (allShown.current) {return}
     //
     if (selectedIndex === 1) {
       animating.current = true;
@@ -187,6 +188,7 @@ export const OnboardingScreen = ({ navigation }) => {
         animating.current = false;
       });
     } else if (selectedIndex === 2) {
+      allShown.current = true;
       animating.current = true;
       Animated.parallel([
         Animated.timing(reportButtonTransform, {
@@ -214,12 +216,8 @@ export const OnboardingScreen = ({ navigation }) => {
           easing: Easing.inOut(Easing.ease)
         }),
       ]).start(()=>{
-        finishedRound.current=true;
         animating.current = false;
       });
-    } else if (selectedIndex === 0 && finishedRound.current) {
-      finishedRound.current = false;
-      finish();
     }
   }, [selectedIndex])
 
@@ -301,25 +299,44 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const next = () => {
     if (animating.current) {return}
-    if (selectedIndex === 2) {return}
-    setSelectedIndex(v=>(v+1)%3);
+    setIndex((selectedIndex+1)%3);
   }
 
   const setIndex = useCallback((i) => {
     if (animating.current) {return}
-    if (i < selectedIndex) {
-      if (selectedIndex === 1) {
-        // animateIcons(
-        //   BOTTOM_MIDDLE_RIGHT, 1,
-        //   BOTTOM_MIDDLE_LEFT, 1,
-        //   BOTTOM_MIDDLE_LEFT, 0,
-        // )
-        // setSelectedIndex(0);
-      } else if (selectedIndex === 2) {
-        // more complex
+    if (i === selectedIndex) {return}
+    if (allShown.current) {
+      if (i === 0) {
+        animateIcons(
+          BOTTOM_MIDDLE, 1,
+          TOP_MIDDLE, 1,
+          TOP_LEFT, 1,
+        )
+      } else if (i === 1) {
+        animateIcons(
+          TOP_RIGHT, 1,
+          BOTTOM_MIDDLE, 1,
+          TOP_LEFT, 1,
+        )
+      } else if (i === 2) {
+        animateIcons(
+          TOP_RIGHT, 1,
+          TOP_MIDDLE, 1,
+          BOTTOM_MIDDLE, 1,
+        )
       }
-    } else {
       setSelectedIndex(i);
+    } else {
+      if (i === 0 && selectedIndex === 1) {
+        animateIcons(
+          BOTTOM_MIDDLE_RIGHT, 1,
+          BOTTOM_MIDDLE_LEFT, 1,
+          BOTTOM_MIDDLE_LEFT, 0,
+        )
+        setSelectedIndex(0);
+      } else {
+        setSelectedIndex(i);
+      }
     }
   }, [selectedIndex])
 
