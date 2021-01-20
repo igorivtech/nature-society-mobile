@@ -199,7 +199,11 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
         {currentIndex === index && (
           <View style={markerStyles.markerContainer} ref={markerRef}>
             <Image style={markerStyles.markerIcon} source={require("../../../assets/images/path_marker.png")} />
-            <Image style={markerStyles.avatar} source={require("../../../assets/images/default_profile_pic.png")} />
+            <Image 
+              resizeMode='contain'
+              style={markerStyles.avatar} 
+              source={require("../../../assets/images/default_profile_pic.png")} 
+            />
             {(user !== null && user.image != null) && (
               <Image source={{uri: user.image}} style={markerStyles.profilePic} />
             )}

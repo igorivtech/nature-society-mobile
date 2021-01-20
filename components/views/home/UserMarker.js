@@ -26,6 +26,7 @@ export const UserMarker = memo(({ user, location }) => {
           source={require("../../../assets/images/path_marker.png")}
         />
         <Image
+          resizeMode='contain'
           onLoad={updateTrackChanged}
           source={require("../../../assets/images/default_profile_pic.png")}
           style={markerStyles.avatar}
