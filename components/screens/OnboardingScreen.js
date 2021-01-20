@@ -247,6 +247,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
   const textsScale = useRef(new Animated.Value(0)).current;
+  const buttonsScale = useRef(new Animated.Value(0)).current;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const finishedRound = useRef(false);
@@ -311,7 +312,12 @@ export const OnboardingScreen = ({ navigation }) => {
           useNativeDriver: true,
           toValue: 1,
           easing: Easing.inOut(Easing.ease)
-        })
+        }),
+        Animated.timing(textsScale, {
+          toValue: 0,
+          useNativeDriver: true,
+          easing: Easing.inOut(Easing.ease)
+        }),
       ]).start(()=>finishedRound.current=true);
     }
   }, [selectedIndex])
@@ -351,12 +357,20 @@ export const OnboardingScreen = ({ navigation }) => {
           duration: 600
         }),
         Animated.delay(300),
-        Animated.timing(textsScale, {
-          toValue: 1,
-          useNativeDriver: true,
-          easing: Easing.out(Easing.ease),
-          duration: 500
-        }),
+        Animated.parallel([
+          Animated.timing(textsScale, {
+            toValue: 1,
+            useNativeDriver: true,
+            easing: Easing.out(Easing.ease),
+            duration: 500
+          }),
+          Animated.timing(buttonsScale, {
+            toValue: 1,
+            useNativeDriver: true,
+            easing: Easing.out(Easing.ease),
+            duration: 500
+          }),
+        ]),
         Animated.timing(skipButtonScale, {
           toValue: 1,
           useNativeDriver: true,
@@ -404,7 +418,7 @@ export const OnboardingScreen = ({ navigation }) => {
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
         <TapView onPress={selectedIndex === 1000 ? null : next} />
-        <Animated.View style={styles.buttonsContainer(textsScale)}>
+        <Animated.View style={styles.buttonsContainer(buttonsScale)}>
           <OnboardingButton
             scale={progressButtonScale}
             transform={progressButtonTransform}
@@ -433,91 +447,6 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
     </View>
   )
-
-  return (
-    <View style={globalStyles.onboardingContainer}>
-
-      <TouchableWithoutFeedback onPress={next} style={globalStyles.halfLeft}>
-        <View style={globalStyles.halfLeftInner} />
-      </TouchableWithoutFeedback>
-
-      <TouchableWithoutFeedback onPress={previous} style={globalStyles.halfRight}>
-        <View style={globalStyles.halfRightInner} />
-      </TouchableWithoutFeedback>
-
-      <View style={globalStyles.onboardingMainContainer}>
-        <Animated.View
-          style={{
-            ...globalStyles.onboardingButtonsContainer,
-            transform: [{ translateY: buttonsYTranslate }],
-          }}
-        >
-          <OnboardingButton
-            index={2}
-            selected={currIndex === 2}
-            setIndex={setIndex}
-            doneVisible={doneVisible}
-          />
-          <OnboardingButton
-            index={1}
-            selected={currIndex === 1}
-            setIndex={setIndex}
-            doneVisible={doneVisible}
-          />
-          <OnboardingButton
-            index={0}
-            selected={currIndex === 0}
-            setIndex={setIndex}
-            doneVisible={doneVisible}
-          />
-        </Animated.View>
-
-        <View pointerEvents='none'>
-          <Animated.Text numberOfLines={3} adjustsFontSizeToFit={true} style={{
-            ...textStyles.onboardingText, 
-            opacity: textAlpha,
-            height: 80,
-            transform: [
-              {scale: textScale}
-            ]
-          }}>
-            {currText}
-          </Animated.Text>
-        </View>
-
-        {doneVisible ? (
-          <Animated.View
-            style={{
-              opacity: doneButtonAlpha,
-              transform: [
-                { translateY: doneButtonYTranslate },
-                { scale: doneButtonScale },
-              ],
-            }}
-          >
-            <Pressable onPress={doneOnPress}>
-              <Image
-                source={require("../../assets/images/onboarding_done.png")}
-              />
-            </Pressable>
-          </Animated.View>
-        ) : null}
-      </View>
-
-      {finishVisible ? (
-        <Animated.View
-          style={{
-            transform: [{ scale: finishButtonScale }],
-            opacity: finishButtonAlpha,
-            position: "absolute",
-            bottom: 50,
-          }}
-        >
-          <CoolButton title={strings.onboardingScreen.coolButton} onPress={finish} />
-        </Animated.View>
-      ) : null}
-    </View>
-  );
 };
 
 
