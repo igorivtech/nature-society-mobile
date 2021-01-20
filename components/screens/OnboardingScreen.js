@@ -68,13 +68,29 @@ export const OnboardingScreen = ({ navigation }) => {
   const secondButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
+  const exploreButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
+  const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
+  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
+
   const exploreButtonScale = useRef(new Animated.Value(1)).current;
   const reportButtonScale = useRef(new Animated.Value(0)).current;
   const progressButtonScale = useRef(new Animated.Value(0)).current;
 
-  const exploreButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
-  const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
-  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
+  const exploreButtonOpacity = exploreButtonTransform.y.interpolate({
+    inputRange: [TOP_MIDDLE.y, BOTTOM_MIDDLE.y],
+    outputRange: [0.5, 1],
+    extrapolate: 'clamp'
+  })
+  const reportButtonOpacity = reportButtonTransform.y.interpolate({
+    inputRange: [TOP_MIDDLE.y, BOTTOM_MIDDLE.y],
+    outputRange: [0.5, 1],
+    extrapolate: 'clamp'
+  })
+  const progressButtonOpacity = progressButtonTransform.y.interpolate({
+    inputRange: [TOP_MIDDLE.y, BOTTOM_MIDDLE.y],
+    outputRange: [0.5, 1],
+    extrapolate: 'clamp'
+  })
 
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
@@ -84,6 +100,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const finishedRound = useRef(false);
   const animating = useRef(true);
+  const customAnimating = useRef(false);
 
   // SPLASH
   useEffect(()=>{
@@ -128,6 +145,8 @@ export const OnboardingScreen = ({ navigation }) => {
   }
 
   useEffect(()=>{
+    if (customAnimating.current) {return}
+    //
     if (selectedIndex === 1) {
       animating.current = true;
       Animated.sequence([
@@ -300,12 +319,71 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const setIndex = useCallback((i) => {
     if (animating.current) {return}
-    if (i < selectedIndex) {return}
-    setSelectedIndex(i);
+    if (i < selectedIndex) {
+      if (selectedIndex === 1) {
+        // animateIcons(
+        //   BOTTOM_MIDDLE_RIGHT, 1,
+        //   BOTTOM_MIDDLE_LEFT, 1,
+        //   BOTTOM_MIDDLE_LEFT, 0,
+        // )
+        // setSelectedIndex(0);
+      } else if (selectedIndex === 2) {
+        // more complex
+      }
+    } else {
+      setSelectedIndex(i);
+    }
   }, [selectedIndex])
 
   const firstContinue = () => {
     setSecondContainerVisible(true);
+  }
+
+  const animateIcons = (exploreTransform, exploreScale, reportTransform, reportScale, progressTransform, progressScale, callback = null) => {
+    customAnimating.current = true;
+    animating.current = true;
+    [exploreButtonScale, reportButtonScale, progressButtonScale, 
+      exploreButtonTransform, reportButtonTransform, progressButtonTransform].forEach(a=>a.stopAnimation());
+    Animated.parallel([
+      Animated.timing(exploreButtonTransform, {
+        useNativeDriver: false,
+        toValue: exploreTransform,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(exploreButtonScale, {
+        useNativeDriver: true,
+        toValue: exploreScale,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(reportButtonTransform, {
+        useNativeDriver: false,
+        toValue: reportTransform,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(reportButtonScale, {
+        useNativeDriver: true,
+        toValue: reportScale,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(progressButtonTransform, {
+        useNativeDriver: false,
+        toValue: progressTransform,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(progressButtonScale, {
+        useNativeDriver: true,
+        toValue: progressScale,
+        easing: Easing.inOut(Easing.ease)
+      }),
+    ]).start((data)=>{
+      if (data.finished) {
+        animating.current = false;
+        customAnimating.current = false;
+        if (callback != null) {
+          callback();
+        }
+      }
+    });
   }
 
   return (
@@ -322,6 +400,7 @@ export const OnboardingScreen = ({ navigation }) => {
         <TapView onPress={selectedIndex === 1000 ? null : next} />
         <Animated.View style={styles.buttonsContainer(buttonsScale, topSafeAreaHeight)}>
           <OnboardingButton
+            alpha={progressButtonOpacity}
             scale={progressButtonScale}
             transform={progressButtonTransform}
             index={2}
@@ -329,6 +408,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
           <OnboardingButton
+            alpha={reportButtonOpacity}
             scale={reportButtonScale}
             transform={reportButtonTransform}
             index={1}
@@ -336,6 +416,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
           <OnboardingButton
+            alpha={exploreButtonOpacity}
             scale={exploreButtonScale}
             transform={exploreButtonTransform}
             index={0}
