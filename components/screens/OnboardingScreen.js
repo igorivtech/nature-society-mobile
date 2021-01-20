@@ -172,20 +172,6 @@ export const OnboardingScreen = ({ navigation }) => {
           toValue: BOTTOM_MIDDLE,
           easing: Easing.inOut(Easing.ease)
         }),
-      ]).start(()=>{
-        finishedRound.current=true;
-        animating.current = false;
-      });
-    } else if (selectedIndex === 0 && finishedRound.current) {
-      animating.current = true;
-      finishedRound.current = false;
-      setSelectedIndex(1000);
-      Animated.parallel([
-        Animated.timing(progressButtonTransform, {
-          useNativeDriver: false,
-          toValue: TOP_LEFT,
-          easing: Easing.inOut(Easing.ease)
-        }),
         Animated.timing(skipButtonScale, {
           useNativeDriver: true,
           toValue: 0,
@@ -196,15 +182,13 @@ export const OnboardingScreen = ({ navigation }) => {
           toValue: 1,
           easing: Easing.inOut(Easing.ease)
         }),
-        Animated.timing(textsScale, {
-          toValue: 0,
-          useNativeDriver: true,
-          easing: Easing.inOut(Easing.ease)
-        }),
       ]).start(()=>{
-        // finishedRound.current=true;
-        // animating.current = false;
+        finishedRound.current=true;
+        animating.current = false;
       });
+    } else if (selectedIndex === 0 && finishedRound.current) {
+      finishedRound.current = false;
+      finish();
     }
   }, [selectedIndex])
 
@@ -249,12 +233,68 @@ export const OnboardingScreen = ({ navigation }) => {
   }, [secondContainerVisible])
 
   const finish = () => {
-    navigation.navigate("Home");
+    animating.current = true;
+    setSelectedIndex(1000);
+    [exploreButtonScale, reportButtonScale, progressButtonScale, 
+      exploreButtonTransform, reportButtonTransform, progressButtonTransform, 
+      textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
+    Animated.parallel([
+      Animated.timing(exploreButtonScale, {
+        useNativeDriver: true,
+        toValue: 1,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(reportButtonScale, {
+        useNativeDriver: true,
+        toValue: 1,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(progressButtonScale, {
+        useNativeDriver: true,
+        toValue: 1,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(exploreButtonTransform, {
+        useNativeDriver: false,
+        toValue: TOP_RIGHT,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(reportButtonTransform, {
+        useNativeDriver: false,
+        toValue: TOP_MIDDLE,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(progressButtonTransform, {
+        useNativeDriver: false,
+        toValue: TOP_LEFT,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(textsScale, {
+        toValue: 0,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(firstButtonScale, {
+        toValue: 0,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
+      Animated.timing(secondButtonScale, {
+        toValue: 0,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
+    ]).start((data)=>{
+      if (data.finished) {
+        navigation.navigate("Home");
+      }
+    });
     AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, (new Date()).toString()).then(()=>{});
   };
 
   const next = () => {
     if (animating.current) {return}
+    if (selectedIndex === 2) {return}
     setSelectedIndex(v=>(v+1)%3);
   }
 
