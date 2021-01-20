@@ -94,6 +94,7 @@ export const OnboardingScreen = ({ navigation }) => {
     extrapolate: 'clamp'
   })
 
+  const [skipButtonVisible, setSkipButtonVisible] = useState(true);
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
   const textsScale = useRef(new Animated.Value(0)).current;
@@ -189,6 +190,7 @@ export const OnboardingScreen = ({ navigation }) => {
     } else if (selectedIndex === 2) {
       allShown.current = true;
       animating.current = true;
+      setSkipButtonVisible(false);
       Animated.parallel([
         Animated.timing(reportButtonTransform, {
           duration: TRAVEL_DURATION,
@@ -435,8 +437,8 @@ export const OnboardingScreen = ({ navigation }) => {
           />
         </Animated.View>
         <TextsView scale={textsScale} index={selectedIndex === 1000 ? 2 : selectedIndex} />
-        <FirstButton altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
-        <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
+        <FirstButton zIndex={skipButtonVisible ? 2 : 3} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
+        <SkipButton zIndex={skipButtonVisible ? 3 : 2} scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
       </Animated.View>
     </View>
   )
