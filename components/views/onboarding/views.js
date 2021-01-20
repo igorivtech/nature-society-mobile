@@ -34,7 +34,7 @@ const iterationDelay = {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const OnboardingButton = ({ scale, index, selected, setIndex, doneVisible = false, transform }) => {
+export const OnboardingButton = memo(({ scale, index, selected, setIndex, doneVisible = false, transform }) => {
   const alpha = useRef(new Animated.Value(0)).current;
   const innerScale = useRef(new Animated.Value(SMALL_SCALE)).current;
   const ref = useRef();
@@ -90,7 +90,7 @@ export const OnboardingButton = ({ scale, index, selected, setIndex, doneVisible
       </Animatable.View>
     </AnimatedPressable>
   );
-};
+});
 
 const styles = StyleSheet.create({
   buttonContainer: (opacity, scale) => ({

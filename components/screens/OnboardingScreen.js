@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -258,6 +258,12 @@ export const OnboardingScreen = ({ navigation }) => {
     setSelectedIndex(v=>(v+1)%3);
   }
 
+  const setIndex = useCallback((i) => {
+    if (animating.current) {return}
+    if (i < selectedIndex) {return}
+    setSelectedIndex(i);
+  }, [selectedIndex])
+
   const firstContinue = () => {
     setSecondContainerVisible(true);
   }
@@ -280,21 +286,21 @@ export const OnboardingScreen = ({ navigation }) => {
             transform={progressButtonTransform}
             index={2}
             selected={selectedIndex === 2}
-            setIndex={setSelectedIndex}
+            setIndex={setIndex}
           />
           <OnboardingButton
             scale={reportButtonScale}
             transform={reportButtonTransform}
             index={1}
             selected={selectedIndex === 1}
-            setIndex={setSelectedIndex}
+            setIndex={setIndex}
           />
           <OnboardingButton
             scale={exploreButtonScale}
             transform={exploreButtonTransform}
             index={0}
             selected={selectedIndex === 0}
-            setIndex={setSelectedIndex}
+            setIndex={setIndex}
           />
         </Animated.View>
         <TextsView scale={textsScale} index={selectedIndex === 1000 ? 2 : selectedIndex} />
