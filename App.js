@@ -90,9 +90,7 @@ export default function App() {
     if (fontsLoaded && !loadingOnboarding && !loadingUser) {
       if (!splashShown.current) {
         splashShown.current = true;
-        setTimeout(() => {
-          SplashScreen.hideAsync()
-        }, SPLASH_HIDE_DELAY);
+        setTimeout(SplashScreen.hideAsync, SPLASH_HIDE_DELAY);
       }
     }
   },[fontsLoaded, loadingOnboarding, loadingUser])
