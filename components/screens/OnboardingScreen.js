@@ -76,6 +76,41 @@ export const OnboardingScreen = ({ navigation }) => {
   const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
   const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
 
+  const [secondContainerVisible, setSecondContainerVisible] = useState(false);
+  const secondContainerOpacity = useRef(new Animated.Value(0)).current;
+  const textsScale = useRef(new Animated.Value(0)).current;
+  const buttonsScale = useRef(new Animated.Value(0)).current;
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const finishedRound = useRef(false);
+
+  // SPLASH
+  useEffect(()=>{
+    Animated.sequence([
+      Animated.delay(1000),
+      Animated.timing(logoTranslateY, {
+        useNativeDriver: true,
+        toValue: TRANSLATE_Y_VALUE,
+        easing: Easing.inOut(Easing.ease),
+        duration: 1000
+      }),
+      Animated.delay(300),
+      Animated.timing(textTranslateY, {
+        useNativeDriver: true,
+        toValue: 0,
+        easing: Easing.inOut(Easing.ease),
+        duration: 600
+      }),
+      Animated.delay(2000),
+      Animated.timing(firstButtonScale, {
+        useNativeDriver: true,
+        toValue: 1,
+        easing: Easing.inOut(Easing.ease),
+      })
+    ]).start()
+  }, [])
+
+  // ONBOARDING
   const fancyAnimate = () => {
     Animated.parallel([
       Animated.timing(exploreButtonTransform, {
@@ -90,14 +125,6 @@ export const OnboardingScreen = ({ navigation }) => {
       }),
     ]).start();
   }
-
-  const [secondContainerVisible, setSecondContainerVisible] = useState(false);
-  const secondContainerOpacity = useRef(new Animated.Value(0)).current;
-  const textsScale = useRef(new Animated.Value(0)).current;
-  const buttonsScale = useRef(new Animated.Value(0)).current;
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const finishedRound = useRef(false);
 
   useEffect(()=>{
     if (selectedIndex === 1) {
@@ -168,31 +195,6 @@ export const OnboardingScreen = ({ navigation }) => {
       ]).start(()=>finishedRound.current=true);
     }
   }, [selectedIndex])
-
-  useEffect(()=>{
-    Animated.sequence([
-      Animated.delay(1000),
-      Animated.timing(logoTranslateY, {
-        useNativeDriver: true,
-        toValue: TRANSLATE_Y_VALUE,
-        easing: Easing.inOut(Easing.ease),
-        duration: 1000
-      }),
-      Animated.delay(300),
-      Animated.timing(textTranslateY, {
-        useNativeDriver: true,
-        toValue: 0,
-        easing: Easing.inOut(Easing.ease),
-        duration: 600
-      }),
-      Animated.delay(2000),
-      Animated.timing(firstButtonScale, {
-        useNativeDriver: true,
-        toValue: 1,
-        easing: Easing.inOut(Easing.ease),
-      })
-    ]).start()
-  }, [])
 
   useEffect(()=>{
     if (secondContainerVisible) {
