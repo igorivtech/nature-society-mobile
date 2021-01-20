@@ -218,7 +218,7 @@ export const ExploreScreen = ({ navigation, route }) => {
               // ListHeaderComponentStyle={styles.headerContainer}
               // ListHeaderComponent={()=><SitesHeader key='sitesHeader' onPress={showGlobalSites} />}
               ListFooterComponentStyle={styles.paginationIndicatorContainer}
-              ListFooterComponent={()=><ActivityIndicator key='indicator' animating={loadingMorePlaces} color={colors.treeBlues} />}
+              ListFooterComponent={()=><ActivityIndicator key='indicator' animating={places.length > 0 && loadingMorePlaces} color={colors.treeBlues} />}
               renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
             />
             <AwareFlatList
