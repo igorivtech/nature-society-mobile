@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
-  Pressable,
-  Image,
-  TouchableWithoutFeedback,
   Animated,
   Easing,
   StyleSheet,
@@ -22,7 +19,6 @@ import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 import {TapView} from "../views/general"
 
-const doneDuration = 1600;
 const TRANSLATE_Y_VALUE = -height * 0.2;
 const TEXT_TRANSLATE_Y = 40;
 const inputRange = [TRANSLATE_Y_VALUE, 0];
@@ -36,21 +32,13 @@ const MIDDLE = {x:width*0.8/2-55/2};
 const MIDDLE_RIGHT = {x:width*0.8*0.66-55/2};
 const RIGHT = {x:width*0.8-55};
 
-const BOTTOM_LEFT = {...BOTTOM, ...LEFT};
 const BOTTOM_MIDDLE_LEFT = {...BOTTOM, ...MIDDLE_LEFT};
 const BOTTOM_MIDDLE = {...BOTTOM, ...MIDDLE};
 const BOTTOM_MIDDLE_RIGHT = {...BOTTOM, ...MIDDLE_RIGHT};
-const BOTTOM_RIGHT = {...BOTTOM, ...RIGHT};
 
 const TOP_LEFT = {...TOP, ...LEFT};
 const TOP_MIDDLE = {...TOP, ...MIDDLE};
 const TOP_RIGHT = {...TOP, ...RIGHT};
-
-const titles = {
-  0: strings.onboardingScreen.item1,
-  1: strings.onboardingScreen.item2,
-  2: strings.onboardingScreen.item3,
-};
 
 export const OnboardingScreen = ({ navigation }) => {
  
