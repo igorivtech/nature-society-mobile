@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   }),
   firstButtonOuterOuterContainer: (bottomSafeAreaInset) => ({
     position: 'absolute',
-    bottom: (bottomSafeAreaInset ?? 0) + 75,
+    bottom: bottomSafeAreaInset + 75,
     left: 0,
     right: 0,
     justifyContent: 'center',

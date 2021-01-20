@@ -23,8 +23,8 @@ const TRANSLATE_Y_VALUE = -height * 0.2;
 const TEXT_TRANSLATE_Y = 40;
 const inputRange = [TRANSLATE_Y_VALUE, 0];
 
-const BOTTOM = {y: 0}
-const TOP = {y: -(height-statusBarHeight)*0.34}
+const BOTTOM = {y: (height-statusBarHeight)*0.5 - 165}
+const TOP = {y: 0}
 const buttonsWidth = 0.7;
 const LEFT = {x: 0};
 const MIDDLE_LEFT = {x:width*buttonsWidth*0.33-55/2};
@@ -42,7 +42,7 @@ const TOP_RIGHT = {...TOP, ...RIGHT};
 
 export const OnboardingScreen = ({ navigation }) => {
  
-  const {bottomSafeAreaInset} = useSafeAreaInsets();
+  const {bottom: bottomSafeAreaInset, top: topSafeAreaHeight} = useSafeAreaInsets();
   const isMounted = useIsMounted();
 
   const logoTranslateY = useRef(new Animated.Value(0)).current;
@@ -320,7 +320,7 @@ export const OnboardingScreen = ({ navigation }) => {
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
         <TapView onPress={selectedIndex === 1000 ? null : next} />
-        <Animated.View style={styles.buttonsContainer(buttonsScale)}>
+        <Animated.View style={styles.buttonsContainer(buttonsScale, topSafeAreaHeight)}>
           <OnboardingButton
             scale={progressButtonScale}
             transform={progressButtonTransform}
@@ -354,8 +354,9 @@ export const OnboardingScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 
-  buttonsContainer: (scale) => ({
-    marginBottom: 16,
+  buttonsContainer: (scale, topSafeAreaHeight) => ({
+    position: 'absolute',
+    top: topSafeAreaHeight + 16,
     ...globalStyles.onboardingButtonsContainer,
     transform: [{ scale }],
     height: 55,
