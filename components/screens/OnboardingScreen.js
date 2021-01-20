@@ -269,43 +269,12 @@ export const OnboardingScreen = ({ navigation }) => {
     [exploreButtonScale, reportButtonScale, progressButtonScale, 
       exploreButtonTransform, reportButtonTransform, progressButtonTransform, 
       textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
+    animateIcons(
+      TOP_RIGHT, 1,
+      TOP_MIDDLE, 1,
+      TOP_LEFT, 1
+    )
     Animated.parallel([
-      Animated.timing(exploreButtonScale, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: 1,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(reportButtonScale, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: 1,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(progressButtonScale, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: 1,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(exploreButtonTransform, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: false,
-        toValue: TOP_RIGHT,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(reportButtonTransform, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: false,
-        toValue: TOP_MIDDLE,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(progressButtonTransform, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: false,
-        toValue: TOP_LEFT,
-        easing: Easing.inOut(Easing.ease)
-      }),
       Animated.timing(textsScale, {
         duration: TRAVEL_DURATION,
         toValue: 0,
