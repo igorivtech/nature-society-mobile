@@ -106,14 +106,14 @@ export const UserHeader = memo(({restartApp}) => {
   
     valueText: {
       ...textStyles.normalOfSize(24),
-      color: colors.userHeader
+      color: colors.userHeader,
+      paddingRight: 4,
     },
   
     icon: {
-      marginLeft: 4,
-      height: 19,
-      width: 19,
-      resizeMode: 'contain'
+      height: 20,
+      width: 20,
+      resizeMode: 'center'
     },
     bottomText: {
       marginTop: 4,
