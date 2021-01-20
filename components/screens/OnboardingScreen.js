@@ -19,6 +19,8 @@ import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 import {TapView} from "../views/general"
 
+const TRAVEL_DURATION = 700;
+
 const TRANSLATE_Y_VALUE = -height * 0.2;
 const TEXT_TRANSLATE_Y = 40;
 const inputRange = [TRANSLATE_Y_VALUE, 0];
@@ -132,11 +134,13 @@ export const OnboardingScreen = ({ navigation }) => {
   const fancyAnimate = () => {
     Animated.parallel([
       Animated.timing(exploreButtonTransform, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: false,
         toValue: BOTTOM_MIDDLE_RIGHT,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(reportButtonScale, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: true,
         toValue: 1,
         easing: Easing.inOut(Easing.ease)
@@ -152,11 +156,13 @@ export const OnboardingScreen = ({ navigation }) => {
       Animated.sequence([
         Animated.parallel([
           Animated.timing(exploreButtonTransform, {
+            duration: TRAVEL_DURATION,
             useNativeDriver: false,
             toValue: TOP_RIGHT,
             easing: Easing.inOut(Easing.ease)
           }),
           Animated.timing(reportButtonTransform, {
+            duration: TRAVEL_DURATION,
             useNativeDriver: false,
             toValue: BOTTOM_MIDDLE,
             easing: Easing.inOut(Easing.ease)
@@ -165,11 +171,13 @@ export const OnboardingScreen = ({ navigation }) => {
         Animated.delay(2000),
         Animated.parallel([
           Animated.timing(reportButtonTransform, {
+            duration: TRAVEL_DURATION,
             useNativeDriver: false,
             toValue: BOTTOM_MIDDLE_RIGHT,
             easing: Easing.inOut(Easing.ease)
           }),
           Animated.timing(progressButtonScale, {
+            duration: TRAVEL_DURATION,
             useNativeDriver: true,
             toValue: 1,
             easing: Easing.inOut(Easing.ease)
@@ -182,21 +190,25 @@ export const OnboardingScreen = ({ navigation }) => {
       animating.current = true;
       Animated.parallel([
         Animated.timing(reportButtonTransform, {
+          duration: TRAVEL_DURATION,
           useNativeDriver: false,
           toValue: TOP_MIDDLE,
           easing: Easing.inOut(Easing.ease)
         }),
         Animated.timing(progressButtonTransform, {
+          duration: TRAVEL_DURATION,
           useNativeDriver: false,
           toValue: BOTTOM_MIDDLE,
           easing: Easing.inOut(Easing.ease)
         }),
         Animated.timing(skipButtonScale, {
+          duration: TRAVEL_DURATION,
           useNativeDriver: true,
           toValue: 0,
           easing: Easing.inOut(Easing.ease)
         }),
         Animated.timing(secondButtonScale, {
+          duration: TRAVEL_DURATION,
           useNativeDriver: true,
           toValue: 1,
           easing: Easing.inOut(Easing.ease)
@@ -259,46 +271,55 @@ export const OnboardingScreen = ({ navigation }) => {
       textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
     Animated.parallel([
       Animated.timing(exploreButtonScale, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: true,
         toValue: 1,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(reportButtonScale, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: true,
         toValue: 1,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(progressButtonScale, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: true,
         toValue: 1,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(exploreButtonTransform, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: false,
         toValue: TOP_RIGHT,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(reportButtonTransform, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: false,
         toValue: TOP_MIDDLE,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(progressButtonTransform, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: false,
         toValue: TOP_LEFT,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(textsScale, {
+        duration: TRAVEL_DURATION,
         toValue: 0,
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(firstButtonScale, {
+        duration: TRAVEL_DURATION,
         toValue: 0,
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(secondButtonScale, {
+        duration: TRAVEL_DURATION,
         toValue: 0,
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
@@ -346,31 +367,37 @@ export const OnboardingScreen = ({ navigation }) => {
       exploreButtonTransform, reportButtonTransform, progressButtonTransform].forEach(a=>a.stopAnimation());
     Animated.parallel([
       Animated.timing(exploreButtonTransform, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: false,
         toValue: exploreTransform,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(exploreButtonScale, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: true,
         toValue: exploreScale,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(reportButtonTransform, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: false,
         toValue: reportTransform,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(reportButtonScale, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: true,
         toValue: reportScale,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(progressButtonTransform, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: false,
         toValue: progressTransform,
         easing: Easing.inOut(Easing.ease)
       }),
       Animated.timing(progressButtonScale, {
+        duration: TRAVEL_DURATION,
         useNativeDriver: true,
         toValue: progressScale,
         easing: Easing.inOut(Easing.ease)
