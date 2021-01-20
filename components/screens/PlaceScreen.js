@@ -337,7 +337,10 @@ const PlaceAction = ({ title, icon, onPress }) => {
         justifyContent: "flex-start",
       }}
     >
-      <Image style={globalStyles.imageJustContain} source={icon} />
+      <Image resizeMode='contain' style={[globalStyles.imageJustContain, {
+        minHeight: 29,
+        resizeMode: 'contain'
+        }]} source={icon} />
       <Text
         style={{
           ...textStyles.normalOfSize(12),
@@ -530,7 +533,7 @@ const s = StyleSheet.create({
   actions: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
+    alignItems: "flex-start",
     ...globalStyles.fullWidth,
   },
 
