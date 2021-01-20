@@ -162,11 +162,12 @@ const siteColor = (rating) => {
 }
 
 export const placeLocked = (user, place) => {
-  if (user == null) {
-    return true;
-  }
-  const unlockedPlaces = user.unlockedPlaces;
-  return unlockedPlaces[place._id] == null && unlockedPlaces[`${place.siteDocumentId}`] == null
+  return false;
+  // if (user == null) {
+  //   return true;
+  // }
+  // const unlockedPlaces = user.unlockedPlaces;
+  // return unlockedPlaces[place._id] == null && unlockedPlaces[`${place.siteDocumentId}`] == null
 }
 
 export const specialSortPlaces = (res, location = null) => {
