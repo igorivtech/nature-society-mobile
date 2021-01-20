@@ -9,7 +9,7 @@ import {
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
-import { width, height, SPLASH_HIDE_DELAY, statusBarHeight } from "../../values/consts";
+import { width, height, SPLASH_HIDE_DELAY, statusBarHeight, TOP_BUTTONS_CONTAINER_WIDTH } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -27,7 +27,7 @@ const inputRange = [TRANSLATE_Y_VALUE, 0];
 
 const BOTTOM = {y: (height-statusBarHeight)*0.5 - 165}
 const TOP = {y: 0}
-const buttonsWidth = 0.7;
+const buttonsWidth = TOP_BUTTONS_CONTAINER_WIDTH;
 const LEFT = {x: 0};
 const MIDDLE_LEFT = {x:width*buttonsWidth*0.33-55/2};
 const MIDDLE = {x:width*buttonsWidth/2-55/2};

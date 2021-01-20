@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { width, height, safeAreaHeight, smallScreen } from "./consts";
+import { width, height, safeAreaHeight, smallScreen, TOP_BUTTONS_CONTAINER_WIDTH } from "./consts";
 
 export const globalStyles = StyleSheet.create({
   absolute: {
@@ -57,7 +57,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   onboardingButtonsContainer: {
-    width: "70%",
+    width: `${TOP_BUTTONS_CONTAINER_WIDTH*100}%`,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
