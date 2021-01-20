@@ -53,149 +53,8 @@ const titles = {
 };
 
 export const OnboardingScreen = ({ navigation }) => {
-  const [currText, setCurrText] = useState(strings.onboardingScreen.item1);
-  const [currIndex, setIndex] = useState(-1);
-  const [doneVisible, setDoneVisible] = useState(false);
-  const [finishVisible, setFinishVisible] = useState(false);
-
-  //
-
+ 
   const {bottomSafeAreaInset} = useSafeAreaInsets();
-
-  const buttonsYTranslate = useRef(new Animated.Value(0)).current;
-  const doneButtonYTranslate = useRef(new Animated.Value(0)).current;
-  const doneButtonAlpha = useRef(new Animated.Value(0)).current;
-  const doneButtonScale = useRef(new Animated.Value(0)).current;
-  const finishButtonAlpha = useRef(new Animated.Value(0)).current;
-  const finishButtonScale = useRef(new Animated.Value(0.5)).current;
-  const textAlpha = useRef(new Animated.Value(1)).current;
-  const textScale = useRef(new Animated.Value(0)).current;
-
-  useEffect(()=>{
-    setTimeout(() => {
-      setIndex(0);
-    }, SPLASH_HIDE_DELAY);
-    Animated.timing(textScale, {
-      delay: SPLASH_HIDE_DELAY,
-      toValue: 1,
-      duration: 500,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true
-    }).start();
-  }, []);
-  
-  // const next = () => {
-  //   if (doneVisible) {
-  //     return;
-  //   }
-  //   if (currIndex < 2) {
-  //     setIndex(v=>v+1);
-  //   }
-  // };
-
-  const previous = () => {
-    if (doneVisible) {
-      return;
-    }
-    if (currIndex > 0) {
-      setIndex(v=>v-1);
-    }
-  };
-
-  const finish = () => {
-    navigation.navigate("Home");
-    AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, (new Date()).toString()).then(()=>{});
-  };
-
-  useEffect(() => {
-    if (currIndex >= 0) {
-      fadeText(titles[currIndex]);
-    }
-    if (currIndex === 2) {
-      setDoneVisible(true);
-      Animated.timing(doneButtonAlpha, {
-        toValue: 0.5,
-        duration: 500,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
-        delay: 1500,
-      }).start();
-      Animated.timing(doneButtonScale, {
-        toValue: 0.8,
-        duration: 500,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
-        delay: 1500,
-      }).start();
-    }
-  }, [currIndex]);
-
-  const doneOnPress = () => {
-    if (currIndex === -1) {
-      return;
-    }
-    setIndex(-1);
-    setTimeout(()=>{
-      fadeText(strings.onboardingScreen.done);
-    }, 100);
-    setFinishVisible(true);
-    // Hstack buttons
-    Animated.timing(buttonsYTranslate, {
-      toValue: -(height / 2 - 100),
-      duration: doneDuration,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
-    // done button
-    Animated.timing(doneButtonYTranslate, {
-      toValue: -200,
-      duration: doneDuration,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(doneButtonAlpha, {
-      toValue: 1,
-      duration: doneDuration/2,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(doneButtonScale, {
-      toValue: 1,
-      duration: doneDuration,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
-    // finish button
-    Animated.timing(finishButtonAlpha, {
-      toValue: 1,
-      duration: doneDuration / 2,
-      useNativeDriver: true,
-      delay: 2 * doneDuration,
-    }).start();
-    Animated.spring(finishButtonScale, {
-      toValue: 1,
-      duration: doneDuration / 2,
-      useNativeDriver: true,
-      delay: 2 * doneDuration,
-    }).start();
-  };
-
-  const fadeText = (text) => {
-    // out
-    Animated.timing(textAlpha, {
-      toValue: 0.1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(()=>{
-      setCurrText(text);
-      Animated.timing(textAlpha, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
-  };
-
   const isMounted = useIsMounted();
 
   const logoTranslateY = useRef(new Animated.Value(0)).current;
@@ -382,21 +241,15 @@ export const OnboardingScreen = ({ navigation }) => {
           setTimeout(() => {
             fancyAnimate();
           }, 2000);
-          // loopTexts();
         }
       })
     }
   }, [secondContainerVisible])
 
-  const loopTexts = () => {
-    setTimeout(() => {
-      if (!isMounted.current) {
-        return;
-      }
-      next();
-      loopTexts();
-    }, 5000);
-  }
+  const finish = () => {
+    navigation.navigate("Home");
+    AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, (new Date()).toString()).then(()=>{});
+  };
 
   const next = () => {
     setSelectedIndex(v=>(v+1)%3);
