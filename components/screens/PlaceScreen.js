@@ -337,10 +337,16 @@ const PlaceAction = ({ title, icon, onPress }) => {
         justifyContent: "flex-start",
       }}
     >
-      <Image resizeMode='center' style={[globalStyles.imageJustContain, {
-        minHeight: 29,
-        resizeMode: 'center'
+      <View style={{
+        height: 29,
+        width: 29,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <Image resizeMode='contain' style={[globalStyles.imageJustContain, {
+          resizeMode: 'contain',
         }]} source={icon} />
+      </View>
       <Text
         style={{
           ...textStyles.normalOfSize(12),
