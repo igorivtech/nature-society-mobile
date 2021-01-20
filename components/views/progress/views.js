@@ -71,7 +71,7 @@ export const UserHeader = memo(({restartApp}) => {
       <View style={headerDetailsStyles.container}>
         <View style={headerDetailsStyles.topContainer}>
           <Text style={headerDetailsStyles.valueText}>{value}</Text>
-          <Image style={headerDetailsStyles.icon} source={icon} />
+          <Image resizeMode='contain' style={headerDetailsStyles.icon} source={icon} />
         </View>
         <Text style={headerDetailsStyles.bottomText}>{title}</Text>
       </View>
