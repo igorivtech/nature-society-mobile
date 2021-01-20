@@ -25,12 +25,12 @@ const inputRange = [TRANSLATE_Y_VALUE, 0];
 
 const BOTTOM = {y: 0}
 const TOP = {y: -(height-statusBarHeight)*0.34}
-
+const buttonsWidth = 0.7;
 const LEFT = {x: 0};
-const MIDDLE_LEFT = {x:width*0.8*0.33-55/2};
-const MIDDLE = {x:width*0.8/2-55/2};
-const MIDDLE_RIGHT = {x:width*0.8*0.66-55/2};
-const RIGHT = {x:width*0.8-55};
+const MIDDLE_LEFT = {x:width*buttonsWidth*0.33-55/2};
+const MIDDLE = {x:width*buttonsWidth/2-55/2};
+const MIDDLE_RIGHT = {x:width*buttonsWidth*0.66-55/2};
+const RIGHT = {x:width*buttonsWidth-55};
 
 const BOTTOM_MIDDLE_LEFT = {...BOTTOM, ...MIDDLE_LEFT};
 const BOTTOM_MIDDLE = {...BOTTOM, ...MIDDLE};

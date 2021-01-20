@@ -57,7 +57,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   onboardingButtonsContainer: {
-    width: "80%",
+    width: "70%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -120,11 +120,9 @@ export const globalStyles = StyleSheet.create({
 
   homeTopContainer: (translateY, topSafeAreaHeight) => ({
     transform: [{translateY}],
-    alignItems: 'center',
-    flexDirection: "row",
-    paddingHorizontal: smallScreen ? 44 : 64,
-    justifyContent: "space-between",
+    ...globalStyles.onboardingButtonsContainer,
     marginTop: topSafeAreaHeight + 16,
+    alignSelf: 'center'
   }),
 
   mainCardContainer: (translateY) => ({
