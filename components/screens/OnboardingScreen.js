@@ -266,9 +266,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const finish = () => {
     animating.current = true;
     setSelectedIndex(1000);
-    [exploreButtonScale, reportButtonScale, progressButtonScale, 
-      exploreButtonTransform, reportButtonTransform, progressButtonTransform, 
-      textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
+    [textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
     animateIcons(
       TOP_RIGHT, 1,
       TOP_MIDDLE, 1,
