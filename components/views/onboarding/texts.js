@@ -160,6 +160,7 @@ export const FirstButton = ({ altTitle=false, scale, onPress, bottomSafeAreaInse
 
 const styles = StyleSheet.create({
   textsContainer: (scale) => ({
+    opacity: scale,
     transform: [{scale}],
     ...globalStyles.shadow,
     justifyContent: "center",
