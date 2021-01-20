@@ -74,7 +74,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
   const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
 
-  const exploreButtonScale = useRef(new Animated.Value(1)).current;
+  const exploreButtonScale = useRef(new Animated.Value(0)).current;
   const reportButtonScale = useRef(new Animated.Value(0)).current;
   const progressButtonScale = useRef(new Animated.Value(0)).current;
 
@@ -97,7 +97,6 @@ export const OnboardingScreen = ({ navigation }) => {
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
   const textsScale = useRef(new Animated.Value(0)).current;
-  const buttonsScale = useRef(new Animated.Value(0)).current;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const animating = useRef(true);
@@ -238,7 +237,7 @@ export const OnboardingScreen = ({ navigation }) => {
             easing: Easing.out(Easing.ease),
             duration: 500
           }),
-          Animated.timing(buttonsScale, {
+          Animated.timing(exploreButtonScale, {
             toValue: 1,
             useNativeDriver: true,
             easing: Easing.out(Easing.ease),
@@ -409,7 +408,7 @@ export const OnboardingScreen = ({ navigation }) => {
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
         <TapView onPress={selectedIndex === 1000 ? null : next} />
-        <Animated.View style={styles.buttonsContainer(buttonsScale, topSafeAreaHeight)}>
+        <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
           <OnboardingButton
             alpha={progressButtonOpacity}
             scale={progressButtonScale}
@@ -446,11 +445,10 @@ export const OnboardingScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 
-  buttonsContainer: (scale, topSafeAreaHeight) => ({
+  buttonsContainer: (topSafeAreaHeight) => ({
     position: 'absolute',
     top: topSafeAreaHeight + 16,
     ...globalStyles.onboardingButtonsContainer,
-    transform: [{ scale }],
     height: 55,
   }),
 
