@@ -83,6 +83,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const finishedRound = useRef(false);
+  const animating = useRef(true);
 
   // SPLASH
   useEffect(()=>{
@@ -123,11 +124,12 @@ export const OnboardingScreen = ({ navigation }) => {
         toValue: 1,
         easing: Easing.inOut(Easing.ease)
       }),
-    ]).start();
+    ]).start(()=>animating.current = false);
   }
 
   useEffect(()=>{
     if (selectedIndex === 1) {
+      animating.current = true;
       Animated.sequence([
         Animated.parallel([
           Animated.timing(exploreButtonTransform, {
@@ -154,8 +156,11 @@ export const OnboardingScreen = ({ navigation }) => {
             easing: Easing.inOut(Easing.ease)
           })
         ])
-      ]).start();
+      ]).start(()=>{
+        animating.current = false;
+      });
     } else if (selectedIndex === 2) {
+      animating.current = true;
       Animated.parallel([
         Animated.timing(reportButtonTransform, {
           useNativeDriver: false,
@@ -167,8 +172,12 @@ export const OnboardingScreen = ({ navigation }) => {
           toValue: BOTTOM_MIDDLE,
           easing: Easing.inOut(Easing.ease)
         }),
-      ]).start(()=>finishedRound.current=true);
+      ]).start(()=>{
+        finishedRound.current=true;
+        animating.current = false;
+      });
     } else if (selectedIndex === 0 && finishedRound.current) {
+      animating.current = true;
       finishedRound.current = false;
       setSelectedIndex(1000);
       Animated.parallel([
@@ -192,7 +201,10 @@ export const OnboardingScreen = ({ navigation }) => {
           useNativeDriver: true,
           easing: Easing.inOut(Easing.ease)
         }),
-      ]).start(()=>finishedRound.current=true);
+      ]).start(()=>{
+        // finishedRound.current=true;
+        // animating.current = false;
+      });
     }
   }, [selectedIndex])
 
@@ -242,6 +254,7 @@ export const OnboardingScreen = ({ navigation }) => {
   };
 
   const next = () => {
+    if (animating.current) {return}
     setSelectedIndex(v=>(v+1)%3);
   }
 
