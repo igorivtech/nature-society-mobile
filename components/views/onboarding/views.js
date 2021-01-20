@@ -17,19 +17,19 @@ const SMALL_SCALE = 0.8;
 const animations = {
   0: null,
   1: 'pulse',
-  2: 'wobble'
+  2: 'pulse'
 }
 
 const delays = {
   0: 0,
-  1: 2000,
-  2: 3000
+  1: 0,
+  2: 0
 }
 
 const iterationDelay = {
   0: 0,
   1: 0,
-  2: 500
+  2: 0
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
