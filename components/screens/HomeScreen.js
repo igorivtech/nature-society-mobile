@@ -119,17 +119,17 @@ export const HomeScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(()=>{
-    if (deepLinkId != null && isFocused) {
+    if (deepLinkId != null && isFocused && !popupVisible && !pushPopupVisible) {
       showPlace({...deepLinkId})
       dispatch({
         type: SAVE_DEEP_LINK_ID,
         payload: null
       })
     }
-  }, [deepLinkId, isFocused])
+  }, [deepLinkId, isFocused, popupVisible, pushPopupVisible])
 
   useEffect(()=>{
-    if (notification != null && isFocused) {
+    if (notification != null && isFocused && !popupVisible && !pushPopupVisible) {
       if (notification.showReport) {
         report();
       }
@@ -138,7 +138,7 @@ export const HomeScreen = ({ navigation, route }) => {
         payload: null
       })
     }
-  }, [notification, isFocused])
+  }, [notification, isFocused, popupVisible, pushPopupVisible])
 
   const tryFetchLocation = async () => {
     let { status } = await Location.getPermissionsAsync();
