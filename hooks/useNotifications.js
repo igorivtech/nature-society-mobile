@@ -81,7 +81,7 @@ export const useNotifications = (state, dispatch) => {
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-        const data = response?.notification?.request?.content?.data;
+        const data = response?.notification?.request?.content?.data?.extraData;
         if (data != null) {
           dispatch({
             type: SAVE_NOTIFICATION,
