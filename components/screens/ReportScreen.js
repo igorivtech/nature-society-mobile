@@ -77,6 +77,7 @@ export const ReportScreen = ({navigation, route}) => {
   const cleannessRef = useRef(0.5);
   const crowdnessRef = useRef(0.5);
 
+  const [flingEnabled, setFlingEnabled] = useState(false);
   const [autoPlayFirst, setAutoPlayFirst] = useState(false);
   const [autoPlaySecond, setAutoPlaySecond] = useState(false);
 
@@ -97,6 +98,15 @@ export const ReportScreen = ({navigation, route}) => {
 
   const errorActionRef = useRef(emptyFunc);
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(()=>{
+    if (autoPlayFirst) {
+      setTimeout(() => {
+        if (!isMounted.current) {return}
+        setFlingEnabled(true);
+      }, 3000);
+    }
+  }, [autoPlayFirst])
 
   useAndroidOnBack(()=>{
     if (popupVisible) {
@@ -317,7 +327,7 @@ export const ReportScreen = ({navigation, route}) => {
     <View style={styles.container}>
       <TapView onPress={tapClose} />
       <ClosePanelArrow direction='bottom' topHeight={35} topMargin={statusBarHeight} />
-      <FlingGestureHandler direction={Directions.DOWN} onHandlerStateChange={onHandlerStateChange}>
+      <FlingGestureHandler enabled={flingEnabled} direction={Directions.DOWN} onHandlerStateChange={onHandlerStateChange}>
         <View onLayout={onContainerLayout} style={styles.cardContainer}>
           <Animatable.View animation='fadeIn' delay={400} style={styles.innerScrollViewContent}>
             <Animated.View style={[StyleSheet.absoluteFill, styles.scrollViewContent, {transform: [{translateY}]}]}>
