@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
-import {ASK_PUSH} from "../context/userReducer"
+import {ASK_PUSH, SAVE_NOTIFICATION} from "../context/userReducer"
 import AsyncStorage from "@react-native-community/async-storage";
 import { Auth } from "aws-amplify";
 import { ATTRIBUTE_PUSH_TOKEN } from "./useUser";
@@ -75,13 +75,19 @@ export const useNotifications = (state, dispatch) => {
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      console.log(notification);
-      setNotification(notification);
+      // console.log(notification);
+      // setNotification(notification);
     });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        const data = response?.notification?.request?.content?.data;
+        if (data != null) {
+          dispatch({
+            type: SAVE_NOTIFICATION,
+            payload: data
+          })
+        }
     });
 
     return () => {

@@ -14,16 +14,16 @@ export const HomeButton = memo(({ index, onPress, notification }) => {
 
   const opacity = useRef(new Animated.Value(0)).current;
 
-  useEffect(()=>{
-    if (index === 2) {
-      Animated.timing(opacity, {
-        useNativeDriver: true,
-        duration: 300,
-        toValue: notification != null ? 1 : 0,
-        timing: Easing.inOut(Easing.ease)
-      }).start();
-    }
-  }, [notification])
+  // useEffect(()=>{
+  //   if (index === 2) {
+  //     Animated.timing(opacity, {
+  //       useNativeDriver: true,
+  //       duration: 300,
+  //       toValue: notification != null ? 1 : 0,
+  //       timing: Easing.inOut(Easing.ease)
+  //     }).start();
+  //   }
+  // }, [notification])
 
   return (
     <TouchableOpacity style={globalStyles.centerChildren} onPress={onPress}>

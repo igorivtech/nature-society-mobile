@@ -84,9 +84,9 @@ export const ProgressScreen = ({ navigation, route }) => {
     });
   }, [])
 
-  useEffect(()=>{
-    setPopupVisible(notification != null);
-  }, [notification])
+  // useEffect(()=>{
+  //   setPopupVisible(notification != null);
+  // }, [notification])
 
   const restartApp = useCallback(() => {
     Alert.alert(
