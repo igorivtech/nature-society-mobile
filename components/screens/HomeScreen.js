@@ -129,10 +129,16 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [deepLinkId, isFocused])
 
   useEffect(()=>{
-    if (notification != null) {
-      console.log('notification', notification);
+    if (notification != null && isFocused) {
+      if (notification.showReport) {
+        report();
+      }
+      dispatch({
+        type: SAVE_NOTIFICATION,
+        payload: null
+      })
     }
-  }, [notification])
+  }, [notification, isFocused])
 
   const tryFetchLocation = async () => {
     let { status } = await Location.getPermissionsAsync();
