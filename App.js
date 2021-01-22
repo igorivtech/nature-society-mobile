@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useReducer, useEffect, useRef } from "react";
-import {I18nManager, Platform, UIManager, Text, TextInput, Image} from 'react-native';
+import {Platform, UIManager, Text, TextInput, Image} from 'react-native';
 //
 import { AppLoading } from "expo";
 import * as SplashScreen from 'expo-splash-screen';
@@ -34,24 +34,15 @@ import { useUserUsageTime } from "./hooks/useUserUsageTime";
 import { useNotifications } from "./hooks/useNotifications";
 import NetInfo from '@react-native-community/netinfo';
 import { SPLASH_HIDE_DELAY } from "./values/consts";
-import * as Updates from 'expo-updates';
 import { useDeepLink } from "./hooks/useDeepLink";
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Portal from '@burstware/react-native-portal';
+import { useRTL } from "./hooks/useRTL";
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-if (I18nManager.isRTL) {
-  try {
-    I18nManager.forceRTL(false);
-  } catch (e) {console.error(e)}
-  try {
-    I18nManager.allowRTL(false);
-  } catch (e) {console.error(e)}
-  Updates.reloadAsync();
-}
 Amplify.configure(awsconfig);
 enableScreens();
 const HomeStack = createSharedElementStackNavigator();
@@ -71,7 +62,8 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {loadingUser} = useUser(dispatch);
   const splashShown = useRef(false);
-
+  const {loadingRTL} = useRTL();
+  
   useNotifications(state, dispatch);
   useUserUsageTime(state);
   useDeepLink(dispatch);
@@ -87,20 +79,20 @@ export default function App() {
   },[])
 
   useEffect(()=>{
-    if (fontsLoaded && !loadingOnboarding && !loadingUser) {
+    if (fontsLoaded && !loadingOnboarding && !loadingUser && !loadingRTL) {
       if (!splashShown.current) {
         splashShown.current = true;
         setTimeout(SplashScreen.hideAsync, SPLASH_HIDE_DELAY);
       }
     }
-  },[fontsLoaded, loadingOnboarding, loadingUser])
+  }, [fontsLoaded, loadingOnboarding, loadingUser, loadingRTL])
 
   const contextValue = React.useMemo(() => ({
     state,
     dispatch
   }), [state, dispatch]);
 
-  if (!fontsLoaded || loadingOnboarding || loadingUser) {
+  if (!fontsLoaded || loadingOnboarding || loadingUser || loadingRTL) {
     return <AppLoading />;
   }
 
