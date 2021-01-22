@@ -1,19 +1,26 @@
-import { TransitionPresets } from "@react-navigation/stack";
 import { Easing } from "react-native";
 import { height, NAV_DURATION, NAV_DURATION_CLOSE, width } from "./consts";
 
-export const fadeOptions = () => ({
+const transparent = {
+  cardStyle: { backgroundColor: "transparent" },
+  cardOverlayEnabled: false,
   gestureEnabled: false,
-  transitionSpec: {
-    open: {
-      animation: "timing",
-      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
-    },
-    close: {
-      animation: "timing",
-      config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
-    },
+}
+
+const transitionSpec = {
+  open: {
+    animation: "timing",
+    config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
   },
+  close: {
+    animation: "timing",
+    config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
+  },
+};
+
+export const fadeOptions = () => ({
+  ...transparent,
+  transitionSpec,
   cardStyleInterpolator: ({ current: { progress } }) => {
     return {
       cardStyle: {
@@ -21,23 +28,11 @@ export const fadeOptions = () => ({
       },
     };
   },
-  cardStyle: {
-    backgroundColor: 'transparent',
-  }
 });
 
 export const slideFromRightOptions = () => ({
-  gestureEnabled: false,
-  transitionSpec: {
-    open: {
-      animation: "timing",
-      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
-    },
-    close: {
-      animation: "timing",
-      config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
-    },
-  },
+  ...transparent,
+  transitionSpec,
   cardStyleInterpolator: ({ current: { progress } }) => {
     return {
       cardStyle: {
@@ -50,23 +45,11 @@ export const slideFromRightOptions = () => ({
       },
     };
   },
-  cardStyle: {
-    backgroundColor: 'transparent',
-  }
 });
 
 export const slideFromLeftOptions = () => ({
-  gestureEnabled: false,
-  transitionSpec: {
-    open: {
-      animation: "timing",
-      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
-    },
-    close: {
-      animation: "timing",
-      config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
-    },
-  },
+  ...transparent,
+  transitionSpec,
   cardStyleInterpolator: ({ current: { progress } }) => {
     return {
       cardStyle: {
@@ -79,23 +62,11 @@ export const slideFromLeftOptions = () => ({
       },
     };
   },
-  cardStyle: {
-    backgroundColor: 'transparent',
-  }
 });
 
 export const slideFromBottomOptions = () => ({
-  gestureEnabled: false,
-  transitionSpec: {
-    open: {
-      animation: "timing",
-      config: { duration: NAV_DURATION, easing: Easing.inOut(Easing.ease) },
-    },
-    close: {
-      animation: "timing",
-      config: { duration: NAV_DURATION_CLOSE, easing: Easing.inOut(Easing.ease) },
-    },
-  },
+  ...transparent,
+  transitionSpec,
   cardStyleInterpolator: ({ current: { progress } }) => {
     return {
       cardStyle: {
@@ -105,11 +76,7 @@ export const slideFromBottomOptions = () => ({
             outputRange: [height, 0]
           })}
         ],
-        // opacity: progress
       },
     };
   },
-  cardStyle: {
-    backgroundColor: 'transparent',
-  }
 });
