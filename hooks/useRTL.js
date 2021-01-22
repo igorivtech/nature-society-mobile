@@ -14,7 +14,9 @@ export const useRTL = () => {
         I18nManager.allowRTL(false);
       } catch (e) {console.error(e)}
       try {
-        Updates.reloadAsync().then(()=>{}).finally(()=>{});
+        setTimeout(() => {
+          Updates.reloadAsync().then(()=>{}).finally(()=>{});
+        }, 200);
       } catch (e) {console.error(e)}
     } else {
       setLoading(false);
