@@ -42,6 +42,7 @@ const Highlight = ({
 }) => {
   return (
     <Highlighter
+      minimumFontScale={0.8}
       adjustsFontSizeToFit={true} 
       numberOfLines={3}
       style={[regular, { position, lineHeight: regular.fontSize }]}
