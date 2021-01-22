@@ -135,7 +135,7 @@ export const OnboardingScreen = ({ navigation }) => {
     Animated.parallel([
       Animated.timing(exploreButtonTransform, {
         duration: TRAVEL_DURATION,
-        useNativeDriver: false,
+        useNativeDriver: true,
         toValue: BOTTOM_MIDDLE_RIGHT,
         easing: Easing.inOut(Easing.ease)
       }),
@@ -158,13 +158,13 @@ export const OnboardingScreen = ({ navigation }) => {
         Animated.parallel([
           Animated.timing(exploreButtonTransform, {
             duration: TRAVEL_DURATION,
-            useNativeDriver: false,
+            useNativeDriver: true,
             toValue: TOP_RIGHT,
             easing: Easing.inOut(Easing.ease)
           }),
           Animated.timing(reportButtonTransform, {
             duration: TRAVEL_DURATION,
-            useNativeDriver: false,
+            useNativeDriver: true,
             toValue: BOTTOM_MIDDLE,
             easing: Easing.inOut(Easing.ease)
           }),
@@ -173,7 +173,7 @@ export const OnboardingScreen = ({ navigation }) => {
         Animated.parallel([
           Animated.timing(reportButtonTransform, {
             duration: TRAVEL_DURATION,
-            useNativeDriver: false,
+            useNativeDriver: true,
             toValue: BOTTOM_MIDDLE_RIGHT,
             easing: Easing.inOut(Easing.ease)
           }),
@@ -194,13 +194,13 @@ export const OnboardingScreen = ({ navigation }) => {
       Animated.parallel([
         Animated.timing(reportButtonTransform, {
           duration: TRAVEL_DURATION,
-          useNativeDriver: false,
+          useNativeDriver: true,
           toValue: TOP_MIDDLE,
           easing: Easing.inOut(Easing.ease)
         }),
         Animated.timing(progressButtonTransform, {
           duration: TRAVEL_DURATION,
-          useNativeDriver: false,
+          useNativeDriver: true,
           toValue: BOTTOM_MIDDLE,
           easing: Easing.inOut(Easing.ease)
         }),
@@ -353,7 +353,7 @@ export const OnboardingScreen = ({ navigation }) => {
     Animated.parallel([
       Animated.timing(exploreButtonTransform, {
         duration: TRAVEL_DURATION,
-        useNativeDriver: false,
+        useNativeDriver: true,
         toValue: exploreTransform,
         easing: Easing.inOut(Easing.ease)
       }),
@@ -365,7 +365,7 @@ export const OnboardingScreen = ({ navigation }) => {
       }),
       Animated.timing(reportButtonTransform, {
         duration: TRAVEL_DURATION,
-        useNativeDriver: false,
+        useNativeDriver: true,
         toValue: reportTransform,
         easing: Easing.inOut(Easing.ease)
       }),
@@ -377,7 +377,7 @@ export const OnboardingScreen = ({ navigation }) => {
       }),
       Animated.timing(progressButtonTransform, {
         duration: TRAVEL_DURATION,
-        useNativeDriver: false,
+        useNativeDriver: true,
         toValue: progressTransform,
         easing: Easing.inOut(Easing.ease)
       }),

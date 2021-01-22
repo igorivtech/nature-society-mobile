@@ -54,7 +54,10 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
   };
 
   return (
-    <AnimatedPressable style={[transform.getLayout(), {position:  'absolute'}]} onPress={onPress}>
+    <AnimatedPressable style={{
+      transform: transform.getTranslateTransform(),
+      position:  'absolute'
+      }} onPress={onPress}>
       <Animatable.View 
         ref={ref} 
         useNativeDriver={true}
