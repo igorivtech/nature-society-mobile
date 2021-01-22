@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useReducer, useEffect, useRef } from "react";
-import {Platform, UIManager, Text, TextInput, Image} from 'react-native';
+import {Platform, UIManager, Text, TextInput, Image, View} from 'react-native';
 //
-import { AppLoading } from "expo";
+import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
 import { fontsLoader } from "./values/fonts";
 import {
@@ -13,7 +13,8 @@ import {
 } from "./values/options";
 //
 import { enableScreens } from "react-native-screens";
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+// import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 //
 import { OnboardingScreen } from "./components/screens/OnboardingScreen";
@@ -45,7 +46,7 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
 
 Amplify.configure(awsconfig);
 enableScreens();
-const HomeStack = createSharedElementStackNavigator();
+const HomeStack = createStackNavigator();
 
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
@@ -102,7 +103,7 @@ export default function App() {
       <Portal.Host>
         <ActionSheetProvider>
           <NavigationContainer>
-            <HomeStack.Navigator initialRouteName={onboardingShown ? "Home" : "Onboarding"} headerMode="none">
+            <HomeStack.Navigator initialRouteName={onboardingShown ? "Home" : "Onboarding"} mode='modal' headerMode="none">
               <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
               <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
               <HomeStack.Screen name="Place" component={PlaceScreen} options={slideFromBottomOptions} />
