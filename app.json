@@ -40,6 +40,9 @@
       }
     },
     "android": {
+      "config": {
+        "googleMapsApiKey": "AIzaSyCZWRw4uja13gJHCiIuDtZ7atE4mU8DNAo"
+      },
       "package": "com.ivtech.hala",
       "versionCode": 1,
       "intentFilters": [
