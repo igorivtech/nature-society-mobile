@@ -167,6 +167,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   cardMainImage: {
+    overflow: 'hidden',
     resizeMode: 'cover',
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
