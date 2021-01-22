@@ -6,21 +6,24 @@ export const useRTL = () => {
   const [loadingRTL, setLoading] = useState(true);
 
   useEffect(() => {
-    if (I18nManager.isRTL) {
-      try {
-        I18nManager.forceRTL(false);
-      } catch (e) {console.error(e)}
-      try {
-        I18nManager.allowRTL(false);
-      } catch (e) {console.error(e)}
-      try {
-        setTimeout(() => {
-          Updates.reloadAsync().then(()=>{}).finally(()=>{});
-        }, 200);
-      } catch (e) {console.error(e)}
-    } else {
-      setLoading(false);
+    const check = async () => {
+      if (I18nManager.isRTL) {
+        try {
+          I18nManager.forceRTL(false);
+        } catch (e) {console.error(e)}
+        try {
+          I18nManager.allowRTL(false);
+        } catch (e) {console.error(e)}
+        try {
+          setTimeout(() => {
+            Updates.reloadAsync().then(()=>{}).finally(()=>{});
+          }, 200);
+        } catch (e) {console.error(e)}
+      } else {
+        setLoading(false);
+      }
     }
+    check();
   }, []);
 
   return { loadingRTL };
