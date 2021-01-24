@@ -41,6 +41,7 @@
     "react-native-get-random-values": "^1.5.0",
     "react-native-highlight-words": "^1.0.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-map-link": "^2.7.20",
     "react-native-maps": "0.27.1",
     "react-native-modal": "^11.6.1",
     "react-native-pose": "^0.9.1",

@@ -19,6 +19,7 @@ import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
 import { Popup } from "../views/Popup"
 import { useShare } from "../../hooks/useShare";
+import { showLocation } from 'react-native-map-link'
 
 import * as Animatable from "react-native-animatable";
 import { RecentVisitor } from "../views/home/views";
@@ -30,6 +31,7 @@ import {
   recentVisitors,
   smallScreen,
   statusBarHeight,
+  WHITE_LIST_APPS,
 } from "../../values/consts";
 import {
   Directions,
@@ -98,9 +100,20 @@ export const PlaceScreen = ({ navigation, route }) => {
   }
 
   const waze = () => {
-    popupAction.current = openWaze;
-    setPopupTextData(strings.popups.waze)
-    setPopupVisible(true);
+    showLocation({
+      latitude: place.position.latitude,
+      longitude: place.position.longitude,
+      // sourceLatitude: -8.0870631,  // optionally specify starting location for directions
+      // sourceLongitude: -34.8941619,  // not optional if sourceLatitude is specified
+      title: place.title,  // optional
+      // dialogTitle: 'This is the dialog Title', // optional (default: 'Open in Maps')
+      // dialogMessage: 'This is the amazing dialog Message', // optional (default: 'What app would you like to use?')
+      // cancelText: 'This is the cancel button text', // optional (default: 'Cancel')
+      appsWhiteList: WHITE_LIST_APPS,
+  })
+    // popupAction.current = openWaze;
+    // setPopupTextData(strings.popups.waze)
+    // setPopupVisible(true);
   };
 
   const sharePressed = () => {

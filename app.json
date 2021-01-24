@@ -26,7 +26,8 @@
       "buildNumber": "1.0.7",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
-          "waze"
+          "waze",
+          "comgooglemaps"
         ],
         "NSCameraUsageDescription": "אנחנו משתמשים במצלמה כדי שתוכלו להעלות תמונות של האתרים שאתם מבקרים בהם.",
         "NSPhotoLibraryUsageDescription": "אנחנו משתמשים בגלריה כדי שתוכלו להעלות תמונות פרופיל.",

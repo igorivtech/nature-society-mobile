@@ -18,6 +18,8 @@ export const smallScreen = height < 667;
 export const NAV_DURATION = 500;
 export const NAV_DURATION_CLOSE = 400;
 
+export const WHITE_LIST_APPS = ['google-maps', 'apple-maps', 'waze'];
+
 export const TOP_BUTTONS_CONTAINER_WIDTH = smallScreen ? 0.75 : 0.7
 
 export const NAV_CLOSE_TAP_SIZE = 64;
