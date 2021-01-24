@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import * as Animatable from "react-native-animatable";
 import { globalStyles } from "../../values/styles";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NAV_DURATION } from "../../values/consts";
 
 const EXIT_SIZE = 26; // must match in "../screens/ExploreScreen"
 const images = {
@@ -14,7 +16,7 @@ export const ClosePanelArrow = ({ direction, topHeight = 0, topMargin = 0 }) => 
   const {bottom} = useSafeAreaInsets();
   return (
     <View pointerEvents='none' style={styles[direction](topHeight, topMargin, bottom)}>
-      <Image style={globalStyles.imageJustContain} source={images[direction]} />
+      <Animatable.Image delay={NAV_DURATION} animation='fadeIn' style={globalStyles.imageJustContain} source={images[direction]} />
     </View>
   );
 };
