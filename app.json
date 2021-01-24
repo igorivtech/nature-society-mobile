@@ -42,7 +42,7 @@
     "android": {
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyCZWRw4uja13gJHCiIuDtZ7atE4mU8DNAo"
+          "apiKey": "AIzaSyD7dnNKKKF-WJ3KEgGbQH9fGxOP7Cg79Hg"
         }
       },
       "package": "com.ivtech.hala",
