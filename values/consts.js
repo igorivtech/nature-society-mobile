@@ -77,7 +77,7 @@ export const errors = {
 
 export const emptyFunc = () => {}
 
-export const THUMB_COLORS = ['#F5B345', '#E8D13F', '#C4E055', '#80E268', '#3EDF7E']
+export const THUMB_COLORS = ['#F5B345', '#E8D13F', '#BCD84B', '#80E268', '#3EDF7E']
 export const CLEANNESS_COLORS = {
   1: THUMB_COLORS[0],
   2: THUMB_COLORS[1],
