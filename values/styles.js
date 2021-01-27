@@ -187,6 +187,7 @@ export const globalStyles = StyleSheet.create({
   }),
 
   cardDetailIcon: {
+    transform: [{translateY: -2}],
     marginLeft: 8,
     width: 22,
   },
