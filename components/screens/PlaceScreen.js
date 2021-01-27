@@ -520,7 +520,7 @@ const s = StyleSheet.create({
 
   fixedHeight: {
     justifyContent: 'center',
-    height: 31.3333
+    // height: 31.3333
   },
 
   buyIndicator: {
@@ -596,7 +596,7 @@ const s = StyleSheet.create({
 
   ratingInnerContainer: (small) => ({
     alignSelf: 'flex-end',
-    marginTop: small ? 0 : 4,
+    marginTop: small ? 2 : 4,
     alignItems: 'center',
     flexDirection: "row",
   }),
