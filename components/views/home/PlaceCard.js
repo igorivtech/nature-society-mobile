@@ -98,7 +98,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
               />
             )}
 
-            <View style={globalStyles.cardLocationContainer}>
+            <View style={[globalStyles.cardLocationContainer, {width: '100%'}]}>
               <RatingView
                 isCleanness={false}
                 settings={settings}
@@ -109,7 +109,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
                 color={item.crowdnessColor}
               />
 
-              <View style={globalStyles.spacer(16)} />
+              <View style={globalStyles.spacer(8)} />
 
               <RatingView
                 isCleanness={true}
