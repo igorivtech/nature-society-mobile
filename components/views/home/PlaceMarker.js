@@ -25,9 +25,9 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
   });
 
   useEffect(()=>{
-    if (loadingImage) {
-      return;
-    }
+    // if (loadingImage) {
+    //   return;
+    // }
     const delay = firstTime.current ? index * 100 : 0;
     firstTime.current = false;
     setLoadingScale(true);
@@ -42,7 +42,7 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
         setLoadingScale(false);
       }
     });
-  }, [selected, loadingImage])
+  }, [selected]) // [selected, loadingImage]
 
   const p = useCallback(()=>{
     onPress(place);
