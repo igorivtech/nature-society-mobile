@@ -37,28 +37,12 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
       easing: Easing.inOut(Easing.ease),
       duration: 300,
       delay,
-    }).start(()=>{
-      setLoadingScale(false);
+    }).start(({finished})=>{
+      if (finished) {
+        setLoadingScale(false);
+      }
     });
   }, [selected, loadingImage])
-
-  // useEffect(()=>{
-  //   if (globalShow !== null) {
-  //     if (!globalShow && keepMarkerAlive.current[place._id] != null) {
-  //       return;
-  //     }
-  //     setTrackChanges(v=>v-1);
-  //     Animated.timing(scale, {
-  //       delay: index * (globalShow ? 100 : 50),
-  //       duration: 300,
-  //       useNativeDriver: true,
-  //       toValue: globalShow ? 0.8 : 0,
-  //       easing: Easing.inOut(Easing.ease)
-  //     }).start(()=>{
-  //       setTrackChanges(v=>v+1);
-  //     })
-  //   }
-  // }, [globalShow])
 
   const p = useCallback(()=>{
     onPress(place);
@@ -73,6 +57,9 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
     }
   }, [place])
 
+  const onLoadStart = useCallback(() => setLoadingImage(true), [])
+  const onLoadEnd = useCallback(() => setLoadingImage(false), [])
+
   return (
     <Marker
       // key={`key_${place.position.longitude}_${place.position.latitude}`} 
@@ -82,14 +69,16 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
       coordinate={place.position}
     >
       <View style={styles.container}>
-        <Animated.Image onLoadStart={()=>setLoadingImage(true)} onLoadEnd={()=>setLoadingImage(false)} style={styles.marker(scale, translateY, opacity)} source={image} />
+        <Animated.Image 
+          source={image} 
+          style={styles.marker(scale, translateY, opacity)} 
+          onLoadStart={onLoadStart} 
+          onLoadEnd={onLoadEnd} 
+        />
       </View>
     </Marker>
   )
 })
-
-// trackChanges || globalTracksViewChanges
-// tracksViewChanges={trackChanges}
 
 const styles = StyleSheet.create({
   container: {
@@ -107,6 +96,28 @@ const styles = StyleSheet.create({
 })
 
 //
+
+// trackChanges || globalTracksViewChanges
+// tracksViewChanges={trackChanges}
+
+// useEffect(()=>{
+//   if (globalShow !== null) {
+//     if (!globalShow && keepMarkerAlive.current[place._id] != null) {
+//       return;
+//     }
+//     setTrackChanges(v=>v-1);
+//     Animated.timing(scale, {
+//       delay: index * (globalShow ? 100 : 50),
+//       duration: 300,
+//       useNativeDriver: true,
+//       toValue: globalShow ? 0.8 : 0,
+//       easing: Easing.inOut(Easing.ease)
+//     }).start(()=>{
+//       setTrackChanges(v=>v+1);
+//     })
+//   }
+// }, [globalShow])
+
 
 // import React, { useState, useCallback, useEffect, useRef, memo } from "react";
 // import { Animated, Easing, Image, StyleSheet, View } from "react-native";
