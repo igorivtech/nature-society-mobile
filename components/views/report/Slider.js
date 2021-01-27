@@ -484,7 +484,7 @@ export const NewReportLabel = () => {
   return (
     <View style={sliderStyles.newReportContainer}>
       <Text style={sliderStyles.newReport}>{strings.reportScreen.newReport}</Text>
-      <Image resizeMode='contain' style={sliderStyles.smallEye} source={require("../../../assets/images/new_report_small_icon.png")} />
+      <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/new_report_small_icon.png")} />
     </View>
   )
 }
@@ -519,12 +519,6 @@ const pagStyles = StyleSheet.create({
 });
 
 const sliderStyles = StyleSheet.create({
-
-  smallEye: {
-    resizeMode: 'contain',
-    // height: Math.ceil(9*1.05),
-    // width: Math.ceil(15*1.05)
-  },
 
   backgroundMaskImage: (item) => ({
     ...item.thumbSize,
