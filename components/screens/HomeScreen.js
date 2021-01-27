@@ -247,7 +247,11 @@ export const HomeScreen = ({ navigation, route }) => {
       }, MAP_ANIMATION_DURATION+SPLASH_HIDE_DELAY*0.6+1000);
     } else {
       lockAutoSearching.current = false;
-      mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
+      mapRef.current.animateToRegion({
+        ...region,
+        longitudeDelta: 0.4, // 1 is 111 kilometers
+        latitudeDelta: 0.4*SCREEN_ASPECT_RATIO
+      }, MAP_ANIMATION_DURATION);
       setTimeout(() => {
         ignoreCardsListener.current = false;
       }, MAP_ANIMATION_DURATION+1);
