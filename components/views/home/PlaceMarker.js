@@ -4,13 +4,13 @@ import { Marker } from "react-native-maps";
 import { isAndroid } from "../../../values/consts";
 import { ITEM_WIDTH } from "./PlaceCard";
 
-export const PlaceMarker = memo(({keepMarkerAlive, globalShow, place, onPress, scrollX, index, selected}) => {
-
-  const [image, setImage] = useState(null);
-  const [loadingImage, setLoadingImage] = useState(true);
-  const [loadingScale, setLoadingScale] = useState(true);
+export const PlaceMarker = memo(({place, onPress, index, selected}) => {
 
   const firstTime = useRef(true);
+
+  const [image, setImage] = useState(null);
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [loadingScale, setLoadingScale] = useState(false);
 
   const scale = useRef(new Animated.Value(0)).current;
   const opacity = scale.interpolate({

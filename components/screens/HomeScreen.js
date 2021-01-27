@@ -588,14 +588,10 @@ export const HomeScreen = ({ navigation, route }) => {
       >
         {sortedPlaces.map((p, index) => (
           <PlaceMarker 
-            keepMarkerAlive={keepMarkerAlive} 
-            globalShow={globalShow} 
-            selected={selectedPlace?.key === p.key} 
-            globalTracksViewChanges={globalTracksViewChanges} 
-            index={index} 
-            scrollX={scrollX} 
-            onPress={markerPressed} 
             key={index} 
+            selected={selectedPlace?.key === p.key} 
+            index={index} 
+            onPress={markerPressed} 
             place={p} 
           />
         ))}
