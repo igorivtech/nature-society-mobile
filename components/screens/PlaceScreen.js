@@ -457,7 +457,7 @@ export const PlaceRating = ({
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
 
       
-      <View style={s.ratingInnerContainer}>
+      <View style={s.ratingInnerContainer(small)}>
         <View style={s.fixedHeight}>
           {locked ? (
             <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
@@ -594,12 +594,12 @@ const s = StyleSheet.create({
     height: 100,
   },
 
-  ratingInnerContainer: {
+  ratingInnerContainer: (small) => ({
     alignSelf: 'flex-end',
-    marginTop: 4,
+    marginTop: small ? 0 : 4,
     alignItems: 'center',
     flexDirection: "row",
-  },
+  }),
 
   ratingContainer: {
     flexDirection: "row",
