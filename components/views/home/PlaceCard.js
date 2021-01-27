@@ -100,6 +100,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
 
             <View style={[globalStyles.cardLocationContainer, {width: '100%'}]}>
               <RatingView
+                ITEM_WIDTH={ITEM_WIDTH}
                 isCleanness={false}
                 settings={settings}
                 locked={placeLocked(user, item)}
@@ -112,6 +113,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
               <View style={globalStyles.spacer(8)} />
 
               <RatingView
+                ITEM_WIDTH={ITEM_WIDTH}
                 isCleanness={true}
                 image={require("../../../assets/images/Heart.png")}
                 rating={item.cleanness}
