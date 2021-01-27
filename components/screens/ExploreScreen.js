@@ -284,6 +284,8 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
         </TouchableOpacity>
         {sent && (<View style={suggestionStyles.sentContainer}>
           <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.suggestionSent}</Text>
+          <View style={globalStyles.spacer(8)} />
+          <Image source={require("../../assets/images/suggestion_sent_icon.png")} style={globalStyles.imageJustContain} />
         </View>)}
       </View>
     )
@@ -294,6 +296,7 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
 
 const suggestionStyles = StyleSheet.create({
   sentContainer: {
+    flexDirection: 'row',
     backgroundColor: 'white',
     ...StyleSheet.absoluteFill,
     justifyContent: 'center',
