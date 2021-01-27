@@ -2,7 +2,7 @@
   "expo": {
     "name": "בשביל הטבע",
     "slug": "nature-society",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "privacy": "unlisted",
@@ -23,7 +23,7 @@
       ],
       "supportsTablet": false,
       "bundleIdentifier": "com.ivtech.hala",
-      "buildNumber": "1.0.9",
+      "buildNumber": "1.0.0",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "waze",
