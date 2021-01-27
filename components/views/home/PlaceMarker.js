@@ -9,8 +9,8 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
   const firstTime = useRef(true);
 
   const [image, setImage] = useState(null);
-  const [loadingImage, setLoadingImage] = useState(false);
-  const [loadingScale, setLoadingScale] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(true);
+  const [loadingScale, setLoadingScale] = useState(true);
 
   const scale = useRef(new Animated.Value(0)).current;
   const opacity = scale.interpolate({
@@ -25,9 +25,9 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
   });
 
   useEffect(()=>{
-    // if (loadingImage) {
-    //   return;
-    // }
+    if (loadingImage) {
+      return;
+    }
     const delay = firstTime.current ? index * 100 : 0;
     firstTime.current = false;
     setLoadingScale(true);
@@ -42,7 +42,7 @@ export const PlaceMarker = memo(({place, onPress, index, selected}) => {
         setLoadingScale(false);
       }
     });
-  }, [selected]) // [selected, loadingImage]
+  }, [selected, loadingImage]) // [selected, loadingImage]
 
   const p = useCallback(()=>{
     onPress(place);
