@@ -41,6 +41,7 @@ export const textStyles = StyleSheet.create({
     fontFamily: fonts.normal,
     fontWeight: "400",
     textAlign: "right",
+    fontSize: 14
   }),
 
   normalOfSize: (size, color = colors.darkWithTone, textAlign = "right") => ({

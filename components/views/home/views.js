@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, memo } from "react";
 import { View, TouchableOpacity, Image, Text, Animated, StyleSheet, Easing } from "react-native";
+import { formatRating } from "../../../hooks/helpers";
 import { colors } from "../../../values/colors";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
@@ -71,7 +72,7 @@ export const RecentVisitor = ({ title, details, image, large = false }) => {
   );
 };
 
-export const RatingView = ({ settings, rating, color, image, locked = false, item }) => {
+export const RatingView = ({ settings, rating, color, image, locked = false, item, isCleanness }) => {
   return (
     <View style={globalStyles.ratingContainer}>
       {locked ? (
@@ -80,7 +81,7 @@ export const RatingView = ({ settings, rating, color, image, locked = false, ite
           <Image style={globalStyles.imageContain(true)} source={require("../../../assets/images/buy_it_small.png")} />
         </View>
       ): (
-        <Text style={textStyles.rating(color)}>{rating.toFixed(1)}</Text>
+        <Text style={textStyles.rating(color)}>{formatRating(rating, isCleanness)}</Text>
       )}
 
       <Image style={{tintColor: locked ? colors.lighterShade : color}} source={image} />
