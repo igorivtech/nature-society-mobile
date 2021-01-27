@@ -596,7 +596,7 @@ const s = StyleSheet.create({
 
   ratingInnerContainer: (small) => ({
     alignSelf: 'flex-end',
-    marginTop: small ? 2 : 4,
+    marginTop: 4,
     alignItems: 'center',
     flexDirection: "row",
   }),
