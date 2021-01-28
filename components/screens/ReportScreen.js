@@ -136,7 +136,7 @@ export const ReportScreen = ({navigation, route}) => {
     } else if (currentPosition != null) { // got physical location
       setFetchingPlace(true);
       const startTime = new Date();
-      getPlaces('1', currentPosition, currentPosition, 15, 1, true).then(data=>{ // 1.5 km. 15 is just DEBUG
+      getPlaces('1', currentPosition, currentPosition, 4, 1, true).then(data=>{ // 1.5 km. 4 is just DEBUG
         if (!isMounted?.current) {return}
         if (data != null && data.pp.length > 0) {
           const passedTime = (new Date()) - startTime;
