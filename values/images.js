@@ -9,115 +9,115 @@ const tempRankImages = [
     on: require("../assets/images/rank_1_on.png"),
     off: require("../assets/images/rank_1_off.png"),
     title: "אוהבי טבע מתקדמים",
-    points: 1
+    points: 100
   },
   {
     on: require("../assets/images/rank_2_on.png"),
     off: require("../assets/images/rank_2_off.png"),
     title: "אוהבי טבע מקצוענים",
-    points: 3
+    points: 300
   },
   {
     on: require("../assets/images/rank_3_on.png"),
     off: require("../assets/images/rank_3_off.png"),
     title: "אוהבי טבע מומחים",
-    points: 6
+    points: 600
   },
   {
     on: require("../assets/images/rank_4_on.png"),
     off: require("../assets/images/rank_4_off.png"),
     title: "פעילי טבע",
-    points: 10
+    points: 1000
   },
   {
     on: require("../assets/images/rank_5_on.png"),
     off: require("../assets/images/rank_5_off.png"),
     title: "פעילי טבע מתקדמים",
-    points: 16
+    points: 1500
   },
   {
     on: require("../assets/images/rank_6_on.png"),
     off: require("../assets/images/rank_6_off.png"),
     title: "פעילי טבע מקצוענים",
-    points: 24
+    points: 2100
   },
   {
     on: require("../assets/images/rank_7_on.png"),
     off: require("../assets/images/rank_7_off.png"),
     title: "פעילי טבע מומחים",
-    points: 34
+    points: 2800
   },
   {
     on: require("../assets/images/rank_8_on.png"),
     off: require("../assets/images/rank_8_off.png"),
     title: "נאמני טבע",
-    points: 44
+    points: 3600
   },
   {
     on: require("../assets/images/rank_9_on.png"),
     off: require("../assets/images/rank_9_off.png"),
     title: "נאמני טבע מתקדמים",
-    points: 56
+    points: 4500
   },
   {
     on: require("../assets/images/rank_10_on.png"),
     off: require("../assets/images/rank_10_off.png"),
     title: "נאמני טבע מקצוענים",
-    points: 68
+    points: 5500
   },
   {
     on: require("../assets/images/rank_11_on.png"),
     off: require("../assets/images/rank_11_off.png"),
     title: "נאמני טבע מומחים",
-    points: 70
+    points: 6600
   },
   {
     on: require("../assets/images/rank_12_on.png"),
     off: require("../assets/images/rank_12_off.png"),
     title: "שומרי טבע",
-    points: 84
+    points: 7800
   },
   {
     on: require("../assets/images/rank_13_on.png"),
     off: require("../assets/images/rank_13_off.png"),
     title: "שומרי טבע מתקדמים",
-    points: 98
+    points: 9100
   },
   {
     on: require("../assets/images/rank_14_on.png"),
     off: require("../assets/images/rank_14_off.png"),
     title: "שומרי טבע מקצוענים",
-    points: 114
+    points: 10500
   },
   {
     on: require("../assets/images/rank_15_on.png"),
     off: require("../assets/images/rank_15_off.png"),
     title: "שומרי טבע מומחים",
-    points: 130
+    points: 12000
   },
   {
     on: require("../assets/images/rank_16_on.png"),
     off: require("../assets/images/rank_16_off.png"),
     title: "אלופי טבע",
-    points: 148
+    points: 13600
   },
   {
     on: require("../assets/images/rank_17_on.png"),
     off: require("../assets/images/rank_17_off.png"),
     title: "אלופי טבע מתקדמים",
-    points: 164
+    points: 15300
   },
   {
     on: require("../assets/images/rank_18_on.png"),
     off: require("../assets/images/rank_18_off.png"),
     title: "אלופי טבע מקצוענים",
-    points: 182
+    points: 17100
   },
   {
     on: require("../assets/images/rank_19_on.png"),
     off: require("../assets/images/rank_19_off.png"),
     title: "אלופי טבע מומחים",
-    points: 200
+    points: 19000
   },
 ];
 
