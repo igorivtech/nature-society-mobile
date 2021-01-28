@@ -38,7 +38,7 @@ const clampAnimationValue = (p) => {
 }
 
 const TITLES_DELTA = 1/7;
-const ALREADY_SHOWN = "ALREADY_SHOWN"
+const ALREADY_SHOWN = "ALREADY_SHOWN_SLIDER"
 
 export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, item, location, showLocation = false, startUpAnimation = false, initialValue = 0.5, onPress, goBack, setSearchVisible}) => {
 
