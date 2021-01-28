@@ -15,7 +15,7 @@ const tempRankImages = [
     on: require("../assets/images/rank_2_on.png"),
     off: require("../assets/images/rank_2_off.png"),
     title: "אוהבי טבע מקצוענים",
-    points: 300
+    points: 400
   },
   {
     on: require("../assets/images/rank_3_on.png"),

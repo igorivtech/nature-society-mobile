@@ -107,6 +107,6 @@ export const DEFAULT_SETTINGS = {
     "title": item.on.title
   })),
   pointsForUnlock: 10,
-  reportPoints: 30,
+  reportPoints: 100,
 };
 
