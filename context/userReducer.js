@@ -13,7 +13,7 @@ export const initialState = {
   token: null,
   user: null,
   offlineUser: {
-    points: 0,
+    points: 50,
     numOfReports: 0,
   },
   notification: null,
