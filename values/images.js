@@ -9,7 +9,7 @@ const tempRankImages = [
     on: require("../assets/images/rank_1_on.png"),
     off: require("../assets/images/rank_1_off.png"),
     title: "אוהבי טבע מתקדמים",
-    points: 100
+    points: 200
   },
   {
     on: require("../assets/images/rank_2_on.png"),
