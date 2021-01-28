@@ -26,7 +26,7 @@ export const UserHeader = memo(({restartApp}) => {
     }, [lastAchievement])
 
     useEffect(()=>{
-      const numOfReports = user != null ? user.numOfReports : offlineUser.numOfReports
+      const numOfReports = user != null ? user.points : offlineUser.points
       let last = ''
       settings.achievements.forEach(achievement => {
         if (numOfReports >= achievement.score) {

@@ -68,7 +68,7 @@ export const ProgressScreen = ({ navigation, route }) => {
     // }, 4000);
     //
     const startTime = new Date();
-    const points = user !== null ? user.numOfReports : offlineUser.numOfReports
+    const points = user !== null ? user.points : offlineUser.points
     calcCustomAchievements(settings.achievements, points).then(output=>{
       output.forEach((elem, i) => {
         if (elem.current) {

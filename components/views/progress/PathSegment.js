@@ -80,7 +80,7 @@ export const PathSegment = (({ pathHeight, currentIndex, scrollY, index, item, p
         // 0.05 - 0.1
         setUserProgress(0.1);
       } else if (!item.topDone) {
-        const userCurrentPoints = user !== null ? user.numOfReports : offlineUser.numOfReports;
+        const userCurrentPoints = user !== null ? user.points : offlineUser.points
         const pointsNeeded = topImageObject.points - bottomImageObject.points
         const userMissingPointsToNext = topImageObject.points - userCurrentPoints;
         setUserProgress(0.3 + 0.4 * ((pointsNeeded - userMissingPointsToNext) / pointsNeeded));
