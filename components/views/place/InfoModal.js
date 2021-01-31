@@ -23,6 +23,7 @@ export const InfoModal = ({ visible, setVisible }) => {
               source={require("../../../assets/images/info_icon_large.png")}
             />
           </View>
+          <Text style={textStyles.normalOfSize(18)}>{strings.placeScreen.infoDesc}</Text>
         </View>
       </View>
     </Modal>
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     paddingRight: 9,
   },
   titleContainer: {
+    marginBottom: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -50,12 +52,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 27,
     paddingTop: 30,
     paddingBottom: 45,
-    justifyContent: "space-between",
     alignItems: "stretch",
     backgroundColor: "white",
     ...globalStyles.shadow,
     borderRadius: 22.5,
-    height: 400,
     width: width - 2 * 30,
   },
 });
