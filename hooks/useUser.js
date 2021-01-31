@@ -31,14 +31,14 @@ export const useUser = (dispatch) => {
         });
       })
       .catch(async(error) => {
-        const savedOfflineUser = await AsyncStorage.getItem(OFFLINE_USER_KEY);
-        const user = JSON.parse(savedOfflineUser);
-        if (savedOfflineUser != null && user != null) {
-          dispatch({
-            type: SAVE_OFFLINE_USER,
-            payload: user
-          })
-        }
+        // const savedOfflineUser = await AsyncStorage.getItem(OFFLINE_USER_KEY);
+        // const user = JSON.parse(savedOfflineUser);
+        // if (savedOfflineUser != null && user != null) {
+        //   dispatch({
+        //     type: SAVE_OFFLINE_USER,
+        //     payload: user
+        //   })
+        // }
       })
       .finally(() => {
         setLoadingUser(false);
