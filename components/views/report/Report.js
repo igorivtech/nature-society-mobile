@@ -60,11 +60,12 @@ export const Report = ({goBack, useImageData, finishReport, details, iHelped, lo
           <Image resizeMode='contain' style={styles.doneImage} resizeMode='center' source={require("../../../assets/images/report_done_image.png")} />
         </View>
         
-        <Text style={textStyles.normalOfSize(18)}>{strings.reportScreen.doneTitle(user)}</Text>
-        <View style={styles.pointsContainer}>
+        <View style={styles.pointsContainer(user)}>
           <Text style={styles.pointsText}>{`+${settings.reportPoints}`}</Text>
           <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/report_done_icon.png")} />
         </View>
+
+        <Text style={styles.doneTitle}>{strings.reportScreen.doneTitle(user)}</Text>
         <Button title={strings.reportScreen.share} filled={true} onPress={sharePressed} />
         <Button title={strings.reportScreen.done} filled={false} onPress={finishReport} loading={loadingSendReport} />
       </Animated.View>
@@ -97,6 +98,11 @@ const Button = ({filled, title, onPress, loading = false}) => {
 
 
 const styles = StyleSheet.create({
+
+  doneTitle: {
+    ...textStyles.normalOfSize(18),
+    marginBottom: smallScreen ? 8 : 24
+  },
 
   indicatorContainer: {
     ...StyleSheet.absoluteFill, 
@@ -152,13 +158,14 @@ const styles = StyleSheet.create({
     color: colors.treeBlues
   },
 
-  pointsContainer: {
+  pointsContainer: (user) => ({
+    opacity: user == null ? 0.5 : 1,
     marginTop: 12,
-    marginBottom: smallScreen ? 2 : 26,
+    marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: "center"
-  },
+  }),
 
   titlesContainer: {
     marginTop: smallScreen ? 10 : 23
