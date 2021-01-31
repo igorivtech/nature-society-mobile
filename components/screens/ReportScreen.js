@@ -232,7 +232,7 @@ export const ReportScreen = ({navigation, route}) => {
           }
         } else {
           const user = {
-            points: offlineUser.points + settings.reportPoints,
+            points: offlineUser.points, // + settings.reportPoints,
             numOfReports: offlineUser.numOfReports + 1
           };
           await AsyncStorage.setItem(OFFLINE_USER_KEY, JSON.stringify(user))
