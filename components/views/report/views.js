@@ -57,7 +57,7 @@ export const FinishButton = ({points, finishReport}) => {
     <View style={styles.buttonContainer}>
       <View style={styles.buttonIconContainer}>
         <Text style={styles.buttonText}>{`+${points}`}</Text>
-        <Image style={globalStyles.shadow} source={require("../../../assets/images/finish_report_icon.png")} />
+        <Image style={globalStyles.imageJustContain} source={require("../../../assets/images/finish_report_icon.png")} />
       </View>
       <Text style={styles.finishText}>{strings.reportScreen.finishButton}</Text>
     </View>
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
 
   buttonIconContainer: {
+    ...globalStyles.shadow,
     flexDirection: 'row',
     alignItems: 'center'
   },
