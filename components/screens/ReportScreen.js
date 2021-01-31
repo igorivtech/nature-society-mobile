@@ -223,7 +223,11 @@ export const ReportScreen = ({navigation, route}) => {
               type: SAVE_USER,
               payload: cognitoToUser(updatedCognitoUser)
             })
-            navigation.navigate("Home");
+            if (login) {
+              navigation.navigate("Home", {loginLogout: true})
+            } else {
+              navigation.navigate("Home");
+            }
             uploadImageAsync(token, response.content.id, image);
           } else {
             if (!isMounted.current) {return}
@@ -240,7 +244,11 @@ export const ReportScreen = ({navigation, route}) => {
             type: SAVE_OFFLINE_USER,
             payload: user
           })
-          navigation.navigate("Home");
+          if (login) {
+            navigation.navigate("Home", {loginLogout: true})
+          } else {
+            navigation.navigate("Home");
+          }
           uploadImageAsync(token, response.content.id, image);
         }
       } else if (response.error) {
