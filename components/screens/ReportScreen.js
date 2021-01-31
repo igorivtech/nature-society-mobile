@@ -189,7 +189,7 @@ export const ReportScreen = ({navigation, route}) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [loadingSendReport, setLoadingSendReport] = useState(false);
 
-  const finishReport = async () => {
+  const finishReport = async (login = false) => {
     try {
       setLoadingSendReport(true);
       let data = {
@@ -257,7 +257,11 @@ export const ReportScreen = ({navigation, route}) => {
   }
 
   const sharePressed = () => {    
-    share(strings.reportScreen.sharePlace(selectedLocation.title), selectedLocation._id);
+    if (user == null) {
+      finishReport(true)
+    } else {
+      share(strings.reportScreen.sharePlace(selectedLocation.title), selectedLocation._id);
+    }
   }
 
   const tapClose = () => {
