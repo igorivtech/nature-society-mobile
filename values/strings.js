@@ -217,6 +217,8 @@ export const strings = {
     chooseNewPasswordTitle: "החלף סיסמה",
   },
   reportScreen: {
+    nextTime: 'בפעם אחרת',
+    gladToJoin: 'אשמח להצטרף ולעזור',
     searchNewPlace: 'על איזה אתר טבע\nנדווח היום?',
     sharePlace: (name) => {
       return `דיווחתי ועזרתי לשמור על הטבע ב${name.trim()} עם אפליקציית בשביל הטבע`

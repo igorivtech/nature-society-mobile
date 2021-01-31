@@ -66,8 +66,8 @@ export const Report = ({goBack, useImageData, finishReport, details, iHelped, lo
         </View>
 
         <Text style={styles.doneTitle}>{strings.reportScreen.doneTitle(user)}</Text>
-        <Button title={strings.reportScreen.share} filled={true} onPress={sharePressed} />
-        <Button title={strings.reportScreen.done} filled={false} onPress={finishReport} loading={loadingSendReport} />
+        <Button title={user != null ? strings.reportScreen.share : strings.reportScreen.gladToJoin} filled={true} onPress={sharePressed} />
+        <Button title={user != null ? strings.reportScreen.done : strings.reportScreen.nextTime} filled={false} onPress={finishReport} loading={loadingSendReport} />
       </Animated.View>
     </View>
   );
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
 
 
   buttonTitle: (filled) => ({
-    ...textStyles.normalOfSize(18),
+    ...(filled ? textStyles.boldOfSize(18) : textStyles.normalOfSize(18)),
     color: filled ? 'white' : colors.treeBlues,
     textAlign: 'center'
   }),
