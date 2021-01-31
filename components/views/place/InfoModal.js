@@ -93,6 +93,10 @@ const styles = StyleSheet.create({
     right: 0,
     width: 3,
     backgroundColor: siteColor(rating),
+    borderTopLeftRadius: rating === 5 ? 1.5 : 0,
+    borderTopRightRadius: rating === 5 ? 1.5 : 0,
+    borderBottomLeftRadius: rating === 1 ? 1.5 : 0,
+    borderBottomRightRadius: rating === 1 ? 1.5 : 0,
   }),
 
   rankContainer: (cleanness) => ({
