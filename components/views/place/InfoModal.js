@@ -26,7 +26,7 @@ export const InfoModal = ({ visible, setVisible }) => {
       useNativeDriver: true,
       toValue: visible ? 1 : 0.5,
       easing: Easing.inOut(Easing.ease),
-      duration: 400
+      duration: 300
     }).start();
   }, [visible]);
   return (
