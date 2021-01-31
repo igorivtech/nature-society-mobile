@@ -430,12 +430,16 @@ export const SearchBar = memo(({
       />     
 
       <TouchableWithoutFeedback disabled={!searchOn} onPress={closeSearch}>
-        <LottieView style={styles.lottie} 
-          resizeMode='contain'
-          source={require("../../assets/animations/search.json")} 
-          autoPlay={false} 
-          progress={progress}
-        />
+        {modal ? (
+          <Image style={globalStyles.imageJustContain} source={require("../../assets/images/search_icon.png")} />
+        ) : (
+          <LottieView style={styles.lottie} 
+            resizeMode='contain'
+            source={require("../../assets/animations/search.json")} 
+            autoPlay={false} 
+            progress={progress}
+          />
+        )}
       </TouchableWithoutFeedback>
 
       <Animated.View style={styles.bottomBorder(bottomLineWidth)} />
