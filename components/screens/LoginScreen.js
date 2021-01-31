@@ -176,7 +176,7 @@ export const LoginScreen = ({ navigation, route }) => {
           let attributes = {
             name: name.trim(),
           }
-          attributes[ATTRIBUTE_POINTS] = `${offlineUser.points}`;
+          attributes[ATTRIBUTE_POINTS] = `${100}`; // `${offlineUser.points}`;
           attributes[ATTRIBUTE_NUM_OF_REPORTS] = `${offlineUser.numOfReports}`;
           attributes[ATTRIBUTE_UNLOCKED_PLACES] = JSON.stringify(DEFAULT_UNLOCKED_PLACES);
           if (fileName) {
