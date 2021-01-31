@@ -1,5 +1,13 @@
-import React, { useEffect } from "react";
-import { Image, Modal, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import {
+  Animated,
+  Easing,
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { colors } from "../../../values/colors";
 import { smallScreen, width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
@@ -9,14 +17,23 @@ import { TapView } from "../general";
 import { siteColor } from "../../../hooks/helpers";
 
 export const InfoModal = ({ visible, setVisible }) => {
+  const scale = useRef(new Animated.Value(0.5)).current;
   const close = () => {
     setVisible(false);
   };
+  useEffect(() => {
+    Animated.timing(scale, {
+      useNativeDriver: true,
+      toValue: visible ? 1 : 0.5,
+      easing: Easing.inOut(Easing.ease),
+      duration: 400
+    }).start();
+  }, [visible]);
   return (
     <Modal visible={visible} animationType="fade">
       <View style={styles.container}>
         <TapView onPress={close} />
-        <View style={styles.card}>
+        <Animated.View style={styles.card(scale)}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{strings.placeScreen.infoTitle}</Text>
             <Image
@@ -28,7 +45,7 @@ export const InfoModal = ({ visible, setVisible }) => {
             {strings.placeScreen.infoDesc}
           </Text>
           <Ranks />
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
@@ -68,7 +85,12 @@ const Rating = ({ cleanness, rating }) => {
   return (
     <View style={styles.ratingContainer}>
       <View style={styles.bar(rating)} />
-      <Text style={textStyles.normalOfSize(smallScreen ? 14 : 16, siteColor(rating))}>
+      <Text
+        style={textStyles.normalOfSize(
+          smallScreen ? 14 : 16,
+          siteColor(rating)
+        )}
+      >
         {cleanness
           ? strings.reportScreen.cleanTitles[rating - 1]
           : strings.reportScreen.crowdTitles[rating - 1]}
@@ -141,7 +163,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  card: {
+  card: (scale) => ({
+    transform: [{ scale }],
     paddingHorizontal: smallScreen ? 22 : 27,
     paddingTop: smallScreen ? 22 : 30,
     paddingBottom: smallScreen ? 32 : 45,
@@ -150,5 +173,5 @@ const styles = StyleSheet.create({
     ...globalStyles.shadow,
     borderRadius: 22.5,
     width: width - 2 * 30,
-  },
+  }),
 });
