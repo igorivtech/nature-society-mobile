@@ -81,7 +81,7 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   const isMounted = useIsMounted();
 
-  const [directionsPopupVisible, setDirectionsPopupVisible] = useState(false);
+  // const [directionsPopupVisible, setDirectionsPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
   const popupAction = useRef(emptyFunc);
@@ -96,14 +96,6 @@ export const PlaceScreen = ({ navigation, route }) => {
   const visitorsRef = useRef();
   const descRef = useRef();
   const actionsRef = useRef();
-
-  const openWaze = () => {
-    Linking.openURL(`https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`)
-  }
-
-  const closeNavPopup = useCallback(() => {
-    setDirectionsPopupVisible(false);
-  }, [])
 
   const waze = () => {
     // setDirectionsPopupVisible(true);
@@ -343,22 +335,6 @@ export const PlaceScreen = ({ navigation, route }) => {
       </FlingGestureHandler>
       <Popup textData={popupTextData} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={popupAction} />
       <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
-      <DirectionsPopup 
-        isVisible={directionsPopupVisible}
-        onCancelPressed={closeNavPopup}
-        onAppPressed={closeNavPopup}
-        onBackButtonPressed={closeNavPopup}
-        modalProps={{ // you can put all react-native-modal props inside.
-            animationIn: 'slideInUp'
-        }}
-        appsWhiteList={WHITE_LIST_APPS}
-        options={{ 
-          latitude: place.position.latitude,
-          longitude: place.position.longitude,
-          title: place.title,  // optional
-        }}
-        style={{ /* Optional: you can override default style by passing your values. */ }}
-      />
     </View>
   );
 };
@@ -670,3 +646,28 @@ const s = StyleSheet.create({
 //     },
 //   ];
 // };
+
+//<DirectionsPopup 
+//  isVisible={directionsPopupVisible}
+//  onCancelPressed={closeNavPopup}
+//  onAppPressed={closeNavPopup}
+//  onBackButtonPressed={closeNavPopup}
+//  modalProps={{ // you can put all react-native-modal props inside.
+//      animationIn: 'slideInUp'
+//  }}
+//  appsWhiteList={WHITE_LIST_APPS}
+//  options={{ 
+//    latitude: place.position.latitude,
+//    longitude: place.position.longitude,
+//    title: place.title,  // optional
+//  }}
+//  style={{ /* Optional: you can override default style by passing your values. */ }}
+///>
+
+// const closeNavPopup = useCallback(() => {
+//   setDirectionsPopupVisible(false);
+// }, [])
+
+// const openWaze = () => {
+//   Linking.openURL(`https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`)
+// }
