@@ -210,12 +210,6 @@ export const PlaceScreen = ({ navigation, route }) => {
         onHandlerStateChange={handleSwipeDown}
       >
         <View style={s.containerStyle}>
-          <SharedElement
-            style={StyleSheet.absoluteFill}
-            id={`place.${place.key}.bg`}
-          >
-            <View style={s.bgStyle} />
-          </SharedElement>
 
           <Animatable.View
             useNativeDriver
@@ -622,6 +616,9 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: CONTAINER_VERTICAL_PADDING,
     paddingHorizontal: 20,
+    backgroundColor: 'white',
+    borderTopRightRadius: 24,
+    borderTopLeftRadius: 24,
   },
 
   imageStyle: {
