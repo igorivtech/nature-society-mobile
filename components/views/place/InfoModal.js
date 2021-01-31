@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
     height: 42,
   },
   icon: (rating) => ({
-    transform: [{ scale: 0.8 }],
-    marginLeft: 6,
+    transform: [{ scale: 0.74 }],
+    marginLeft: 2,
     resizeMode: "contain",
     tintColor: siteColor(rating),
   }),
