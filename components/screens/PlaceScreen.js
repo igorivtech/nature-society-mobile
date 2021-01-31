@@ -218,7 +218,12 @@ export const PlaceScreen = ({ navigation, route }) => {
             delay={600}
             style={{...globalStyles.fullWidth, marginBottom: VERTICAL_MARGIN}}
           >
-            <Text numberOfLines={2} adjustsFontSizeToFit={true} minimumFontScale={0.7} style={textStyles.boldOfSize(24)}>{place.title.trim()}</Text>
+            <View style={s.topContainer}>
+              <Text numberOfLines={2} adjustsFontSizeToFit={true} minimumFontScale={0.7} style={s.title}>{`${place.title.trim()}`}</Text>
+              <TouchableOpacity style={s.infoButtonContainer}>
+                <Image style={globalStyles.imageJustContain} source={require("../../assets/images/info_icon.png")} />
+              </TouchableOpacity>
+            </View>
 
             <Text style={textStyles.normalOfSize(24)}>
               {strings.distanceFromYou(place.distance)}
@@ -493,6 +498,25 @@ export const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  topContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+
+  title: {
+    ...textStyles.boldOfSize(24),
+    paddingLeft: 15+16,
+    flexGrow: 1,
+    flexShrink: 1
+  },
+
+  infoButtonContainer: {
+    position: 'absolute',
+    top: 2,
+    left: 2
+  },
 
   lockedImage: (opacity) => ({
     tintColor: colors.lighterShade, 
