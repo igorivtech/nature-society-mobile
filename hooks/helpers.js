@@ -157,7 +157,7 @@ export const convertSliderValue = (value) => {
   return 1 + 4*value;
 }
 
-const siteColor = (rating) => {
+export const siteColor = (rating) => {
   return CLEANNESS_COLORS[clamp(1, Math.round(rating), 5)]
 }
 

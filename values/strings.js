@@ -149,6 +149,9 @@ export const strings = {
     coolButton: "מגניב",
   },
   placeScreen: {
+    ranksTitle: (cleanness) => {
+      return cleanness ? 'רמת הניקיון' : 'עומס במבקרים'
+    },
     infoDesc: 'אתרי הטבע באפליקציית ״בשביל הטבע״ מציגים דירוג לרמת הנקיון והעומס במבקרים באתר. הדירוג לאתרי הטבע נקבע על ידי משתמשים כמוך ומתעדכן כל הזמן.',
     infoTitle: 'סולם דירוג אתרי טבע',
     sharePlace: (name) => {
