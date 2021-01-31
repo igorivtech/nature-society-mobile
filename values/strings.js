@@ -149,6 +149,7 @@ export const strings = {
     coolButton: "מגניב",
   },
   placeScreen: {
+    infoTitle: 'סולם דירוג אתרי טבע',
     sharePlace: (name) => {
       return `מצאתי באפליקציית "בשביל הטבע" את ${name.trim()} וחשבתי שיעניין אתכם`
     },

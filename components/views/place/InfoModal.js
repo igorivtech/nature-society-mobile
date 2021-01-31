@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { Image, Modal, StyleSheet, View } from "react-native";
+import { Image, Modal, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../../values/colors";
 import { width } from "../../../values/consts";
+import { strings } from "../../../values/strings";
+import { textStyles } from "../../../values/textStyles";
 import { globalStyles } from "../../../values/styles";
 import { TapView } from "../general";
 
@@ -14,10 +16,13 @@ export const InfoModal = ({ visible, setVisible }) => {
       <View style={styles.container}>
         <TapView onPress={close} />
         <View style={styles.card}>
-          <Image
-            style={globalStyles.imageJustContain}
-            source={require("../../../assets/images/info_icon_large.png")}
-          />
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{strings.placeScreen.infoTitle}</Text>
+            <Image
+              style={globalStyles.imageJustContain}
+              source={require("../../../assets/images/info_icon_large.png")}
+            />
+          </View>
         </View>
       </View>
     </Modal>
@@ -25,6 +30,16 @@ export const InfoModal = ({ visible, setVisible }) => {
 };
 
 const styles = StyleSheet.create({
+  title: {
+    ...textStyles.boldOfSize(24),
+    flex: 1,
+    paddingRight: 9,
+  },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   container: {
     flex: 1,
     backgroundColor: colors.grass,
@@ -32,8 +47,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   card: {
-    justifyContent: "center",
-    alignItems: "center",
+    paddingHorizontal: 27,
+    paddingTop: 30,
+    paddingBottom: 45,
+    justifyContent: "space-between",
+    alignItems: "stretch",
     backgroundColor: "white",
     ...globalStyles.shadow,
     borderRadius: 22.5,
