@@ -189,22 +189,26 @@ export const ReportScreen = ({navigation, route}) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [loadingSendReport, setLoadingSendReport] = useState(false);
 
-  const finishReport = async (login = false) => {
+  const calcData = () => {
+    return {
+      cleanness: convertSliderValue(cleannessRef.current),
+      crowdness: convertSliderValue(crowdnessRef.current),
+      placeId: selectedLocation._id,
+      checkboxes: {
+        'i_helped': iHelped.on,
+        '1_extra_light': details[0].on,
+        '0_full_bins': details[1].on,
+        '3_fires_marks': details[2].on,
+        '2_open_bins': details[3].on,
+        '4_broken_bins': details[4].on,
+      }
+    };
+  };
+
+  const finishReport = async () => {
     try {
       setLoadingSendReport(true);
-      let data = {
-        cleanness: convertSliderValue(cleannessRef.current),
-        crowdness: convertSliderValue(crowdnessRef.current),
-        placeId: selectedLocation._id,
-        checkboxes: {
-          'i_helped': iHelped.on,
-          '1_extra_light': details[0].on,
-          '0_full_bins': details[1].on,
-          '3_fires_marks': details[2].on,
-          '2_open_bins': details[3].on,
-          '4_broken_bins': details[4].on,
-        }
-      }
+      let data = calcData();
       const response = await sendReport(token, data);
       if (response.content && response.content.id != null) {
         if (user != null && token != null) {
@@ -223,11 +227,7 @@ export const ReportScreen = ({navigation, route}) => {
               type: SAVE_USER,
               payload: cognitoToUser(updatedCognitoUser)
             })
-            if (login) {
-              navigation.navigate("Home", {loginLogout: true})
-            } else {
-              navigation.navigate("Home");
-            }
+            navigation.navigate("Home");
             uploadImageAsync(token, response.content.id, image);
           } else {
             if (!isMounted.current) {return}
@@ -244,11 +244,7 @@ export const ReportScreen = ({navigation, route}) => {
             type: SAVE_OFFLINE_USER,
             payload: user
           })
-          if (login) {
-            navigation.navigate("Home", {loginLogout: true})
-          } else {
-            navigation.navigate("Home");
-          }
+          navigation.navigate("Home");
           uploadImageAsync(token, response.content.id, image);
         }
       } else if (response.error) {
@@ -263,10 +259,26 @@ export const ReportScreen = ({navigation, route}) => {
       setLoadingSendReport(false);
     }
   }
-
-  const sharePressed = () => {    
+  
+  const sharePressed = async () => {    
     if (user == null) {
-      finishReport(true)
+      let data = calcData();
+      try {
+        navigation.navigate("Home", {loginLogout: true})
+        const response = await sendReport(null, data);
+        if (response.content && response.content.id != null) {
+          const user = {
+            points: offlineUser.points, // + settings.reportPoints,
+            numOfReports: offlineUser.numOfReports + 1
+          };
+          await AsyncStorage.setItem(OFFLINE_USER_KEY, JSON.stringify(user))
+          dispatch({
+            type: SAVE_OFFLINE_USER,
+            payload: user
+          })
+          uploadImageAsync(token, response.content.id, image);
+        }
+      } catch {}
     } else {
       share(strings.reportScreen.sharePlace(selectedLocation.title), selectedLocation._id);
     }
