@@ -40,15 +40,19 @@ export const GrowthPoints = memo(() => {
   }, [])
 
   const setup = async () => {
-    const points = user != null ? user.points : offlineUser.points
+    if (user == null) {
+      setReady(true);
+      return;
+    }
+    const p = user.points
     const shown = await AsyncStorage.getItem(ALREADY_SHOWN);
-    if (shown === null) {
+    if (shown === null) { // not shown
       await AsyncStorage.setItem(ALREADY_SHOWN, '1');
       if (!isMounted.current) {return}
       setReady(true);
-    } else {
+    } else { // shown
       if (!isMounted.current) {return}
-      setPoints(points);
+      setPoints(p);
       show(true, 1000).start(()=>{
         show(false, 3500).start(()=>{
           if (!isMounted.current) {return}
@@ -59,10 +63,10 @@ export const GrowthPoints = memo(() => {
   }
 
   useEffect(()=>{
-    if (!ready) {
+    if (!ready || user == null) {
       return;
     }
-    const p = user != null ? user.points : offlineUser.points;
+    const p = user.points
     if (p !== points) {
       show(true, 1000).start(()=>{
         Animated.timing(textOpacity, {
@@ -86,7 +90,7 @@ export const GrowthPoints = memo(() => {
         })
       })
     }
-  }, [user, offlineUser, ready]);
+  }, [user, ready]);
 
   const show = (show, delay) => {
     return Animated.timing(opacity, {
