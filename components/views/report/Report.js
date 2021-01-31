@@ -100,6 +100,7 @@ const Button = ({filled, title, onPress, loading = false}) => {
 const styles = StyleSheet.create({
 
   doneTitle: {
+    lineHeight: 17,
     ...textStyles.normalOfSize(18),
     marginBottom: smallScreen ? 8 : 24
   },
