@@ -62,7 +62,7 @@ const Ranks = () => {
 
 const Rank = ({ cleanness }) => {
   return (
-    <View style={styles.rankContainer(cleanness)}>
+    <View style={styles.rankContainer}>
       <Text style={textStyles.normalOfSize(14)}>
         {strings.placeScreen.ranksTitle(cleanness)}
       </Text>
@@ -121,13 +121,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: rating === 1 ? 1.5 : 0,
   }),
 
-  rankContainer: (cleanness) => ({
+  rankContainer: {
     flexGrow: 1,
-    // backgroundColor: cleanness ? "#f002" : "#0f02",
-  }),
+  },
   ranksContainer: {
     marginTop: smallScreen ? 22 : 36,
-    // backgroundColor: "#f002",
     flexDirection: "row",
   },
   iconsContainer: {
