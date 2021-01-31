@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Image, Modal, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../../values/colors";
-import { width } from "../../../values/consts";
+import { smallScreen, width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { globalStyles } from "../../../values/styles";
@@ -68,7 +68,7 @@ const Rating = ({ cleanness, rating }) => {
   return (
     <View style={styles.ratingContainer}>
       <View style={styles.bar(rating)} />
-      <Text style={textStyles.normalOfSize(16, siteColor(rating))}>
+      <Text style={textStyles.normalOfSize(smallScreen ? 14 : 16, siteColor(rating))}>
         {cleanness
           ? strings.reportScreen.cleanTitles[rating - 1]
           : strings.reportScreen.crowdTitles[rating - 1]}
@@ -115,19 +115,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "flex-end",
-    paddingRight: 10,
+    paddingRight: smallScreen ? 6 : 10,
     height: 42,
   },
   icon: (rating) => ({
     transform: [{ scale: 0.74 }],
-    marginLeft: 2,
+    marginLeft: smallScreen ? 0 : 2,
     resizeMode: "contain",
     tintColor: siteColor(rating),
   }),
   title: {
-    ...textStyles.boldOfSize(24),
+    ...textStyles.boldOfSize(smallScreen ? 20 : 24),
     flex: 1,
-    paddingRight: 9,
+    paddingRight: smallScreen ? 4 : 9,
   },
   titleContainer: {
     marginBottom: 16,
@@ -142,9 +142,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   card: {
-    paddingHorizontal: 27,
-    paddingTop: 30,
-    paddingBottom: 45,
+    paddingHorizontal: smallScreen ? 22 : 27,
+    paddingTop: smallScreen ? 22 : 30,
+    paddingBottom: smallScreen ? 32 : 45,
     alignItems: "stretch",
     backgroundColor: "white",
     ...globalStyles.shadow,
