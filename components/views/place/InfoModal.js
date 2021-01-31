@@ -67,16 +67,7 @@ const Icons = ({ cleanness }) => {
 const Rating = ({ cleanness, rating }) => {
   return (
     <View style={styles.ratingContainer}>
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          right: 0,
-          width: 3,
-          backgroundColor: siteColor(rating),
-        }}
-      />
+      <View style={styles.bar(rating)}/>
       <Text style={textStyles.normalOfSize(16, siteColor(rating))}>
         {cleanness
           ? strings.reportScreen.cleanTitles[rating - 1]
@@ -91,6 +82,16 @@ const Rating = ({ cleanness, rating }) => {
 };
 
 const styles = StyleSheet.create({
+
+    bar: (rating) => ({
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        right: 0,
+        width: 3,
+        backgroundColor: siteColor(rating),
+    }),
+
   rankContainer: (cleanness) => ({
     flexGrow: 1,
     // backgroundColor: cleanness ? "#f002" : "#0f02",
