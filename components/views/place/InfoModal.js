@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     // backgroundColor: cleanness ? "#f002" : "#0f02",
   }),
   ranksContainer: {
-    marginTop: 36,
+    marginTop: smallScreen ? 22 : 36,
     // backgroundColor: "#f002",
     flexDirection: "row",
   },
