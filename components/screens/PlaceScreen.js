@@ -48,6 +48,7 @@ import LottieView from 'lottie-react-native';
 import posed, {Transition as PosedTransition} from 'react-native-pose';
 import useIsMounted from "ismounted";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
+import { InfoModal } from "../views/place/InfoModal";
 
 const PosedText = posed.Text({
   enter: {opacity: 1},
@@ -81,6 +82,7 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   const isMounted = useIsMounted();
 
+  const [infoVisible, setInfoVisible] = useState(false);
   // const [directionsPopupVisible, setDirectionsPopupVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupTextData, setPopupTextData] = useState(strings.popups.empty);
@@ -191,6 +193,10 @@ export const PlaceScreen = ({ navigation, route }) => {
     console.error(error);
   }
 
+  const showInfo = () => {
+    setInfoVisible(true);
+  }
+
   return (
     <View style={s.container}>
       <TouchableWithoutFeedback onPress={goBack} style={s.tap}>
@@ -212,7 +218,7 @@ export const PlaceScreen = ({ navigation, route }) => {
           >
             <View style={s.topContainer}>
               <Text numberOfLines={2} adjustsFontSizeToFit={true} minimumFontScale={0.7} style={s.title}>{`${place.title.trim()}`}</Text>
-              <TouchableOpacity style={s.infoButtonContainer}>
+              <TouchableOpacity onPress={showInfo} style={s.infoButtonContainer}>
                 <Image style={globalStyles.imageJustContain} source={require("../../assets/images/info_icon.png")} />
               </TouchableOpacity>
             </View>
@@ -335,6 +341,7 @@ export const PlaceScreen = ({ navigation, route }) => {
       </FlingGestureHandler>
       <Popup textData={popupTextData} popupVisible={popupVisible} setPopupVisible={setPopupVisible} actionRef={popupAction} />
       <Popup textData={errorData} popupVisible={errorPopupVisible} setPopupVisible={setErrorPopupVisible} />
+      <InfoModal visible={infoVisible} setVisible={setInfoVisible} />
     </View>
   );
 };
