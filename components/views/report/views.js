@@ -13,6 +13,7 @@ import { textStyles } from "../../../values/textStyles";
 import { Popup } from "../Popup";
 import { askSettings } from "../../../hooks/usePermissions";
 import { smallScreen } from "../../../values/consts";
+import { globalStyles } from "../../../values/styles";
 
 export const TakePicView = ({ useImageData }) => {
 
@@ -56,7 +57,7 @@ export const FinishButton = ({points, finishReport}) => {
     <View style={styles.buttonContainer}>
       <View style={styles.buttonIconContainer}>
         <Text style={styles.buttonText}>{`+${points}`}</Text>
-        <Image source={require("../../../assets/images/finish_report_icon.png")} />
+        <Image style={globalStyles.shadow} source={require("../../../assets/images/finish_report_icon.png")} />
       </View>
       <Text style={styles.finishText}>{strings.reportScreen.finishButton}</Text>
     </View>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   },
 
   finishText: {
-    ...textStyles.normalOfSize(18),
+    ...textStyles.boldOfSize(18),
     color: 'white',
     textAlign: 'center'
   },
