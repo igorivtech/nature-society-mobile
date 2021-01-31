@@ -6,7 +6,7 @@ import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { globalStyles } from "../../../values/styles";
 import { TapView } from "../general";
-import {siteColor} from "../../../hooks/helpers"
+import { siteColor } from "../../../hooks/helpers";
 
 export const InfoModal = ({ visible, setVisible }) => {
   const close = () => {
@@ -65,46 +65,57 @@ const Icons = ({ cleanness }) => {
 };
 
 const Rating = ({ cleanness, rating }) => {
-  return <View style={styles.ratingContainer}>
-      <View style={{
-          position: 'absolute',
+  return (
+    <View style={styles.ratingContainer}>
+      <View
+        style={{
+          position: "absolute",
           top: 0,
           bottom: 0,
           right: 0,
           width: 3,
-          backgroundColor: siteColor(rating)
-      }} />
-      <Text style={textStyles.normalOfSize(16, siteColor(rating))}>{cleanness ? strings.reportScreen.cleanTitles[rating-1] : strings.reportScreen.crowdTitles[rating-1]}</Text>
-      <Image style={styles.icon(rating)} source={cleanness ? require("../../../assets/images/HeartL.png") : require("../../../assets/images/HowBusyL.png")} />
-  </View>;
+          backgroundColor: siteColor(rating),
+        }}
+      />
+      <Text style={textStyles.normalOfSize(16, siteColor(rating))}>
+        {cleanness
+          ? strings.reportScreen.cleanTitles[rating - 1]
+          : strings.reportScreen.crowdTitles[rating - 1]}
+      </Text>
+      <Image
+        style={styles.icon(rating)}
+        source={cleanness ? require("../../../assets/images/HeartL.png") : require("../../../assets/images/HowBusyL.png")}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    rankContainer: (cleanness) => ({
-        flexGrow: 1,
-        // backgroundColor: cleanness ? "#f002" : "#0f02",
-    }),
-    ranksContainer: {
-        marginTop: 36,
-        // backgroundColor: "#f002",
-        flexDirection: "row",
-    },
-    iconsContainer: {
-        marginTop: 12
-    },
-    ratingContainer: {
-        alignItems: 'center',
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      paddingRight: 10,
-      height: 42
-    },
-    icon: (rating) => ({
-        transform: [{scale: 0.8}],
-        marginLeft: 6,
-        resizeMode: 'contain',
-        tintColor: siteColor(rating)
-    }),
+  rankContainer: (cleanness) => ({
+    flexGrow: 1,
+    // backgroundColor: cleanness ? "#f002" : "#0f02",
+  }),
+  ranksContainer: {
+    marginTop: 36,
+    // backgroundColor: "#f002",
+    flexDirection: "row",
+  },
+  iconsContainer: {
+    marginTop: 12,
+  },
+  ratingContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingRight: 10,
+    height: 42,
+  },
+  icon: (rating) => ({
+    transform: [{ scale: 0.8 }],
+    marginLeft: 6,
+    resizeMode: "contain",
+    tintColor: siteColor(rating),
+  }),
   title: {
     ...textStyles.boldOfSize(24),
     flex: 1,
