@@ -67,7 +67,7 @@ const Icons = ({ cleanness }) => {
 const Rating = ({ cleanness, rating }) => {
   return (
     <View style={styles.ratingContainer}>
-      <View style={styles.bar(rating)}/>
+      <View style={styles.bar(rating)} />
       <Text style={textStyles.normalOfSize(16, siteColor(rating))}>
         {cleanness
           ? strings.reportScreen.cleanTitles[rating - 1]
@@ -75,22 +75,25 @@ const Rating = ({ cleanness, rating }) => {
       </Text>
       <Image
         style={styles.icon(rating)}
-        source={cleanness ? require("../../../assets/images/HeartL.png") : require("../../../assets/images/HowBusyL.png")}
+        source={
+          cleanness
+            ? require("../../../assets/images/HeartL.png")
+            : require("../../../assets/images/HowBusyL.png")
+        }
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-
-    bar: (rating) => ({
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        right: 0,
-        width: 3,
-        backgroundColor: siteColor(rating),
-    }),
+  bar: (rating) => ({
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    right: 0,
+    width: 3,
+    backgroundColor: siteColor(rating),
+  }),
 
   rankContainer: (cleanness) => ({
     flexGrow: 1,
