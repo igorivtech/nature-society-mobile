@@ -31,10 +31,11 @@ export const reducer = (state, action) => {
         user: action.payload,
       };
     case SAVE_OFFLINE_USER:
-      return {
-        ...state,
-        offlineUser: action.payload,
-      };
+      return state
+      // return {
+      //   ...state,
+      //   offlineUser: action.payload,
+      // };
     case SAVE_NOTIFICATION:
       return {
         ...state,
