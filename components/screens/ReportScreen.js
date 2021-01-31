@@ -262,8 +262,8 @@ export const ReportScreen = ({navigation, route}) => {
   
   const sharePressed = async () => {    
     if (user == null) {
-      let data = calcData();
       try {
+        let data = calcData();
         navigation.navigate("Home", {loginLogout: true})
         const response = await sendReport(null, data);
         if (response.content && response.content.id != null) {
