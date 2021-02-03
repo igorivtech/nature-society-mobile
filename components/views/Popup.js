@@ -82,6 +82,7 @@ export const Popup = ({ website = false, permissions = false, textData, popupVis
       style={{margin: 0}} 
       backdropColor={colors.clear}
       onModalHide={onModalHide}
+      onBackButtonPress={onModalHide}
       animationIn='fadeIn' 
       animationOut='fadeOut' 
       isVisible={popupVisible}

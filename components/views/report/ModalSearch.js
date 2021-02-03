@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
-import { StyleSheet, Animated, SafeAreaView, Modal, View, Text } from "react-native";
+import { StyleSheet, Animated, SafeAreaView, View, Text } from "react-native";
+import Modal from 'react-native-modal';
 import { globalStyles } from "../../../values/styles";
 import { SearchBar, TextCard } from "../../screens/ExploreScreen";
 import { useKeyboard } from "../../../hooks/useKeyboard";
@@ -65,8 +66,20 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
     setPlaces(p);
   }, 500), [location]);
 
+  const hide = () => {
+    setSearchVisible(false);
+  };
+
   return (
-    <Modal visible={visible} animationType="fade">
+    <Modal 
+      hideModalContentWhileAnimating={true}
+      style={styles.container}
+      onBackButtonPress={hide} 
+      isVisible={visible} 
+      animationIn='fadeIn' 
+      animationOut='fadeOut' 
+      useNativeDriver={true}
+    >
       <View style={styles.newReportLabelContainer(topSafeAreaHeight)}>
           <NewReportLabel />
         </View>
@@ -111,6 +124,10 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
 };
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 0,
+    backgroundColor: 'white'
+  },
   newReportLabelContainer: (topSafeAreaHeight) => ({
     position: 'absolute',
     top: topSafeAreaHeight,

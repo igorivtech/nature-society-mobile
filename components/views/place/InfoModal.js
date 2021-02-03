@@ -3,11 +3,11 @@ import {
   Animated,
   Easing,
   Image,
-  Modal,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import Modal from 'react-native-modal';
 import { colors } from "../../../values/colors";
 import { smallScreen, width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
@@ -30,7 +30,15 @@ export const InfoModal = ({ visible, setVisible }) => {
     }).start();
   }, [visible]);
   return (
-    <Modal visible={visible} animationType="fade">
+    <Modal 
+      hideModalContentWhileAnimating={true}
+      style={globalStyles.marginZero}
+      isVisible={visible} 
+      animationIn='fadeIn' 
+      animationOut='fadeOut' 
+      useNativeDriver={true} 
+      onBackButtonPress={close}
+    >
       <View style={styles.container}>
         <TapView onPress={close} />
         <Animated.View style={styles.card(scale)}>

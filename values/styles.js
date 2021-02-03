@@ -192,6 +192,10 @@ export const globalStyles = StyleSheet.create({
     width: 22,
   },
 
+  marginZero: {
+    margin: 0
+  },
+
   cardVisitorPic: (large) => ({
     resizeMode: 'contain',
     borderWidth: 0.4,
