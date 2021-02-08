@@ -228,34 +228,36 @@ export const PlaceScreen = ({ navigation, route }) => {
             </Text>
           </Animatable.View>
 
-          <Animatable.View
-            useNativeDriver
-            ref={ratingRef}
-            // animation="bounceIn"
-            delay={800}
-            style={s.ratingContainer}
-          >
-            <PlaceRating
-              isCleanness={false}
-              loading={loadingBuy}
-              pointsToUnlock={settings.pointsForUnlock}
-              unlockPlace={unlockPlace}
-              locked={placeLocked(user, place)}
-              title={strings.placeScreen.crowdnessTitle(false)}
-              image={require("../../assets/images/HowBusyL.png")}
-              color={place.crowdnessColor}
-              rating={place.crowdness}
-            />
+          <TouchableWithoutFeedback onPress={showInfo}>
+            <Animatable.View
+              useNativeDriver
+              ref={ratingRef}
+              // animation="bounceIn"
+              delay={800}
+              style={s.ratingContainer}
+            >
+              <PlaceRating
+                isCleanness={false}
+                loading={loadingBuy}
+                pointsToUnlock={settings.pointsForUnlock}
+                unlockPlace={unlockPlace}
+                locked={placeLocked(user, place)}
+                title={strings.placeScreen.crowdnessTitle(false)}
+                image={require("../../assets/images/HowBusyL.png")}
+                color={place.crowdnessColor}
+                rating={place.crowdness}
+              />
 
-            <PlaceRating
-              isCleanness={true}
-              leftMargin={smallScreen ? 30 : 40}
-              title={strings.placeScreen.cleannessTitle(placeLocked(user, place))}
-              image={require("../../assets/images/HeartL.png")}
-              color={place.cleannessColor}
-              rating={place.cleanness}
-            />
-          </Animatable.View>
+              <PlaceRating
+                isCleanness={true}
+                leftMargin={smallScreen ? 30 : 40}
+                title={strings.placeScreen.cleannessTitle(placeLocked(user, place))}
+                image={require("../../assets/images/HeartL.png")}
+                color={place.cleannessColor}
+                rating={place.cleanness}
+              />
+            </Animatable.View>
+          </TouchableWithoutFeedback>
 
           <View style={[s.imageStyle, globalStyles.centerChildren, {
             overflow: 'hidden',
