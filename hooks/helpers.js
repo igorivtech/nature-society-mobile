@@ -130,6 +130,16 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     } else {
       res[i].distance = null;
     }
+    if (!place.similarReports) {
+      res[i].similarReports = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+      }
+    }
     //
     res[i].cleanness = place.cleanness;
     res[i].cleannessColor = siteColor(res[i].cleanness);
