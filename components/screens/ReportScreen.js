@@ -31,7 +31,7 @@ const clean = {
   titles: strings.reportScreen.cleanTitles,
   animation: require("../../assets/animations/clean.json"),
   introAnimation: require("../../assets/animations/clean_intro.json"),
-  outputRange: [0, 0.27184466019, 0.50485436893, 0.73786407767, 1],
+  outputRange: [0, 0.28155339805, 0.51456310679, 0.74757281553, 1],
   resizeMode: 'contain',
   thumb: require("../../assets/images/slider_thumb_clean.png"),
   thumbBg: require("../../assets/images/slider_thumb_clean_bg.png"),
