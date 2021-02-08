@@ -48,7 +48,7 @@ const crowd = {
   animation: require('../../assets/animations/crowd.json'),
   bg: require("../../assets/images/crowd_bg.png"),
   introAnimation: require('../../assets/animations/crowd_intro.json'),
-  outputRange: [0, 0.21621621621, 0.56756756756, 0.78378378378, 1],
+  outputRange: [0, 0.22321428571, 0.57142857142, 0.78571428571, 1],
   resizeMode: 'cover',
   thumb: require("../../assets/images/slider_thumb_crowd.png"),
   thumbBg: require("../../assets/images/slider_thumb_crowd_bg.png"),
