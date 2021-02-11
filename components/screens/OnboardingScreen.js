@@ -222,29 +222,6 @@ export const OnboardingScreen = ({ navigation }) => {
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
         <TapView onPress={selectedIndex === 1000 ? null : next} />
-        <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
-          <OnboardingButton
-            scale={progressButtonScale}
-            transform={progressButtonTransform}
-            index={2}
-            selected={selectedIndex === 2}
-            setIndex={setIndex}
-          />
-          <OnboardingButton
-            scale={reportButtonScale}
-            transform={reportButtonTransform}
-            index={1}
-            selected={selectedIndex === 1}
-            setIndex={setIndex}
-          />
-          <OnboardingButton
-            scale={exploreButtonScale}
-            transform={exploreButtonTransform}
-            index={0}
-            selected={selectedIndex === 0}
-            setIndex={setIndex}
-          />
-        </Animated.View>
         <Animated.View style={{
             transform: [{translateX: carouselTranslateX}]
           }}>
@@ -271,6 +248,29 @@ export const OnboardingScreen = ({ navigation }) => {
             }}
             sliderWidth={width}
             itemWidth={width}
+          />
+        </Animated.View>
+        <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
+          <OnboardingButton
+            scale={progressButtonScale}
+            transform={progressButtonTransform}
+            index={2}
+            selected={selectedIndex === 2}
+            setIndex={setIndex}
+          />
+          <OnboardingButton
+            scale={reportButtonScale}
+            transform={reportButtonTransform}
+            index={1}
+            selected={selectedIndex === 1}
+            setIndex={setIndex}
+          />
+          <OnboardingButton
+            scale={exploreButtonScale}
+            transform={exploreButtonTransform}
+            index={0}
+            selected={selectedIndex === 0}
+            setIndex={setIndex}
           />
         </Animated.View>
         <FirstButton zIndex={skipButtonVisible ? 2 : 3} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
