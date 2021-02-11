@@ -221,6 +221,12 @@ export const OnboardingScreen = ({ navigation }) => {
     setSecondContainerVisible(true);
   }
 
+  const nextOrFinish = () => {
+    const index = (selectedIndex+1)%3;
+    setIndex(index);
+    carousel.current.snapToItem(index);
+  }
+
   return (
     <View style={styles.container}>
       <Animated.Image style={styles.logo(logoTranslateY, logoScale)} source={require("../../assets/images/splash_top.png")} />
@@ -287,7 +293,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
         </Animated.View>
-        <FirstButton altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={finish} />
+        <FirstButton altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={nextOrFinish} />
         <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-62} onPress={finish} />
       </Animated.View>
     </View>
