@@ -240,6 +240,18 @@ export const OnboardingScreen = ({ navigation }) => {
     }
   }
 
+  const onBeforeSnapToItem = (i) => {
+    setSelectedIndex(i);
+    if (i === 2) {
+      setFinishOnboardingButtonTitle(strings.onboardingScreen.lastButtonTitle)
+      Animated.timing(skipButtonScale, {
+        toValue: 0,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true
+      }).start();
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Animated.Image style={styles.logo(logoTranslateY, logoScale)} source={require("../../assets/images/splash_top.png")} />
@@ -277,7 +289,7 @@ export const OnboardingScreen = ({ navigation }) => {
         <Animated.View style={styles.carouselContainer(carouselOpacity, carouselTranslateX)}>
           <Carousel
             inverted={true}
-            onBeforeSnapToItem={(i)=>setSelectedIndex(i)}
+            onBeforeSnapToItem={onBeforeSnapToItem}
             ref={carousel}
             loop={true}
             data={[0, 1, 2]}
