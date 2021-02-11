@@ -36,12 +36,14 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex, doneVisible = false, transform }) => {
 
-  const ref = useRef();
+  const opacity = useRef(new Animated.Value(selected ? 1 : 0.5)).current;
 
   useEffect(() => {
-    if (selected) {
-      ref.current?.stopAnimation();
-    }
+    Animated.timing(opacity, {
+      useNativeDriver: true,
+      toValue: selected ? 1 : 0.5,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
   }, [selected]);
 
   const onPress = () => {
@@ -58,16 +60,8 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
       transform: transform.getTranslateTransform(),
       position:  'absolute'
       }} onPress={onPress}>
-      <Animatable.View 
-        ref={ref} 
-        useNativeDriver={true}
-        easing='ease-out'
-        iterationCount='infinite'
-        iterationDelay={iterationDelay[index]} 
-        delay={delays[index]} 
-        animation={animations[index]}
-      >
-        <Animated.View style={{
+      <Animated.View style={{
+          opacity,
           transform: [{scale}]
         }}>
           <Animated.Image
@@ -75,7 +69,6 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
             source={images[index]}
           />
         </Animated.View>
-      </Animatable.View>
     </AnimatedPressable>
   );
 });

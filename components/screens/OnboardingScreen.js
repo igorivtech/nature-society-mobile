@@ -18,6 +18,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 import {TapView} from "../views/general"
+import Carousel from 'react-native-snap-carousel';
+import LottieView from 'lottie-react-native';
+
+const animations = {
+  0: require("../../assets/animations/map.json"),
+  1: require("../../assets/animations/scores.json"),
+  2: require("../../assets/animations/progress.json"),
+}
 
 const TRAVEL_DURATION = 600;
 
@@ -70,29 +78,13 @@ export const OnboardingScreen = ({ navigation }) => {
   const secondButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
-  const exploreButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE)).current;
-  const reportButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
-  const progressButtonTransform = useRef(new Animated.ValueXY(BOTTOM_MIDDLE_LEFT)).current;
+  const exploreButtonTransform = useRef(new Animated.ValueXY(TOP_RIGHT)).current;
+  const reportButtonTransform = useRef(new Animated.ValueXY(TOP_MIDDLE)).current;
+  const progressButtonTransform = useRef(new Animated.ValueXY(TOP_LEFT)).current;
 
   const exploreButtonScale = useRef(new Animated.Value(0)).current;
   const reportButtonScale = useRef(new Animated.Value(0)).current;
   const progressButtonScale = useRef(new Animated.Value(0)).current;
-
-  const exploreButtonOpacity = exploreButtonTransform.y.interpolate({
-    inputRange: [TOP_MIDDLE.y, BOTTOM_MIDDLE.y],
-    outputRange: [0.5, 1],
-    extrapolate: 'clamp'
-  })
-  const reportButtonOpacity = reportButtonTransform.y.interpolate({
-    inputRange: [TOP_MIDDLE.y, BOTTOM_MIDDLE.y],
-    outputRange: [0.5, 1],
-    extrapolate: 'clamp'
-  })
-  const progressButtonOpacity = progressButtonTransform.y.interpolate({
-    inputRange: [TOP_MIDDLE.y, BOTTOM_MIDDLE.y],
-    outputRange: [0.5, 1],
-    extrapolate: 'clamp'
-  })
 
   const [skipButtonVisible, setSkipButtonVisible] = useState(true);
   const [secondContainerVisible, setSecondContainerVisible] = useState(false);
@@ -103,6 +95,8 @@ export const OnboardingScreen = ({ navigation }) => {
   const animating = useRef(true);
   const customAnimating = useRef(false);
   const allShown = useRef(false);
+
+  const carousel = useRef();
 
   // SPLASH
   useEffect(()=>{
@@ -132,94 +126,81 @@ export const OnboardingScreen = ({ navigation }) => {
 
   // ONBOARDING
   const fancyAnimate = () => {
-    Animated.parallel([
-      Animated.timing(exploreButtonTransform, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: BOTTOM_MIDDLE_RIGHT,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(reportButtonScale, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: 1,
-        easing: Easing.inOut(Easing.ease)
-      }),
-    ]).start(()=>animating.current = false);
+    
   }
 
   useEffect(()=>{
-    if (customAnimating.current) {return}
-    if (allShown.current) {return}
-    //
-    if (selectedIndex === 1) {
-      animating.current = true;
-      Animated.sequence([
-        Animated.parallel([
-          Animated.timing(exploreButtonTransform, {
-            duration: TRAVEL_DURATION,
-            useNativeDriver: true,
-            toValue: TOP_RIGHT,
-            easing: Easing.inOut(Easing.ease)
-          }),
-          Animated.timing(reportButtonTransform, {
-            duration: TRAVEL_DURATION,
-            useNativeDriver: true,
-            toValue: BOTTOM_MIDDLE,
-            easing: Easing.inOut(Easing.ease)
-          }),
-        ]),
-        Animated.delay(2000),
-        Animated.parallel([
-          Animated.timing(reportButtonTransform, {
-            duration: TRAVEL_DURATION,
-            useNativeDriver: true,
-            toValue: BOTTOM_MIDDLE_RIGHT,
-            easing: Easing.inOut(Easing.ease)
-          }),
-          Animated.timing(progressButtonScale, {
-            duration: TRAVEL_DURATION,
-            useNativeDriver: true,
-            toValue: 1,
-            easing: Easing.inOut(Easing.ease)
-          })
-        ])
-      ]).start(()=>{
-        animating.current = false;
-      });
-    } else if (selectedIndex === 2) {
-      allShown.current = true;
-      animating.current = true;
-      setSkipButtonVisible(false);
-      Animated.parallel([
-        Animated.timing(reportButtonTransform, {
-          duration: TRAVEL_DURATION,
-          useNativeDriver: true,
-          toValue: TOP_MIDDLE,
-          easing: Easing.inOut(Easing.ease)
-        }),
-        Animated.timing(progressButtonTransform, {
-          duration: TRAVEL_DURATION,
-          useNativeDriver: true,
-          toValue: BOTTOM_MIDDLE,
-          easing: Easing.inOut(Easing.ease)
-        }),
-        Animated.timing(skipButtonScale, {
-          duration: TRAVEL_DURATION,
-          useNativeDriver: true,
-          toValue: 0,
-          easing: Easing.inOut(Easing.ease)
-        }),
-        Animated.timing(secondButtonScale, {
-          duration: TRAVEL_DURATION,
-          useNativeDriver: true,
-          toValue: 1,
-          easing: Easing.inOut(Easing.ease)
-        }),
-      ]).start(()=>{
-        animating.current = false;
-      });
-    }
+    // if (customAnimating.current) {return}
+    // if (allShown.current) {return}
+    // //
+    // if (selectedIndex === 1) {
+    //   animating.current = true;
+    //   Animated.sequence([
+    //     Animated.parallel([
+    //       Animated.timing(exploreButtonTransform, {
+    //         duration: TRAVEL_DURATION,
+    //         useNativeDriver: true,
+    //         toValue: TOP_RIGHT,
+    //         easing: Easing.inOut(Easing.ease)
+    //       }),
+    //       Animated.timing(reportButtonTransform, {
+    //         duration: TRAVEL_DURATION,
+    //         useNativeDriver: true,
+    //         toValue: BOTTOM_MIDDLE,
+    //         easing: Easing.inOut(Easing.ease)
+    //       }),
+    //     ]),
+    //     Animated.delay(2000),
+    //     Animated.parallel([
+    //       Animated.timing(reportButtonTransform, {
+    //         duration: TRAVEL_DURATION,
+    //         useNativeDriver: true,
+    //         toValue: BOTTOM_MIDDLE_RIGHT,
+    //         easing: Easing.inOut(Easing.ease)
+    //       }),
+    //       Animated.timing(progressButtonScale, {
+    //         duration: TRAVEL_DURATION,
+    //         useNativeDriver: true,
+    //         toValue: 1,
+    //         easing: Easing.inOut(Easing.ease)
+    //       })
+    //     ])
+    //   ]).start(()=>{
+    //     animating.current = false;
+    //   });
+    // } else if (selectedIndex === 2) {
+    //   allShown.current = true;
+    //   animating.current = true;
+    //   setSkipButtonVisible(false);
+    //   Animated.parallel([
+    //     Animated.timing(reportButtonTransform, {
+    //       duration: TRAVEL_DURATION,
+    //       useNativeDriver: true,
+    //       toValue: TOP_MIDDLE,
+    //       easing: Easing.inOut(Easing.ease)
+    //     }),
+    //     Animated.timing(progressButtonTransform, {
+    //       duration: TRAVEL_DURATION,
+    //       useNativeDriver: true,
+    //       toValue: BOTTOM_MIDDLE,
+    //       easing: Easing.inOut(Easing.ease)
+    //     }),
+    //     Animated.timing(skipButtonScale, {
+    //       duration: TRAVEL_DURATION,
+    //       useNativeDriver: true,
+    //       toValue: 0,
+    //       easing: Easing.inOut(Easing.ease)
+    //     }),
+    //     Animated.timing(secondButtonScale, {
+    //       duration: TRAVEL_DURATION,
+    //       useNativeDriver: true,
+    //       toValue: 1,
+    //       easing: Easing.inOut(Easing.ease)
+    //     }),
+    //   ]).start(()=>{
+    //     animating.current = false;
+    //   });
+    // }
   }, [selectedIndex])
 
   useEffect(()=>{
@@ -239,12 +220,13 @@ export const OnboardingScreen = ({ navigation }) => {
             easing: Easing.out(Easing.ease),
             duration: 500
           }),
-          Animated.timing(exploreButtonScale, {
-            toValue: 1,
-            useNativeDriver: true,
-            easing: Easing.out(Easing.ease),
-            duration: 500
-          }),
+          Animated.parallel(
+            [exploreButtonScale, reportButtonScale, progressButtonScale].map(a => Animated.timing(a, {
+              useNativeDriver: true,
+              toValue: 1,
+              easing: Easing.inOut(Easing.ease)
+            }))
+          )
         ]),
         Animated.timing(skipButtonScale, {
           toValue: 1,
@@ -299,46 +281,50 @@ export const OnboardingScreen = ({ navigation }) => {
   };
 
   const next = () => {
-    if (animating.current) {return}
-    setIndex((selectedIndex+1)%3);
+    // if (animating.current) {return}
+    const index = (selectedIndex+1)%3;
+    setIndex(index);
+    carousel.current.snapToItem(index);
   }
 
   const setIndex = useCallback((i) => {
-    if (animating.current) {return}
-    if (i === selectedIndex) {return}
-    if (allShown.current) {
-      if (i === 0) {
-        animateIcons(
-          BOTTOM_MIDDLE, 1,
-          TOP_MIDDLE, 1,
-          TOP_LEFT, 1,
-        )
-      } else if (i === 1) {
-        animateIcons(
-          TOP_RIGHT, 1,
-          BOTTOM_MIDDLE, 1,
-          TOP_LEFT, 1,
-        )
-      } else if (i === 2) {
-        animateIcons(
-          TOP_RIGHT, 1,
-          TOP_MIDDLE, 1,
-          BOTTOM_MIDDLE, 1,
-        )
-      }
-      setSelectedIndex(i);
-    } else {
-      if (i === 0 && selectedIndex === 1) {
-        animateIcons(
-          BOTTOM_MIDDLE_RIGHT, 1,
-          BOTTOM_MIDDLE_LEFT, 1,
-          BOTTOM_MIDDLE_LEFT, 0,
-        )
-        setSelectedIndex(0);
-      } else {
-        setSelectedIndex(i);
-      }
-    }
+    setSelectedIndex(i);
+    carousel.current.snapToItem(i);
+    // if (animating.current) {return}
+    // if (i === selectedIndex) {return}
+    // if (allShown.current) {
+    //   if (i === 0) {
+    //     animateIcons(
+    //       BOTTOM_MIDDLE, 1,
+    //       TOP_MIDDLE, 1,
+    //       TOP_LEFT, 1,
+    //     )
+    //   } else if (i === 1) {
+    //     animateIcons(
+    //       TOP_RIGHT, 1,
+    //       BOTTOM_MIDDLE, 1,
+    //       TOP_LEFT, 1,
+    //     )
+    //   } else if (i === 2) {
+    //     animateIcons(
+    //       TOP_RIGHT, 1,
+    //       TOP_MIDDLE, 1,
+    //       BOTTOM_MIDDLE, 1,
+    //     )
+    //   }
+    //   setSelectedIndex(i);
+    // } else {
+    //   if (i === 0 && selectedIndex === 1) {
+    //     animateIcons(
+    //       BOTTOM_MIDDLE_RIGHT, 1,
+    //       BOTTOM_MIDDLE_LEFT, 1,
+    //       BOTTOM_MIDDLE_LEFT, 0,
+    //     )
+    //     setSelectedIndex(0);
+    //   } else {
+    //     setSelectedIndex(i);
+    //   }
+    // }
   }, [selectedIndex])
 
   const firstContinue = () => {
@@ -412,7 +398,6 @@ export const OnboardingScreen = ({ navigation }) => {
         <TapView onPress={selectedIndex === 1000 ? null : next} />
         <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
           <OnboardingButton
-            alpha={progressButtonOpacity}
             scale={progressButtonScale}
             transform={progressButtonTransform}
             index={2}
@@ -420,7 +405,6 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
           <OnboardingButton
-            alpha={reportButtonOpacity}
             scale={reportButtonScale}
             transform={reportButtonTransform}
             index={1}
@@ -428,7 +412,6 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
           <OnboardingButton
-            alpha={exploreButtonOpacity}
             scale={exploreButtonScale}
             transform={exploreButtonTransform}
             index={0}
@@ -436,7 +419,28 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
         </Animated.View>
-        <TextsView scale={textsScale} index={selectedIndex === 1000 ? 2 : selectedIndex} />
+        <Carousel
+          inverted={true}
+          onBeforeSnapToItem={(i)=>setSelectedIndex(i)}
+          ref={carousel}
+          loop={true}
+          containerCustomStyle={styles.carousel(topSafeAreaHeight)}
+          data={[0, 1, 2]}
+          renderItem={({item, index})=>{
+            return (
+              <View style={styles.itemContainer}>
+                <View style={styles.itemInnerContainaer}>
+                  <Text>Hello!</Text>
+                  <View style={styles.lottieContainer}>
+                    <LottieView source={require("../../assets/animations/map.json")} loop={true} autoPlay={true} />
+                  </View>
+                </View>
+              </View>
+            )
+          }}
+          sliderWidth={width}
+          itemWidth={width}
+        />
         <FirstButton zIndex={skipButtonVisible ? 2 : 3} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
         <SkipButton zIndex={skipButtonVisible ? 3 : 2} scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
       </Animated.View>
@@ -446,6 +450,29 @@ export const OnboardingScreen = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
+
+  lottieContainer: {
+    flex: 1
+  },
+
+  itemInnerContainaer: {
+    ...StyleSheet.absoluteFill,
+    margin: 16,
+    padding: 32,
+    backgroundColor: 'white',
+    ...globalStyles.shadow,
+    borderRadius: 30
+  },
+
+  itemContainer: {
+    width: '100%',
+    height: '100%',
+  },
+
+  carousel: (topSafeAreaHeight) => ({
+    marginTop: topSafeAreaHeight + 16 + 64,
+    marginBottom: 160
+  }),
 
   buttonsContainer: (topSafeAreaHeight) => ({
     position: 'absolute',
