@@ -103,7 +103,7 @@ export default function App() {
       <Portal.Host>
         <ActionSheetProvider>
           <NavigationContainer>
-            <HomeStack.Navigator initialRouteName={!onboardingShown ? "Home" : "Onboarding"} mode='modal' headerMode="none">
+            <HomeStack.Navigator initialRouteName={onboardingShown ? "Home" : "Onboarding"} mode='modal' headerMode="none">
               <HomeStack.Screen name="Onboarding" component={OnboardingScreen} />
               <HomeStack.Screen name="Home" component={HomeScreen} options={fadeOptions} />
               <HomeStack.Screen name="Place" component={PlaceScreen} options={slideFromBottomOptions} />
