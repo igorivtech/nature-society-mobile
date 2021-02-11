@@ -198,6 +198,12 @@ export const OnboardingScreen = ({ navigation }) => {
         useNativeDriver: true,
         easing: Easing.inOut(Easing.ease)
       }),
+      Animated.timing(skipButtonScale, {
+        duration: TRAVEL_DURATION,
+        toValue: 0,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }),
     ]).start((data)=>{
       if (data.finished) {
         navigation.navigate("Home");
@@ -281,8 +287,8 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
         </Animated.View>
-        <FirstButton zIndex={skipButtonVisible ? 2 : 3} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={finish} />
-        <SkipButton zIndex={skipButtonVisible ? 3 : 2} scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-62} onPress={finish} />
+        <FirstButton altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={finish} />
+        <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-62} onPress={finish} />
       </Animated.View>
     </View>
   )
