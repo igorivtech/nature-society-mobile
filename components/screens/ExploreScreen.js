@@ -242,7 +242,7 @@ export const ExploreScreen = ({ navigation, route }) => {
   );
 };
 
-const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadingSuggestion}) => {
+export const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadingSuggestion}) => {
   const [sent, setSent] = useState(false);
   const scale = useRef(new Animated.Value(loadingSuggestion ? 0.9 : 1)).current;
   const opacity = scale.interpolate({
@@ -294,7 +294,7 @@ const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadin
   }
 })
 
-const suggestionStyles = StyleSheet.create({
+export const suggestionStyles = StyleSheet.create({
   sentContainer: {
     flexDirection: 'row',
     backgroundColor: 'white',

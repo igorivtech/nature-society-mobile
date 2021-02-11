@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
-import { StyleSheet, Animated, SafeAreaView, View, Text } from "react-native";
+import { StyleSheet, Animated, SafeAreaView, View, Text, KeyboardAvoidingView } from "react-native";
 import Modal from 'react-native-modal';
 import { globalStyles } from "../../../values/styles";
-import { SearchBar, TextCard } from "../../screens/ExploreScreen";
+import { SearchBar, SuggestPlaceView, TextCard, suggestionStyles } from "../../screens/ExploreScreen";
 import { useKeyboard } from "../../../hooks/useKeyboard";
 import { UserContext } from "../../../context/context";
 import { useServer } from "../../../hooks/useServer";
@@ -11,13 +11,16 @@ import { NewReportLabel } from "./Slider";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
+import { keyboardAwareBehaviour } from "../../../values/consts";
 
 export const ModalSearch = ({ visible, setSearchVisible, selectItem, location }) => {
 
-  const {searchPlaces, loadingSearch} = useServer();
+  const {searchPlaces, loadingSearch, suggestNewPlace, loadingSuggestion} = useServer();
+
+  const [showSuggestion, setShowSuggestion] = useState(false);
 
   const {state} = useContext(UserContext);
-  const {serverPlaces} = state;
+  const {serverPlaces, token} = state;
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -41,6 +44,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
   }, [keyboardHeight]);
 
   const closeSearch = useCallback(() => {
+    setShowSuggestion(false);
     if (searchTerm.length > 0) {
       debounce.cancel();
       setSearchTerm("");
@@ -51,6 +55,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
   }, [searchTerm, serverPlaces]);
 
   const textChanged = useCallback((value) => {
+    setShowSuggestion(false);
     setSearchTerm(value);
     debounce.cancel()
     if (value.length === 0) {
@@ -64,11 +69,18 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
     const p = await searchPlaces(searchVal, location);
     setShowLabel(false);
     setPlaces(p);
+    if (p.length === 0) {
+      setShowSuggestion(true);
+    }
   }, 500), [location]);
 
   const hide = () => {
     setSearchVisible(false);
   };
+
+  const suggestPlace = useCallback(() => {
+    suggestNewPlace(searchTerm.trim(), token);
+  }, [searchTerm])
 
   return (
     <Modal 
@@ -118,6 +130,9 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
             />
           )}
         />
+        <KeyboardAvoidingView behavior={keyboardAwareBehaviour} style={suggestionStyles.suggestionContainer(showSuggestion)}>
+          <SuggestPlaceView loadingSuggestion={loadingSuggestion} searchTerm={searchTerm} showSuggestion={showSuggestion} suggestPlace={suggestPlace} />
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </Modal>
   );
