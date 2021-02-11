@@ -251,16 +251,35 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
-        <Animated.View style={{
-            opacity: carouselOpacity,
-            transform: [{translateX: carouselTranslateX}]
-          }}>
+        <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
+          <OnboardingButton
+            finished={finished}
+            scale={progressButtonScale}
+            index={2}
+            selected={selectedIndex === 2}
+            setIndex={setIndex}
+          />
+          <OnboardingButton
+            finished={finished}
+            scale={reportButtonScale}
+            index={1}
+            selected={selectedIndex === 1}
+            setIndex={setIndex}
+          />
+          <OnboardingButton
+            finished={finished}
+            scale={exploreButtonScale}
+            index={0}
+            selected={selectedIndex === 0}
+            setIndex={setIndex}
+          />
+        </Animated.View>
+        <Animated.View style={styles.carouselContainer(carouselOpacity, carouselTranslateX)}>
           <Carousel
             inverted={true}
             onBeforeSnapToItem={(i)=>setSelectedIndex(i)}
             ref={carousel}
             loop={true}
-            containerCustomStyle={styles.carousel(topSafeAreaHeight)}
             data={[0, 1, 2]}
             renderItem={({item, index})=>{
               return (
@@ -280,34 +299,11 @@ export const OnboardingScreen = ({ navigation }) => {
             itemWidth={width}
           />
         </Animated.View>
-        <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
-          <OnboardingButton
-            finished={finished}
-            scale={progressButtonScale}
-            transform={progressButtonTransform}
-            index={2}
-            selected={selectedIndex === 2}
-            setIndex={setIndex}
-          />
-          <OnboardingButton
-            finished={finished}
-            scale={reportButtonScale}
-            transform={reportButtonTransform}
-            index={1}
-            selected={selectedIndex === 1}
-            setIndex={setIndex}
-          />
-          <OnboardingButton
-            finished={finished}
-            scale={exploreButtonScale}
-            transform={exploreButtonTransform}
-            index={0}
-            selected={selectedIndex === 0}
-            setIndex={setIndex}
-          />
-        </Animated.View>
-        <FirstButton altTitleString={finishOnboardingButtonTitle} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={nextOrFinish} />
-        <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-62} onPress={finish} />
+        <View style={globalStyles.marginBottom(bottomSafeAreaInset + 24)}>
+          <FirstButton position='relative' altTitleString={finishOnboardingButtonTitle} altTitle={true} scale={secondButtonScale} onPress={nextOrFinish} />
+          <View style={globalStyles.spacer(16)} />
+          <SkipButton position='relative' scale={skipButtonScale} onPress={finish} />
+        </View>
       </Animated.View>
     </View>
   )
@@ -340,16 +336,18 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  carousel: (topSafeAreaHeight) => ({
-    marginTop: topSafeAreaHeight + 16 + (smallScreen ? 50 : 58),
-    marginBottom: smallScreen ? 90 : 150
+  carouselContainer: (carouselOpacity, carouselTranslateX) => ({
+    opacity: carouselOpacity,
+    transform: [{translateX: carouselTranslateX}],
+    flexGrow: 1,
+    flexShrink: 1,
+    marginBottom: 16
   }),
 
   buttonsContainer: (topSafeAreaHeight) => ({
-    position: 'absolute',
-    top: topSafeAreaHeight + 16,
     ...globalStyles.onboardingButtonsContainer,
-    height: 55,
+    marginTop: topSafeAreaHeight + 16,
+    // height: 55,
   }),
 
   secondContainer: (opacity, secondContainerVisible) => ({

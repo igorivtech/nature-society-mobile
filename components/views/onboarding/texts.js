@@ -126,9 +126,9 @@ export const Text3 = ({ opacity }) => {
   );
 };
 
-export const SkipButton = ({zIndex, scale, onPress, bottomSafeAreaInset}) => {
+export const SkipButton = ({zIndex, scale, onPress, bottomSafeAreaInset, position = 'absolute'}) => {
   return (
-    <View style={styles.firstButtonOuterOuterContainer(zIndex, bottomSafeAreaInset)}>
+    <View style={styles.firstButtonOuterOuterContainer(zIndex, bottomSafeAreaInset, position)}>
       <Animated.View style={styles.firstButtonOuterContainer(scale)}>
         <TouchableOpacity onPress={onPress}>
           <Text style={textStyles.normalOfSize(14, colors.darkWithTone, "center")}>
@@ -140,9 +140,9 @@ export const SkipButton = ({zIndex, scale, onPress, bottomSafeAreaInset}) => {
   )
 }
 
-export const FirstButton = ({ zIndex, altTitle=false, scale, onPress, bottomSafeAreaInset, altTitleString = null }) => {
+export const FirstButton = ({ zIndex, altTitle=false, scale, onPress, bottomSafeAreaInset, altTitleString = null, position = 'absolute' }) => {
   return (
-    <View style={styles.firstButtonOuterOuterContainer(zIndex, bottomSafeAreaInset)}>
+    <View style={styles.firstButtonOuterOuterContainer(zIndex, bottomSafeAreaInset, position)}>
       <Animated.View style={styles.firstButtonOuterContainer(scale)}>
         <TouchableOpacity onPress={onPress}>
           <View style={styles.firstButtonContainer(altTitle)}>
@@ -169,10 +169,10 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 16,
   }),
-  firstButtonOuterOuterContainer: (zIndex, bottomSafeAreaInset) => ({
+  firstButtonOuterOuterContainer: (zIndex, bottomSafeAreaInset, position) => ({
     zIndex,
-    position: 'absolute',
-    bottom: bottomSafeAreaInset + 75,
+    position,
+    bottom: position === 'absolute' ? bottomSafeAreaInset + 75 : 0,
     left: 0,
     right: 0,
     justifyContent: 'center',

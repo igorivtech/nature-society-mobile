@@ -81,10 +81,7 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
   };
 
   return (
-    <AnimatedPressable style={{
-      transform: transform.getTranslateTransform(),
-      position:  'absolute'
-      }} onPress={onPress}>
+    <AnimatedPressable onPress={onPress}>
       <Animated.View style={{
           opacity,
           transform: [{scale}]
