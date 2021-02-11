@@ -92,6 +92,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const carousel = useRef();
 
   const [finished, setFinished] = useState(false);
+  const [finishOnboardingButtonTitle, setFinishOnboardingButtonTitle] = useState(null);
 
   // SPLASH
   useEffect(()=>{
@@ -222,9 +223,21 @@ export const OnboardingScreen = ({ navigation }) => {
   }
 
   const nextOrFinish = () => {
-    const index = (selectedIndex+1)%3;
-    setIndex(index);
-    carousel.current.snapToNext();
+    if (finishOnboardingButtonTitle == null) {
+      if (selectedIndex === 1) {
+        setFinishOnboardingButtonTitle(strings.onboardingScreen.lastButtonTitle)
+        Animated.timing(skipButtonScale, {
+          toValue: 0,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true
+        }).start();
+      }
+      const index = (selectedIndex+1)%3;
+      setIndex(index);
+      carousel.current.snapToNext();
+    } else {
+      finish();
+    }
   }
 
   return (
@@ -293,7 +306,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
         </Animated.View>
-        <FirstButton altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={nextOrFinish} />
+        <FirstButton altTitleString={finishOnboardingButtonTitle} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={nextOrFinish} />
         <SkipButton scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-62} onPress={finish} />
       </Animated.View>
     </View>

@@ -131,6 +131,7 @@ export const strings = {
     return str;
   },
   onboardingScreen: {
+    lastButtonTitle: 'בואו נתחיל',
     secondButton: 'בואו נמשיך',
     firstButton: 'בשביל זה אני פה',
     skipButton: 'דילוג',
