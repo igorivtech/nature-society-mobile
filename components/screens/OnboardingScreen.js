@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
 
   carousel: (topSafeAreaHeight) => ({
     marginTop: topSafeAreaHeight + 16 + 64,
-    marginBottom: 160
+    marginBottom: 120
   }),
 
   buttonsContainer: (topSafeAreaHeight) => ({
