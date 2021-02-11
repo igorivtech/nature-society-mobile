@@ -37,6 +37,11 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex, doneVisible = false, transform }) => {
 
   const opacity = useRef(new Animated.Value(selected ? 1 : 0.5)).current;
+  const innerScale = opacity.interpolate({
+    inputRange: [0.5, 1],
+    outputRange: [0.8, 1],
+    extrapolate: 'clamp'
+  });
 
   useEffect(() => {
     Animated.timing(opacity, {
@@ -65,7 +70,7 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
           transform: [{scale}]
         }}>
           <Animated.Image
-            style={styles.buttonContainer(alpha, 1)}
+            style={styles.buttonContainer(alpha, innerScale)}
             source={images[index]}
           />
         </Animated.View>
