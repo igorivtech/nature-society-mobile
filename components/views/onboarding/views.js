@@ -44,7 +44,7 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
       Animated.parallel([
         Animated.timing(opacity, {
           useNativeDriver: true,
-          toValue: 0.5,
+          toValue: 1,
           easing: Easing.inOut(Easing.ease),
           duration: 600
         }),
