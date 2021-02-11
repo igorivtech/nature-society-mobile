@@ -224,7 +224,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const nextOrFinish = () => {
     const index = (selectedIndex+1)%3;
     setIndex(index);
-    carousel.current.snapToItem(index);
+    carousel.current.snapToNext();
   }
 
   return (
