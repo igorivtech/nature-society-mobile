@@ -88,6 +88,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const animating = useRef(true);
 
   const carouselTranslateX = useRef(new Animated.Value(-width)).current;
+  const carouselOpacity = useRef(new Animated.Value(1)).current;
   const carousel = useRef();
 
   // SPLASH
@@ -165,11 +166,10 @@ export const OnboardingScreen = ({ navigation }) => {
   }, [secondContainerVisible])
 
   const finish = () => {
-    animating.current = true;
     setSelectedIndex(1000);
     [textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
     Animated.parallel([
-      Animated.timing(textsScale, {
+      Animated.timing(carouselOpacity, {
         duration: TRAVEL_DURATION,
         toValue: 0,
         useNativeDriver: true,
@@ -223,6 +223,7 @@ export const OnboardingScreen = ({ navigation }) => {
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
         <TapView onPress={selectedIndex === 1000 ? null : next} />
         <Animated.View style={{
+            opacity: carouselOpacity,
             transform: [{translateX: carouselTranslateX}]
           }}>
           <Carousel
