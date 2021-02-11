@@ -68,7 +68,7 @@ export const OnboardingScreen = ({ navigation }) => {
   })
 
   const firstButtonScale = useRef(new Animated.Value(0)).current;
-  const secondButtonScale = useRef(new Animated.Value(0)).current;
+  const secondButtonScale = useRef(new Animated.Value(1)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
   const exploreButtonTransform = useRef(new Animated.ValueXY(TOP_RIGHT)).current;
@@ -273,8 +273,8 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
         </Animated.View>
-        <FirstButton zIndex={skipButtonVisible ? 2 : 3} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
-        <SkipButton zIndex={skipButtonVisible ? 3 : 2} scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
+        <FirstButton zIndex={skipButtonVisible ? 2 : 3} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-32} onPress={finish} />
+        <SkipButton zIndex={skipButtonVisible ? 3 : 2} scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset-62} onPress={finish} />
       </Animated.View>
     </View>
   )
@@ -308,8 +308,8 @@ const styles = StyleSheet.create({
   },
 
   carousel: (topSafeAreaHeight) => ({
-    marginTop: topSafeAreaHeight + 16 + (smallScreen ? 50 : 64),
-    marginBottom: smallScreen ? 60 : 120
+    marginTop: topSafeAreaHeight + 16 + (smallScreen ? 50 : 58),
+    marginBottom: smallScreen ? 90 : 150
   }),
 
   buttonsContainer: (topSafeAreaHeight) => ({
