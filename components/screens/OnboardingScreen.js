@@ -198,12 +198,6 @@ export const OnboardingScreen = ({ navigation }) => {
     AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, (new Date()).toString()).then(()=>{});
   };
 
-  const next = () => {
-    const index = (selectedIndex+1)%3;
-    setIndex(index);
-    carousel.current.snapToItem(index);
-  }
-
   const setIndex = useCallback((i) => {
     setSelectedIndex(i);
     carousel.current.snapToItem(i);
@@ -224,7 +218,6 @@ export const OnboardingScreen = ({ navigation }) => {
       </Animated.View>
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
-        <TapView onPress={selectedIndex === 1000 ? null : next} />
         <Animated.View style={{
             opacity: carouselOpacity,
             transform: [{translateX: carouselTranslateX}]
