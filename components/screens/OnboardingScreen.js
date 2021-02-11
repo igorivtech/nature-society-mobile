@@ -241,7 +241,7 @@ export const OnboardingScreen = ({ navigation }) => {
                       {item === 0 ? (<Text1 opacity={1} />) : (item === 1 ? (<Text2 opacity={1} />) : (<Text3 opacity={1} />))}
                     </View>
                     <View style={styles.lottieContainer}>
-                      <LottieView source={animations[item]} loop={true} autoPlay={true} />
+                      <LottieView source={animations[item]} loop={true} autoPlay={true} resizeMode={item === 0 ? 'contain' : 'cover'} />
                     </View>
                   </View>
                 </View>
