@@ -34,22 +34,42 @@ const iterationDelay = {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex, doneVisible = false, transform }) => {
+export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex, doneVisible = false, transform, finished }) => {
 
   const opacity = useRef(new Animated.Value(selected ? 1 : 0.5)).current;
-  const innerScale = opacity.interpolate({
-    inputRange: [0.5, 1],
-    outputRange: [0.8, 1],
-    extrapolate: 'clamp'
-  });
+  const innerScale = useRef(new Animated.Value(selected ? 1 : 0.75)).current;
 
   useEffect(() => {
-    Animated.timing(opacity, {
-      useNativeDriver: true,
-      toValue: selected ? 1 : 0.5,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
-  }, [selected]);
+    if (finished) {
+      Animated.parallel([
+        Animated.timing(opacity, {
+          useNativeDriver: true,
+          toValue: 0.5,
+          easing: Easing.inOut(Easing.ease),
+          duration: 600
+        }),
+        Animated.timing(innerScale, {
+          useNativeDriver: true,
+          toValue: 1,
+          easing: Easing.inOut(Easing.ease),
+          duration: 600
+        }),
+      ]).start()
+    } else {
+      Animated.parallel([
+        Animated.timing(opacity, {
+          useNativeDriver: true,
+          toValue: selected ? 1 : 0.5,
+          easing: Easing.inOut(Easing.ease)
+        }),
+        Animated.timing(innerScale, {
+          useNativeDriver: true,
+          toValue: selected ? 1 : 0.75,
+          easing: Easing.inOut(Easing.ease)
+        }),
+      ]).start()
+    }
+  }, [finished, selected]);
 
   const onPress = () => {
     if (setIndex != null) {

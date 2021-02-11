@@ -91,6 +91,8 @@ export const OnboardingScreen = ({ navigation }) => {
   const carouselOpacity = useRef(new Animated.Value(1)).current;
   const carousel = useRef();
 
+  const [finished, setFinished] = useState(false);
+
   // SPLASH
   useEffect(()=>{
     Animated.sequence([
@@ -167,6 +169,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const finish = () => {
     setSelectedIndex(1000);
+    setFinished(true);
     [textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
     Animated.parallel([
       Animated.timing(carouselOpacity, {
@@ -253,6 +256,7 @@ export const OnboardingScreen = ({ navigation }) => {
         </Animated.View>
         <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
           <OnboardingButton
+            finished={finished}
             scale={progressButtonScale}
             transform={progressButtonTransform}
             index={2}
@@ -260,6 +264,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
           <OnboardingButton
+            finished={finished}
             scale={reportButtonScale}
             transform={reportButtonTransform}
             index={1}
@@ -267,6 +272,7 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
           <OnboardingButton
+            finished={finished}
             scale={exploreButtonScale}
             transform={exploreButtonTransform}
             index={0}
