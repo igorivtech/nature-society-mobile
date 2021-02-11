@@ -21,6 +21,8 @@ import {TapView} from "../views/general"
 import Carousel from 'react-native-snap-carousel';
 import LottieView from 'lottie-react-native';
 
+const AnimatedCarousel = Animated.createAnimatedComponent(Carousel);
+
 const animations = {
   0: require("../../assets/animations/map.json"),
   1: require("../../assets/animations/scores.json"),
@@ -96,6 +98,7 @@ export const OnboardingScreen = ({ navigation }) => {
   const customAnimating = useRef(false);
   const allShown = useRef(false);
 
+  const carouselTranslateX = useRef(new Animated.Value(-width)).current;
   const carousel = useRef();
 
   // SPLASH
@@ -226,7 +229,14 @@ export const OnboardingScreen = ({ navigation }) => {
               toValue: 1,
               easing: Easing.inOut(Easing.ease)
             }))
-          )
+          ),
+          Animated.timing(carouselTranslateX, {
+            delay: 200,
+            duration: 500,
+            useNativeDriver: true,
+            toValue: 0,
+            easing: Easing.inOut(Easing.ease)
+          })
         ]),
         Animated.timing(skipButtonScale, {
           toValue: 1,
@@ -423,30 +433,34 @@ export const OnboardingScreen = ({ navigation }) => {
             setIndex={setIndex}
           />
         </Animated.View>
-        <Carousel
-          inverted={true}
-          onBeforeSnapToItem={(i)=>setSelectedIndex(i)}
-          ref={carousel}
-          loop={true}
-          containerCustomStyle={styles.carousel(topSafeAreaHeight)}
-          data={[0, 1, 2]}
-          renderItem={({item, index})=>{
-            return (
-              <View style={styles.itemContainer}>
-                <View style={styles.itemInnerContainaer}>
-                  <View style={styles.textsContainer}>
-                    {item === 0 ? (<Text1 opacity={1} />) : (item === 1 ? (<Text2 opacity={1} />) : (<Text3 opacity={1} />))}
-                  </View>
-                  <View style={styles.lottieContainer}>
-                    <LottieView source={animations[item]} loop={true} autoPlay={true} />
+        <Animated.View style={{
+            transform: [{translateX: carouselTranslateX}]
+          }}>
+          <Carousel
+            inverted={true}
+            onBeforeSnapToItem={(i)=>setSelectedIndex(i)}
+            ref={carousel}
+            loop={true}
+            containerCustomStyle={styles.carousel(topSafeAreaHeight)}
+            data={[0, 1, 2]}
+            renderItem={({item, index})=>{
+              return (
+                <View style={styles.itemContainer}>
+                  <View style={styles.itemInnerContainaer}>
+                    <View style={styles.textsContainer}>
+                      {item === 0 ? (<Text1 opacity={1} />) : (item === 1 ? (<Text2 opacity={1} />) : (<Text3 opacity={1} />))}
+                    </View>
+                    <View style={styles.lottieContainer}>
+                      <LottieView source={animations[item]} loop={true} autoPlay={true} />
+                    </View>
                   </View>
                 </View>
-              </View>
-            )
-          }}
-          sliderWidth={width}
-          itemWidth={width}
-        />
+              )
+            }}
+            sliderWidth={width}
+            itemWidth={width}
+          />
+        </Animated.View>
         <FirstButton zIndex={skipButtonVisible ? 2 : 3} altTitle={true} scale={secondButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
         <SkipButton zIndex={skipButtonVisible ? 3 : 2} scale={skipButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={finish} />
       </Animated.View>
