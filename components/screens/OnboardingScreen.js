@@ -68,7 +68,7 @@ export const OnboardingScreen = ({ navigation }) => {
   })
 
   const firstButtonScale = useRef(new Animated.Value(0)).current;
-  const secondButtonScale = useRef(new Animated.Value(1)).current;
+  const secondButtonScale = useRef(new Animated.Value(0)).current;
   const skipButtonScale = useRef(new Animated.Value(0)).current;
 
   const exploreButtonTransform = useRef(new Animated.ValueXY(TOP_RIGHT)).current;
@@ -149,14 +149,22 @@ export const OnboardingScreen = ({ navigation }) => {
             useNativeDriver: true,
             toValue: 0,
             easing: Easing.inOut(Easing.ease)
-          })
-        ]),
-        Animated.timing(skipButtonScale, {
-          toValue: 1,
-          useNativeDriver: true,
-          easing: Easing.out(Easing.ease),
-          duration: 300
-        }),
+          }),
+          Animated.timing(skipButtonScale, {
+            delay: 500,
+            toValue: 1,
+            useNativeDriver: true,
+            easing: Easing.out(Easing.ease),
+            duration: 300
+          }),
+          Animated.timing(secondButtonScale, {
+            delay: 500,
+            toValue: 1,
+            useNativeDriver: true,
+            easing: Easing.out(Easing.ease),
+            duration: 300
+          }),
+        ])
       ]).start(({finished})=>{
         // if (finished) {
         //   setTimeout(() => {
