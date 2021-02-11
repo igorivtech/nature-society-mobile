@@ -42,7 +42,6 @@ const Highlight = ({
 }) => {
   return (
     <Highlighter
-      minimumFontScale={0.9}
       adjustsFontSizeToFit={true} 
       numberOfLines={3}
       style={[regular, { position, lineHeight: regular.fontSize }]}
@@ -53,7 +52,7 @@ const Highlight = ({
   );
 };
 
-const Text1 = ({ opacity }) => {
+export const Text1 = ({ opacity }) => {
   return (
     <Animated.View style={{ opacity, ...globalStyles.centerChildren }}>
       <Highlight
@@ -91,11 +90,10 @@ const Text1 = ({ opacity }) => {
   );
 };
 
-const Text2 = ({ opacity }) => {
+export const Text2 = ({ opacity }) => {
   return (
     <Animated.View
       style={{
-        position: "absolute",
         ...globalStyles.centerChildren,
         opacity,
       }}
@@ -110,11 +108,10 @@ const Text2 = ({ opacity }) => {
   );
 };
 
-const Text3 = ({ opacity }) => {
+export const Text3 = ({ opacity }) => {
   return (
     <Animated.View
       style={{
-        position: "absolute",
         ...globalStyles.centerChildren,
         opacity,
       }}

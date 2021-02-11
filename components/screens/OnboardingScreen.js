@@ -15,7 +15,7 @@ import { OnboardingButton, CoolButton } from "../views/onboarding/views";
 import AsyncStorage from "@react-native-community/async-storage";
 import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { TextsView, FirstButton, SkipButton } from "../views/onboarding/texts";
+import { Text1, Text2, Text3, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 import {TapView} from "../views/general"
 import Carousel from 'react-native-snap-carousel';
@@ -384,6 +384,10 @@ export const OnboardingScreen = ({ navigation }) => {
     });
   }
 
+  const renderText = (item) => {
+
+  }
+
   return (
     <View style={styles.container}>
       <Animated.Image style={styles.logo(logoTranslateY, logoScale)} source={require("../../assets/images/splash_top.png")} />
@@ -430,9 +434,11 @@ export const OnboardingScreen = ({ navigation }) => {
             return (
               <View style={styles.itemContainer}>
                 <View style={styles.itemInnerContainaer}>
-                  <Text>Hello!</Text>
+                  <View style={styles.textsContainer}>
+                    {item === 0 ? (<Text1 opacity={1} />) : (item === 1 ? (<Text2 opacity={1} />) : (<Text3 opacity={1} />))}
+                  </View>
                   <View style={styles.lottieContainer}>
-                    <LottieView source={require("../../assets/animations/map.json")} loop={true} autoPlay={true} />
+                    <LottieView source={animations[item]} loop={true} autoPlay={true} />
                   </View>
                 </View>
               </View>
@@ -451,8 +457,14 @@ export const OnboardingScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 
+  textsContainer: {
+    alignItems: 'center',
+  },
+
   lottieContainer: {
-    flex: 1
+    marginTop: 16,
+    flexGrow: 1,
+    flexShrink: 1
   },
 
   itemInnerContainaer: {
