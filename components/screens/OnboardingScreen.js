@@ -21,8 +21,6 @@ import {TapView} from "../views/general"
 import Carousel from 'react-native-snap-carousel';
 import LottieView from 'lottie-react-native';
 
-const AnimatedCarousel = Animated.createAnimatedComponent(Carousel);
-
 const animations = {
   0: require("../../assets/animations/map.json"),
   1: require("../../assets/animations/scores.json"),
@@ -35,18 +33,11 @@ const TRANSLATE_Y_VALUE = -height * 0.2;
 const TEXT_TRANSLATE_Y = 40;
 const inputRange = [TRANSLATE_Y_VALUE, 0];
 
-const BOTTOM = {y: (height-statusBarHeight)*0.5 - (smallScreen ? 145 : 165)}
 const TOP = {y: 0}
 const buttonsWidth = TOP_BUTTONS_CONTAINER_WIDTH;
 const LEFT = {x: 0};
-const MIDDLE_LEFT = {x:width*buttonsWidth*0.33-55/2};
 const MIDDLE = {x:width*buttonsWidth/2-55/2};
-const MIDDLE_RIGHT = {x:width*buttonsWidth*0.66-55/2};
 const RIGHT = {x:width*buttonsWidth-55};
-
-const BOTTOM_MIDDLE_LEFT = {...BOTTOM, ...MIDDLE_LEFT};
-const BOTTOM_MIDDLE = {...BOTTOM, ...MIDDLE};
-const BOTTOM_MIDDLE_RIGHT = {...BOTTOM, ...MIDDLE_RIGHT};
 
 const TOP_LEFT = {...TOP, ...LEFT};
 const TOP_MIDDLE = {...TOP, ...MIDDLE};
@@ -95,8 +86,6 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const animating = useRef(true);
-  const customAnimating = useRef(false);
-  const allShown = useRef(false);
 
   const carouselTranslateX = useRef(new Animated.Value(-width)).current;
   const carousel = useRef();
@@ -126,85 +115,6 @@ export const OnboardingScreen = ({ navigation }) => {
       })
     ]).start()
   }, [])
-
-  // ONBOARDING
-  const fancyAnimate = () => {
-    
-  }
-
-  useEffect(()=>{
-    // if (customAnimating.current) {return}
-    // if (allShown.current) {return}
-    // //
-    // if (selectedIndex === 1) {
-    //   animating.current = true;
-    //   Animated.sequence([
-    //     Animated.parallel([
-    //       Animated.timing(exploreButtonTransform, {
-    //         duration: TRAVEL_DURATION,
-    //         useNativeDriver: true,
-    //         toValue: TOP_RIGHT,
-    //         easing: Easing.inOut(Easing.ease)
-    //       }),
-    //       Animated.timing(reportButtonTransform, {
-    //         duration: TRAVEL_DURATION,
-    //         useNativeDriver: true,
-    //         toValue: BOTTOM_MIDDLE,
-    //         easing: Easing.inOut(Easing.ease)
-    //       }),
-    //     ]),
-    //     Animated.delay(2000),
-    //     Animated.parallel([
-    //       Animated.timing(reportButtonTransform, {
-    //         duration: TRAVEL_DURATION,
-    //         useNativeDriver: true,
-    //         toValue: BOTTOM_MIDDLE_RIGHT,
-    //         easing: Easing.inOut(Easing.ease)
-    //       }),
-    //       Animated.timing(progressButtonScale, {
-    //         duration: TRAVEL_DURATION,
-    //         useNativeDriver: true,
-    //         toValue: 1,
-    //         easing: Easing.inOut(Easing.ease)
-    //       })
-    //     ])
-    //   ]).start(()=>{
-    //     animating.current = false;
-    //   });
-    // } else if (selectedIndex === 2) {
-    //   allShown.current = true;
-    //   animating.current = true;
-    //   setSkipButtonVisible(false);
-    //   Animated.parallel([
-    //     Animated.timing(reportButtonTransform, {
-    //       duration: TRAVEL_DURATION,
-    //       useNativeDriver: true,
-    //       toValue: TOP_MIDDLE,
-    //       easing: Easing.inOut(Easing.ease)
-    //     }),
-    //     Animated.timing(progressButtonTransform, {
-    //       duration: TRAVEL_DURATION,
-    //       useNativeDriver: true,
-    //       toValue: BOTTOM_MIDDLE,
-    //       easing: Easing.inOut(Easing.ease)
-    //     }),
-    //     Animated.timing(skipButtonScale, {
-    //       duration: TRAVEL_DURATION,
-    //       useNativeDriver: true,
-    //       toValue: 0,
-    //       easing: Easing.inOut(Easing.ease)
-    //     }),
-    //     Animated.timing(secondButtonScale, {
-    //       duration: TRAVEL_DURATION,
-    //       useNativeDriver: true,
-    //       toValue: 1,
-    //       easing: Easing.inOut(Easing.ease)
-    //     }),
-    //   ]).start(()=>{
-    //     animating.current = false;
-    //   });
-    // }
-  }, [selectedIndex])
 
   useEffect(()=>{
     if (secondContainerVisible) {
@@ -245,11 +155,11 @@ export const OnboardingScreen = ({ navigation }) => {
           duration: 300
         }),
       ]).start(({finished})=>{
-        if (finished) {
-          setTimeout(() => {
-            fancyAnimate();
-          }, 2000);
-        }
+        // if (finished) {
+        //   setTimeout(() => {
+        //     fancyAnimate();
+        //   }, 2000);
+        // }
       })
     }
   }, [secondContainerVisible])
@@ -258,11 +168,6 @@ export const OnboardingScreen = ({ navigation }) => {
     animating.current = true;
     setSelectedIndex(1000);
     [textsScale, firstButtonScale, secondButtonScale].forEach(a=>a.stopAnimation());
-    animateIcons(
-      TOP_RIGHT, 1,
-      TOP_MIDDLE, 1,
-      TOP_LEFT, 1
-    )
     Animated.parallel([
       Animated.timing(textsScale, {
         duration: TRAVEL_DURATION,
@@ -291,7 +196,6 @@ export const OnboardingScreen = ({ navigation }) => {
   };
 
   const next = () => {
-    // if (animating.current) {return}
     const index = (selectedIndex+1)%3;
     setIndex(index);
     carousel.current.snapToItem(index);
@@ -300,102 +204,10 @@ export const OnboardingScreen = ({ navigation }) => {
   const setIndex = useCallback((i) => {
     setSelectedIndex(i);
     carousel.current.snapToItem(i);
-    // if (animating.current) {return}
-    // if (i === selectedIndex) {return}
-    // if (allShown.current) {
-    //   if (i === 0) {
-    //     animateIcons(
-    //       BOTTOM_MIDDLE, 1,
-    //       TOP_MIDDLE, 1,
-    //       TOP_LEFT, 1,
-    //     )
-    //   } else if (i === 1) {
-    //     animateIcons(
-    //       TOP_RIGHT, 1,
-    //       BOTTOM_MIDDLE, 1,
-    //       TOP_LEFT, 1,
-    //     )
-    //   } else if (i === 2) {
-    //     animateIcons(
-    //       TOP_RIGHT, 1,
-    //       TOP_MIDDLE, 1,
-    //       BOTTOM_MIDDLE, 1,
-    //     )
-    //   }
-    //   setSelectedIndex(i);
-    // } else {
-    //   if (i === 0 && selectedIndex === 1) {
-    //     animateIcons(
-    //       BOTTOM_MIDDLE_RIGHT, 1,
-    //       BOTTOM_MIDDLE_LEFT, 1,
-    //       BOTTOM_MIDDLE_LEFT, 0,
-    //     )
-    //     setSelectedIndex(0);
-    //   } else {
-    //     setSelectedIndex(i);
-    //   }
-    // }
   }, [selectedIndex])
 
   const firstContinue = () => {
     setSecondContainerVisible(true);
-  }
-
-  const animateIcons = (exploreTransform, exploreScale, reportTransform, reportScale, progressTransform, progressScale, callback = null) => {
-    customAnimating.current = true;
-    animating.current = true;
-    [exploreButtonScale, reportButtonScale, progressButtonScale, 
-      exploreButtonTransform, reportButtonTransform, progressButtonTransform].forEach(a=>a.stopAnimation());
-    Animated.parallel([
-      Animated.timing(exploreButtonTransform, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: exploreTransform,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(exploreButtonScale, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: exploreScale,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(reportButtonTransform, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: reportTransform,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(reportButtonScale, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: reportScale,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(progressButtonTransform, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: progressTransform,
-        easing: Easing.inOut(Easing.ease)
-      }),
-      Animated.timing(progressButtonScale, {
-        duration: TRAVEL_DURATION,
-        useNativeDriver: true,
-        toValue: progressScale,
-        easing: Easing.inOut(Easing.ease)
-      }),
-    ]).start((data)=>{
-      if (data.finished) {
-        animating.current = false;
-        customAnimating.current = false;
-        if (callback != null) {
-          callback();
-        }
-      }
-    });
-  }
-
-  const renderText = (item) => {
-
   }
 
   return (
