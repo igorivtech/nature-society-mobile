@@ -31,7 +31,7 @@ export const TextsView = ({ index, scale }) => {
   );
 };
 
-const fontSize = smallScreen ? 22 : 24
+const fontSize = smallScreen ? 18 : 24
 
 const Highlight = ({
   regular,
@@ -43,7 +43,7 @@ const Highlight = ({
   return (
     <Highlighter
       adjustsFontSizeToFit={true} 
-      numberOfLines={3}
+      numberOfLines={smallScreen ? 4 : 3}
       style={[regular, { position, lineHeight: regular.fontSize }]}
       highlightStyle={highlight}
       searchWords={words}
