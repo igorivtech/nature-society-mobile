@@ -93,6 +93,7 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
       animationOut='fadeOut' 
       animationOutTiming={NAV_DURATION_CLOSE}
       useNativeDriver={true}
+      backdropTransitionOutTiming={0}
     >
       <View style={styles.newReportLabelContainer(topSafeAreaHeight)}>
           <NewReportLabel />
