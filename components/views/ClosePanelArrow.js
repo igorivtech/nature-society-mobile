@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     width: EXIT_SIZE
   }),
   bottom: (height, marginTop) => ({
+    transform: [{translateY: -6}],
     justifyContent: 'center',
     alignItems: 'center',
     position: "absolute",
