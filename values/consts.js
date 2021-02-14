@@ -15,7 +15,7 @@ export const SCREEN_ASPECT_RATIO = height/width;
 
 export const smallScreen = height < 667;
 
-export const NAV_DURATION = 500;
+export const NAV_DURATION = 600;
 export const NAV_DURATION_CLOSE = 400;
 
 export const WHITE_LIST_APPS = ['google-maps', 'apple-maps', 'waze', 'moovit'];
