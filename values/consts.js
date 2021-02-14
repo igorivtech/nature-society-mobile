@@ -22,7 +22,7 @@ export const WHITE_LIST_APPS = ['google-maps', 'apple-maps', 'waze', 'moovit'];
 
 export const TOP_BUTTONS_CONTAINER_WIDTH = smallScreen ? 0.75 : 0.7
 
-export const NAV_CLOSE_TAP_SIZE = 64;
+export const NAV_CLOSE_TAP_SIZE = 74;
 
 export const CARD_RADIUS = 24;
 
