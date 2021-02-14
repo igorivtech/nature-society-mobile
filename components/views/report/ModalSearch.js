@@ -11,7 +11,7 @@ import { NewReportLabel } from "./Slider";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
-import { keyboardAwareBehaviour } from "../../../values/consts";
+import { keyboardAwareBehaviour, NAV_DURATION, NAV_DURATION_CLOSE } from "../../../values/consts";
 
 export const ModalSearch = ({ visible, setSearchVisible, selectItem, location }) => {
 
@@ -89,7 +89,9 @@ export const ModalSearch = ({ visible, setSearchVisible, selectItem, location })
       onBackButtonPress={hide} 
       isVisible={visible} 
       animationIn='fadeIn' 
+      animationInTiming={NAV_DURATION}
       animationOut='fadeOut' 
+      animationOutTiming={NAV_DURATION_CLOSE}
       useNativeDriver={true}
     >
       <View style={styles.newReportLabelContainer(topSafeAreaHeight)}>
