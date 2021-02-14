@@ -439,45 +439,15 @@ export const PlaceRating = ({
   return (
     <View style={globalStyles.marginLeft(leftMargin)}>
       <Text style={textStyles.normalOfSize(small ? 13 : 14)}>{title}</Text>
-
-      
       <View style={s.ratingInnerContainer(small)}>
-        <View style={s.fixedHeight}>
-          {locked ? (
-            <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
-              <View style={s.buyContainer(small, loading)}>
-                <Text style={s.buyPoints}>{pointsToUnlock}</Text>
-                <View>
-                  <Animated.Image 
-                    style={[globalStyles.imageContain(small), {opacity: imageOpacity}]} 
-                    source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")}
-                  />
-                  <AnimatedLottie
-                    style={s.lottie(lottieOpacity)}
-                    ref={lottie}
-                    loop={true}
-                    source={require("../../assets/animations/buy_spin.json")} 
-                    resizeMode='cover'
-                  />
-                </View>
-                {!small && (
-                  <Text style={s.buyTitle}>{strings.showInfo}</Text>
-                )}
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <Animatable.Text animation={ratingAnimation} style={s.ratingStyle(small, color)}>
-              {formatRating(rating, isCleanness)}
-            </Animatable.Text>
-          )}
-        </View>
-        
+        <Animatable.Text animation={ratingAnimation} style={s.ratingStyle(small, color)}>
+          {formatRating(rating, isCleanness)}
+        </Animatable.Text>
         <View>
           <Animated.Image style={s.openImage(openOpacity, color)} source={image} />
           <Animated.Image style={s.lockedImage(lockedOpacity)} source={image} />
         </View>
       </View>
-      
     </View>
   );
 };
@@ -647,6 +617,43 @@ const s = StyleSheet.create({
     backgroundColor: colors.clear,
   },
 });
+
+{/* <View style={s.ratingInnerContainer(small)}>
+  <View style={s.fixedHeight}>
+    {locked ? (
+      <TouchableOpacity disabled={loading || !locked || unlockPlace == null} onPress={unlockPlace}>
+        <View style={s.buyContainer(small, loading)}>
+          <Text style={s.buyPoints}>{pointsToUnlock}</Text>
+          <View>
+            <Animated.Image 
+              style={[globalStyles.imageContain(small), {opacity: imageOpacity}]} 
+              source={small ? require("../../assets/images/buy_it_small.png") : require("../../assets/images/buy_it_large.png")}
+            />
+            <AnimatedLottie
+              style={s.lottie(lottieOpacity)}
+              ref={lottie}
+              loop={true}
+              source={require("../../assets/animations/buy_spin.json")} 
+              resizeMode='cover'
+            />
+          </View>
+          {!small && (
+            <Text style={s.buyTitle}>{strings.showInfo}</Text>
+          )}
+        </View>
+      </TouchableOpacity>
+    ) : (
+      <Animatable.Text animation={ratingAnimation} style={s.ratingStyle(small, color)}>
+        {formatRating(rating, isCleanness)}
+      </Animatable.Text>
+    )}
+  </View>
+
+  <View>
+    <Animated.Image style={s.openImage(openOpacity, color)} source={image} />
+    <Animated.Image style={s.lockedImage(lockedOpacity)} source={image} />
+  </View>
+</View> */}
 
 // PlaceScreen.sharedElements = (route, otherRoute, showing) => {
 //   const { place } = route.params;
