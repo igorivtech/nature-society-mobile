@@ -635,7 +635,11 @@ const s = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 15,
     width: "100%",
-    aspectRatio: smallScreen ? 2 : 1.429
+    // aspectRatio: smallScreen ? 2 : 1.429,
+    minHeight: '20%',
+    maxHeight: '40%',
+    flexGrow: 100,
+    flexShrink: 1
   },
 
   container: {
