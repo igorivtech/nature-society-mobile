@@ -89,7 +89,7 @@ export const Popup = ({ website = false, permissions = false, textData, popupVis
       useNativeDriver={true}
       useNativeDriverForBackdrop={true}
       hideModalContentWhileAnimating={true}
-      // backdropTransitionOutTiming={0}
+      backdropTransitionOutTiming={0}
     >
       <View style={popupStyles.bg}>
         <TouchableWithoutFeedback

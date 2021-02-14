@@ -38,6 +38,7 @@ export const InfoModal = ({ visible, setVisible }) => {
       animationOut='fadeOut' 
       useNativeDriver={true} 
       onBackButtonPress={close}
+      backdropTransitionOutTiming={0}
     >
       <View style={styles.container}>
         <TapView onPress={close} />
