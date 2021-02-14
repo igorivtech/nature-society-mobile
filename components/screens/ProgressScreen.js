@@ -36,6 +36,7 @@ import * as Animatable from "react-native-animatable";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+const ALREADY_SHOWN = 'ALREADY_SHOWN_PROGRESS';
 
 export const ProgressScreen = ({ navigation, route }) => {
 
@@ -127,33 +128,42 @@ export const ProgressScreen = ({ navigation, route }) => {
   useEffect(()=>{
     if (data.length > 0) {
       const currentIndex = data.findIndex(achievement=>achievement.current);
-      Animated.timing(pathOpacity, {
-        toValue: 1,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
-      }).start(()=>{
-        if (!isMounted?.current) {return}
-        if (currentIndex > 0) {
-          translateY.addListener(({value})=>{
-            scrollY.setValue(-value);
-          })
-          Animated.timing(translateY, {
-            useNativeDriver: true,
-            easing: Easing.inOut(Easing.ease),
-            duration: 250*(currentIndex+1),
-            toValue: -pathHeight*currentIndex
-          }).start(()=>{
-            if (!isMounted?.current) {return}
-            translateY.setValue(0);
-            scrollView.current.scrollTo({x: 0, y: pathHeight*currentIndex, animated: false})
-            scrollY.setValue(pathHeight*currentIndex);
-            translateY.removeAllListeners();
-            setScrollEnabled(true);
-          })
-        } else {
+      AsyncStorage.getItem(ALREADY_SHOWN).then(alreadyShown => {
+        if (alreadyShown) {
+          scrollView.current.scrollTo({x: 0, y: pathHeight*currentIndex, animated: false})
           setScrollEnabled(true);
         }
-      });
+        //
+        Animated.timing(pathOpacity, {
+          toValue: 1,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }).start(()=>{
+          if (!isMounted?.current || alreadyShown) {return}
+          if (currentIndex > 0) {
+            translateY.addListener(({value})=>{
+              scrollY.setValue(-value);
+            })
+            Animated.timing(translateY, {
+              useNativeDriver: true,
+              easing: Easing.inOut(Easing.ease),
+              duration: 250*(currentIndex+1),
+              toValue: -pathHeight*currentIndex
+            }).start(()=>{
+              if (!isMounted?.current) {return}
+              translateY.setValue(0);
+              scrollView.current.scrollTo({x: 0, y: pathHeight*currentIndex, animated: false})
+              scrollY.setValue(pathHeight*currentIndex);
+              translateY.removeAllListeners();
+              setScrollEnabled(true);
+            })
+          } else {
+            setScrollEnabled(true);
+          }
+        });
+        //
+        AsyncStorage.setItem(ALREADY_SHOWN, '1').then(()=>{});
+      })
     }
   }, [data])
 
