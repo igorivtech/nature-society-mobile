@@ -475,26 +475,10 @@ export const HomeScreen = ({ navigation, route }) => {
         if (data.searchId === currSearchId.current) {
           const pp = data.pp;
           if (pp.length > 0) {
-            // keepMarkerAlive.current = {}
-            // serverPlaces.forEach(sp => {
-            //   if (pp.findIndex(p=>p._id === sp._id) > -1) {
-            //     keepMarkerAlive.current[sp._id] = 1;
-            //   }
-            // });
-            // //
-            // let timeout = (serverPlaces.length - 0)*50; // objectLength(keepMarkerAlive.current)
-            // if (timeout > 0) {
-            //   timeout += 300;
-            // }
-            // setGlobalShow(false);
-            // setTimeout(() => {
-            //   if (data.searchId === currSearchId.current) {
-                dispatch({
-                  type: SAVE_PLACES,
-                  payload: pp,
-                });
-            //   }
-            // }, timeout);
+            dispatch({
+              type: SAVE_PLACES,
+              payload: pp,
+            });
           }
         } else {
           console.log("DISCARDING OLD PLACES");
@@ -666,3 +650,38 @@ export const HomeScreen = ({ navigation, route }) => {
     </View>
   );
 };
+
+// getPlaces(currSearchId.current, region, location, calcRadius(region)).then(data => {
+//   if (data !== null) {
+//     if (data.searchId === currSearchId.current) {
+//       const pp = data.pp;
+//       if (pp.length > 0) {
+//         // keepMarkerAlive.current = {}
+//         // serverPlaces.forEach(sp => {
+//         //   if (pp.findIndex(p=>p._id === sp._id) > -1) {
+//         //     keepMarkerAlive.current[sp._id] = 1;
+//         //   }
+//         // });
+//         // //
+//         // let timeout = (serverPlaces.length - 0)*50; // objectLength(keepMarkerAlive.current)
+//         // if (timeout > 0) {
+//         //   timeout += 300;
+//         // }
+//         // setGlobalShow(false);
+//         // setTimeout(() => {
+//         //   if (data.searchId === currSearchId.current) {
+//             dispatch({
+//               type: SAVE_PLACES,
+//               payload: pp,
+//             });
+//         //   }
+//         // }, timeout);
+//       }
+//     } else {
+//       console.log("DISCARDING OLD PLACES");
+//     }
+//     if (specialLockForInitialFetch.current) {
+//       specialLockForInitialFetch.current = false;
+//     }
+//   }
+// })
