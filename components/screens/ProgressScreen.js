@@ -132,6 +132,8 @@ export const ProgressScreen = ({ navigation, route }) => {
         if (alreadyShown) {
           scrollView.current.scrollTo({x: 0, y: pathHeight*currentIndex, animated: false})
           setScrollEnabled(true);
+        } else {
+          AsyncStorage.setItem(ALREADY_SHOWN, '1').then(()=>{});
         }
         //
         Animated.timing(pathOpacity, {
@@ -161,8 +163,6 @@ export const ProgressScreen = ({ navigation, route }) => {
             setScrollEnabled(true);
           }
         });
-        //
-        AsyncStorage.setItem(ALREADY_SHOWN, '1').then(()=>{});
       })
     }
   }, [data])
