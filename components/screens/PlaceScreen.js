@@ -592,6 +592,7 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: CONTAINER_VERTICAL_PADDING,
     paddingHorizontal: 20,
+    paddingBottom: smallScreen ? 20 : 40,
     backgroundColor: 'white',
     borderTopRightRadius: 24,
     borderTopLeftRadius: 24,
