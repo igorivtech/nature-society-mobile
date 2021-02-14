@@ -303,7 +303,7 @@ export const HomeScreen = ({ navigation, route }) => {
               animateToItem(item);
             }
           }
-        }, 10);
+        }, 20);
       })
     }
   }, [selectedPlace, sortedPlaces])
