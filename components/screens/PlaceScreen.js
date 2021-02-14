@@ -443,10 +443,7 @@ export const PlaceRating = ({
         <Animatable.Text animation={ratingAnimation} style={s.ratingStyle(small, color)}>
           {formatRating(rating, isCleanness)}
         </Animatable.Text>
-        <View>
-          <Animated.Image style={s.openImage(openOpacity, color)} source={image} />
-          <Animated.Image style={s.lockedImage(lockedOpacity)} source={image} />
-        </View>
+        <Animated.Image style={s.openImage(openOpacity, color)} source={image} />
       </View>
     </View>
   );
