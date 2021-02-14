@@ -74,6 +74,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [pushPopupVisible, setPushPopupVisible] = useState(false);
   const [showPushPopup, setShowPushPopup] = useState(false);
   const [userMarkerVisible, setUserMarkerVisible] = useState(true);
+  const [progressVisible, setProgressVisible] = useState(false);
 
   const isMounted = useIsMounted();
   const isFocused = useIsFocused();
@@ -316,6 +317,7 @@ export const HomeScreen = ({ navigation, route }) => {
           setHideList(false);
           setHideButtons(false);
         }
+        setProgressVisible(false);
       }
     });
     return unsubscribe;
@@ -392,6 +394,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [route]);
 
   const progress = useCallback(() => {
+    setProgressVisible(true);
     setHideList(true);
     setTimeout(() => {
       setHideList(true);
@@ -400,12 +403,13 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [navigation])
 
   const report = useCallback(() => {
+    setProgressVisible(true);
     setHideList(true);
-      setHideButtons(true);
-      setTimeout(() => {
-        setHideList(true);
-        navigation.navigate("Report", { location: null, currentPosition: location });
-      }, SCREEN_WAIT_DURATION);
+    setHideButtons(true);
+    setTimeout(() => {
+      setHideList(true);
+      navigation.navigate("Report", { location: null, currentPosition: location });
+    }, SCREEN_WAIT_DURATION);
   }, [navigation, location])
 
   const explore = useCallback(() => {
@@ -644,7 +648,7 @@ export const HomeScreen = ({ navigation, route }) => {
         />
       </AnimatedSafeAreaView>
       <GrowthPoints />
-      <CenterMapButton userMarkerVisible={userMarkerVisible} onPress={centerMap} />
+      <CenterMapButton progressVisible={progressVisible} userMarkerVisible={userMarkerVisible} onPress={centerMap} />
       <Popup
         permissions={true}
         textData={strings.popups.locationPermissions}
