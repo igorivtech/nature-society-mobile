@@ -497,7 +497,7 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
             <PlaceRating
               isCleanness={true}
               small
-              leftMargin={40}
+              leftMargin={smallScreen ? 20 : 40}
               title={strings.placeScreen.cleannessTitle(placeLocked(user, item))}
               image={require("../../assets/images/Heart.png")}
               color={item.cleannessColor}

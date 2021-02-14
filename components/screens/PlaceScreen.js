@@ -250,7 +250,7 @@ export const PlaceScreen = ({ navigation, route }) => {
 
               <PlaceRating
                 isCleanness={true}
-                leftMargin={smallScreen ? 30 : 40}
+                leftMargin={smallScreen ? 12 : 40}
                 title={strings.placeScreen.cleannessTitle(placeLocked(user, place))}
                 image={require("../../assets/images/HeartL.png")}
                 color={place.cleannessColor}
@@ -538,7 +538,7 @@ const s = StyleSheet.create({
   }),
 
   ratingStyle: (small, color) => ({
-    ...textStyles.normalOfSize(isAlt ? (small ? 16 : 24) : (small ? 22 : 36)), color, marginRight: 8 
+    ...textStyles.normalOfSize(isAlt ? (small ? 16 : (smallScreen ? 20 : 24)) : (small ? 22 : 36)), color, marginRight: 8 
   }),
 
   buyTitle: {
