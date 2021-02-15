@@ -17,13 +17,13 @@ export const LoadingImage = ({ source, style }) => {
             toValue: 0.5,
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
-            duration: 1000,
+            duration: 750,
           }),
           Animated.timing(opacity, {
             toValue: 1,
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
-            duration: 1000,
+            duration: 750,
           }),
         ])
       ).start();
