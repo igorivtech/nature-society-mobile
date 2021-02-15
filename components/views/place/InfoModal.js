@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   card: (scale) => ({
     transform: [{ scale }],
-    paddingHorizontal: smallScreen ? 22 : 27,
+    paddingHorizontal: smallScreen ? 18 : 27,
     paddingTop: smallScreen ? 22 : 30,
     paddingBottom: smallScreen ? 32 : 45,
     alignItems: "stretch",
