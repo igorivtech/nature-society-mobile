@@ -118,8 +118,8 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     res[i].position = {
       longitude: place.location.coordinates[0],
       latitude: place.location.coordinates[1],
-      latitudeDelta: 0.1 * SCREEN_ASPECT_RATIO,
-      longitudeDelta: 0.1,
+      // latitudeDelta: 0.1 * SCREEN_ASPECT_RATIO,
+      // longitudeDelta: 0.1,
     }
     if (place.title == null || place.title == '' || place.title.trim() === "") {
       res[i].title = "אין שם";
