@@ -345,32 +345,11 @@ export const PlaceScreen = ({ navigation, route }) => {
 
 const PlaceAction = ({ title, icon, onPress }) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={{
-        alignItems: "center",
-        justifyContent: "flex-start",
-      }}
-    >
-      <View style={{
-        height: 29,
-        width: 29,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        <Image resizeMode='contain' style={[globalStyles.imageJustContain, {
-          resizeMode: 'contain',
-        }]} source={icon} />
+    <TouchableOpacity onPress={onPress} style={s.actionContainer}>
+      <View style={s.actionIconContainer}>
+        <Image resizeMode='contain' style={s.actionIcon} source={icon} />
       </View>
-      <Text
-        style={{
-          ...textStyles.normalOfSize(12),
-          textAlign: "center",
-          marginTop: 6,
-        }}
-      >
-        {title}
-      </Text>
+      <Text style={s.actionTitle}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -445,6 +424,29 @@ export const PlaceRating = ({
 };
 
 const s = StyleSheet.create({
+
+  actionContainer: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+
+  actionIconContainer: {
+    height: smallScreen ? 24 : 29,
+    width: smallScreen ? 24 : 29,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  actionIcon: {
+    ...globalStyles.imageJustContain,
+    resizeMode: 'contain',
+  },
+
+  actionTitle: {
+    ...textStyles.normalOfSize(12),
+    textAlign: "center",
+    marginTop: 6,
+  },
 
   topContainer: {
     flexDirection: 'row',
