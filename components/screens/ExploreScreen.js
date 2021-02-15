@@ -35,6 +35,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { appWebsite } from "../../hooks/useShare";
 import LottieView from 'lottie-react-native';
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
+import { LoadingImage } from "../views/LoadingImage";
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -457,11 +458,10 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
         )}
         {item.image != null && (
           <View style={styles.placeImageContainer}>
-            <Image onLoad={()=>setLoadingImage(false)} onLoadStart={()=>setLoadingImage(true)} style={styles.cardImage('cover')} source={{ 
+            <LoadingImage style={styles.cardImage('cover')} source={{ 
               uri: item.image,
               cache: 'force-cache'
             }} />
-            <ActivityIndicator style={globalStyles.absolute} animating={loadingImage} />
           </View>
         )}
         <View style={styles.cardDetailsContainer}>
