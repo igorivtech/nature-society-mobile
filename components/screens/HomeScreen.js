@@ -295,7 +295,7 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }, [sortedPlaces])
   useEffect(() => {
-    if (serverPlaces && serverPlaces.length > 0) {
+    if (serverPlaces) { // && serverPlaces.length > 0
       setSortedPlaces(specialSortPlaces([...serverPlaces], locationRef.current));
     } else {
       // somthing i guess?
@@ -473,12 +473,12 @@ export const HomeScreen = ({ navigation, route }) => {
       if (data !== null) {
         if (data.searchId === currSearchId.current) {
           const pp = data.pp;
-          if (pp.length > 0) {
+          // if (pp.length > 0) {
             dispatch({
               type: SAVE_PLACES,
               payload: pp,
             });
-          }
+          // }
         } else {
           console.log("DISCARDING OLD PLACES");
         }
