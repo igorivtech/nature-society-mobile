@@ -250,8 +250,8 @@ export const HomeScreen = ({ navigation, route }) => {
       lockAutoSearching.current = false;
       mapRef.current.animateToRegion({
         ...region,
-        longitudeDelta: 0.2, // 1 is 111 kilometers
-        latitudeDelta: 0.2*SCREEN_ASPECT_RATIO
+        longitudeDelta: 0.17, // 1 is 111 kilometers
+        latitudeDelta: 0.17*SCREEN_ASPECT_RATIO
       }, MAP_ANIMATION_DURATION);
       setTimeout(() => {
         ignoreCardsListener.current = false;
@@ -261,7 +261,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const animateToItem = (item) => {
     const ld = mapRef.current.__lastRegion.longitudeDelta;
-    const noZoom = ld <= 0.2;
+    const noZoom = ld <= 0.17;
     if (noZoom) {
       mapRef.current.animateToRegion({
         ...mapRef.current.__lastRegion,
@@ -271,8 +271,8 @@ export const HomeScreen = ({ navigation, route }) => {
     } else {
       mapRef.current.animateToRegion({
         ...item.position,
-        longitudeDelta: 0.2, // 1 is 111 kilometers
-        latitudeDelta: 0.2*SCREEN_ASPECT_RATIO
+        longitudeDelta: 0.17, // 1 is 111 kilometers
+        latitudeDelta: 0.17*SCREEN_ASPECT_RATIO
       }, MAP_ANIMATION_DURATION);
     }
   };
