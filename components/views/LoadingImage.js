@@ -4,6 +4,7 @@ import { colors } from "../../values/colors";
 
 export const LoadingImage = memo(({ source, style }) => {
   const opacity = useRef(new Animated.Value(1)).current;
+  const imageOpacity = useRef(new Animated.Value(0)).current;
   const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
@@ -34,15 +35,21 @@ export const LoadingImage = memo(({ source, style }) => {
   }, []);
   const onLoadEnd = useCallback(() => {
     setAnimating(false);
+    Animated.timing(imageOpacity, {
+      toValue: 1,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease),
+      duration: 300
+    }).start();
   }, []);
 
   return (
     <View style={styles.container(style)}>
       <Animated.View style={styles.background(opacity)} />
-      <Image
+      <Animated.Image
         onLoadStart={onLoadStart}
         onLoadEnd={onLoadEnd}
-        style={StyleSheet.absoluteFill}
+        style={styles.image(imageOpacity)}
         source={source}
       />
     </View>
@@ -50,13 +57,20 @@ export const LoadingImage = memo(({ source, style }) => {
 });
 
 const styles = StyleSheet.create({
+  image: (opacity) => ({
+    ...StyleSheet.absoluteFill,
+    opacity,
+    overflow: 'hidden'
+  }),
   container: (style) => ({
     ...style,
     backgroundColor: "white",
+    overflow: 'hidden'
   }),
   background: (opacity) => ({
     ...StyleSheet.absoluteFill,
     opacity,
     backgroundColor: colors.imageBg,
+    overflow: 'hidden'
   }),
 });
