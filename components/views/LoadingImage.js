@@ -1,11 +1,8 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useRef } from "react";
+import React, { memo, useEffect, useCallback, useState, useRef } from "react";
 import { View, StyleSheet, Animated, Easing, Image } from "react-native";
 import { colors } from "../../values/colors";
 
-export const LoadingImage = ({ source, style }) => {
+export const LoadingImage = memo(({ source, style }) => {
   const opacity = useRef(new Animated.Value(1)).current;
   const [animating, setAnimating] = useState(false);
 
@@ -32,12 +29,12 @@ export const LoadingImage = ({ source, style }) => {
     }
   }, [animating]);
 
-  const onLoadStart = () => {
+  const onLoadStart = useCallback(() => {
     setAnimating(true);
-  };
-  const onLoadEnd = () => {
+  }, []);
+  const onLoadEnd = useCallback(() => {
     setAnimating(false);
-  };
+  }, []);
 
   return (
     <View style={styles.container(style)}>
@@ -50,7 +47,7 @@ export const LoadingImage = ({ source, style }) => {
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: (style) => ({
