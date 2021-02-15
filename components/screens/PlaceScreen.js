@@ -223,7 +223,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               </TouchableOpacity>
             </View>
 
-            <Text style={textStyles.normalOfSize(24)}>
+            <Text style={textStyles.normalOfSize(smallScreen ? 22 : 24)}>
               {strings.distanceFromYou(place.distance)}
             </Text>
           </Animatable.View>
@@ -455,7 +455,7 @@ const s = StyleSheet.create({
   },
 
   title: {
-    ...textStyles.boldOfSize(24),
+    ...textStyles.boldOfSize(smallScreen ? 22 : 24),
     paddingLeft: 15+16,
     flexGrow: 1,
     flexShrink: 1
