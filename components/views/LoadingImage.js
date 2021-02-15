@@ -32,7 +32,7 @@ export const LoadingImage = ({ source, style }) => {
     }
   }, [animating]);
 
-  const onLoad = () => {
+  const onLoadStart = () => {
     setAnimating(true);
   };
   const onLoadEnd = () => {
@@ -49,7 +49,7 @@ export const LoadingImage = ({ source, style }) => {
         }}
       />
       <Image
-        onLoad={onLoad}
+        onLoadStart={onLoadStart}
         onLoadEnd={onLoadEnd}
         style={{
           ...StyleSheet.absoluteFill,
