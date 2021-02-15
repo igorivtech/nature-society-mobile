@@ -111,7 +111,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
                 color={item.crowdnessColor}
               />
 
-              <View style={globalStyles.spacer(8)} />
+              <View style={globalStyles.spacer(smallScreen ? 6 : 8)} />
 
               <RatingView
                 ITEM_WIDTH={ITEM_WIDTH}
