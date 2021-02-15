@@ -17,13 +17,13 @@ export const LoadingImage = ({ source, style }) => {
             toValue: 0.5,
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
-            duration: 500
+            duration: 1000,
           }),
           Animated.timing(opacity, {
             toValue: 1,
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
-            duration: 500
+            duration: 1000,
           }),
         ])
       ).start();
@@ -40,22 +40,26 @@ export const LoadingImage = ({ source, style }) => {
   };
 
   return (
-    <View style={[style, { backgroundColor: 'white' }]}>
-      <Animated.View
-        style={{
-          ...StyleSheet.absoluteFill,
-          opacity,
-          backgroundColor: colors.imageBg,
-        }}
-      />
+    <View style={styles.container(style)}>
+      <Animated.View style={styles.background(opacity)} />
       <Image
         onLoadStart={onLoadStart}
         onLoadEnd={onLoadEnd}
-        style={{
-          ...StyleSheet.absoluteFill,
-        }}
+        style={StyleSheet.absoluteFill}
         source={source}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: (style) => ({
+    ...style,
+    backgroundColor: "white",
+  }),
+  background: (opacity) => ({
+    ...StyleSheet.absoluteFill,
+    opacity,
+    backgroundColor: colors.imageBg,
+  }),
+});
