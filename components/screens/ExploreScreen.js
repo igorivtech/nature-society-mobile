@@ -449,7 +449,6 @@ export const SearchBar = memo(({
 });
 
 const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
-  const [loadingImage, setLoadingImage] = useState(false);
   return (
     <Animatable.View animation='fadeIn'>
       <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>

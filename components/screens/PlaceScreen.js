@@ -21,6 +21,7 @@ import { Popup } from "../views/Popup"
 import { useShare } from "../../hooks/useShare";
 import { showLocation } from 'react-native-map-link'
 import { Popup as DirectionsPopup } from 'react-native-map-link';
+import {LoadingImage} from "../views/LoadingImage";
 
 import * as Animatable from "react-native-animatable";
 import { RecentVisitor } from "../views/home/views";
@@ -91,7 +92,6 @@ export const PlaceScreen = ({ navigation, route }) => {
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const [loadingBuy, setLoadingBuy] = useState(false);
-  const [loadingImage, setLoadingImage] = useState(false);
 
   const textRef = useRef();
   const ratingRef = useRef();
@@ -266,12 +266,7 @@ export const PlaceScreen = ({ navigation, route }) => {
               <Image source={require("../../assets/images/default_place_bg.png")} />
             )}
             {place.image != null && (
-              <View style={globalStyles.centerChildren}>
-                <ActivityIndicator animating={loadingImage} />
-              </View>
-            )}
-            {place.image != null && (
-              <Image onLoadStart={()=>setLoadingImage(true)} onLoad={()=>setLoadingImage(false)} style={StyleSheet.absoluteFill} source={{ 
+              <LoadingImage style={StyleSheet.absoluteFill} source={{ 
                 uri: place.image,
                 cache: 'force-cache'
               }} />
