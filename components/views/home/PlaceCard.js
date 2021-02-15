@@ -15,6 +15,7 @@ import { smallScreen, width } from "../../../values/consts";
 import { strings } from "../../../values/strings";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
+import { LoadingImage } from "../LoadingImage";
 import { RatingView, RecentVisitor } from "./views";
 
 export const SPACING = smallScreen ? 20 : 40;
@@ -126,7 +127,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
 
           <View style={globalStyles.cardMainImage}>
             {item.image != null && (
-              <Image style={styles.image} source={{ 
+              <LoadingImage style={styles.image} source={{ 
                 uri: item.image ,
                 cache: 'force-cache'
               }} />
