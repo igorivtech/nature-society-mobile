@@ -259,6 +259,25 @@ export const HomeScreen = ({ navigation, route }) => {
     }
   }
 
+  const animateToItem = (item) => {
+    const ld = mapRef.current.__lastRegion.longitudeDelta;
+    const noZoom = ld < 0.3;
+    if (noZoom) {
+      mapRef.current.animateToRegion({
+        ...mapRef.current.__lastRegion,
+        longitude: item.position.longitude,
+        latitude: item.position.latitude,
+      }, MAP_ANIMATION_DURATION);
+    } else {
+      const paddedLD = item.position.longitudeDelta + 0.2;
+      mapRef.current.animateToRegion({
+        ...item.position,
+        longitudeDelta: paddedLD,
+        latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
+      }, MAP_ANIMATION_DURATION);
+    }
+  };
+
   useEffect(()=>{
     if (sortedPlaces.length > 0) {
       setCardsData([leftSpacer, ...sortedPlaces, rightSpacer]);
@@ -422,25 +441,6 @@ export const HomeScreen = ({ navigation, route }) => {
       });
     }, SCREEN_WAIT_DURATION);
   }, [navigation, location])
-
-  const animateToItem = (item) => {
-    const ld = mapRef.current.__lastRegion.longitudeDelta;
-    const noZoom = ld < 0.3;
-    if (noZoom) {
-      mapRef.current.animateToRegion({
-        ...mapRef.current.__lastRegion,
-        longitude: item.position.longitude,
-        latitude: item.position.latitude,
-      }, MAP_ANIMATION_DURATION);
-    } else {
-      const paddedLD = item.position.longitudeDelta + 0.2;
-      mapRef.current.animateToRegion({
-        ...item.position,
-        longitudeDelta: paddedLD,
-        latitudeDelta: paddedLD*SCREEN_ASPECT_RATIO
-      }, MAP_ANIMATION_DURATION);
-    }
-  };
 
   const showPlace = useCallback((place) => {
     setHideList(true);
