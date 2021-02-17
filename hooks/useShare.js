@@ -3,7 +3,7 @@ import { Platform, Share } from "react-native";
 import * as Linking from 'expo-linking';
 import { isStandalone } from "../values/consts";
 
-export const appWebsite = "https://d1i8174zhvqsl4.cloudfront.net"
+export const appWebsite = "https://my.teva.org.il"
 
 export const useShare = () => {
   const oldShare = async (title, id) => {

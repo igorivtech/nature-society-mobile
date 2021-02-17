@@ -19,7 +19,7 @@
     ],
     "ios": {
       "associatedDomains": [
-        "applinks:d1i8174zhvqsl4.cloudfront.net"
+        "applinks:my.teva.org.il"
       ],
       "supportsTablet": false,
       "bundleIdentifier": "com.ivtech.hala",
@@ -55,7 +55,7 @@
           "data": [
             {
               "scheme": "https",
-              "host": "d1i8174zhvqsl4.cloudfront.net",
+              "host": "my.teva.org.il",
               "pathPrefix": "/showPlace"
             }
           ],
