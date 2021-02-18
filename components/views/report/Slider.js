@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState, useCallback } from "react";
 import { Directions, FlingGestureHandler, PanGestureHandler, State } from "react-native-gesture-handler";
-import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image, ActivityIndicator } from "react-native";
+import { View, StyleSheet, Animated, Easing, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
 import {clamp} from '../../../hooks/helpers'
 import {textStyles} from "../../../values/textStyles"
 import { height, pureHeight, smallScreen, THUMB_COLORS } from "../../../values/consts";
@@ -10,6 +10,7 @@ import { colors } from "../../../values/colors";
 import useIsMounted from 'ismounted';
 import AsyncStorage from "@react-native-community/async-storage";
 import { globalStyles } from "../../../values/styles";
+import {ActivityIndicator} from "../ActivityIndicator";
 
 const THUMB_RADIUS = 26.5 / 2;
 let SLIDER_HEIGHT = Math.min(347, (pureHeight-45*2)*0.5);

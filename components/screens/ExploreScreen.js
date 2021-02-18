@@ -11,7 +11,6 @@ import {
   Keyboard,
   Animated,
   Easing,
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform
 } from "react-native";
@@ -36,6 +35,7 @@ import { appWebsite } from "../../hooks/useShare";
 import LottieView from 'lottie-react-native';
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 import { LoadingImage } from "../views/LoadingImage";
+import {ActivityIndicator} from "../views/ActivityIndicator"
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 

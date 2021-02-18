@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useRef } from "react";
 import {
-  ActivityIndicator,
   Animated,
   Easing,
   Image,
@@ -16,6 +15,7 @@ import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
 import { CARD_RADIUS, smallScreen, width } from "../../../values/consts";
 import { globalStyles } from "../../../values/styles";
+import {ActivityIndicator} from "../ActivityIndicator"
 
 const CARD_ANIMATION_DURATION = 400;
 

@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { View, Text, StyleSheet, Animated, Image, Easing, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, Animated, Image, Easing, TouchableOpacity } from "react-native";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { DetailsView } from "./DetailsView";
@@ -10,6 +10,7 @@ import { colors } from "../../../values/colors";
 import { useEffect } from "react";
 import { smallScreen } from "../../../values/consts";
 import { globalStyles } from "../../../values/styles";
+import {ActivityIndicator} from "../ActivityIndicator";
 
 export const Report = ({goBack, useImageData, finishReport, details, iHelped, loadingSendReport, sharePressed}) => {
 

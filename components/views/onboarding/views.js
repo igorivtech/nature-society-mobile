@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, memo } from "react";
-import { View, Text, Pressable, Animated, Easing, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
+import { View, Text, Pressable, Animated, Easing, TouchableOpacity, StyleSheet } from "react-native";
 import { colors } from "../../../values/colors";
 import { textStyles } from "../../../values/textStyles";
 import * as Animatable from "react-native-animatable";
+import {ActivityIndicator} from "../ActivityIndicator";
 
 const images = {
   0: require("../../../assets/images/Explore.png"),

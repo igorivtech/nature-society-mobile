@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  ActivityIndicator,
 } from "react-native";
 import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
@@ -14,6 +13,7 @@ import { Popup } from "../Popup";
 import { askSettings } from "../../../hooks/usePermissions";
 import { smallScreen } from "../../../values/consts";
 import { globalStyles } from "../../../values/styles";
+import {ActivityIndicator} from "../ActivityIndicator";
 
 export const TakePicView = ({ useImageData }) => {
 
