@@ -1,18 +1,17 @@
 import React from "react";
 import LottieView from "lottie-react-native";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
-export const ActivityIndicator = ({ style = {}, animating = true, color, key = null }) => {
+export const ActivityIndicator = ({style = {}, animating = true, color, customKey = ""}) => {
   return (
-    <View key={key}>
-      <LottieView
-        style={styles.lottie(style, animating)}
-        source={require("../../assets/animations/buy_spin.json")}
-        loop={true}
-        resizeMode="contain"
-        autoPlay={animating}
-      />
-    </View>
+    <LottieView
+      key={customKey}
+      style={styles.lottie(style, animating)}
+      source={require("../../assets/animations/buy_spin.json")}
+      loop={true}
+      resizeMode="contain"
+      autoPlay={animating}
+    />
   );
 };
 
