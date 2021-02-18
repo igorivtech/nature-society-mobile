@@ -22,7 +22,7 @@ export const ActivityIndicator = memo(({style = {}, animating = true, color, cus
         source={require("../../assets/animations/buy_spin.json")}
         loop={true}
         resizeMode="contain"
-        autoPlay={animating}
+        autoPlay={true}
       />
     </Animated.View>
   );
