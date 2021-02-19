@@ -242,7 +242,7 @@ const FloatingLabel = ({right, done, points, title}) => {
           <Text adjustsFontSizeToFit={smallScreen} style={flStyles.notDoneTitle(right)}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={flStyles.notDoneInnerText}>{user ? (points - user.points) : (points - offlineUser.points)}</Text>
+            <Text style={flStyles.notDoneInnerText}>{points}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>
@@ -250,7 +250,7 @@ const FloatingLabel = ({right, done, points, title}) => {
     </View>
   )
 }
-
+// <Text style={flStyles.notDoneInnerText}>{user ? (points - user.points) : (points - offlineUser.points)}</Text>
 // path_marker - 65 × 72
 // trees - 52 × 82
 
