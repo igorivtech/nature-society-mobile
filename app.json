@@ -23,7 +23,7 @@
       ],
       "supportsTablet": false,
       "bundleIdentifier": "com.ivtech.hala",
-      "buildNumber": "1",
+      "buildNumber": "3",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "waze",
