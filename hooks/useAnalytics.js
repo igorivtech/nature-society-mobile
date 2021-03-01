@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import * as Analytics from "expo-firebase-analytics";
+import * as Facebook from 'expo-facebook';
 
 export const useAnalytics = () => {
   useEffect(() => {
@@ -8,5 +9,7 @@ export const useAnalytics = () => {
     //   screen: "profile",
     //   purpose: "Opens the internal settings",
     // }).then(v=>console.log({v})).catch(e=>console.log({e}));
+    //
+    Facebook.initializeAsync("139938011330970").then(()=>{});
   }, []);
 };
