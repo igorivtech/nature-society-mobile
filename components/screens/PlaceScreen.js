@@ -73,11 +73,15 @@ if (height > 667) {
   CONTAINER_VERTICAL_PADDING = 30;
 }
 
-const options = [
-  'ווייז', 
-  'אחר',
-  'ביטול'
-];
+const sheetOptions = {
+  options: [
+    'ווייז', 
+    'אחר',
+    'ביטול'
+  ],
+  cancelButtonIndex: 2,
+  tintColor: colors.treeBlues,
+};
 
 export const PlaceScreen = ({ navigation, route }) => {
 
@@ -110,11 +114,7 @@ export const PlaceScreen = ({ navigation, route }) => {
 
   const waze = () => {
     showActionSheetWithOptions(
-      {
-        options,
-        cancelButtonIndex: 2,
-        tintColor: colors.treeBlues,
-      },
+      sheetOptions,
       buttonIndex => {
         if (buttonIndex === 0) {
           Linking.openURL(`https://www.waze.com/ul/?q=${decodeURIComponent(place.title)}`)
