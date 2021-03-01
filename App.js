@@ -39,6 +39,7 @@ import { useDeepLink } from "./hooks/useDeepLink";
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Portal from '@burstware/react-native-portal';
 import { useRTL } from "./hooks/useRTL";
+import { useAnalytics } from "./hooks/useAnalytics";
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -68,6 +69,7 @@ export default function App() {
   useNotifications(state, dispatch);
   useUserUsageTime(state);
   useDeepLink(dispatch);
+  useAnalytics();
 
   useEffect(()=>{
     SplashScreen.preventAutoHideAsync();

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "203328678397",
+    "project_id": "igneous-clover-300016",
+    "storage_bucket": "igneous-clover-300016.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203328678397:android:ff7724876a659f7eb59194",
+        "android_client_info": {
+          "package_name": "com.ivtech.hala"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203328678397-j3ev4nnl24crngjlghoo1unh3ag6h06a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7dnNKKKF-WJ3KEgGbQH9fGxOP7Cg79Hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203328678397-j3ev4nnl24crngjlghoo1unh3ag6h06a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>203328678397-8o5hd0kah4k39i1i6v7e0dnohgt1a0ba.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.203328678397-8o5hd0kah4k39i1i6v7e0dnohgt1a0ba</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCZWRw4uja13gJHCiIuDtZ7atE4mU8DNAo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>203328678397</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ivtech.hala</string>
+	<key>PROJECT_ID</key>
+	<string>igneous-clover-300016</string>
+	<key>STORAGE_BUCKET</key>
+	<string>igneous-clover-300016.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:203328678397:ios:bcd739db12cd629bb59194</string>
+</dict>
+</plist>
