@@ -117,7 +117,8 @@ export const PlaceScreen = ({ navigation, route }) => {
       },
       buttonIndex => {
         if (buttonIndex === 0) {
-          Linking.openURL(`https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`)
+          Linking.openURL(`https://www.waze.com/ul/?q=${decodeURIComponent(place.title)}`)
+          // `https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`
         } else if (buttonIndex === 1) {
           showLocation({
             latitude: place.position.latitude,
