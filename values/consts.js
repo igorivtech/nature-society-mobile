@@ -19,6 +19,7 @@ export const NAV_DURATION = 600;
 export const NAV_DURATION_CLOSE = 400;
 
 export const WHITE_LIST_APPS = ['google-maps', 'apple-maps', 'waze', 'moovit'];
+// export const WHITE_LIST_APPS = ['google-maps', 'apple-maps', 'moovit'];
 
 export const TOP_BUTTONS_CONTAINER_WIDTH = smallScreen ? 0.75 : 0.7
 

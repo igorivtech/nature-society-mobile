@@ -10,6 +10,9 @@ export const useAnalytics = () => {
     //   purpose: "Opens the internal settings",
     // }).then(v=>console.log({v})).catch(e=>console.log({e}));
     //
-    Facebook.initializeAsync("139938011330970").then(()=>{});
+    Facebook.initializeAsync({
+      appId: "139938011330970",
+      appName: "בשביל הטבע"
+    }).then(()=>{});
   }, []);
 };

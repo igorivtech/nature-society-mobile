@@ -50,6 +50,7 @@ import posed, {Transition as PosedTransition} from 'react-native-pose';
 import useIsMounted from "ismounted";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 import { InfoModal } from "../views/place/InfoModal";
+import { useActionSheet } from '@expo/react-native-action-sheet'
 
 const PosedText = posed.Text({
   enter: {opacity: 1},
@@ -71,6 +72,12 @@ if (height > 667) {
 } else {
   CONTAINER_VERTICAL_PADDING = 30;
 }
+
+const options = [
+  'ווייז', 
+  'אחר',
+  'ביטול'
+];
 
 export const PlaceScreen = ({ navigation, route }) => {
 
@@ -99,19 +106,30 @@ export const PlaceScreen = ({ navigation, route }) => {
   const descRef = useRef();
   const actionsRef = useRef();
 
+  const { showActionSheetWithOptions } = useActionSheet();
+
   const waze = () => {
-    // setDirectionsPopupVisible(true);
-    showLocation({
-      latitude: place.position.latitude,
-      longitude: place.position.longitude,
-      // sourceLatitude: -8.0870631,  // optionally specify starting location for directions
-      // sourceLongitude: -34.8941619,  // not optional if sourceLatitude is specified
-      title: place.title,  // optional
-      // dialogTitle: 'This is the dialog Title', // optional (default: 'Open in Maps')
-      // dialogMessage: 'This is the amazing dialog Message', // optional (default: 'What app would you like to use?')
-      // cancelText: 'This is the cancel button text', // optional (default: 'Cancel')
-      appsWhiteList: WHITE_LIST_APPS,
-  })
+    showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex: 2,
+        tintColor: colors.treeBlues,
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          Linking.openURL(`https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`)
+        } else if (buttonIndex === 1) {
+          showLocation({
+            latitude: place.position.latitude,
+            longitude: place.position.longitude,
+            title: place.title,  // optional
+            appsWhiteList: WHITE_LIST_APPS,
+          })
+        }
+      }
+    )
+
+
     // popupAction.current = openWaze;
     // setPopupTextData(strings.popups.waze)
     // setPopupVisible(true);
