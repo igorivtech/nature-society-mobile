@@ -51,6 +51,11 @@
       "package": "com.ivtech.hala",
       "googleServicesFile": "./google-services.json",
       "versionCode": 1,
+      "icon": "./assets/images/logo.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo_android.png",
+        "backgroundColor": "#F5B345"
+      },
       "intentFilters": [
         {
           "action": "VIEW",
