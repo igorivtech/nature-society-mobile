@@ -6,6 +6,7 @@ import {ASK_PUSH, SAVE_NOTIFICATION} from "../context/userReducer"
 import AsyncStorage from "@react-native-community/async-storage";
 import { Auth } from "aws-amplify";
 import { ATTRIBUTE_PUSH_TOKEN } from "./useUser";
+import { useServer } from "./useServer";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -23,11 +24,13 @@ export const useNotifications = (state, dispatch) => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const {askPush, user} = state;
+  const {askPush, user, token} = state;
+
+  const {updatePushToken} = useServer();
 
   useEffect(()=>{
     handleToken();
-  }, [expoPushToken, user])
+  }, [expoPushToken, user, token])
 
   const handleToken = () => {
     Promise.all([
@@ -38,6 +41,7 @@ export const useNotifications = (state, dispatch) => {
       const lastSentToken = results[1];
       if (lastKnownToken != null && lastKnownToken != lastSentToken) {
         handleUser(lastKnownToken);
+        updatePushToken(lastKnownToken, token);
       }
     })
   }

@@ -169,6 +169,22 @@ export const useServer = () => {
     }
   }
 
+  const updatePushToken = async (pushToken, token) => {
+    // try {
+    //   await fetch(`${BASE_URL}/updatePushToken`, {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //       pushToken
+    //     }),
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: token ?? 'guest'
+    //     }
+    //   });
+    //   AsyncStorage.setItem("LAST_SENT_TOKEN", pushToken).then(()=>{});
+    // } catch (error) {}
+  }
+
   const sendReport = async (token, reportData) => {
     try {
       const response = await fetch(`${BASE_URL}/newReport`, {
@@ -188,7 +204,7 @@ export const useServer = () => {
     }
   }
 
-  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport, getPlace, loadingGetPlace, suggestNewPlace, loadingSuggestion };
+  return { getPlaces, getSettings, searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, sendUsageTime, sendReport, getPlace, loadingGetPlace, suggestNewPlace, loadingSuggestion, updatePushToken };
 };
 
 //
