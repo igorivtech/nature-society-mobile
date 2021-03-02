@@ -42,7 +42,7 @@ import {
   State,
 } from "react-native-gesture-handler";
 import {UserContext} from "../../context/context"
-import {SAVE_PLACES, SAVE_USER} from "../../context/userReducer";
+import {SAVE_USER} from "../../context/userReducer";
 import { Auth } from "aws-amplify";
 import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} from '../../hooks/useUser';
 import { formatRating, placeLocked } from "../../hooks/helpers";
