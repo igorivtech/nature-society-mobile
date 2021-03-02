@@ -2,6 +2,25 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { CLEANNESS_COLORS, height, isAlt, SCREEN_ASPECT_RATIO, width } from "../values/consts";
 import { landscapeImages } from "../values/images";
 import { strings } from "../values/strings";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
+
+export const getExpoToken = async() => {
+  let token;
+  if (Constants.isDevice) {
+    const { status } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    if (status !== "granted") {
+      return null;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+  } else {
+    return null;
+  }
+  return token;
+}
 
 export const clamp = (min, value, max) => {
   if (value < min) {

@@ -69,16 +69,16 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 
 const apps = Platform.select({
   ios: [
-    'ווייז', 
-    'גוגל מפס',
-    'אפל מפס',
-    'מוביט',
+    'Waze', 
+    'Google Maps',
+    'Apple Maps',
+    'Moovit',
     'ביטול'
   ],
   android: [
-    'ווייז', 
-    'גוגל מפס',
-    'מוביט',
+    'Waze', 
+    'Google Maps',
+    'Moovit',
     'ביטול'
   ]
 });

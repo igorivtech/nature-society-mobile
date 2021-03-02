@@ -3,7 +3,7 @@ import Amplify, { Auth } from "aws-amplify";
 import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER, SAVE_OFFLINE_USER } from "../context/userReducer";
 import { useServer } from "./useServer";
 import AsyncStorage from "@react-native-community/async-storage";
-import { getExpoToken } from "./useNotifications";
+import { getExpoToken } from "./helpers";
 
 export const ATTRIBUTE_POINTS = "custom:points";
 export const ATTRIBUTE_NUM_OF_REPORTS = "custom:numOfReports";

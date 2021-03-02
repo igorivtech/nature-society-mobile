@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { Auth } from "aws-amplify";
 import { ATTRIBUTE_PUSH_TOKEN } from "./useUser";
 import { useServer } from "./useServer";
+import { getExpoToken } from "./helpers";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -105,22 +106,6 @@ export const useNotifications = (state, dispatch) => {
   }, []);
 
 };
-
-export const getExpoToken = async() => {
-  let token;
-  if (Constants.isDevice) {
-    const { status } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
-    if (status !== "granted") {
-      return null;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-  } else {
-    return null;
-  }
-  return token;
-}
 
 async function registerForPushNotificationsAsync() {
   let token;
