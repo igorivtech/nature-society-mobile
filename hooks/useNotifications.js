@@ -106,7 +106,7 @@ export const useNotifications = (state, dispatch) => {
 
 };
 
-async function getExpoToken() {
+export const getExpoToken = async() => {
   let token;
   if (Constants.isDevice) {
     const { status } = await Permissions.getAsync(

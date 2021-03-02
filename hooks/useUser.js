@@ -3,6 +3,7 @@ import Amplify, { Auth } from "aws-amplify";
 import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER, SAVE_OFFLINE_USER } from "../context/userReducer";
 import { useServer } from "./useServer";
 import AsyncStorage from "@react-native-community/async-storage";
+import { getExpoToken } from "./useNotifications";
 
 export const ATTRIBUTE_POINTS = "custom:points";
 export const ATTRIBUTE_NUM_OF_REPORTS = "custom:numOfReports";
@@ -21,14 +22,16 @@ export const useUser = (dispatch) => {
       // bypassCache: true,
     })
       .then((cognitoUser) => {
+        const token = getToken(cognitoUser);
         dispatch({
           type: SAVE_TOKEN,
-          payload: getToken(cognitoUser),
+          payload: token,
         });
         dispatch({
           type: SAVE_USER,
           payload: cognitoToUser(cognitoUser),
         });
+        // send token and date to Ron
       })
       .catch(async(error) => {
         const savedOfflineUser = await AsyncStorage.getItem(OFFLINE_USER_KEY);
@@ -39,6 +42,11 @@ export const useUser = (dispatch) => {
             payload: user
           })
         }
+        getExpoToken().then(pushToken=>{
+          if (pushToken != null) {
+            // send pushToken and date to Ron
+          }
+        });
       })
       .finally(() => {
         setLoadingUser(false);
