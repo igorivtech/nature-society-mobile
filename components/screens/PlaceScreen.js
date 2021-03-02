@@ -46,25 +46,25 @@ import { Auth } from "aws-amplify";
 import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} from '../../hooks/useUser';
 import { formatRating, placeLocked } from "../../hooks/helpers";
 import LottieView from 'lottie-react-native';
-import posed, {Transition as PosedTransition} from 'react-native-pose';
+// import posed, {Transition as PosedTransition} from 'react-native-pose';
 import useIsMounted from "ismounted";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 import { InfoModal } from "../views/place/InfoModal";
-import { useActionSheet } from '@expo/react-native-action-sheet'
+// import { useActionSheet } from '@expo/react-native-action-sheet'
 
-const PosedText = posed.Text({
-  enter: {opacity: 1},
-  exit: {opacity: 0}
-})
+// const PosedText = posed.Text({
+//   enter: {opacity: 1},
+//   exit: {opacity: 0}
+// })
 
-const PosedtouchableOpacity = posed(TouchableOpacity)({
-  enter: {opacity: 1},
-  exit: {opacity: 0}
-})
+// const PosedtouchableOpacity = posed(TouchableOpacity)({
+//   enter: {opacity: 1},
+//   exit: {opacity: 0}
+// })
 
-const AnimatedLottie = Animated.createAnimatedComponent(LottieView);
+// const AnimatedLottie = Animated.createAnimatedComponent(LottieView);
 
-const fadeOutDuration = 100;
+// const fadeOutDuration = 100;
 let VERTICAL_MARGIN = Math.min(35, height*0.015);
 let CONTAINER_VERTICAL_PADDING = 40;
 if (height > 667) {
@@ -73,20 +73,20 @@ if (height > 667) {
   CONTAINER_VERTICAL_PADDING = 30;
 }
 
-const sheetOptions = {
-  options: [
-    'ווייז', 
-    'אחר',
-    'ביטול'
-  ],
-  cancelButtonIndex: 2,
-  tintColor: colors.treeBlues,
-};
+// const sheetOptions = {
+//   options: [
+//     'ווייז', 
+//     'אחר',
+//     'ביטול'
+//   ],
+//   cancelButtonIndex: 2,
+//   tintColor: colors.treeBlues,
+// };
 
 export const PlaceScreen = ({ navigation, route }) => {
 
   const {state, dispatch} = useContext(UserContext);
-  const {serverPlaces, user, settings} = state;
+  const {user, settings} = state;
 
   const { place } = route.params;
 
@@ -110,7 +110,7 @@ export const PlaceScreen = ({ navigation, route }) => {
   const descRef = useRef();
   const actionsRef = useRef();
 
-  const { showActionSheetWithOptions } = useActionSheet();
+  // const { showActionSheetWithOptions } = useActionSheet();
 
   const waze = () => {
     // showActionSheetWithOptions(
