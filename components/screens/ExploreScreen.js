@@ -36,6 +36,7 @@ import LottieView from 'lottie-react-native';
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 import { LoadingImage } from "../views/LoadingImage";
 import {ActivityIndicator} from "../views/ActivityIndicator"
+import useIsMounted from "ismounted";
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
 
@@ -64,6 +65,8 @@ export const ExploreScreen = ({ navigation, route }) => {
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const [showSuggestion, setShowSuggestion] = useState(false);
+
+  const isMounted = useIsMounted();
 
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
   const listTranslateX = leftMargin.interpolate({
@@ -107,12 +110,14 @@ export const ExploreScreen = ({ navigation, route }) => {
     }
     if (location != null) {
       const p = await getExplorePlaces(location, currentPage.current);
-      if (p) {
-        if (p.length > 0) {
-          currentPage.current = currentPage.current + 1;
-          setPlaces([...places, ...p]);
-        } else {
-          currentPage.current = -1;
+      if (isMounted?.current) {
+        if (p) {
+          if (p.length > 0) {
+            currentPage.current = currentPage.current + 1;
+            setPlaces([...places, ...p]);
+          } else {
+            currentPage.current = -1;
+          }
         }
       }
     }
