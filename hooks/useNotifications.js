@@ -25,13 +25,13 @@ export const useNotifications = (state, dispatch) => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const {askPush, user, token} = state;
+  const {askPush, user} = state;
 
   const {updatePushToken} = useServer();
 
   useEffect(()=>{
     handleToken();
-  }, [expoPushToken, user, token])
+  }, [expoPushToken, user])
 
   const handleToken = () => {
     Promise.all([
@@ -42,7 +42,7 @@ export const useNotifications = (state, dispatch) => {
       const lastSentToken = results[1];
       if (lastKnownToken != null && lastKnownToken != lastSentToken) {
         handleUser(lastKnownToken);
-        updatePushToken(lastKnownToken, token);
+        updatePushToken(lastKnownToken);
       }
     })
   }

@@ -15,17 +15,22 @@ export const OFFLINE_USER_KEY = 'OFFLINE_USER_KEY';
 
 export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(true);
-  
-  // const {getSettings} = useServer();
+  const {updatePushToken} = useServer();
+
   useEffect(() => {
+    getExpoToken().then(pushToken=>{
+      if (pushToken != null) {
+        updatePushToken(pushToken);
+      }
+    });
+    //
     Auth.currentAuthenticatedUser({
       // bypassCache: true,
     })
       .then((cognitoUser) => {
-        const token = getToken(cognitoUser);
         dispatch({
           type: SAVE_TOKEN,
-          payload: token,
+          payload: getToken(cognitoUser),
         });
         dispatch({
           type: SAVE_USER,
@@ -42,11 +47,6 @@ export const useUser = (dispatch) => {
             payload: user
           })
         }
-        getExpoToken().then(pushToken=>{
-          if (pushToken != null) {
-            // send pushToken and date to Ron
-          }
-        });
       })
       .finally(() => {
         setLoadingUser(false);
