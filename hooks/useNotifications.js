@@ -30,32 +30,36 @@ export const useNotifications = (state, dispatch) => {
   }, [expoPushToken, user])
 
   const handleToken = () => {
+    Promise.all([
+      getExpoToken(),
+      AsyncStorage.getItem(LAST_SENT_TOKEN)
+    ]).then(results => {
+      const lastKnownToken = results[0];
+      const lastSentToken = results[1];
+      if (lastKnownToken != null && lastKnownToken != lastSentToken) {
+        handleUser(lastKnownToken);
+      }
+    })
+  }
+
+  const handleUser = async (lastKnownToken) => {
     if (user != null) {
-      Promise.all([
-        getExpoToken(),
-        AsyncStorage.getItem(LAST_SENT_TOKEN)
-      ]).then(async results => {
-        const lastKnownToken = results[0];
-        const lastSentToken = results[1];
-        if (lastKnownToken != null && lastKnownToken != lastSentToken) {
-          try {
-            let attributes = {}
-            attributes[ATTRIBUTE_PUSH_TOKEN] = lastKnownToken;
-            let cognitoUser = await Auth.currentAuthenticatedUser({
-              bypassCache: true,
-            });
-            let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-            if (result === 'SUCCESS') {
-              console.log('saved push token');
-              AsyncStorage.setItem(LAST_SENT_TOKEN, lastKnownToken).then(()=>{});
-            } else {
-              console.error('error saving push token with result', result);
-            }
-          } catch (error) {
-            console.error('error saving push token', error);
-          }
+      try {
+        let attributes = {}
+        attributes[ATTRIBUTE_PUSH_TOKEN] = lastKnownToken;
+        let cognitoUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        let result = await Auth.updateUserAttributes(cognitoUser, attributes);
+        if (result === 'SUCCESS') {
+          console.log('saved push token');
+          AsyncStorage.setItem(LAST_SENT_TOKEN, lastKnownToken).then(()=>{});
+        } else {
+          console.error('error saving push token with result', result);
         }
-      })
+      } catch (error) {
+        console.error('error saving push token', error);
+      }
     }
   }
 
