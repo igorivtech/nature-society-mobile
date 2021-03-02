@@ -113,22 +113,22 @@ export const PlaceScreen = ({ navigation, route }) => {
   const { showActionSheetWithOptions } = useActionSheet();
 
   const waze = () => {
-    showActionSheetWithOptions(
-      sheetOptions,
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          Linking.openURL(`https://www.waze.com/ul/?q=${decodeURIComponent(place.title)}`)
-          // `https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`
-        } else if (buttonIndex === 1) {
+    // showActionSheetWithOptions(
+    //   sheetOptions,
+    //   buttonIndex => {
+    //     if (buttonIndex === 0) {
+    //       Linking.openURL(`https://www.waze.com/ul/?q=${decodeURIComponent(place.title)}`)
+    //       // `https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`
+    //     } else if (buttonIndex === 1) {
           showLocation({
             latitude: place.position.latitude,
             longitude: place.position.longitude,
             title: place.title,  // optional
             appsWhiteList: WHITE_LIST_APPS,
           })
-        }
-      }
-    )
+    //     }
+    //   }
+    // )
 
 
     // popupAction.current = openWaze;
