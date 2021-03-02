@@ -28,7 +28,8 @@
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "waze",
-          "comgooglemaps"
+          "comgooglemaps",
+          "moovit"
         ],
         "NSCameraUsageDescription": "אנחנו משתמשים במצלמה כדי שתוכלו להעלות תמונות של האתרים שאתם מבקרים בהם.",
         "NSPhotoLibraryUsageDescription": "אנחנו משתמשים בגלריה כדי שתוכלו להעלות תמונות פרופיל.",
