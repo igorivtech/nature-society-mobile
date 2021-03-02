@@ -67,6 +67,27 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 
 // const AnimatedLottie = Animated.createAnimatedComponent(LottieView);
 
+const apps = Platform.select({
+  ios: [
+    'ווייז', 
+    'גוגל מפס',
+    'אפל מפס',
+    'מוביט',
+    'ביטול'
+  ],
+  android: [
+    'ווייז', 
+    'גוגל מפס',
+    'מוביט',
+    'ביטול'
+  ]
+});
+const sheetOptions = {
+  options: apps,
+  cancelButtonIndex: apps.length - 1,
+  tintColor: colors.treeBlues,
+};
+
 // const fadeOutDuration = 100;
 let VERTICAL_MARGIN = Math.min(35, height*0.015);
 let CONTAINER_VERTICAL_PADDING = 40;
@@ -106,16 +127,6 @@ export const PlaceScreen = ({ navigation, route }) => {
   const { showActionSheetWithOptions } = useActionSheet();
 
   const waze = () => {
-    const sheetOptions = {
-      options: [
-        'ווייז', 
-        Platform.OS === 'android' ? 'גוגל מפס' : 'אפל מפס',
-        'מוביט',
-        'ביטול'
-      ],
-      cancelButtonIndex: 3,
-      tintColor: colors.treeBlues,
-    };
     showActionSheetWithOptions(
       sheetOptions,
       buttonIndex => {
@@ -123,12 +134,8 @@ export const PlaceScreen = ({ navigation, route }) => {
         if (buttonIndex === 0) {
           Linking.openURL(`https://www.waze.com/ul/?q=${query}`)
         } else if (buttonIndex === 1) {
-          if (Platform.OS === 'android') { // google maps
-            Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${query}`)
-          } else { // apple maps
-            Linking.openURL(`http://maps.apple.com/?q=${query}`)
-          }
-        } else if (buttonIndex === 2) {
+          Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${query}`)
+        } else if (buttonIndex === apps.length - 2) {
           showLocation({
             latitude: place.position.latitude,
             longitude: place.position.longitude,
@@ -137,6 +144,8 @@ export const PlaceScreen = ({ navigation, route }) => {
           }).catch(()=>{
             Linking.openURL("https://app.appsflyer.com/id498477945?pid=DL");
           });
+        } else if (Platform.OS === 'ios' && buttonIndex === 2) {
+          Linking.openURL(`http://maps.apple.com/?q=${query}`)
         }
       }
     )
