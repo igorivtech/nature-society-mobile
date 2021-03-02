@@ -170,19 +170,18 @@ export const useServer = () => {
   }
 
   const updatePushToken = async (pushToken) => {
-    // try {
-    //   await fetch(`${BASE_URL}/updatePushToken`, {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       pushToken
-    //     }),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: 'guest'
-    //     }
-    //   });
-    //   AsyncStorage.setItem("LAST_SENT_TOKEN", pushToken).then(()=>{});
-    // } catch (error) {}
+    try {
+      await fetch(`${BASE_URL}/saveToken`, {
+        method: "POST",
+        body: JSON.stringify({
+          token: pushToken
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      AsyncStorage.setItem("LAST_SENT_TOKEN", pushToken).then(()=>{});
+    } catch (error) {}
   }
 
   const sendReport = async (token, reportData) => {
