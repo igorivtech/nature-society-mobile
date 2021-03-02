@@ -46,7 +46,7 @@ import {SAVE_PLACES, SAVE_USER} from "../../context/userReducer";
 import { Auth } from "aws-amplify";
 import {ATTRIBUTE_POINTS, ATTRIBUTE_UNLOCKED_PLACES, cognitoToUser, dicToArray} from '../../hooks/useUser';
 import { formatRating, placeLocked } from "../../hooks/helpers";
-import LottieView from 'lottie-react-native';
+// import LottieView from 'lottie-react-native';
 // import posed, {Transition as PosedTransition} from 'react-native-pose';
 import useIsMounted from "ismounted";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
