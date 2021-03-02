@@ -131,20 +131,20 @@ export const PlaceScreen = ({ navigation, route }) => {
     showActionSheetWithOptions(
       sheetOptions,
       buttonIndex => {
-        if (buttonIndex === 0) {
+        if (buttonIndex === 0) { // waze
           Linking.openURL(`https://www.waze.com/ul/?q=${query}`)
-        } else if (buttonIndex === 1) {
+        } else if (buttonIndex === 1) { // google maps
           Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${query}`)
-        } else if (buttonIndex === apps.length - 2) {
+        } else if (buttonIndex === apps.length - 2) { // moovit
           showLocation({
             latitude: place.position.latitude,
             longitude: place.position.longitude,
-            title: place.title,  // optional
+            title: place.title,
             app: "moovit"
           }).catch(()=>{
             Linking.openURL("https://app.appsflyer.com/id498477945?pid=DL");
           });
-        } else if (Platform.OS === 'ios' && buttonIndex === 2) {
+        } else if (Platform.OS === 'ios' && buttonIndex === 2) { // apple maps
           Linking.openURL(`http://maps.apple.com/?q=${query}`)
         }
       }
