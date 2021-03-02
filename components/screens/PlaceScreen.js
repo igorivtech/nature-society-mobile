@@ -149,11 +149,6 @@ export const PlaceScreen = ({ navigation, route }) => {
         }
       }
     )
-
-
-    // popupAction.current = openWaze;
-    // setPopupTextData(strings.popups.waze)
-    // setPopupVisible(true);
   };
 
   const sharePressed = () => {
