@@ -127,10 +127,10 @@ export const PlaceScreen = ({ navigation, route }) => {
   const { showActionSheetWithOptions } = useActionSheet();
 
   const waze = () => {
+    const query = decodeURIComponent(place.title);
     showActionSheetWithOptions(
       sheetOptions,
       buttonIndex => {
-        const query = decodeURIComponent(place.title);
         if (buttonIndex === 0) {
           Linking.openURL(`https://www.waze.com/ul/?q=${query}`)
         } else if (buttonIndex === 1) {
