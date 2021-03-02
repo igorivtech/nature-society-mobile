@@ -10,7 +10,8 @@ import {
   Linking,
   Animated,
   Easing,
-  LayoutAnimation
+  LayoutAnimation,
+  Platform
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { colors } from "../../values/colors";
@@ -50,7 +51,9 @@ import LottieView from 'lottie-react-native';
 import useIsMounted from "ismounted";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 import { InfoModal } from "../views/place/InfoModal";
-// import { useActionSheet } from '@expo/react-native-action-sheet'
+import { useActionSheet } from '@expo/react-native-action-sheet'
+
+// `https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`
 
 // const PosedText = posed.Text({
 //   enter: {opacity: 1},
@@ -72,16 +75,6 @@ if (height > 667) {
 } else {
   CONTAINER_VERTICAL_PADDING = 30;
 }
-
-// const sheetOptions = {
-//   options: [
-//     'ווייז', 
-//     'אחר',
-//     'ביטול'
-//   ],
-//   cancelButtonIndex: 2,
-//   tintColor: colors.treeBlues,
-// };
 
 export const PlaceScreen = ({ navigation, route }) => {
 
@@ -110,25 +103,43 @@ export const PlaceScreen = ({ navigation, route }) => {
   const descRef = useRef();
   const actionsRef = useRef();
 
-  // const { showActionSheetWithOptions } = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
 
   const waze = () => {
-    // showActionSheetWithOptions(
-    //   sheetOptions,
-    //   buttonIndex => {
-    //     if (buttonIndex === 0) {
-    //       Linking.openURL(`https://www.waze.com/ul/?q=${decodeURIComponent(place.title)}`)
-    //       // `https://www.waze.com/ul?ll=${place.position.latitude},${place.position.longitude}&navigate=yes&zoom=17`
-    //     } else if (buttonIndex === 1) {
+    const sheetOptions = {
+      options: [
+        'ווייז', 
+        Platform.OS === 'android' ? 'גוגל מפס' : 'אפל מפס',
+        'מוביט',
+        'ביטול'
+      ],
+      cancelButtonIndex: 3,
+      tintColor: colors.treeBlues,
+    };
+    showActionSheetWithOptions(
+      sheetOptions,
+      buttonIndex => {
+        const query = decodeURIComponent(place.title);
+        if (buttonIndex === 0) {
+          Linking.openURL(`https://www.waze.com/ul/?q=${query}`)
+        } else if (buttonIndex === 1) {
+          if (Platform.OS === 'android') { // google maps
+            Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${query}`)
+          } else { // apple maps
+            Linking.openURL(`http://maps.apple.com/?q=${query}`)
+          }
+        } else if (buttonIndex === 2) {
           showLocation({
             latitude: place.position.latitude,
             longitude: place.position.longitude,
             title: place.title,  // optional
-            appsWhiteList: WHITE_LIST_APPS,
-          })
-    //     }
-    //   }
-    // )
+            app: "moovit"
+          }).catch(()=>{
+            Linking.openURL("https://app.appsflyer.com/id498477945?pid=DL");
+          });
+        }
+      }
+    )
 
 
     // popupAction.current = openWaze;
