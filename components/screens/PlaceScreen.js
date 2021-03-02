@@ -142,7 +142,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             title: place.title,
             app: "moovit"
           }).catch(()=>{
-            Linking.openURL("https://app.appsflyer.com/id498477945?pid=DL");
+            Linking.openURL("https://app.appsflyer.com/id498477945?pid=DL&c=");
           });
         } else if (Platform.OS === 'ios' && buttonIndex === 2) { // apple maps
           Linking.openURL(`http://maps.apple.com/?q=${query}`)
