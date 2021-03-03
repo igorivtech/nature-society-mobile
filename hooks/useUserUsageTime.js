@@ -39,15 +39,15 @@ export const useUserUsageTime = (state) => {
     if (nextAppState === "active") {
       // App has come to the foreground!
       startTime.current = new Date();
-      AsyncStorage.getItem(LAST_USAGE_TIME).then(stringData=>{
-        AsyncStorage.removeItem(LAST_USAGE_TIME).then(()=>{});
-        if (stringData != null) {
-          const data = JSON.parse(stringData);
-          if (data != null) {
+      // AsyncStorage.getItem(LAST_USAGE_TIME).then(stringData=>{
+      //   AsyncStorage.removeItem(LAST_USAGE_TIME).then(()=>{});
+      //   if (stringData != null) {
+      //     const data = JSON.parse(stringData);
+      //     if (data != null) {
             // sendUsageTime(token, data);
-          }
-        }
-      })
+      //     }
+      //   }
+      // })
     }
     if (appState.current === "active" && nextAppState.match(/inactive|background/)) {
       // App has gone to the background!
