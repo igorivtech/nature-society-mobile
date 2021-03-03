@@ -129,9 +129,9 @@ export const useServer = () => {
   };
 
   const sendUsageTime = async (token, data) => {
-    if (token == null) {
-      return; // ?
-    }
+    // if (token == null) {
+    //   return; // ?
+    // }
     try {
       await fetch(`${BASE_URL}/insertTime`, {
         method: "POST",
@@ -141,7 +141,7 @@ export const useServer = () => {
         }),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: token
+          // Authorization: token
         }
       });
       // console.log("SUCCESS SENDING USAGE TIME", data);
