@@ -244,7 +244,7 @@ export const HomeScreen = ({ navigation, route }) => {
         setTimeout(() => {
           ignoreCardsListener.current = false;
           lockAutoSearching.current = false;
-        }, MAP_ANIMATION_DURATION+100);
+        }, MAP_ANIMATION_DURATION+200);
       }, SPLASH_HIDE_DELAY*0.6);
     } else {
       lockAutoSearching.current = false;
