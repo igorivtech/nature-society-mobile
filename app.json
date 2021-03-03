@@ -50,6 +50,7 @@
       },
       "package": "com.ivtech.hala",
       "googleServicesFile": "./google-services.json",
+      "icon": "./assets/images/logo.png",
       "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo_android.png",
