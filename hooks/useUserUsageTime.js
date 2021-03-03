@@ -44,7 +44,7 @@ export const useUserUsageTime = (state) => {
         if (stringData != null) {
           const data = JSON.parse(stringData);
           if (data != null) {
-            sendUsageTime(token, data);
+            // sendUsageTime(token, data);
           }
         }
       })
