@@ -59,13 +59,11 @@ export const UserHeader = memo(({restartApp}) => {
           <HeaderDetail value={user ? user.numOfReports : offlineUser.numOfReports} title={strings.progressScreen.reportsTitle} icon={require("../../../assets/images/header_reports_icon.png")} />
           <HeaderDetail value={user ? user.points : offlineUser.points} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
         </View>
-
-        <TapView numberOfTaps={12} onPress={restartApp} />
         
       </View>
     )
   })
-  
+  // <TapView numberOfTaps={12} onPress={restartApp} />
   export const HeaderDetail = ({icon, value, title}) => {
     return (
       <View style={headerDetailsStyles.container}>
