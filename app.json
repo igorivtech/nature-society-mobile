@@ -54,7 +54,6 @@
       "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo_android.png",
-        "backgroundColor": "#F5B345",
         "backgroundImage": "./assets/images/logo_android_background.png"
       },
       "intentFilters": [
