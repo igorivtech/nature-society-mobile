@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>203328678397-8o5hd0kah4k39i1i6v7e0dnohgt1a0ba.apps.googleusercontent.com</string>
+	<string>664306093049-taeeklono5kpl1tapr31ja7893rnrmag.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.203328678397-8o5hd0kah4k39i1i6v7e0dnohgt1a0ba</string>
+	<string>com.googleusercontent.apps.664306093049-taeeklono5kpl1tapr31ja7893rnrmag</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCZWRw4uja13gJHCiIuDtZ7atE4mU8DNAo</string>
+	<string>AIzaSyDSZppi2pabqDyIIkkGfpPPmN5_I-_Gdoo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>203328678397</string>
+	<string>664306093049</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.ivtech.hala</string>
 	<key>PROJECT_ID</key>
-	<string>igneous-clover-300016</string>
+	<string>x4v4-31031</string>
 	<key>STORAGE_BUCKET</key>
-	<string>igneous-clover-300016.appspot.com</string>
+	<string>x4v4-31031.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:203328678397:ios:bcd739db12cd629bb59194</string>
+	<string>1:664306093049:ios:4b078baf4eaef3b19b8b28</string>
 </dict>
 </plist>
