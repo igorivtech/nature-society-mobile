@@ -598,7 +598,7 @@ const styles = StyleSheet.create({
   }),
 
   indicator: {
-    transform: [{translateX: 24}]
+    transform: [{translateX: 12}]
   },
 
   searchIndicatorContainer: (opacity) => ({
