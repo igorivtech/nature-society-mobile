@@ -1,10 +1,27 @@
 import * as ImageManipulator from "expo-image-manipulator";
-import { CLEANNESS_COLORS, height, isAlt, SCREEN_ASPECT_RATIO, width } from "../values/consts";
+import {
+  CLEANNESS_COLORS,
+  height,
+  isAlt,
+  MAP_BOUNDARY_NORTHEAST,
+  MAP_BOUNDARY_SOUTHWEST,
+  SCREEN_ASPECT_RATIO,
+  width,
+} from "../values/consts";
 import { landscapeImages } from "../values/images";
 import { strings } from "../values/strings";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
+
+export const isLocationInIsrael = (coordinate) => {
+  return (
+    coordinate.longitude >= MAP_BOUNDARY_SOUTHWEST.longitude &&
+    coordinate.longitude <= MAP_BOUNDARY_NORTHEAST.longitude &&
+    coordinate.latitude >= MAP_BOUNDARY_SOUTHWEST.latitude &&
+    coordinate.latitude <= MAP_BOUNDARY_NORTHEAST.latitude
+  );
+};
 
 export const getExpoToken = async() => {
   let token;
