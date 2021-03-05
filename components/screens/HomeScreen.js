@@ -34,7 +34,7 @@ import { PlaceMarker } from "../views/home/PlaceMarker";
 import * as Location from 'expo-location';
 import { useServer } from "../../hooks/useServer";
 // import _ from "lodash";
-import { clamp, mapAtPlace, calcRadius, objectLength, specialSortPlaces } from "../../hooks/helpers";
+import { clamp, mapAtPlace, calcRadius, objectLength, specialSortPlaces, isLocationInIsrael } from "../../hooks/helpers";
 import { UserMarker } from "../views/home/UserMarker";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -205,9 +205,14 @@ export const HomeScreen = ({ navigation, route }) => {
       if (firstTimeSettingLocation.current) {
         checkUserMarkerVisible()
         firstTimeSettingLocation.current = false;
-        specialLockForInitialFetch.current = true;
         console.log("actuallyGetPlaces: first time location fetched - useEffect");
-        animateToCurrentLocation(true);
+        if (isLocationInIsrael(location)) {
+          specialLockForInitialFetch.current = true;
+          animateToCurrentLocation(true);
+        } else {
+          lockAutoSearching.current = false;
+          actuallyGetPlaces(INITIAL_REGION, null);
+        }
         //
         if (locationListener?.current != null) {
           locationListener?.current();
@@ -217,7 +222,9 @@ export const HomeScreen = ({ navigation, route }) => {
           distanceInterval: 100 // meters
         }, (l) => {
           if (l != null && l.coords != null) {
-            setLocation(l.coords)
+            if (isLocationInIsrael(l.coords)) {
+              setLocation(l.coords)
+            }
           }
         }).then(r=>locationListener.current=r.remove);
       }
@@ -516,7 +523,11 @@ export const HomeScreen = ({ navigation, route }) => {
     if (location != null && mapRef.current?.__lastRegion != null) {
       const region = mapRef.current.__lastRegion;
       const visible = isPointWithinRadius(location, region, calcRadius(region)*1000);
-      setUserMarkerVisible(visible);
+      if (isLocationInIsrael(location)) {
+        setUserMarkerVisible(visible);
+      } else { // so that center map button never shown
+        setUserMarkerVisible(true);
+      }
     }
   }
 
