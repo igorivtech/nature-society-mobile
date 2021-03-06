@@ -406,6 +406,7 @@ export const HomeScreen = ({ navigation, route }) => {
         navigation.setParams({reportNow: null});
         setListOpacity(0);
         setTimeout(() => {
+          setProgressVisible(true);
           setListOpacity(0);
           setHideButtons(true);
           setHideList(true);  
