@@ -247,7 +247,7 @@ export const HomeScreen = ({ navigation, route }) => {
       actuallyGetPlaces(region, location);
       lockAutoSearching.current = true;
       setTimeout(() => {
-        mapRef.current.animateToRegion(region, MAP_ANIMATION_DURATION);
+        mapRef.current?.animateToRegion(region, MAP_ANIMATION_DURATION);
         setTimeout(() => {
           ignoreCardsListener.current = false;
           lockAutoSearching.current = false;
@@ -255,7 +255,7 @@ export const HomeScreen = ({ navigation, route }) => {
       }, SPLASH_HIDE_DELAY*0.6);
     } else {
       lockAutoSearching.current = false;
-      mapRef.current.animateToRegion({
+      mapRef.current?.animateToRegion({
         ...region,
         longitudeDelta: 0.125, // 1 is 111 kilometers
         latitudeDelta: 0.125*SCREEN_ASPECT_RATIO
@@ -270,13 +270,13 @@ export const HomeScreen = ({ navigation, route }) => {
     const ld = mapRef.current.__lastRegion.longitudeDelta;
     const noZoom = ld <= 0.15;
     if (noZoom) {
-      mapRef.current.animateToRegion({
+      mapRef.current?.animateToRegion({
         ...mapRef.current.__lastRegion,
         longitude: item.position.longitude,
         latitude: item.position.latitude,
       }, MAP_ANIMATION_DURATION);
     } else {
-      mapRef.current.animateToRegion({
+      mapRef.current?.animateToRegion({
         ...item.position,
         longitudeDelta: 0.15, // 1 is 111 kilometers
         latitudeDelta: 0.15*SCREEN_ASPECT_RATIO
