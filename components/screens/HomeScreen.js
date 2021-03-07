@@ -270,11 +270,14 @@ export const HomeScreen = ({ navigation, route }) => {
     const ld = mapRef.current.__lastRegion.longitudeDelta;
     const noZoom = ld <= 0.15;
     if (noZoom) {
-      mapRef.current?.animateToRegion({
-        ...mapRef.current.__lastRegion,
-        longitude: item.position.longitude,
-        latitude: item.position.latitude,
-      }, MAP_ANIMATION_DURATION);
+      const lastRegion = mapRef.current?.__lastRegion;
+      if (lastRegion) {
+        mapRef.current?.animateToRegion({
+          ...lastRegion,
+          longitude: item.position.longitude,
+          latitude: item.position.latitude,
+        }, MAP_ANIMATION_DURATION);
+      }
     } else {
       mapRef.current?.animateToRegion({
         ...item.position,
