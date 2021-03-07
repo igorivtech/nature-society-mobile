@@ -470,11 +470,9 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
         )}
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
-            {item.distance && (
-              <Text style={textStyles.normalOfSize(14)}>
-                {strings.distanceFromYou(hasLocation ? item.distance : null)}
-              </Text>  
-            )}
+            <Text style={textStyles.normalOfSize(14)}>
+              {strings.distanceFromYou(hasLocation ? item.distance : null)}
+            </Text>
             
             <View style={styles.titleContainer}>
               <Text numberOfLines={1} minimumFontScale={0.9} adjustsFontSizeToFit={true} style={styles.title}>{item.title}</Text>
