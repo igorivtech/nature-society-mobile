@@ -392,6 +392,7 @@ export const HomeScreen = ({ navigation, route }) => {
         });
         setListOpacity(0);
         setTimeout(() => {
+          setProgressVisible(true);
           setListOpacity(0);
           setHideButtons(true);
           setHideList(true);
