@@ -35,7 +35,7 @@ export const TakePicView = ({ useImageData }) => {
             />
           </View>
         ) : null}
-        {image && <Image style={cameraStyle.image} source={{ uri: image.uri }} />}
+        {image != null ? <Image style={cameraStyle.image} source={{ uri: image.uri }} /> : null}
       </TouchableOpacity>
       <Popup textData={strings.popups.camera} action={askSettings} popupVisible={imagePopupvisible} setPopupVisible={setPopupVisible} />
     </View>
