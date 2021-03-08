@@ -28,9 +28,9 @@ export const HomeButton = memo(({ index, onPress, notification }) => {
 
   return (
     <TouchableOpacity style={globalStyles.centerChildren} onPress={onPress}>
-      {index === 2 && (
+      {index === 2 ? (
         <Animated.View style={s.bg(opacity)} />
-      )}
+      ) : null}
       <Image source={images[index]} />
     </TouchableOpacity>
   );

@@ -312,15 +312,15 @@ const ProgressPopup = () => {
   return (
     <Animated.View style={pStyles.container(scale)}>
 
-      {notification && (
+      {notification != null ? (
         <NotificationHeader notification={notification} />
-      )}
+      ) : null}
 
-      {notification && (
+      {notification != null ? (
         <Text style={textStyles.normalOfSize(16)}>{notification.description}</Text>
-      )}
+      ) : null}
 
-      {notification && (
+      {notification != null ? (
         <TouchableOpacity onPress={notificationPressed} style={pStyles.button}>
           <View style={pStyles.buttonInnerContainer}>
             <Text style={pStyles.buttonPoints}>{`+${notification.points}`}</Text>
@@ -328,7 +328,7 @@ const ProgressPopup = () => {
           </View>
           <Text style={pStyles.buttonTitle}>{strings.progressScreen.thankYou}</Text>
         </TouchableOpacity>
-      )}
+      ) : null}
       
     </Animated.View>
   )

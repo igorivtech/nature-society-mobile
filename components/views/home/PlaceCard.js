@@ -76,11 +76,9 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
             <View style={globalStyles.cardLocationContainer}>
               <View style={styles.titleContainer}>
                 <Text numberOfLines={2} minimumFontScale={0.7} adjustsFontSizeToFit={true} style={textStyles.cardTitle}>{item.title}</Text>
-                {item.distance && (
-                  <Text style={textStyles.cardDetail}>
-                    {strings.distanceFromYou(item.distance)}
-                  </Text>
-                )}
+                <Text style={textStyles.cardDetail}>
+                  {strings.distanceFromYou(item.distance)}
+                </Text>
               </View>
               <Image
                 style={globalStyles.cardDetailIcon}
@@ -88,7 +86,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
               />
             </View>
 
-            {item.lastVisitors.length > 0 && (
+            {item.lastVisitors.length > 0 ? (
               <RecentVisitor
                 title={item.lastVisitors[0].lastVisitorName}
                 details={strings.homeScreen.recentVisitor(
@@ -97,7 +95,7 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
                 )}
                 image={item.lastVisitors[0].lastVisitorImage}
               />
-            )}
+            ) : null}
 
             <View style={[globalStyles.cardLocationContainer, {width: '100%'}]}>
               <RatingView
@@ -126,15 +124,15 @@ export const PlaceCard = memo(({ settings, user, item, index, scrollX, callback 
           </View>
 
           <View style={globalStyles.cardMainImage}>
-            {item.image != null && (
+            {item.image != null ? (
               <LoadingImage style={styles.image} source={{ 
                 uri: item.image ,
                 cache: 'force-cache'
               }} />
-            )}
-            {item.image == null && (
+            ) : null}
+            {item.image == null ? (
               <Image style={styles.noImage} source={require("../../../assets/images/default_place_bg.png")} />
-            )}
+            ) : null}
             {/* <Image style={[styles.image, {
               resizeMode: 'contain',
               backgroundColor: colors.imageBg

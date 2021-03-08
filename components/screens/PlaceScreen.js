@@ -296,15 +296,15 @@ export const PlaceScreen = ({ navigation, route }) => {
           <View style={[s.imageStyle, globalStyles.centerChildren, {
             overflow: 'hidden',
             }]}>
-            {place.image == null && (
+            {place.image == null ? (
               <Image source={require("../../assets/images/default_place_bg.png")} />
-            )}
-            {place.image != null && (
+            ) : null}
+            {place.image != null ? (
               <LoadingImage style={StyleSheet.absoluteFill} source={{ 
                 uri: place.image,
                 cache: 'force-cache'
               }} />
-            )}
+            ) : null}
           </View>
 
           <Animatable.View
@@ -314,12 +314,12 @@ export const PlaceScreen = ({ navigation, route }) => {
             ref={visitorsRef}
             style={{...globalStyles.fullWidth, marginVertical: VERTICAL_MARGIN}}
           >
-            {place.lastVisitors.length > 0 && (
+            {place.lastVisitors.length > 0 ? (
               <Text style={textStyles.normalOfSize(12)}>
                 {strings.placeScreen.recentVisitors(placeLocked(user, place))}
               </Text>
-            )}
-            {place.lastVisitors.length > 0 && (
+            ) : null}
+            {place.lastVisitors.length > 0 ? (
               <View style={s.recentVisitorsContainer}>
                 {place.lastVisitors.slice(0, 2).map((visitor, index) => (
                   <RecentVisitor
@@ -331,7 +331,7 @@ export const PlaceScreen = ({ navigation, route }) => {
                   />
                 ))}
               </View>
-            )}
+            ) : null}
           </Animatable.View>
 
           <Animatable.Text
@@ -666,9 +666,9 @@ const s = StyleSheet.create({
               resizeMode='cover'
             />
           </View>
-          {!small && (
+          {!small ? (
             <Text style={s.buyTitle}>{strings.showInfo}</Text>
-          )}
+          ) : null}
         </View>
       </TouchableOpacity>
     ) : (

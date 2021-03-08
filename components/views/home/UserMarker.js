@@ -31,13 +31,13 @@ export const UserMarker = memo(({ user, location }) => {
           source={require("../../../assets/images/default_profile_pic.png")}
           style={markerStyles.avatar}
         />
-        {user !== null && user.image != null && (
+        {user !== null && user.image != null ? (
           <Image
             onLoad={updateTrackChanged}
             source={{ uri: user.image }}
             style={markerStyles.profilePic}
           />
-        )}
+        ) : null}
       </View>
     </Marker>
   );

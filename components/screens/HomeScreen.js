@@ -602,7 +602,7 @@ export const HomeScreen = ({ navigation, route }) => {
             place={p} 
           />
         ))}
-        {location != null && (<UserMarker user={user} location={location} />)}
+        {location != null ? (<UserMarker user={user} location={location} />) : null}
       </MapView>
       
       <Animated.View style={globalStyles.homeTopContainer(buttonsTranslateY, topSafeAreaHeight)}>

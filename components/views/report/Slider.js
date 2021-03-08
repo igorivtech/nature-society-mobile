@@ -402,7 +402,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
     <View style={sliderStyles.container}>
 
       <Animated.View style={sliderStyles.topContainer(bottomTopContainersOpacity)}>
-        {showLocation && (
+        {showLocation ? (
           <TouchableWithoutFeedback onPress={pickLocation}>
             <View style={sliderStyles.locationContainer}>
               <ActivityIndicator style={globalStyles.scale(0.8)} animating={fetchingPlace} color={colors.treeBlues} />
@@ -410,7 +410,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
               <Image source={require("../../../assets/images/location_small_marker.png")} /> 
             </View>
           </TouchableWithoutFeedback>
-        )}
+        ) : null}
         <View style={sliderStyles.titlePaginationContainer}>
           <Pagination index={goBack ? 1 : 0} />
           <Text style={sliderStyles.title}>{title}</Text>
@@ -424,7 +424,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
         onGestureEvent={panHandlerEvent}
       >
         <View style={sliderStyles.animationSliderContainer}>
-          {loaded && (
+          {loaded ? (
             <Animated.View style={sliderStyles.animationsContainer(animationsContainerOpacity)}>
               <Animated.View style={sliderStyles.animation(animationOpacity)}>
                 <LottieView source={animation} progress={animationProgress} resizeMode={item.resizeMode} />
@@ -433,7 +433,7 @@ export const Slider = memo(({fetchingPlace = false, loaded, autoPlay, valueRef, 
                 <LottieView ref={introAnimationRef} source={introAnimation} loop={false} autoPlay={false} resizeMode={item.resizeMode} onAnimationFinish={onIntroFinish} />
               </Animated.View>
             </Animated.View>
-          )}
+          ) : null}
           <View style={sliderStyles.sliderTextContainer}>
             <Animated.View style={sliderStyles.textContainer(textContainerOpacity)}>
               <Animated.Text style={sliderStyles.text(topTextOpacity, titleTranslateY)}>{topText}</Animated.Text>

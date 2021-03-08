@@ -108,9 +108,9 @@ export const Input = ({ autoCapitalize = 'words', keyboardType = 'default', titl
         style={styles.textInput}
         selectionColor={colors.desertRock}
       />
-      {passwordHint && (
+      {passwordHint ? (
         <Animated.Text style={styles.passwordHint(passwordHintOpacity)}>{strings.loginScreen.passwordLength}</Animated.Text>
-      )}
+      ) : null}
     </View>
   );
 };

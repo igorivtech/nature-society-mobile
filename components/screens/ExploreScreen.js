@@ -288,11 +288,11 @@ export const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm,
             <Text numberOfLines={2} style={suggestionStyles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
           </Animated.View>
         </TouchableOpacity>
-        {sent && (<View style={suggestionStyles.sentContainer}>
+        {sent ? (<View style={suggestionStyles.sentContainer}>
           <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.suggestionSent}</Text>
           <View style={globalStyles.spacer(8)} />
           <Image source={require("../../assets/images/suggestion_sent_icon.png")} style={globalStyles.imageJustContain} />
-        </View>)}
+        </View>) : null}
       </View>
     )
   } else {
@@ -457,17 +457,17 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
   return (
     <Animatable.View animation='fadeIn'>
       <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
-        {item.image == null && (
+        {item.image == null ? (
           <Image style={styles.cardImage('contain')} source={require("../../assets/images/default_place_bg.png")} />
-        )}
-        {item.image != null && (
+        ) : null}
+        {item.image != null ? (
           <View style={styles.placeImageContainer}>
             <LoadingImage style={styles.cardImage('cover')} source={{ 
               uri: item.image,
               cache: 'force-cache'
             }} />
           </View>
-        )}
+        ) : null}
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
             <Text style={textStyles.normalOfSize(14)}>

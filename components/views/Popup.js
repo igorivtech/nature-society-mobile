@@ -107,13 +107,13 @@ export const Popup = ({ website = false, permissions = false, textData, popupVis
             filled={true}
           />
 
-          {(textData.no != null && textData.no.length > 0) && (
+          {(textData.no != null && textData.no.length > 0) ? (
             <PopupButton
               title={textData.no}
               onPress={reverseActions ? doAction : close}
               filled={false}
             />
-          )}
+          ) : null}
         </Animated.View>
       </View>
     </Modal>

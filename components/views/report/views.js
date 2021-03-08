@@ -27,14 +27,14 @@ export const TakePicView = ({ useImageData }) => {
       >
         <Image source={require("../../../assets/images/camera_icon.png")} />
 
-        {loadingImage && (
+        {loadingImage ? (
           <View style={cameraStyle.indicatorContainer}>
             <ActivityIndicator
               style={cameraStyle.indicator}
               color={colors.treeBlues}
             />
           </View>
-        )}
+        ) : null}
         {image && <Image style={cameraStyle.image} source={{ uri: image.uri }} />}
       </TouchableOpacity>
       <Popup textData={strings.popups.camera} action={askSettings} popupVisible={imagePopupvisible} setPopupVisible={setPopupVisible} />
