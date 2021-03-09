@@ -65,7 +65,7 @@ export const useServer = () => {
   };
 
   let abortController = useRef();
-  const getPlaces = (searchId, coordinate, location, radius, limit = 14, ignoreRankings = false) => {
+  const getPlaces = (searchId, coordinate, location, radius, limit = 13, ignoreRankings = false) => {
     // if (abortController?.current) {
     //   abortController.current.abort();
     // }
