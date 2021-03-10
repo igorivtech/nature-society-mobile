@@ -51,7 +51,7 @@
       "package": "com.ivtech.hala",
       "googleServicesFile": "./google-services.json",
       "icon": "./assets/images/logo.png",
-      "versionCode": 4,
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo_android.png",
         "backgroundImage": "./assets/images/logo_android_background.png"
