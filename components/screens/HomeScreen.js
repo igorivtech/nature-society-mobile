@@ -558,7 +558,8 @@ export const HomeScreen = ({ navigation, route }) => {
     // setGlobalTracksViewChanges(true);
     if (!lockAutoSearching.current) {
       setSelectedPlace(null);
-      setHideList(true)
+      setHideList(true);
+      setLogoOpacity(1);
     }
   }, [])
 
