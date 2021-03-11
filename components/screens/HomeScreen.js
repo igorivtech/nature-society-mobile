@@ -267,23 +267,25 @@ export const HomeScreen = ({ navigation, route }) => {
   }
 
   const animateToItem = (item) => {
-    const ld = mapRef.current.__lastRegion.longitudeDelta;
-    const noZoom = ld <= 0.15;
-    if (noZoom) {
-      const lastRegion = mapRef.current?.__lastRegion;
-      if (lastRegion) {
+    if (mapRef.current) {
+      const ld = mapRef.current.__lastRegion.longitudeDelta;
+      const noZoom = ld <= 0.15;
+      if (noZoom) {
+        const lastRegion = mapRef.current?.__lastRegion;
+        if (lastRegion) {
+          mapRef.current?.animateToRegion({
+            ...lastRegion,
+            longitude: item.position.longitude,
+            latitude: item.position.latitude,
+          }, MAP_ANIMATION_DURATION);
+        }
+      } else {
         mapRef.current?.animateToRegion({
-          ...lastRegion,
-          longitude: item.position.longitude,
-          latitude: item.position.latitude,
+          ...item.position,
+          longitudeDelta: 0.15, // 1 is 111 kilometers
+          latitudeDelta: 0.15*SCREEN_ASPECT_RATIO
         }, MAP_ANIMATION_DURATION);
       }
-    } else {
-      mapRef.current?.animateToRegion({
-        ...item.position,
-        longitudeDelta: 0.15, // 1 is 111 kilometers
-        latitudeDelta: 0.15*SCREEN_ASPECT_RATIO
-      }, MAP_ANIMATION_DURATION);
     }
   };
 
