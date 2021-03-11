@@ -600,6 +600,7 @@ const s = StyleSheet.create({
     marginTop: 4,
     alignItems: 'center',
     flexDirection: "row",
+    height: small ? 17 : 30
   }),
 
   ratingContainer: {
