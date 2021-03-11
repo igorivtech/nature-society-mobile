@@ -123,7 +123,7 @@ const cameraStyle = StyleSheet.create({
     alignItems: "center",
   },
   indicator: {
-    transform: [{ translateY: 2.7 }],
+    transform: [{ translateY: 2.75 }],
   },
   image: {
     ...StyleSheet.absoluteFill,
