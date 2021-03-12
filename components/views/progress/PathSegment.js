@@ -242,7 +242,7 @@ const FloatingLabel = ({right, done, points, title}) => {
           <Text adjustsFontSizeToFit={smallScreen} style={flStyles.notDoneTitle(right)}>{title}</Text>
           <View style={flStyles.notDoneBorder} />
           <View style={flStyles.notDoneInnerContainer}>
-            <Text style={flStyles.notDoneInnerText}>{points}</Text>
+            <Text style={flStyles.notDoneInnerText}>{points.toLocaleString()}</Text>
             <Image source={require("../../../assets/images/floating_marker.png")} />
           </View>
         </View>

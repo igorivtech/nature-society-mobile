@@ -57,7 +57,7 @@ export const UserHeader = memo(({restartApp}) => {
           marginTop: 24
         }}>
           <HeaderDetail value={user ? user.numOfReports : offlineUser.numOfReports} title={strings.progressScreen.reportsTitle} icon={require("../../../assets/images/header_reports_icon.png")} />
-          <HeaderDetail value={user ? user.points : offlineUser.points} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
+          <HeaderDetail value={(user ? user.points : offlineUser.points).toLocaleString()} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
         </View>
         
       </View>
