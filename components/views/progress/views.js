@@ -5,7 +5,7 @@ import { colors } from "../../../values/colors";
 import { strings } from "../../../values/strings";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
-import { TapView } from "../general";
+// import { TapView } from "../general";
 
 export const UserHeader = memo(({restartApp}) => {
 
@@ -53,9 +53,7 @@ export const UserHeader = memo(({restartApp}) => {
           )}
         </View>
   
-        <View style={{
-          marginTop: 24
-        }}>
+        <View style={styles.detailsContainer}>
           <HeaderDetail value={user ? user.numOfReports : offlineUser.numOfReports} title={strings.progressScreen.reportsTitle} icon={require("../../../assets/images/header_reports_icon.png")} />
           <HeaderDetail value={(user ? user.points : offlineUser.points).toLocaleString()} title={strings.progressScreen.pointsTitle} icon={require("../../../assets/images/header_points_icon.png")} />
         </View>
@@ -122,6 +120,10 @@ export const UserHeader = memo(({restartApp}) => {
 
 
 const styles = StyleSheet.create({
+
+    detailsContainer: {
+      marginTop: 24
+    },
 
     headerNameContainer: {
       flexDirection: 'row',
