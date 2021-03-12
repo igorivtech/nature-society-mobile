@@ -16,6 +16,8 @@ import { globalStyles } from "../../../values/styles";
 import { TapView } from "../general";
 import { siteColor } from "../../../hooks/helpers";
 
+const fontSize = smallScreen ? 17 : 18;
+
 export const InfoModal = ({ visible, setVisible }) => {
   const scale = useRef(new Animated.Value(0.5)).current;
   const close = () => {
@@ -50,7 +52,7 @@ export const InfoModal = ({ visible, setVisible }) => {
               source={require("../../../assets/images/info_icon_large.png")}
             />
           </View>
-          <Text style={textStyles.normalOfSize(18)}>
+          <Text style={textStyles.normalOfSize(fontSize)}>
             {strings.placeScreen.infoDesc}
           </Text>
           <Ranks />
