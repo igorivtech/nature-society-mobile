@@ -103,7 +103,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   // STARTUP POINT
   useEffect(() => {
-    tryFetchLocation();
+    // tryFetchLocation();
     mapRef.current.setMapBoundaries(MAP_BOUNDARY_NORTHEAST, MAP_BOUNDARY_SOUTHWEST);
     // notification - DEBUG
     // setTimeout(() => {
@@ -587,6 +587,7 @@ export const HomeScreen = ({ navigation, route }) => {
         minZoomLevel={MAP_MIN_ZOOM}
         rotateEnabled={false}
         moveOnMarkerPress={false}
+        onMapReady={tryFetchLocation}
         onPanDrag={onPanDrag}
         onRegionChange={onRegionChange}
         onRegionChangeComplete={onRegionChangeComplete}
