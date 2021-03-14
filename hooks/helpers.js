@@ -162,7 +162,11 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     }
     if (location) {
       const di = distance(place.location.coordinates[1], place.location.coordinates[0], location.latitude, location.longitude);
-      res[i].distance = Math.round(Math.round((di) * 100) / 100);
+      if (di < 1) {
+        res[i].distance = parseFloat(di.toFixed(1));
+      } else {
+        res[i].distance = Math.round(Math.round((di) * 100) / 100);
+      }
     } else {
       res[i].distance = null;
     }
