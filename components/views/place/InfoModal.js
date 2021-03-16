@@ -52,7 +52,7 @@ export const InfoModal = ({ visible, setVisible }) => {
               source={require("../../../assets/images/info_icon_large.png")}
             />
           </View>
-          <Text style={textStyles.normalOfSize(fontSize)}>
+          <Text style={styles.mainText}>
             {strings.placeScreen.infoDesc}
           </Text>
           <Ranks />
@@ -119,6 +119,10 @@ const Rating = ({ cleanness, rating }) => {
 };
 
 const styles = StyleSheet.create({
+  mainText: {
+    ...textStyles.normalOfSize(fontSize),
+    lineHeight: fontSize
+  },
   bar: (rating) => ({
     position: "absolute",
     top: 0,
