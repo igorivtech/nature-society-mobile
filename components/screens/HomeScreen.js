@@ -66,7 +66,7 @@ export const HomeScreen = ({ navigation, route }) => {
   const [cardsData, setCardsData] = useState([]);
   const [sortedPlaces, setSortedPlaces] = useState([]);
   const [listOpacity, setListOpacity] = useState(1);
-  const [logoOpacity, setLogoOpacity] = useState(0);
+  const [logoOpacity, setLogoOpacity] = useState(1);
   const [hideList, setHideList] = useState(true);
   const [hideButtons, setHideButtons] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
