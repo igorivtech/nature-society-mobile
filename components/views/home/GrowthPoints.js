@@ -110,7 +110,7 @@ export const GrowthPoints = memo(() => {
           numberOfLines={1}
           style={textStyles.pointsGrowthText(textOpacity)}
         >
-          {points}
+          {points.toLocaleString()}
         </Animated.Text>
         <Image source={require("../../../assets/images/growth_icon.png")} />
       </Animated.View>
