@@ -1,11 +1,8 @@
-import React, { memo, useRef, useState } from "react";
-import { Animated, Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { SPACER_ITEM_SIZE } from "./PlaceCard";
-import * as WebBrowser from 'expo-web-browser';
+import React, { memo } from "react";
+import { Animated, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
-import {Popup} from "../Popup"
-import { strings } from "../../../values/strings";
-import { smallScreen } from "../../../values/consts";
+// import { SPACER_ITEM_SIZE } from "./PlaceCard";
+// import * as WebBrowser from 'expo-web-browser';
 
 export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeight, logoOpacity}) => {
 
@@ -20,21 +17,21 @@ export const LogoView = memo(({listYTranslate, bottomHeight, bottomSafeAreaHeigh
     extrapolate: 'clamp'
   })
 
-  const [popupVisible, setPopupVisible] = useState(false);
+  // const [popupVisible, setPopupVisible] = useState(false);
 
-  const onPress = () => {
-    WebBrowser.openBrowserAsync('https://www.teva.org.il');
-  }
+  // const onPress = () => {
+  //   WebBrowser.openBrowserAsync('https://www.teva.org.il');
+  // }
 
-  const actionRef = useRef(onPress);
+  // const actionRef = useRef(onPress);
 
-  const localOnPress = () => {
-    setPopupVisible(true);
-  }
+  // const localOnPress = () => {
+  //   setPopupVisible(true);
+  // }
   return (
-    <View pointerEvents='none' style={styles.logo(bottomSafeAreaHeight, bottomHeight, logoOpacity)} onPress={localOnPress}>
+    <Animatable.View delay={700} animation='fadeIn' pointerEvents='none' style={styles.logo(bottomSafeAreaHeight, bottomHeight, logoOpacity)}>
       <Animated.Image style={styles.image(opacity, scale)} source={require("../../../assets/images/hala_logo.png")} />
-    </View>
+    </Animatable.View>
   );
 });
 
