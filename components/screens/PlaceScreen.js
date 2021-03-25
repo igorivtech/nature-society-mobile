@@ -326,7 +326,7 @@ export const PlaceScreen = ({ navigation, route }) => {
                     key={`${index}`}
                     large
                     title={visitor.lastVisitorName}
-                    details={visitor.lastVisitorRank}
+                    // details={visitor.lastVisitorRank}
                     image={visitor.lastVisitorImage}
                   />
                 ))}
