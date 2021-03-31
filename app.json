@@ -2,7 +2,7 @@
   "expo": {
     "name": "בשביל הטבע",
     "slug": "nature-society",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "privacy": "unlisted",
@@ -24,7 +24,7 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.ivtech.hala",
       "googleServicesFile": "./GoogleService-Info.plist",
-      "buildNumber": "2",
+      "buildNumber": "1",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "waze",
@@ -51,7 +51,7 @@
       "package": "com.ivtech.hala",
       "googleServicesFile": "./google-services.json",
       "icon": "./assets/images/logo.png",
-      "versionCode": 5,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo_android.png",
         "backgroundImage": "./assets/images/logo_android_background.png"
