@@ -12,7 +12,8 @@ export const useAnalytics = () => {
     //
     Facebook.initializeAsync({
       appId: "139938011330970",
-      appName: "בשביל הטבע"
+      appName: "בשביל הטבע",
+      autoLogAppEvents: true
     }).then(()=>{});
   }, []);
 };
