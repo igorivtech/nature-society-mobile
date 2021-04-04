@@ -14,8 +14,6 @@ export const useAnalytics = () => {
       appId: "139938011330970",
       appName: "בשביל הטבע",
       autoLogAppEvents: true
-    }).then(()=>{
-      Facebook.setAutoLogAppEventsEnabledAsync(true).then(()=>{});
-    });
+    }).then(()=>{});
   }, []);
 };

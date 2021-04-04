@@ -77,6 +77,8 @@
     "description": "",
     "facebookScheme": "fb139938011330970",
     "facebookAppId": "139938011330970",
-    "facebookDisplayName": "בשביל הטבע"
+    "facebookDisplayName": "בשביל הטבע",
+    "facebookAutoInitEnabled": true,
+    "facebookAutoLogAppEventsEnabled": true
   }
 }
