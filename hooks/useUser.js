@@ -20,22 +20,27 @@ export const useUser = (dispatch) => {
 
   const lastOpen = useRef(new Date());
 
-  useAppState(null, () => {
+  useAppState(null, async () => {
     const now = new Date();
     const secondsDiff = (now - lastOpen.current)/1000;
     lastOpen.current = now;
     if (secondsDiff >= 60 * 30) { // 60 seconds in minute, 30 minutes
-      Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      })
-        .then((cognitoUser) => {
-          dispatch({
-            type: SAVE_TOKEN,
-            payload: getToken(cognitoUser),
-          });
-        })
-        .finally(() => {});
-      }
+      try {
+        const cognitoUser = await Auth.currentAuthenticatedUser();
+        const currentSession = await Auth.currentSession();
+        cognitoUser.refreshSession(currentSession.refreshToken, (err, session) => {
+          const { accessToken } = session;
+          const token = accessToken.jwtToken;
+          console.log(token);
+          if (token) {
+            dispatch({
+              type: SAVE_TOKEN,
+              payload: getToken(cognitoUser),
+            });
+          }
+        });
+      } catch (e) {}
+    }
   });
 
   useEffect(() => {
