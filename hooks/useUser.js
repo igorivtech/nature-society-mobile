@@ -20,7 +20,7 @@ export const useUser = (dispatch) => {
 
   const lastOpen = useRef(new Date());
 
-  useAppState(null, async () => {
+  useAppState(null, async () => { // on foreground
     const now = new Date();
     const secondsDiff = (now - lastOpen.current)/1000;
     lastOpen.current = now;
@@ -29,12 +29,11 @@ export const useUser = (dispatch) => {
         const cognitoUser = await Auth.currentAuthenticatedUser();
         const currentSession = await Auth.currentSession();
         cognitoUser.refreshSession(currentSession.refreshToken, (err, session) => {
-          const { accessToken } = session;
-          const token = accessToken.jwtToken;
+          const token = session?.accessToken?.jwtToken;
           if (token) {
             dispatch({
               type: SAVE_TOKEN,
-              payload: getToken(cognitoUser),
+              payload: token,
             });
           }
         });
