@@ -31,7 +31,6 @@ export const useUser = (dispatch) => {
         cognitoUser.refreshSession(currentSession.refreshToken, (err, session) => {
           const { accessToken } = session;
           const token = accessToken.jwtToken;
-          console.log(token);
           if (token) {
             dispatch({
               type: SAVE_TOKEN,
