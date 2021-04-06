@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Amplify, { Auth } from "aws-amplify";
 import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER, SAVE_OFFLINE_USER } from "../context/userReducer";
 import { useServer } from "./useServer";
 import AsyncStorage from "@react-native-community/async-storage";
 import { getExpoToken } from "./helpers";
+import { useAppState } from "./useAppState";
 
 export const ATTRIBUTE_POINTS = "custom:points";
 export const ATTRIBUTE_NUM_OF_REPORTS = "custom:numOfReports";
@@ -16,6 +17,26 @@ export const OFFLINE_USER_KEY = 'OFFLINE_USER_KEY';
 export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(true);
   const {updatePushToken} = useServer();
+
+  const lastOpen = useRef(new Date());
+
+  useAppState(null, () => {
+    const now = new Date();
+    const secondsDiff = (now - lastOpen.current)/1000;
+    lastOpen.current = now;
+    if (secondsDiff > 60 * 30) { // 60 seconds in minute, 30 minutes
+      Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      })
+        .then((cognitoUser) => {
+          dispatch({
+            type: SAVE_TOKEN,
+            payload: getToken(cognitoUser),
+          });
+        })
+        .finally(() => {});
+      }
+  });
 
   useEffect(() => {
     getExpoToken().then(pushToken=>{
