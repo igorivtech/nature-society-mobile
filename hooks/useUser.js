@@ -18,13 +18,13 @@ export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(true);
   const {updatePushToken} = useServer();
 
-  const lastOpen = useRef(new Date());
+  const lastRefresh = useRef(new Date());
 
-  useAppState(null, async () => { // foreground
+  useAppState(null, async () => { // onForeground
     const now = new Date();
-    const secondsDiff = (now - lastOpen.current)/1000;
-    lastOpen.current = now;
+    const secondsDiff = (now - lastRefresh.current)/1000;
     if (secondsDiff >= 60 * 30) { // 60 seconds in minute, 30 minutes
+      lastRefresh.current = now;
       try {
         const cognitoUser = await Auth.currentAuthenticatedUser();
         const currentSession = await Auth.currentSession();
