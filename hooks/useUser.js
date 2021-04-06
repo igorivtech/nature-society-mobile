@@ -20,7 +20,7 @@ export const useUser = (dispatch) => {
 
   const lastOpen = useRef(new Date());
 
-  useAppState(null, async () => { // on foreground
+  useAppState(null, async () => { // foreground
     const now = new Date();
     const secondsDiff = (now - lastOpen.current)/1000;
     lastOpen.current = now;
