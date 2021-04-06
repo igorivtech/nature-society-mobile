@@ -24,7 +24,7 @@ export const useUser = (dispatch) => {
     const now = new Date();
     const secondsDiff = (now - lastOpen.current)/1000;
     lastOpen.current = now;
-    if (secondsDiff > 60 * 30) { // 60 seconds in minute, 30 minutes
+    if (secondsDiff >= 60 * 30) { // 60 seconds in minute, 30 minutes
       Auth.currentAuthenticatedUser({
         bypassCache: true,
       })
