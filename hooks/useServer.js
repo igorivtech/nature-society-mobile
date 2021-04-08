@@ -64,6 +64,8 @@ export const useServer = () => {
     }
   };
 
+  // `${BASE_URL}/sitesTest`,
+  // pp: convertServerPlaces(data.slice(0, 12), location, true)
   let abortController = useRef();
   const getPlaces = (searchId, coordinate, location, radius, limit = 13, ignoreRankings = false) => {
     // if (abortController?.current) {
