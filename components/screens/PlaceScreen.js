@@ -231,6 +231,17 @@ export const PlaceScreen = ({ navigation, route }) => {
     setInfoVisible(true);
   }
 
+  const rankToTitle = (rank) => {
+    const numOfReports = parseInt(rank);
+    let last = ''
+    settings.achievements.forEach(achievement => {
+      if (numOfReports >= achievement.score) {
+        last = achievement.title;
+      }
+    });
+    return last;
+  }
+
   return (
     <View style={s.container}>
       <TouchableWithoutFeedback onPress={goBack} style={s.tap}>
@@ -326,8 +337,7 @@ export const PlaceScreen = ({ navigation, route }) => {
                     key={`${index}`}
                     large
                     title={visitor.lastVisitorName}
-                    // details={visitor.lastVisitorRank}
-                    details={""}
+                    details={visitor.lastVisitorRank == '' ? "" : rankToTitle(visitor.lastVisitorRank)}
                     image={visitor.lastVisitorImage}
                   />
                 ))}
