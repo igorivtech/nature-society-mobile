@@ -57,11 +57,11 @@ const s = StyleSheet.create({
 export const RecentVisitor = ({ title, details, image, large = false }) => {
   return (
     <View
-      style={{ ...globalStyles.cardLocationContainer, marginLeft: large ? 30 : 0 }}
+      style={{ ...globalStyles.cardLocationContainer, marginLeft: large ? 24 : 0 }}
     >
       <View style={globalStyles.marginRight(large ? 12 : 8)}>
         <Text style={textStyles.cardTitle}>{title}</Text>
-        <Text style={textStyles.cardDetail}>{details}</Text>
+        {details != '' ? <Text style={textStyles.cardDetail}>{details}</Text> : null}
       </View>
       <Image style={globalStyles.cardVisitorPic(large, image != null && image != '')} source={image != null && image != '' ? { uri: image } : require("../../../assets/images/default_profile_pic.png")} />
     </View>
