@@ -231,7 +231,7 @@ export const PlaceScreen = ({ navigation, route }) => {
     setInfoVisible(true);
   }
 
-  const rankToTitle = (rank) => {
+  const rankToTitle = useCallback((rank) => {
     const numOfReports = parseInt(rank);
     let last = ''
     settings.achievements.forEach(achievement => {
@@ -240,7 +240,7 @@ export const PlaceScreen = ({ navigation, route }) => {
       }
     });
     return last;
-  }
+  }, [settings]);
 
   return (
     <View style={s.container}>
