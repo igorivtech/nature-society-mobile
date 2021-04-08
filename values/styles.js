@@ -204,8 +204,8 @@ export const globalStyles = StyleSheet.create({
     marginRight: c
   }),
 
-  cardVisitorPic: (large) => ({
-    resizeMode: 'contain',
+  cardVisitorPic: (large, hasImage) => ({
+    resizeMode: hasImage ? 'cover' : 'contain',
     borderWidth: 0.4,
     borderColor: '#202224',
     width: large ? 27 : 22,
