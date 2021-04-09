@@ -57,7 +57,7 @@ const s = StyleSheet.create({
 export const RecentVisitor = ({ title, details, image, large = false }) => {
   return (
     <View
-      style={[globalStyles.cardLocationContainer, {marginLeft: large ? 24 : 0, alignItems: 'center'}]}
+      style={[globalStyles.cardLocationContainer, {marginLeft: large ? 24 : 0, alignItems: 'center', maxWidth: large ? '50%' : '100%'}]}
     >
       <View style={[globalStyles.marginRight(large ? 12 : 8), {justifyContent: 'center'}]}>
         <Text style={textStyles.cardTitle}>{title}</Text>
