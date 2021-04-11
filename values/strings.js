@@ -159,7 +159,7 @@ export const strings = {
       return `מצאתי באפליקציית "בשביל הטבע" את ${name.trim()} וחשבתי שיעניין אתכם`
     },
     recentVisitors: (locked) => {
-      return 'מבקר אחרון';
+      return 'מדווחים הכי פעילים';
     },
     cleannessTitle: (locked) => {
       // return locked ? "מצב וניקיון הטבע" : "מצב הטבע";
