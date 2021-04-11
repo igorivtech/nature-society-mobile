@@ -330,7 +330,7 @@ export const PlaceScreen = ({ navigation, route }) => {
                 {strings.placeScreen.recentVisitors(placeLocked(user, place))}
               </Text>
             ) : null}
-            {place.lastVisitors.length > 0 ? (
+            {place.lastVisitors.length > 0 && !smallScreen ? (
               <View style={s.recentVisitorsContainer}>
                 {place.lastVisitors.slice(0, 2).map((visitor, index) => (
                   <RecentVisitor
