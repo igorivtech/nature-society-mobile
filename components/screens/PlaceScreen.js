@@ -325,7 +325,7 @@ export const PlaceScreen = ({ navigation, route }) => {
             ref={visitorsRef}
             style={{...globalStyles.fullWidth, marginVertical: VERTICAL_MARGIN}}
           >
-            {place.lastVisitors.length > 0 ? (
+            {place.lastVisitors.length > 0 && !smallScreen ? (
               <Text style={textStyles.normalOfSize(12)}>
                 {strings.placeScreen.recentVisitors(placeLocked(user, place))}
               </Text>
