@@ -3,7 +3,6 @@ import { CLEANNESS_COLORS, height, isAlt, MAP_BOUNDARY_NORTHEAST, MAP_BOUNDARY_S
 import { landscapeImages } from "../values/images";
 import { strings } from "../values/strings";
 import * as Notifications from "expo-notifications";
-// import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
 export const isLocationInIsrael = (coordinate) => {

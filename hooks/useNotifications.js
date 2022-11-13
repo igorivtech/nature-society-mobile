@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
 import { ASK_PUSH, SAVE_NOTIFICATION } from "../context/userReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Auth } from "aws-amplify";

@@ -1,4 +1,3 @@
-import * as Permissions from "expo-permissions";
 import { useEffect } from "react";
 import { Linking } from "react-native";
 import * as Location from "expo-location";

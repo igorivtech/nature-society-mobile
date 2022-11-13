@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import * as Permissions from "expo-permissions";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { DEFAULT_IMAGE_QUALITY } from "../values/consts";
@@ -49,8 +48,9 @@ export const useImage = () => {
 
   const selectImageGallery = useCallback(async () => {
     setLoadingImage(true);
-    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === "granted") {
+    const { status, permissions } = await MediaLibrary.requestPermissionsAsync();
+    //  Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === "all" || status === "all") {
       ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,

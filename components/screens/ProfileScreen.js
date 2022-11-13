@@ -8,7 +8,6 @@ import * as ImagePicker from "expo-image-picker";
 import { DEFAULT_IMAGE_QUALITY, errors, height, isAndroid, smallScreen, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
-// import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
