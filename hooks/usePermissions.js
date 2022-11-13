@@ -1,24 +1,27 @@
 import * as Permissions from "expo-permissions";
 import { useEffect } from "react";
 import { Linking } from "react-native";
+import * as Location from "expo-location";
 
 export const askSettings = () => {
-  Linking.openURL('app-settings:');
-}
+  Linking.openURL("app-settings:");
+};
 
 export const useLocationPermissions = () => {
-  const [permission, askPermission, getPermission] = Permissions.usePermissions(Permissions.LOCATION, {});
-
+  // const [permission, askPermission, getPermission] = Permissions.usePermissions(Permissions.LOCATION, {});
+  // const {} = await Location.
+  // Location.
   useEffect(() => {
     // console.log({ permission });
-  }, [permission]);
+  }, []);
 
   const askLocation = () => {
-    askPermission();
+    // askPermission();
+    Location.getBackgroundPermissionsAsync();
   };
 
   return {
     askLocation,
-    locationPermission: permission,
+    // locationPermission: permission,
   };
 };

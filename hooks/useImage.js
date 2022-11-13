@@ -1,17 +1,14 @@
 import { useState, useCallback } from "react";
 import * as Permissions from "expo-permissions";
+import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { DEFAULT_IMAGE_QUALITY } from "../values/consts";
 import { resizeImage } from "./helpers";
-import { useActionSheet } from '@expo/react-native-action-sheet'
-import {colors} from '../values/colors'
+import { useActionSheet } from "@expo/react-native-action-sheet";
+import { colors } from "../values/colors";
 // import {textStyles} from '../values/textStyles'
 
-const options = [
-  'מצלמה', 
-  'גלריה', 
-  'ביטול'
-];
+const options = ["מצלמה", "גלריה", "ביטול"];
 
 export const useImage = () => {
   const [image, setImage] = useState(null);
@@ -21,9 +18,10 @@ export const useImage = () => {
 
   const selectImageCamera = useCallback(async () => {
     setLoadingImage(true);
-    const { status, permissions } = await Permissions.askAsync(
-      Permissions.CAMERA
-    );
+    const { status } = await Camera.getPermissionsAsync();
+    //  Permissions.askAsync(
+    //   Permissions.CAMERA
+    // );
     if (status === "granted") {
       ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -51,9 +49,7 @@ export const useImage = () => {
 
   const selectImageGallery = useCallback(async () => {
     setLoadingImage(true);
-    const { status, permissions } = await Permissions.askAsync(
-      Permissions.CAMERA_ROLL
-    );
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status === "granted") {
       ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -86,15 +82,15 @@ export const useImage = () => {
         cancelButtonIndex: 2,
         tintColor: colors.treeBlues,
       },
-      buttonIndex => {
+      (buttonIndex) => {
         if (buttonIndex === 0) {
           selectImageCamera();
         } else if (buttonIndex === 1) {
           selectImageGallery();
         }
       }
-    )
-  }
+    );
+  };
 
   return { image, setImage, loadingImage, setLoadingImage, selectImage, selectImageCamera, selectImageGallery, imagePopupvisible, setPopupVisible };
 };

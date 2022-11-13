@@ -1,17 +1,9 @@
 import * as ImageManipulator from "expo-image-manipulator";
-import {
-  CLEANNESS_COLORS,
-  height,
-  isAlt,
-  MAP_BOUNDARY_NORTHEAST,
-  MAP_BOUNDARY_SOUTHWEST,
-  SCREEN_ASPECT_RATIO,
-  width,
-} from "../values/consts";
+import { CLEANNESS_COLORS, height, isAlt, MAP_BOUNDARY_NORTHEAST, MAP_BOUNDARY_SOUTHWEST, SCREEN_ASPECT_RATIO, width } from "../values/consts";
 import { landscapeImages } from "../values/images";
 import { strings } from "../values/strings";
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
+// import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
 export const isLocationInIsrael = (coordinate) => {
@@ -23,12 +15,13 @@ export const isLocationInIsrael = (coordinate) => {
   );
 };
 
-export const getExpoToken = async() => {
+export const getExpoToken = async () => {
   let token;
   if (Constants.isDevice) {
-    const { status } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
+    const { status } = await Notifications.getPermissionsAsync();
+    //  Permissions.getAsync(
+    //   Permissions.NOTIFICATIONS
+    // );
     if (status !== "granted") {
       return null;
     }
@@ -37,7 +30,7 @@ export const getExpoToken = async() => {
     return null;
   }
   return token;
-}
+};
 
 export const clamp = (min, value, max) => {
   if (value < min) {
@@ -67,11 +60,7 @@ const newImageSize = (image) => {
 
 export const resizeImage = async (response) => {
   const { newWidth, newHeight } = newImageSize(response);
-  const resizedImage = await ImageManipulator.manipulateAsync(
-    response.uri,
-    [{ resize: { width: newWidth, height: newHeight } }],
-    { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
-  );
+  const resizedImage = await ImageManipulator.manipulateAsync(response.uri, [{ resize: { width: newWidth, height: newHeight } }], { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG });
   resizedImage.type = "image";
   return resizedImage;
 };
@@ -81,21 +70,21 @@ export const objectLength = (object) => {
     return 0;
   }
   return Object.keys(object).length;
-}
+};
 
 export const validateEmail = (email) => {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
-}
+};
 
-export const calcPlaceDelta = ({southWest, northEast}) => {
-    const ASPECT_RATIO = width / height;
-    const northeastLat = northEast.latitude;
-    const southwestLat = southWest.latitude;
-    const latitudeDelta = (northeastLat - southwestLat);
-    const longitudeDelta = latitudeDelta * ASPECT_RATIO;
-    return {latitudeDelta, longitudeDelta}
-}
+export const calcPlaceDelta = ({ southWest, northEast }) => {
+  const ASPECT_RATIO = width / height;
+  const northeastLat = northEast.latitude;
+  const southwestLat = southWest.latitude;
+  const latitudeDelta = northeastLat - southwestLat;
+  const longitudeDelta = latitudeDelta * ASPECT_RATIO;
+  return { latitudeDelta, longitudeDelta };
+};
 
 export const calcCustomAchievements = async (serverAchievements, userPoints) => {
   let output = [];
@@ -103,10 +92,10 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
   let currentSet = false;
   let landscapeIndex = 0;
   let tempLandscapeImages = shuffle([...landscapeImages]);
-  for (i = 0; i < serverAchievements.length; i++) { 
+  for (i = 0; i < serverAchievements.length; i++) {
     if (i % 2 == 0) {
       const bottom = serverAchievements[i];
-      const top = serverAchievements[i+1];
+      const top = serverAchievements[i + 1];
       let item = {
         topDone: userPoints >= top.score,
         bottomDone: userPoints >= bottom.score,
@@ -115,8 +104,8 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
         bottomTitle: bottom.title,
         topPoints: top.score,
         bottomPoints: bottom.score,
-        landscape: tempLandscapeImages[landscapeIndex++]
-      }
+        landscape: tempLandscapeImages[landscapeIndex++],
+      };
       if (!currentSet) {
         if (!item.topDone || !item.bottomDone) {
           item.current = true;
@@ -127,22 +116,21 @@ export const calcCustomAchievements = async (serverAchievements, userPoints) => 
     }
   }
   output.reverse();
-  return output
-}
+  return output;
+};
 
 function shuffle(a) {
   var j, x, i;
   for (i = a.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = a[i];
-      a[i] = a[j];
-      a[j] = x;
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    a[i] = a[j];
+    a[j] = x;
   }
   return a;
 }
 
 export const convertServerPlaces = (serverPlaces, location, specialSort = false) => {
-
   let res = [...serverPlaces];
 
   res.forEach((place, i) => {
@@ -156,8 +144,8 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
       latitude: place.location.coordinates[1],
       // latitudeDelta: 0.1 * SCREEN_ASPECT_RATIO,
       // longitudeDelta: 0.1,
-    }
-    if (place.title == null || place.title == '' || place.title.trim() === "") {
+    };
+    if (place.title == null || place.title == "" || place.title.trim() === "") {
       res[i].title = "אין שם";
     }
     if (location) {
@@ -165,7 +153,7 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
       if (di < 1) {
         res[i].distance = parseFloat(di.toFixed(1));
       } else {
-        res[i].distance = Math.round(Math.round((di) * 100) / 100);
+        res[i].distance = Math.round(Math.round(di * 100) / 100);
       }
     } else {
       res[i].distance = null;
@@ -177,8 +165,8 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
         2: 0,
         3: 0,
         4: 0,
-        5: 0
-      }
+        5: 0,
+      };
     }
     //
     res[i].cleanness = place.cleanness;
@@ -188,11 +176,11 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     res[i].crowdnessColor = siteColor(res[i].crowdness);
     //
     if (!place.image.startsWith("http")) {
-      res[i].image = `https://d2hi055ukb5xv2.cloudfront.net/public/images/${place.image}`
+      res[i].image = `https://d2hi055ukb5xv2.cloudfront.net/public/images/${place.image}`;
     } else {
       res[i].image = null;
     }
-  })
+  });
 
   // if (specialSort) {
   //   res = specialSortPlaces(res, location);
@@ -200,16 +188,16 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
   //   res.sort((p1, p2) => p1.distance > p2.distance);
   // }
 
-  return res
-}
+  return res;
+};
 
 export const convertSliderValue = (value) => {
-  return 1 + 4*value;
-}
+  return 1 + 4 * value;
+};
 
 export const siteColor = (rating) => {
-  return CLEANNESS_COLORS[clamp(1, Math.round(rating), 5)]
-}
+  return CLEANNESS_COLORS[clamp(1, Math.round(rating), 5)];
+};
 
 export const placeLocked = (user, place) => {
   return false;
@@ -218,7 +206,7 @@ export const placeLocked = (user, place) => {
   // }
   // const unlockedPlaces = user.unlockedPlaces;
   // return unlockedPlaces[place._id] == null && unlockedPlaces[`${place.siteDocumentId}`] == null
-}
+};
 
 export const specialSortPlaces = (res, location = null) => {
   if (res.length > 2) {
@@ -226,17 +214,17 @@ export const specialSortPlaces = (res, location = null) => {
     let notMapped = [...res];
     let currentLocation;
     if (location == null) {
-      currentLocation = {...res[0]};
+      currentLocation = { ...res[0] };
     } else {
-      currentLocation = {position: location};
+      currentLocation = { position: location };
     }
-    let distances = res.map(p=>distancePlaces(p, currentLocation));
+    let distances = res.map((p) => distancePlaces(p, currentLocation));
     let indexOfMin = distances.indexOf(Math.min(...distances));
     newRes.push(notMapped.splice(indexOfMin, 1)[0]);
     let curr = newRes[0];
     let i;
     for (i = 1; i < res.length; i++) {
-      distances = notMapped.map(p=>distancePlaces(p, curr));
+      distances = notMapped.map((p) => distancePlaces(p, curr));
       indexOfMin = distances.indexOf(Math.min(...distances));
       curr = notMapped.splice(indexOfMin, 1)[0];
       newRes.push(curr);
@@ -245,10 +233,10 @@ export const specialSortPlaces = (res, location = null) => {
   } else {
     return res;
   }
-}
+};
 
 const firstNameOnly = (fullName) => {
-  const parts = fullName.split(' ');
+  const parts = fullName.split(" ");
   return parts[0];
   // if (parts.length === 1) {
   //   return parts[0];
@@ -260,7 +248,7 @@ const firstNameOnly = (fullName) => {
   //     return `${parts[0]} ${firstChar}.`
   //   }
   // }
-}
+};
 
 // {
 //   image:
@@ -334,60 +322,57 @@ const firstNameOnly = (fullName) => {
 //   "type": " ",
 // },
 function toRad(Value) {
-    return Value * Math.PI / 180;
+  return (Value * Math.PI) / 180;
 }
 const distance = (lat1, lon1, lat2, lon2) => {
-	if ((lat1 == lat2) && (lon1 == lon2)) {
-		return 0;
-	}
-	else {
-
+  if (lat1 == lat2 && lon1 == lon2) {
+    return 0;
+  } else {
     var R = 6371; // km
-    var dLat = toRad(lat2-lat1);
-    var dLon = toRad(lon2-lon1);
+    var dLat = toRad(lat2 - lat1);
+    var dLon = toRad(lon2 - lon1);
     var lat1 = toRad(lat1);
     var lat2 = toRad(lat2);
 
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d;
 
-		// var radlat1 = Math.PI * lat1/180;
-		// var radlat2 = Math.PI * lat2/180;
-		// var theta = lon1-lon2;
-		// var radtheta = Math.PI * theta/180;
-		// var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-		// if (dist > 1) {
-		// 	dist = 1;
-		// }
-		// dist = Math.acos(dist);
-		// dist = dist * 180/Math.PI;
-		// dist = dist * 60 * 1.1515;
-		// // if (unit=="K") { dist = dist * 1.609344 }
+    // var radlat1 = Math.PI * lat1/180;
+    // var radlat2 = Math.PI * lat2/180;
+    // var theta = lon1-lon2;
+    // var radtheta = Math.PI * theta/180;
+    // var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    // if (dist > 1) {
+    // 	dist = 1;
+    // }
+    // dist = Math.acos(dist);
+    // dist = dist * 180/Math.PI;
+    // dist = dist * 60 * 1.1515;
+    // // if (unit=="K") { dist = dist * 1.609344 }
     // // if (unit=="N") { dist = dist * 0.8684 }
     // dist = dist * 1.609344
-		// return Math.round(dist * 100) / 100;
-	}
-}
+    // return Math.round(dist * 100) / 100;
+  }
+};
 
 const distancePlaces = (p1, p2) => {
-	return distance(p1.position.latitude, p1.position.longitude, p2.position.latitude, p2.position.longitude);
-}
+  return distance(p1.position.latitude, p1.position.longitude, p2.position.latitude, p2.position.longitude);
+};
 
 export const formatRating = (rating, isCleanness) => {
   if (isAlt) {
-    const fixedRating = rating >= 4.5 ? 4 : rating
+    const fixedRating = rating >= 4.5 ? 4 : rating;
     if (isCleanness) {
-      return strings.reportScreen.cleanTitles[Math.round(fixedRating)]
+      return strings.reportScreen.cleanTitles[Math.round(fixedRating)];
     } else {
-      return strings.reportScreen.crowdTitles[Math.round(fixedRating)]
+      return strings.reportScreen.crowdTitles[Math.round(fixedRating)];
     }
   } else {
     return rating.toFixed(1);
   }
-}
+};
 
 export const getZoomLevelFromRegion = (region) => {
   const { longitudeDelta } = region;
@@ -405,9 +390,9 @@ export const getZoomLevelFromRegion = (region) => {
 
 const EPSILON = 0.01;
 export const mapAtPlace = (mapRegion, place) => {
-  return Math.abs(mapRegion.latitude - place.position.latitude) < EPSILON && Math.abs(mapRegion.longitude - place.position.longitude) < EPSILON
-}
+  return Math.abs(mapRegion.latitude - place.position.latitude) < EPSILON && Math.abs(mapRegion.longitude - place.position.longitude) < EPSILON;
+};
 
 export const calcRadius = (region) => {
-  return 90 * region.longitudeDelta / 2;
-}
+  return (90 * region.longitudeDelta) / 2;
+};

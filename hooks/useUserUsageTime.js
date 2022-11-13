@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Auth } from "aws-amplify";
 import React, { useState, useEffect, useRef } from "react";
 import { AppState } from "react-native";

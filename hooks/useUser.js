@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Amplify, { Auth } from "aws-amplify";
 import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER, SAVE_OFFLINE_USER } from "../context/userReducer";
 import { useServer } from "./useServer";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getExpoToken } from "./helpers";
 import { useAppState } from "./useAppState";
 

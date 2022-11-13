@@ -10,10 +10,7 @@ export const useDeepLink = (dispatch) => {
   const { getPlace } = useServer();
 
   const handlePlaceId = (placeId) => {
-    Promise.all([
-      Location.getLastKnownPositionAsync({}),
-      getPlace(placeId),
-    ]).then((results) => {
+    Promise.all([Location.getLastKnownPositionAsync({}), getPlace(placeId)]).then((results) => {
       const location = results[0];
       const place = results[1];
       if (place != null) {
@@ -33,7 +30,7 @@ export const useDeepLink = (dispatch) => {
       .path.split("showPlace/")
       .filter((e) => e != "");
     if (idInArray.length === 1) {
-      handlePlaceId(idInArray[0].replace(/\\|\//g,''));
+      handlePlaceId(idInArray[0].replace(/\\|\//g, ""));
     }
   };
 

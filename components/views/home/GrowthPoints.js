@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext, useEffect, useRef, useState, memo } from "react";
 import { Animated, Easing, Image } from "react-native";
 import { UserContext } from "../../../context/context";

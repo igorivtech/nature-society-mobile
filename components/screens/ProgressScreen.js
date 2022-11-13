@@ -28,7 +28,7 @@ import useIsMounted from "ismounted";
 import { Popup } from "../views/Popup";
 import { shouldAskUser } from "../../hooks/useNotifications";
 import { Auth } from "aws-amplify";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

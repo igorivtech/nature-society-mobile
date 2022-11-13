@@ -12,7 +12,7 @@ import { textStyles } from "../../values/textStyles";
 import { width, height, SPLASH_HIDE_DELAY, statusBarHeight, TOP_BUTTONS_CONTAINER_WIDTH, smallScreen } from "../../values/consts";
 import { colors } from "../../values/colors";
 import { OnboardingButton, CoolButton } from "../views/onboarding/views";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ONBOARDING_SHOWN_KEY } from "../../hooks/memory";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text1, Text2, Text3, FirstButton, SkipButton } from "../views/onboarding/texts";
