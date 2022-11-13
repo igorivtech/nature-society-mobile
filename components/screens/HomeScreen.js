@@ -128,7 +128,7 @@ export const HomeScreen = ({ navigation, route }) => {
   }, [notification, isFocused, popupVisible, pushPopupVisible]);
 
   const tryFetchLocation = async () => {
-    let { status } = await Location.getBackgroundPermissionsAsync();
+    let { status } = await Location.getForegroundPermissionsAsync();
     //  getForegroundPermissions();
     if (status === "granted") {
       let location = await Location.getLastKnownPositionAsync({});

@@ -16,7 +16,7 @@ export const useLocationPermissions = () => {
 
   const askLocation = () => {
     // askPermission();
-    Location.getBackgroundPermissionsAsync();
+    Location.getForegroundPermissionsAsync();
   };
 
   return {
