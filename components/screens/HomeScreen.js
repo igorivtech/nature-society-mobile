@@ -268,7 +268,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   const animateToItem = (item) => {
     if (mapRef.current) {
-      const ld = mapRef.current.__lastRegion.longitudeDelta;
+      const ld = mapRef.current.props.initialRegion.longitudeDelta;
       const noZoom = ld <= 0.15;
       if (noZoom) {
         const lastRegion = mapRef.current?.__lastRegion;
