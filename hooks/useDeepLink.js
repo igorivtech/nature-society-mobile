@@ -44,7 +44,7 @@ export const useDeepLink = (dispatch) => {
     });
     Linking.addEventListener("url", handleUrl);
     return () => {
-      Linking.removeEventListener("url", handleUrl);
+      // Linking.removeEventListener("url", handleUrl);
     };
     // }
   }, []);

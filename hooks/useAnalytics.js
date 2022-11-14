@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as Analytics from "expo-firebase-analytics";
-import * as Facebook from 'expo-facebook';
+import * as Facebook from "expo-facebook";
 
 export const useAnalytics = () => {
   useEffect(() => {
@@ -12,8 +12,6 @@ export const useAnalytics = () => {
     //
     Facebook.initializeAsync({
       appId: "139938011330970",
-      appName: "בשביל הטבע",
-      autoLogAppEvents: true
-    }).then(()=>{});
+    }).then(() => {});
   }, []);
 };

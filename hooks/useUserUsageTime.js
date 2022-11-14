@@ -1,39 +1,39 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Auth } from "aws-amplify";
 import React, { useState, useEffect, useRef } from "react";
 import { AppState } from "react-native";
 import { useServer } from "./useServer";
 import { ATTRIBUTE_LAST_USED_DATE } from "./useUser";
 
-const LAST_USAGE_TIME = 'LAST_USAGE_TIME'
+const LAST_USAGE_TIME = "LAST_USAGE_TIME";
 
 export const useUserUsageTime = (state) => {
   const appState = useRef(AppState.currentState);
   const startTime = useRef();
 
-  const {sendUsageTime} = useServer();
-  const {token} = state;
+  const { sendUsageTime } = useServer();
+  const { token } = state;
   const sent = useRef(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     handleLastUse();
-  }, [token])
+  }, [token]);
 
   const handleLastUse = async () => {
     if (token != null && !sent.current) {
       try {
-        let attributes = {}
-        attributes[ATTRIBUTE_LAST_USED_DATE] = (new Date()).toUTCString();
+        let attributes = {};
+        attributes[ATTRIBUTE_LAST_USED_DATE] = new Date().toUTCString();
         let cognitoUser = await Auth.currentAuthenticatedUser({
           bypassCache: true,
         });
         let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-        if (result === 'SUCCESS') {
+        if (result === "SUCCESS") {
           sent.current = true;
         }
       } catch (error) {}
     }
-  }
+  };
 
   const handleAppStateChange = (nextAppState) => {
     if (nextAppState === "active") {
@@ -44,7 +44,7 @@ export const useUserUsageTime = (state) => {
       //   if (stringData != null) {
       //     const data = JSON.parse(stringData);
       //     if (data != null) {
-            // sendUsageTime(token, data);
+      // sendUsageTime(token, data);
       //     }
       //   }
       // })
@@ -54,10 +54,15 @@ export const useUserUsageTime = (state) => {
       if (startTime?.current) {
         const endTime = new Date();
         const usage = endTime - startTime.current;
-        AsyncStorage.setItem(LAST_USAGE_TIME, JSON.stringify({
-          duration: usage,
-          startDate: startTime.current
-        })).then(()=>{}).catch((err)=>console.log("DIDN'T SAVE USAGE TIME, ", err))
+        AsyncStorage.setItem(
+          LAST_USAGE_TIME,
+          JSON.stringify({
+            duration: usage,
+            startDate: startTime.current,
+          })
+        )
+          .then(() => {})
+          .catch((err) => console.log("DIDN'T SAVE USAGE TIME, ", err));
         startTime.current = null;
       }
     }
@@ -67,7 +72,7 @@ export const useUserUsageTime = (state) => {
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChange);
     return () => {
-      AppState.removeEventListener("change", handleAppStateChange);
+      // AppState. removeEventListener("change", handleAppStateChange);
     };
   }, []);
 };
