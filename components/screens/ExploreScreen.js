@@ -1,41 +1,28 @@
 import React, { useCallback, useContext, useRef, useState, memo } from "react";
 import { useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  Keyboard,
-  Animated,
-  Easing,
-  KeyboardAvoidingView,
-  Platform
-} from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback, TextInput, Image, TouchableOpacity, Keyboard, Animated, Easing, KeyboardAvoidingView, Platform } from "react-native";
 import { colors } from "../../values/colors";
 import { strings } from "../../values/strings";
 import { textStyles } from "../../values/textStyles";
 import { PlaceRating } from "./PlaceScreen";
-import Highlighter from 'react-native-highlight-words';
+// import Highlighter from 'react-native-highlight-words';
 import { fonts } from "../../values/fonts";
 import { UserContext } from "../../context/context";
 import { keyboardAwareBehaviour, smallScreen, statusBarHeight } from "../../values/consts";
 import { globalStyles } from "../../values/styles";
 import _ from "lodash";
 import { useServer } from "../../hooks/useServer";
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 import { placeLocked } from "../../hooks/helpers";
-import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareFlatList } from "react-native-keyboard-aware-scroll-view";
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 import * as Animatable from "react-native-animatable";
-import * as WebBrowser from 'expo-web-browser';
+import * as WebBrowser from "expo-web-browser";
 import { appWebsite } from "../../hooks/useShare";
-import LottieView from 'lottie-react-native';
+import LottieView from "lottie-react-native";
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 import { LoadingImage } from "../views/LoadingImage";
-import {ActivityIndicator} from "../views/ActivityIndicator"
+import { ActivityIndicator } from "../views/ActivityIndicator";
 import useIsMounted from "ismounted";
 
 const AwareFlatList = Animated.createAnimatedComponent(KeyboardAwareFlatList);
@@ -47,19 +34,18 @@ const INNER_BORDER_RADIUS = BORDER_RADIUS - CARD_PADDING;
 export const EXIT_SIZE = 26;
 
 export const ExploreScreen = ({ navigation, route }) => {
-
-  const {location, hasLocation} = route.params;
+  const { location, hasLocation } = route.params;
   const currentPage = useRef(0);
 
   const isFocused = useIsFocused();
 
-  const {state} = useContext(UserContext);
-  const {serverPlaces, user, settings, token} = state;
+  const { state } = useContext(UserContext);
+  const { serverPlaces, user, settings, token } = state;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOn, setSearchOn] = useState(false);
 
-  const {searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, suggestNewPlace, loadingSuggestion} = useServer();
+  const { searchPlaces, loadingSearch, getExplorePlaces, loadingMorePlaces, suggestNewPlace, loadingSuggestion } = useServer();
 
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -71,20 +57,20 @@ export const ExploreScreen = ({ navigation, route }) => {
   const leftMargin = useRef(new Animated.Value(EXIT_SIZE)).current;
   const listTranslateX = leftMargin.interpolate({
     inputRange: [0, EXIT_SIZE],
-    outputRange: [0, -EXIT_SIZE/2],
-    extrapolate: 'clamp',
+    outputRange: [0, -EXIT_SIZE / 2],
+    extrapolate: "clamp",
   });
   const cardListAlpha = leftMargin.interpolate({
     inputRange: [0, EXIT_SIZE],
     outputRange: [0, 1],
-    extrapolate: 'clamp',
+    extrapolate: "clamp",
   });
   const textListOpacity = cardListAlpha.interpolate({
     inputRange: [0, 1],
-    outputRange: [1, 0]
-  })
+    outputRange: [1, 0],
+  });
 
-  useEffect(()=> {
+  useEffect(() => {
     if (searchOn) {
       setFilteredPlaces(serverPlaces);
     }
@@ -92,9 +78,9 @@ export const ExploreScreen = ({ navigation, route }) => {
       duration: 320,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
-      toValue: searchOn ? 0 : EXIT_SIZE
+      toValue: searchOn ? 0 : EXIT_SIZE,
     }).start();
-  }, [searchOn, serverPlaces])
+  }, [searchOn, serverPlaces]);
 
   useEffect(() => {
     currentPage.current = 0;
@@ -121,7 +107,7 @@ export const ExploreScreen = ({ navigation, route }) => {
         }
       }
     }
-  }
+  };
 
   const closeSearch = useCallback(() => {
     setShowSuggestion(false);
@@ -140,32 +126,38 @@ export const ExploreScreen = ({ navigation, route }) => {
     } else {
       closeSearch();
     }
-  }, [searchTerm, serverPlaces])
+  }, [searchTerm, serverPlaces]);
 
   const goBack = () => {
     navigation.goBack();
   };
 
-  const textChanged = useCallback((value) => {
-    setShowSuggestion(false);
-    setSearchTerm(value);
-    debounce.cancel()
-    if (value.length === 0) {
-      setFilteredPlaces(serverPlaces);
-    } else {
-      debounce(value);
-    }
-  }, [serverPlaces]);
-
-  const debounce = useCallback(_.debounce(async(searchVal) => {
-    const p = await searchPlaces(searchVal, location);
-    if (isFocused) {
-      setFilteredPlaces(p);
-      if (p.length === 0) {
-        setShowSuggestion(true);
+  const textChanged = useCallback(
+    (value) => {
+      setShowSuggestion(false);
+      setSearchTerm(value);
+      debounce.cancel();
+      if (value.length === 0) {
+        setFilteredPlaces(serverPlaces);
+      } else {
+        debounce(value);
       }
-    }
-  }, 500), [location]);
+    },
+    [serverPlaces]
+  );
+
+  const debounce = useCallback(
+    _.debounce(async (searchVal) => {
+      const p = await searchPlaces(searchVal, location);
+      if (isFocused) {
+        setFilteredPlaces(p);
+        if (p.length === 0) {
+          setShowSuggestion(true);
+        }
+      }
+    }, 500),
+    [location]
+  );
 
   const showItem = (item) => {
     navigation.navigate("Home", { searchItem: item });
@@ -187,19 +179,15 @@ export const ExploreScreen = ({ navigation, route }) => {
 
   const suggestPlace = useCallback(() => {
     suggestNewPlace(searchTerm.trim(), token);
-  }, [searchTerm])
+  }, [searchTerm]);
 
   return (
     <View style={styles.container}>
-      <FlingGestureHandler
-        direction={Directions.RIGHT}
-        onHandlerStateChange={handleSwipeRight}
-      >
+      <FlingGestureHandler direction={Directions.RIGHT} onHandlerStateChange={handleSwipeRight}>
         <Animated.View style={styles.searchScreenContainer(leftMargin)}>
+          <ClosePanelArrow direction="right" />
 
-          <ClosePanelArrow direction='right' />
-
-          <Animated.View style={{width: '100%', transform: [{translateX: listTranslateX}]}}>
+          <Animated.View style={{ width: "100%", transform: [{ translateX: listTranslateX }] }}>
             <SearchBar
               leftMargin={leftMargin}
               loadingSearch={loadingSearch}
@@ -222,14 +210,14 @@ export const ExploreScreen = ({ navigation, route }) => {
               data={places}
               keyExtractor={(item) => item.key}
               ListHeaderComponentStyle={styles.headerContainer}
-              ListHeaderComponent={()=><SitesHeader key='sitesHeader' onPress={showGlobalSites} />}
+              ListHeaderComponent={() => <SitesHeader key="sitesHeader" onPress={showGlobalSites} />}
               ListFooterComponentStyle={styles.paginationIndicatorContainer}
-              ListFooterComponent={()=><ActivityIndicator customKey='indicator' animating={places.length > 0 && loadingMorePlaces} color={colors.treeBlues} />}
+              ListFooterComponent={() => <ActivityIndicator customKey="indicator" animating={places.length > 0 && loadingMorePlaces} color={colors.treeBlues} />}
               renderItem={({ item, index }) => <SearchCard hasLocation settings={settings} user={user} showItem={showItem} item={item} index={index} />}
             />
             <AwareFlatList
               scrollIndicatorInsets={styles.scrollInsets}
-              style={{...StyleSheet.absoluteFill, opacity: textListOpacity}}
+              style={{ ...StyleSheet.absoluteFill, opacity: textListOpacity }}
               contentContainerStyle={styles.flatListContainer}
               data={filteredPlaces}
               keyExtractor={(item) => item.key}
@@ -248,114 +236,120 @@ export const ExploreScreen = ({ navigation, route }) => {
   );
 };
 
-export const SuggestPlaceView = memo(({showSuggestion, suggestPlace, searchTerm, loadingSuggestion}) => {
+export const SuggestPlaceView = memo(({ showSuggestion, suggestPlace, searchTerm, loadingSuggestion }) => {
   const [sent, setSent] = useState(false);
   const scale = useRef(new Animated.Value(loadingSuggestion ? 0.9 : 1)).current;
   const opacity = scale.interpolate({
     inputRange: [0.9, 1],
     outputRange: [0.8, 1],
-    extrapolate: 'clamp'
+    extrapolate: "clamp",
   });
-  useEffect(()=>{
+  useEffect(() => {
     if (showSuggestion === false) {
       setSent(false);
     }
-  }, [showSuggestion])
-  useEffect(()=>{
+  }, [showSuggestion]);
+  useEffect(() => {
     setSent(false);
-  }, [searchTerm])
-  useEffect(()=>{
+  }, [searchTerm]);
+  useEffect(() => {
     if (loadingSuggestion !== null) {
       Animated.timing(scale, {
         toValue: loadingSuggestion ? 0.9 : 1,
         useNativeDriver: true,
         duration: loadingSuggestion ? 400 : 300,
-        easing: loadingSuggestion ? Easing.inOut(Easing.ease) : Easing.out(Easing.ease)
-      }).start(()=>{
+        easing: loadingSuggestion ? Easing.inOut(Easing.ease) : Easing.out(Easing.ease),
+      }).start(() => {
         if (loadingSuggestion === false) {
           setSent(true);
         }
       });
     }
-  }, [loadingSuggestion])
+  }, [loadingSuggestion]);
   if (showSuggestion) {
     return (
       <View style={suggestionStyles.container}>
-        <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.didntFindTitle}</Text>
+        <Text style={textStyles.normalOfSize(18, colors.treeBlues, "center")}>{strings.exploreScreen.didntFindTitle}</Text>
         <View style={globalStyles.spacer(12)} />
         <TouchableOpacity disabled={loadingSuggestion} onPress={suggestPlace}>
           <Animated.View style={suggestionStyles.newSuggestionButtonContainer(opacity, scale)}>
-            <Text numberOfLines={2} style={suggestionStyles.suggestButton}>{strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}</Text>
+            <Text numberOfLines={2} style={suggestionStyles.suggestButton}>
+              {strings.exploreScreen.newPlaceSuggestion(searchTerm.trim())}
+            </Text>
           </Animated.View>
         </TouchableOpacity>
-        {sent ? (<View style={suggestionStyles.sentContainer}>
-          <Text style={textStyles.normalOfSize(18, colors.treeBlues, 'center')}>{strings.exploreScreen.suggestionSent}</Text>
-          <View style={globalStyles.spacer(8)} />
-          <Image source={require("../../assets/images/suggestion_sent_icon.png")} style={globalStyles.imageJustContain} />
-        </View>) : null}
+        {sent ? (
+          <View style={suggestionStyles.sentContainer}>
+            <Text style={textStyles.normalOfSize(18, colors.treeBlues, "center")}>{strings.exploreScreen.suggestionSent}</Text>
+            <View style={globalStyles.spacer(8)} />
+            <Image source={require("../../assets/images/suggestion_sent_icon.png")} style={globalStyles.imageJustContain} />
+          </View>
+        ) : null}
       </View>
-    )
+    );
   } else {
-    return <View />
+    return <View />;
   }
-})
+});
 
 export const suggestionStyles = StyleSheet.create({
   sentContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    backgroundColor: "white",
     ...StyleSheet.absoluteFill,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   container: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'stretch'
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "stretch",
   },
   suggestionContainer: (showSuggestion) => ({
-    transform: [{translateY: -34}],
+    transform: [{ translateY: -34 }],
     ...StyleSheet.absoluteFill,
     zIndex: showSuggestion ? 4 : -4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 40
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 40,
   }),
 
   suggestButton: {
-    ...textStyles.boldOfSize(18, colors.treeBlues, 'center'),
+    ...textStyles.boldOfSize(18, colors.treeBlues, "center"),
     flexShrink: 1,
   },
 
   newSuggestionButtonContainer: (opacity, scale) => ({
     opacity,
-    transform: [{scale}],
+    transform: [{ scale }],
     paddingHorizontal: 8,
     paddingVertical: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
     borderWidth: 1,
     borderColor: colors.treeBlues,
     borderRadius: 15,
-    minHeight: 54
+    minHeight: 54,
   }),
-})
+});
 
-export const SitesHeader = memo(({onPress}) => {
+export const SitesHeader = memo(({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.headerInnerContainer}>
       <Image style={globalStyles.imageJustContain} source={require("../../assets/images/left_arrow.png")} />
-      <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.8} style={styles.headerTitle}>{strings.exploreScreen.globalSites}</Text>
+      <Text numberOfLines={1} adjustsFontSizeToFit={true} minimumFontScale={0.8} style={styles.headerTitle}>
+        {strings.exploreScreen.globalSites}
+      </Text>
       <Image style={globalStyles.imageJustContain} source={require("../../assets/images/trophy.png")} />
     </TouchableOpacity>
-  )
-})
+  );
+});
 
 export const TextCard = ({ item, showItem, index, searchTerm }) => {
   return (
-    <TouchableOpacity onPress={()=>showItem(item)} style={styles.smallCardContainer}>
-      <Highlighter
+    <TouchableOpacity onPress={() => showItem(item)} style={styles.smallCardContainer}>
+      {/* <Highlighter
         minimumFontScale={0.8}
         adjustsFontSizeToFit={true} 
         numberOfLines={2}
@@ -363,64 +357,58 @@ export const TextCard = ({ item, showItem, index, searchTerm }) => {
         highlightStyle={{fontFamily: fonts.bold}}
         searchWords={searchTerm.length === 0 ? [] : [searchTerm]}
         textToHighlight={item.title}
-      />
-      <Text minimumFontScale={0.8} adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>{strings.distanceFromYou(item.distance)}</Text>
+      /> */}
+      <Text minimumFontScale={0.8} adjustsFontSizeToFit={true} numberOfLines={1} style={styles.smallCardDetail}>
+        {strings.distanceFromYou(item.distance)}
+      </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export const SearchBar = memo(({
-  leftMargin = null,
-  searchTerm,
-  searchOn,
-  setSearchOn,
-  closeSearch,
-  safeCloseSearch,
-  textChanged,
-  modal = false,
-  loadingSearch = false
-}) => {
-
+export const SearchBar = memo(({ leftMargin = null, searchTerm, searchOn, setSearchOn, closeSearch, safeCloseSearch, textChanged, modal = false, loadingSearch = false }) => {
   const indicatorOpacity = useRef(new Animated.Value(1)).current;
 
-  const progress = leftMargin !== null ? leftMargin.interpolate({
-    inputRange: [0, EXIT_SIZE],
-    outputRange: [1, 0]
-  }) : 0
+  const progress =
+    leftMargin !== null
+      ? leftMargin.interpolate({
+          inputRange: [0, EXIT_SIZE],
+          outputRange: [1, 0],
+        })
+      : 0;
 
-  const bottomLineWidth = leftMargin !== null ? leftMargin.interpolate({
-    inputRange: [0, EXIT_SIZE],
-    outputRange: [2, 1],
-    extrapolate: 'clamp'
-  }) : 2
+  const bottomLineWidth =
+    leftMargin !== null
+      ? leftMargin.interpolate({
+          inputRange: [0, EXIT_SIZE],
+          outputRange: [2, 1],
+          extrapolate: "clamp",
+        })
+      : 2;
 
-  useEffect(()=>{
+  useEffect(() => {
     Animated.timing(indicatorOpacity, {
       useNativeDriver: true,
       toValue: loadingSearch ? 1 : 0,
-      easing: Easing.inOut(Easing.ease)
+      easing: Easing.inOut(Easing.ease),
     }).start();
-  }, [loadingSearch])
+  }, [loadingSearch]);
 
   const onFocus = () => {
     if (modal) {
       return;
     }
-    setSearchOn(true)
+    setSearchOn(true);
   };
 
   return (
     <View style={styles.searchContainer}>
-
       <Animated.View style={styles.searchIndicatorContainer(indicatorOpacity)}>
         <ActivityIndicator style={styles.indicator} animating={loadingSearch} color={colors.treeBlues} />
       </Animated.View>
 
       {searchOn ? (
         <TouchableOpacity onPress={safeCloseSearch ?? closeSearch}>
-          <Image
-            source={require("../../assets/images/search_close_icon.png")}
-          />
+          <Image source={require("../../assets/images/search_close_icon.png")} />
         </TouchableOpacity>
       ) : null}
 
@@ -433,18 +421,13 @@ export const SearchBar = memo(({
         // placeholderTextColor={colors.treeBlues}
         // placeholder={modal ? '' : (searchOn ? strings.exploreScreen.searchPlaceholder : "")}
         style={styles.searchInput}
-      />     
+      />
 
       <TouchableWithoutFeedback disabled={!searchOn} onPress={closeSearch}>
         {modal ? (
           <Image style={globalStyles.imageJustContain} source={require("../../assets/images/search_icon.png")} />
         ) : (
-          <LottieView style={styles.lottie} 
-            resizeMode='contain'
-            source={require("../../assets/animations/search.json")} 
-            autoPlay={false} 
-            progress={progress}
-          />
+          <LottieView style={styles.lottie} resizeMode="contain" source={require("../../assets/animations/search.json")} autoPlay={false} progress={progress} />
         )}
       </TouchableWithoutFeedback>
 
@@ -455,32 +438,30 @@ export const SearchBar = memo(({
 
 const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
   return (
-    <Animatable.View animation='fadeIn'>
+    <Animatable.View animation="fadeIn">
       <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={() => showItem(item)}>
-        {item.image == null ? (
-          <Image style={styles.cardImage('contain')} source={require("../../assets/images/default_place_bg.png")} />
-        ) : null}
+        {item.image == null ? <Image style={styles.cardImage("contain")} source={require("../../assets/images/default_place_bg.png")} /> : null}
         {item.image != null ? (
           <View style={styles.placeImageContainer}>
-            <LoadingImage style={styles.cardImage('cover')} source={{ 
-              uri: item.image,
-              cache: 'force-cache'
-            }} />
+            <LoadingImage
+              style={styles.cardImage("cover")}
+              source={{
+                uri: item.image,
+                cache: "force-cache",
+              }}
+            />
           </View>
         ) : null}
         <View style={styles.cardDetailsContainer}>
           <View style={styles.cardLocationContainer}>
-            <Text style={textStyles.normalOfSize(14)}>
-              {strings.distanceFromYou(hasLocation ? item.distance : null)}
-            </Text>
-            
-            <View style={styles.titleContainer}>
-              <Text numberOfLines={1} minimumFontScale={0.9} adjustsFontSizeToFit={true} style={styles.title}>{item.title}</Text>
+            <Text style={textStyles.normalOfSize(14)}>{strings.distanceFromYou(hasLocation ? item.distance : null)}</Text>
 
-              <Image
-                style={styles.translateY(-1)}
-                source={item.cleanness >= 3 ? require("../../assets/images/marker_explore_green.png") : require("../../assets/images/marker_explore_orange.png")}
-              />
+            <View style={styles.titleContainer}>
+              <Text numberOfLines={1} minimumFontScale={0.9} adjustsFontSizeToFit={true} style={styles.title}>
+                {item.title}
+              </Text>
+
+              <Image style={styles.translateY(-1)} source={item.cleanness >= 3 ? require("../../assets/images/marker_explore_green.png") : require("../../assets/images/marker_explore_orange.png")} />
             </View>
           </View>
 
@@ -507,33 +488,33 @@ const SearchCard = ({ hasLocation, settings, user, item, showItem, index }) => {
             />
           </View>
         </View>
-      </TouchableOpacity>      
+      </TouchableOpacity>
     </Animatable.View>
-
   );
 };
 
 const styles = StyleSheet.create({
- 
   titleSpacer: {
-    flexGrow: 1, minWidth: 4
+    flexGrow: 1,
+    minWidth: 4,
   },
 
   title: {
     ...textStyles.boldOfSize(16),
-    flexGrow: 1, flexShrink: 1
+    flexGrow: 1,
+    flexShrink: 1,
   },
 
   placeImageContainer: {
     flexGrow: 1,
     flexShrink: 1,
-    width: '100%',
-    ...globalStyles.centerChildren
+    width: "100%",
+    ...globalStyles.centerChildren,
   },
 
   lottie: {
     width: 28,
-    height: 28
+    height: 28,
   },
 
   headerTitle: {
@@ -545,88 +526,88 @@ const styles = StyleSheet.create({
   },
 
   headerInnerContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: colors.treeBlues,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 
   headerContainer: {
     paddingTop: 4,
     paddingBottom: 23,
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
 
-  bottomBorder: (height) => ({ 
-    transform: [{scaleY: height}, {translateY: 1}],
+  bottomBorder: (height) => ({
+    transform: [{ scaleY: height }, { translateY: 1 }],
     height: 1,
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: colors.treeBlues
+    backgroundColor: colors.treeBlues,
   }),
 
   searchOnImage: (opacity) => ({
-    position: 'absolute',
-    resizeMode: 'contain',
-    opacity
+    position: "absolute",
+    resizeMode: "contain",
+    opacity,
   }),
 
   searchOffImage: (opacity) => ({
-    resizeMode: 'contain',
-    opacity
+    resizeMode: "contain",
+    opacity,
   }),
 
   paginationIndicatorContainer: {
     paddingVertical: 12,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   cardsList: (searchOn, opacity) => ({
-    ...StyleSheet.absoluteFill, 
-    zIndex: searchOn ? -1 : 1, 
-    opacity
+    ...StyleSheet.absoluteFill,
+    zIndex: searchOn ? -1 : 1,
+    opacity,
   }),
 
   indicator: {
-    transform: [{translateX: 12}]
+    transform: [{ translateX: 12 }],
   },
 
   searchIndicatorContainer: (opacity) => ({
     ...StyleSheet.absoluteFill,
-    flexDirection: 'row',
-    alignItems: 'center',
-    opacity
+    flexDirection: "row",
+    alignItems: "center",
+    opacity,
   }),
 
   scrollInsets: {
-    right: 1
+    right: 1,
   },
 
   smallCardTitle: {
-    width: '50%',
+    width: "50%",
     ...textStyles.normalOfSize(18),
-    color: colors.treeBlues
+    color: colors.treeBlues,
   },
 
   smallCardDetail: {
-    width: '50%',
+    width: "50%",
     ...textStyles.normalOfSize(18),
     color: colors.treeBlues,
-    textAlign: 'center',
+    textAlign: "center",
   },
 
   smallCardContainer: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    justifyContent: "space-between",
     borderColor: colors.treeBlues,
     borderWidth: 1,
     borderRadius: 15,
@@ -638,8 +619,8 @@ const styles = StyleSheet.create({
   listsContainer: (translateX) => ({
     marginTop: 34, // this is new - remove if needed
     flex: 1,
-    width: '100%',
-    transform: [{translateX}]
+    width: "100%",
+    transform: [{ translateX }],
   }),
 
   translateY: (translateY) => ({
@@ -649,10 +630,10 @@ const styles = StyleSheet.create({
   titleContainer: {
     paddingRight: 4,
     flexGrow: 1,
-    flexShrink: 1, 
-    flexDirection: "row", 
+    flexShrink: 1,
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'flex-end'
+    justifyContent: "flex-end",
   },
 
   cardLocationContainer: {
@@ -660,7 +641,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     marginLeft: 16,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   ratingContainer: {
     flexDirection: "row",
@@ -690,7 +671,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: INNER_BORDER_RADIUS,
     flexGrow: 1,
     flexShrink: 1,
-    width: '100%',
+    width: "100%",
     backgroundColor: colors.imageBg,
   }),
 
@@ -731,17 +712,16 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     flex: 1,
     backgroundColor: "white",
-    transform: [{translateX: marginLeft}],
+    transform: [{ translateX: marginLeft }],
     marginTop: statusBarHeight,
     alignItems: "center",
   }),
 
   tapClose: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: -EXIT_SIZE,
     width: EXIT_SIZE,
-  }
-  
+  },
 });
