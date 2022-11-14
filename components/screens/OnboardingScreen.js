@@ -13,6 +13,7 @@ import { Text1, Text2, Text3, FirstButton, SkipButton } from "../views/onboardin
 import useIsMounted from "ismounted";
 import { TapView } from "../views/general";
 // import Carousel from 'react-native-snap-carousel';
+import Carousel from "react-native-reanimated-carousel";
 import LottieView from "lottie-react-native";
 
 const animations = {
@@ -267,29 +268,27 @@ export const OnboardingScreen = ({ navigation }) => {
           <OnboardingButton finished={finished} scale={exploreButtonScale} index={0} selected={selectedIndex === 0} setIndex={setIndex} />
         </Animated.View>
         <Animated.View style={styles.carouselContainer(carouselOpacity, carouselTranslateX)}>
-          {/* <Carousel
-            inverted={true}
+          <Carousel
             onBeforeSnapToItem={onBeforeSnapToItem}
             ref={carousel}
             loop={true}
             data={[0, 1, 2]}
-            renderItem={({item, index})=>{
+            width={width}
+            renderItem={({ item, index }) => {
               return (
                 <View style={styles.itemContainer}>
                   <View style={styles.itemInnerContainaer}>
-                    <View style={styles.textsContainer}>
-                      {item === 0 ? (<Text1 opacity={1} />) : (item === 1 ? (<Text2 opacity={1} />) : (<Text3 opacity={1} />))}
-                    </View>
+                    <View style={styles.textsContainer}>{item === 0 ? <Text1 opacity={1} /> : item === 1 ? <Text2 opacity={1} /> : <Text3 opacity={1} />}</View>
                     <View style={styles.lottieContainer}>
-                      <LottieView source={animations[item]} loop={true} autoPlay={true} resizeMode={item === 0 ? 'contain' : 'cover'} />
+                      <LottieView source={animations[item]} loop={true} autoPlay={true} resizeMode={item === 0 ? "contain" : "cover"} />
                     </View>
                   </View>
                 </View>
-              )
+              );
             }}
             sliderWidth={width}
             itemWidth={width}
-          /> */}
+          />
         </Animated.View>
         <View style={globalStyles.marginBottom(bottomSafeAreaInset + 24)}>
           <FirstButton position="relative" altTitleString={finishOnboardingButtonTitle} altTitle={true} scale={secondButtonScale} onPress={nextOrFinish} />
@@ -326,13 +325,15 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  carouselContainer: (carouselOpacity, carouselTranslateX) => ({
-    opacity: carouselOpacity,
-    transform: [{ translateX: carouselTranslateX }],
-    flexGrow: 1,
-    flexShrink: 1,
-    marginBottom: 16,
-  }),
+  carouselContainer: (carouselOpacity, carouselTranslateX) => {
+    return {
+      opacity: carouselOpacity,
+      transform: [{ translateX: carouselTranslateX }],
+      flexGrow: 1,
+      flexShrink: 1,
+      marginBottom: 16,
+    };
+  },
 
   buttonsContainer: (topSafeAreaHeight) => ({
     ...globalStyles.onboardingButtonsContainer,
