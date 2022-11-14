@@ -1,9 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useReducer, useEffect, useRef } from "react";
 import { Platform, UIManager, Text, TextInput, Image, View } from "react-native";
-//
-import AppLoading from "expo-app-loading";
-import * as SplashScreen from "expo-splash-screen";
+import * as SplashScreen from "expo-splash-screen"; //
 import { fontsLoader } from "./values/fonts";
 import { fadeOptions, slideFromBottomOptions, slideFromLeftOptions, slideFromRightOptions } from "./values/options";
 //
@@ -77,10 +75,7 @@ export default function App() {
 
   useEffect(() => {
     if (fontsLoaded && !loadingOnboarding && !loadingUser && !loadingRTL) {
-      if (!splashShown.current) {
-        splashShown.current = true;
-        setTimeout(SplashScreen.hideAsync, SPLASH_HIDE_DELAY);
-      }
+      setTimeout(SplashScreen.hideAsync, SPLASH_HIDE_DELAY);
     }
   }, [fontsLoaded, loadingOnboarding, loadingUser, loadingRTL]);
 
@@ -93,7 +88,7 @@ export default function App() {
   );
 
   if (!fontsLoaded || loadingOnboarding || loadingUser || loadingRTL) {
-    return <AppLoading />;
+    return null;
   }
 
   return (
