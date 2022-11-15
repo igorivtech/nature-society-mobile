@@ -269,11 +269,18 @@ export const OnboardingScreen = ({ navigation }) => {
         </Animated.View>
         <Animated.View style={styles.carouselContainer(carouselOpacity, carouselTranslateX)}>
           <Carousel
-            onBeforeSnapToItem={onBeforeSnapToItem}
-            ref={carousel}
-            loop={true}
+            // onBeforeSnapToItem={onBeforeSnapToItem}
             data={[0, 1, 2]}
             width={width}
+            autoFillData={true}
+            autoPlayReverser={true}
+            modeConfig={{ snapDirection: "left" }}
+            ref={carousel}
+            onSnapToItem={(i) => {
+              console.log(i);
+              onBeforeSnapToItem(i);
+            }}
+            loop={true}
             renderItem={({ item, index }) => {
               return (
                 <View style={styles.itemContainer}>
@@ -286,8 +293,6 @@ export const OnboardingScreen = ({ navigation }) => {
                 </View>
               );
             }}
-            sliderWidth={width}
-            itemWidth={width}
           />
         </Animated.View>
         <View style={globalStyles.marginBottom(bottomSafeAreaInset + 24)}>

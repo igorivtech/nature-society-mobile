@@ -33,22 +33,23 @@ export const TextsView = ({ index, scale }) => {
 
 const fontSize = smallScreen ? 18 : 24;
 
-const Highlight = ({ regular, highlight, text, words, position = "relative" }) => {
-  return null;
-  // <Highlighter
-  //   adjustsFontSizeToFit={true}
-  //   numberOfLines={smallScreen ? 4 : 3}
-  //   style={[regular, { position, lineHeight: regular.fontSize }]}
-  //   highlightStyle={highlight}
-  //   searchWords={words}
-  //   textToHighlight={text}
-  // />
-};
+// const Highlight = ({ regular, highlight, text, words, position = "relative" }) => {
+//   return (
+//     <Highlighter
+//       adjustsFontSizeToFit={true}
+//       numberOfLines={smallScreen ? 4 : 3}
+//       style={[regular, { position, lineHeight: regular.fontSize }]}
+//       highlightStyle={highlight}
+//       searchWords={words}
+//       textToHighlight={text}
+//     />
+//   );
+// };
 
 export const Text1 = ({ opacity }) => {
   return (
     <Animated.View style={{ opacity, ...globalStyles.centerChildren }}>
-      <Highlight
+      {/* <Highlight
         regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
         highlight={textStyles.normalOfSize(fontSize, colors.clear, "center")}
         text={strings.onboardingScreen.newItem1}
@@ -74,7 +75,8 @@ export const Text1 = ({ opacity }) => {
         highlight={textStyles.normalOfSize(fontSize, colors.desertRock, "center")}
         text={strings.onboardingScreen.newItem1}
         words={["מלוכלכים", "עמוסים במבקרים"]}
-      />
+      /> */}
+      <Text>{strings.onboardingScreen.newItem1}</Text>
     </Animated.View>
   );
 };
@@ -87,12 +89,13 @@ export const Text2 = ({ opacity }) => {
         opacity,
       }}
     >
-      <Highlight
+      {/* <Highlight
         regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
         highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem2}
         words={["דווחו"]}
-      />
+      /> */}
+      <Text>{strings.onboardingScreen.newItem2}</Text>
     </Animated.View>
   );
 };
@@ -105,12 +108,13 @@ export const Text3 = ({ opacity }) => {
         opacity,
       }}
     >
-      <Highlight
+      {/* <Highlight
         regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
         highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem3}
         words={["התקדמו"]}
-      />
+      /> */}
+      <Text>{strings.onboardingScreen.newItem3}</Text>
     </Animated.View>
   );
 };
