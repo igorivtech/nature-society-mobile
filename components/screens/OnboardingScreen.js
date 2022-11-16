@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { View, Text, Animated, Easing, StyleSheet } from "react-native";
+import { View, Text, Animated, Easing, StyleSheet, ScrollView, FlatList } from "react-native";
 import { strings } from "../../values/strings";
 import { globalStyles } from "../../values/styles";
 import { textStyles } from "../../values/textStyles";
@@ -12,7 +12,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text1, Text2, Text3, FirstButton, SkipButton } from "../views/onboarding/texts";
 import useIsMounted from "ismounted";
 import { TapView } from "../views/general";
-// import Carousel from 'react-native-snap-carousel';
 import Carousel from "react-native-reanimated-carousel";
 import LottieView from "lottie-react-native";
 
@@ -41,6 +40,7 @@ const TOP_RIGHT = { ...TOP, ...RIGHT };
 export const OnboardingScreen = ({ navigation }) => {
   const { bottom: bottomSafeAreaInset, top: topSafeAreaHeight } = useSafeAreaInsets();
   const isMounted = useIsMounted();
+  const flatListRef = useRef(null);
 
   const logoTranslateY = useRef(new Animated.Value(0)).current;
   const logoScale = logoTranslateY.interpolate({
@@ -78,15 +78,47 @@ export const OnboardingScreen = ({ navigation }) => {
   const secondContainerOpacity = useRef(new Animated.Value(0)).current;
   const textsScale = useRef(new Animated.Value(0)).current;
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(2);
   const animating = useRef(true);
 
   const carouselTranslateX = useRef(new Animated.Value(-width)).current;
   const carouselOpacity = useRef(new Animated.Value(1)).current;
-  const carousel = useRef();
 
   const [finished, setFinished] = useState(false);
   const [finishOnboardingButtonTitle, setFinishOnboardingButtonTitle] = useState(null);
+
+  const OnboardingScreenSlides = [
+    <View style={styles.itemContainer} key={2}>
+      <View style={styles.itemInnerContainaer}>
+        <View style={styles.textsContainer}>
+          <Text3 opacity={1} />
+        </View>
+        <View style={styles.lottieContainer}>
+          <LottieView source={animations[2]} loop={true} autoPlay={true} resizeMode={"cover"} />
+        </View>
+      </View>
+    </View>,
+    <View style={styles.itemContainer} key={1}>
+      <View style={styles.itemInnerContainaer}>
+        <View style={styles.textsContainer}>
+          <Text2 opacity={1} />
+        </View>
+        <View style={styles.lottieContainer}>
+          <LottieView source={animations[1]} loop={true} autoPlay={true} resizeMode={"cover"} />
+        </View>
+      </View>
+    </View>,
+    <View style={styles.itemContainer} key={0}>
+      <View style={styles.itemInnerContainaer}>
+        <View style={styles.textsContainer}>
+          <Text1 opacity={1} />
+        </View>
+        <View style={styles.lottieContainer}>
+          <LottieView source={animations[0]} loop={true} autoPlay={true} resizeMode={"contain"} />
+        </View>
+      </View>
+    </View>,
+  ];
 
   // SPLASH
   useEffect(() => {
@@ -212,16 +244,14 @@ export const OnboardingScreen = ({ navigation }) => {
   const setIndex = useCallback(
     (i) => {
       setSelectedIndex(i);
-      carousel.current.snapToItem(i);
     },
     [selectedIndex]
   );
-
   const firstContinue = () => {
     setSecondContainerVisible(true);
   };
 
-  const nextOrFinish = () => {
+  const nextOrFinish = (e) => {
     if (finishOnboardingButtonTitle == null) {
       if (selectedIndex === 1) {
         setFinishOnboardingButtonTitle(strings.onboardingScreen.lastButtonTitle);
@@ -231,17 +261,31 @@ export const OnboardingScreen = ({ navigation }) => {
           useNativeDriver: true,
         }).start();
       }
-      const index = (selectedIndex + 1) % 3;
-      setIndex(index);
-      carousel.current.snapToNext();
+      // console.log(e.nativeEvent);
+      flatListRef.current.scrollToIndex({ index: selectedIndex === 2 ? 1 : 0 });
+      setIndex(selectedIndex >= 0 ? selectedIndex - 1 : 0);
     } else {
       finish();
     }
   };
 
-  const onBeforeSnapToItem = (i) => {
-    setSelectedIndex(i);
-    if (i === 2) {
+  // const onBeforeSnapToItem = (i) => {
+  //   setSelectedIndex(i);
+  //   if (i === 2) {
+  //     setFinishOnboardingButtonTitle(strings.onboardingScreen.lastButtonTitle);
+  //     Animated.timing(skipButtonScale, {
+  //       toValue: 0,
+  //       easing: Easing.inOut(Easing.ease),
+  //       useNativeDriver: true,
+  //     }).start();
+  //   }
+  // };
+  const handleScroll = (scroll) => {
+    const slide = Math.ceil(scroll.nativeEvent.contentOffset.x / scroll.nativeEvent.layoutMeasurement.width);
+    if (slide !== selectedIndex) {
+      setSelectedIndex(slide);
+    }
+    if (slide === 0) {
       setFinishOnboardingButtonTitle(strings.onboardingScreen.lastButtonTitle);
       Animated.timing(skipButtonScale, {
         toValue: 0,
@@ -263,12 +307,30 @@ export const OnboardingScreen = ({ navigation }) => {
       <FirstButton scale={firstButtonScale} bottomSafeAreaInset={bottomSafeAreaInset} onPress={firstContinue} />
       <Animated.View style={styles.secondContainer(secondContainerOpacity, secondContainerVisible)}>
         <Animated.View style={styles.buttonsContainer(topSafeAreaHeight)}>
-          <OnboardingButton finished={finished} scale={progressButtonScale} index={2} selected={selectedIndex === 2} setIndex={setIndex} />
+          <OnboardingButton finished={finished} scale={progressButtonScale} index={2} selected={selectedIndex === 0} setIndex={setIndex} />
           <OnboardingButton finished={finished} scale={reportButtonScale} index={1} selected={selectedIndex === 1} setIndex={setIndex} />
-          <OnboardingButton finished={finished} scale={exploreButtonScale} index={0} selected={selectedIndex === 0} setIndex={setIndex} />
+          <OnboardingButton finished={finished} scale={exploreButtonScale} index={0} selected={selectedIndex === 2} setIndex={setIndex} />
         </Animated.View>
         <Animated.View style={styles.carouselContainer(carouselOpacity, carouselTranslateX)}>
-          <Carousel
+          <FlatList
+            data={OnboardingScreenSlides}
+            renderItem={({ item }) => {
+              return item;
+            }}
+            initialScrollIndex={2}
+            horizontal
+            pagingEnabled
+            style={{ flex: 1, width: width, height: width * 0.6 }}
+            showsHorizontalScrollIndicator={false}
+            ref={flatListRef}
+            onScroll={handleScroll}
+          >
+            {/* {OnboardingScreenSlides.map((item, index) => {
+              return item;
+            })} */}
+            {/* {OnboardingScreenSlides} */}
+          </FlatList>
+          {/* <Carousel
             // onBeforeSnapToItem={onBeforeSnapToItem}
             data={[0, 1, 2]}
             width={width}
@@ -293,7 +355,7 @@ export const OnboardingScreen = ({ navigation }) => {
                 </View>
               );
             }}
-          />
+          /> */}
         </Animated.View>
         <View style={globalStyles.marginBottom(bottomSafeAreaInset + 24)}>
           <FirstButton position="relative" altTitleString={finishOnboardingButtonTitle} altTitle={true} scale={secondButtonScale} onPress={nextOrFinish} />
@@ -326,7 +388,7 @@ const styles = StyleSheet.create({
   },
 
   itemContainer: {
-    width: "100%",
+    width: width,
     height: "100%",
   },
 
@@ -337,6 +399,7 @@ const styles = StyleSheet.create({
       flexGrow: 1,
       flexShrink: 1,
       marginBottom: 16,
+      width: "100%",
     };
   },
 

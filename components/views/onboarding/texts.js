@@ -76,7 +76,7 @@ export const Text1 = ({ opacity }) => {
         text={strings.onboardingScreen.newItem1}
         words={["מלוכלכים", "עמוסים במבקרים"]}
       /> */}
-      <Text>{strings.onboardingScreen.newItem1}</Text>
+      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem1}</Text>
     </Animated.View>
   );
 };
@@ -95,7 +95,7 @@ export const Text2 = ({ opacity }) => {
         text={strings.onboardingScreen.newItem2}
         words={["דווחו"]}
       /> */}
-      <Text>{strings.onboardingScreen.newItem2}</Text>
+      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem2}</Text>
     </Animated.View>
   );
 };
@@ -114,7 +114,7 @@ export const Text3 = ({ opacity }) => {
         text={strings.onboardingScreen.newItem3}
         words={["התקדמו"]}
       /> */}
-      <Text>{strings.onboardingScreen.newItem3}</Text>
+      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem3}</Text>
     </Animated.View>
   );
 };
