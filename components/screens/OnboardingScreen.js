@@ -314,9 +314,7 @@ export const OnboardingScreen = ({ navigation }) => {
         <Animated.View style={styles.carouselContainer(carouselOpacity, carouselTranslateX)}>
           <FlatList
             data={OnboardingScreenSlides}
-            renderItem={({ item }) => {
-              return item;
-            }}
+            renderItem={({ item }) => item}
             initialScrollIndex={2}
             horizontal
             pagingEnabled
@@ -324,12 +322,7 @@ export const OnboardingScreen = ({ navigation }) => {
             showsHorizontalScrollIndicator={false}
             ref={flatListRef}
             onScroll={handleScroll}
-          >
-            {/* {OnboardingScreenSlides.map((item, index) => {
-              return item;
-            })} */}
-            {/* {OnboardingScreenSlides} */}
-          </FlatList>
+          ></FlatList>
           {/* <Carousel
             // onBeforeSnapToItem={onBeforeSnapToItem}
             data={[0, 1, 2]}
