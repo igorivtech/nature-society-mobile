@@ -17,7 +17,8 @@ export const useImage = () => {
 
   const selectImageCamera = useCallback(async () => {
     setLoadingImage(true);
-    const { status } = await Camera.getPermissionsAsync();
+    const { status } = await Camera.getCameraPermissionsAsync();
+    console.log(status);
     //  Permissions.askAsync(
     //   Permissions.CAMERA
     // );
@@ -29,7 +30,7 @@ export const useImage = () => {
         quality: DEFAULT_IMAGE_QUALITY,
       })
         .then(async (result) => {
-          if (!result.cancelled) {
+          if (!result.canceled) {
             const resized = await resizeImage(result);
             setImage(resized);
           }
@@ -48,9 +49,11 @@ export const useImage = () => {
 
   const selectImageGallery = useCallback(async () => {
     setLoadingImage(true);
-    const { status, permissions } = await MediaLibrary.requestPermissionsAsync();
+    console.log("here");
+    const { status, permissions } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     //  Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === "all" || status === "all") {
+    console.log(status);
+    if (status === "all" || status === "granted") {
       ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         // allowsEditing: true,
@@ -58,7 +61,7 @@ export const useImage = () => {
         quality: DEFAULT_IMAGE_QUALITY,
       })
         .then(async (result) => {
-          if (!result.cancelled) {
+          if (!result.canceled) {
             const resized = await resizeImage(result);
             setImage(resized);
           }

@@ -174,6 +174,7 @@ export const HomeScreen = ({ navigation, route }) => {
       }
     });
   }, []);
+
   useEffect(() => {
     // !popupVisible is location popup
     if (showPushPopup && isFocused && !popupVisible) {
@@ -181,6 +182,7 @@ export const HomeScreen = ({ navigation, route }) => {
       setPushPopupVisible(true);
     }
   }, [showPushPopup, isFocused, popupVisible]);
+
   useEffect(() => {
     // permissions popup
     if (requestPermissions && isFocused) {
@@ -188,11 +190,13 @@ export const HomeScreen = ({ navigation, route }) => {
       setPopupVisible(true);
     }
   }, [requestPermissions, isFocused]);
+
   useEffect(() => {
     if (Location.PermissionStatus === "granted") {
       tryFetchLocation();
     }
   }, [Location.PermissionStatus]);
+
   useEffect(() => {
     // current location fetched
     if (objectLength(location) > 0) {
@@ -312,6 +316,7 @@ export const HomeScreen = ({ navigation, route }) => {
       }
     }
   }, [sortedPlaces]);
+
   useEffect(() => {
     if (serverPlaces) {
       // && serverPlaces.length > 0

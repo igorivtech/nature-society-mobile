@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { Linking } from "react-native";
 import * as Location from "expo-location";
+import { Camera } from "expo-camera";
 
 export const askSettings = () => {
-  Linking.openURL("app-settings:");
+  // Camera.getCameraPermissionsAsync();
+  Linking.openSettings();
+  // Linking.openURL("app-settings:");
 };
 
 export const useLocationPermissions = () => {
