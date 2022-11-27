@@ -76,7 +76,7 @@
     "@aws-amplify/core" "5.0.3"
     "tslib" "^1.8.0"
 
-"@aws-amplify/core@5.0.3":
+"@aws-amplify/core@^5.0.3", "@aws-amplify/core@5.0.3":
   "integrity" "sha512-iHjWUSBUiLOmVYt4cdcAc5OR7onBgJf2SQ4PaJ1aCjmRfng8O61/UUK7Qxd9D9ijEtlx9qGB65hsSG8K3t61IA=="
   "resolved" "https://registry.npmjs.org/@aws-amplify/core/-/core-5.0.3.tgz"
   "version" "5.0.3"
@@ -3263,10 +3263,18 @@
     "uuid" "^3.4.0"
     "wrap-ansi" "^7.0.0"
 
-"@expo/code-signing-certificates@^0.0.2", "@expo/code-signing-certificates@0.0.2":
+"@expo/code-signing-certificates@^0.0.2":
   "integrity" "sha512-vnPHFjwOqxQ1VLztktY+fYCfwvLzjqpzKn09rchcQE7Sdf0wtW5fFtIZBEFOOY5wasp8tXSnp627zrAwazPHzg=="
   "resolved" "https://registry.npmjs.org/@expo/code-signing-certificates/-/code-signing-certificates-0.0.2.tgz"
   "version" "0.0.2"
+  dependencies:
+    "node-forge" "^1.2.1"
+    "nullthrows" "^1.1.1"
+
+"@expo/code-signing-certificates@0.0.5":
+  "integrity" "sha512-BNhXkY1bblxKZpltzAx98G2Egj9g1Q+JRcvR7E99DOj862FTCX+ZPsAUtPTr7aHxwtrL7+fL3r0JSmM9kBm+Bw=="
+  "resolved" "https://registry.npmjs.org/@expo/code-signing-certificates/-/code-signing-certificates-0.0.5.tgz"
+  "version" "0.0.5"
   dependencies:
     "node-forge" "^1.2.1"
     "nullthrows" "^1.1.1"
@@ -3883,10 +3891,10 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   "version" "0.1.11"
 
-"@react-native-community/netinfo@^9.3.6":
-  "integrity" "sha512-SwbBnHZuXcCUpYdL6ebt4HPAZEugPASl+RPxIyNe91Y+boZptzAFLywYW6yU93DYAhiHHFQBL6x6LxwF/K/tOQ=="
-  "resolved" "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.3.6.tgz"
-  "version" "9.3.6"
+"@react-native-community/netinfo@^9.3.5":
+  "integrity" "sha512-Mqbh/J8YCfc+EqSjq5OJn2USmcD8On4048pKEfyCsCDty3lQs1SNcmHqJdu9idNU2v//aM73T8F+re59cf78Ig=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.3.5.tgz"
+  "version" "9.3.5"
 
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
@@ -5645,10 +5653,10 @@
   dependencies:
     "expo-image-loader" "~4.0.0"
 
-"expo-image-picker@~14.0.1":
-  "integrity" "sha512-Qx7Vt00nEZvLwRUC6vknm0dbvYWwnEzqbg3rIRImGxfZ7ki3rWJ3HlWebGpxCyYRpJV6A7rUAgm/Mc0eY4eYzA=="
-  "resolved" "https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-14.0.1.tgz"
-  "version" "14.0.1"
+"expo-image-picker@^14.0.2":
+  "integrity" "sha512-dC0efykReusbjOtcvXYagABrVuwuOFwTfEx87VNjCZejig5aIPPj14UsViSV7xEQ+wkHvVnxyirox5xIbD196w=="
+  "resolved" "https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-14.0.2.tgz"
+  "version" "14.0.2"
   dependencies:
     "expo-image-loader" "~4.0.0"
     "uuid" "7.0.2"
@@ -5748,12 +5756,12 @@
   "resolved" "https://registry.npmjs.org/expo-updates-interface/-/expo-updates-interface-0.8.1.tgz"
   "version" "0.8.1"
 
-"expo-updates@^0.15.5":
-  "integrity" "sha512-FTWT0u2ila2Oxsa3Ls1qix2YCK3F1I5VnG2O5pAAHqQ0k6FsZKO0/yvf/5O2X1K8Iqj4CiD/2MOLmpFaCsoQqg=="
-  "resolved" "https://registry.npmjs.org/expo-updates/-/expo-updates-0.15.5.tgz"
-  "version" "0.15.5"
+"expo-updates@^0.15.6":
+  "integrity" "sha512-g5BuCmWdyiLqFaVkVz+m7r6U7MHJrLKvqybs04H6ArMNpTEf6FhUwSzmnCyOkSSP35KFNkC/I0dYlgW3Vcf1sw=="
+  "resolved" "https://registry.npmjs.org/expo-updates/-/expo-updates-0.15.6.tgz"
+  "version" "0.15.6"
   dependencies:
-    "@expo/code-signing-certificates" "0.0.2"
+    "@expo/code-signing-certificates" "0.0.5"
     "@expo/config" "~7.0.2"
     "@expo/config-plugins" "~5.0.3"
     "@expo/metro-config" "~0.5.0"

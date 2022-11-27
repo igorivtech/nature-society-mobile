@@ -14,11 +14,11 @@ export const useImage = () => {
   const [loadingImage, setLoadingImage] = useState(false);
   const [imagePopupvisible, setPopupVisible] = useState(false);
   const { showActionSheetWithOptions } = useActionSheet();
+  const [permission, requestPermission] = Camera.useCameraPermissions();
 
   const selectImageCamera = useCallback(async () => {
     setLoadingImage(true);
-    const { status } = await Camera.getCameraPermissionsAsync();
-    console.log(status);
+    const { status } = await requestPermission();
     //  Permissions.askAsync(
     //   Permissions.CAMERA
     // );

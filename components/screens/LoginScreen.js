@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, Keyboard } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
 import { useKeyboard } from "../../hooks/useKeyboard";
-import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView } from "../views/login/views";
+import { EmailSentView, ForgotPasswordView, LoginView, NewPasswordView, SignupView, VerifyCodeView } from "../views/login/views";
 import { errors, height, isAndroid, smallScreen, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
@@ -20,7 +20,7 @@ import { useImage } from "../../hooks/useImage";
 
 const PASSWORD_MIN_LENGTH = 8;
 const DEFAULT_UNLOCKED_PLACES = [];
-
+let emailTmp;
 export const LoginScreen = ({ navigation, route }) => {
   const { state, dispatch } = useContext(UserContext);
   const { offlineUser } = state;
@@ -37,6 +37,7 @@ export const LoginScreen = ({ navigation, route }) => {
   const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
   const [emailSentVisible, setEmailSentVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
+  const [verifyCodeVisible, setVerifyCodeVisible] = useState(false);
 
   const [name, setName] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
@@ -49,6 +50,8 @@ export const LoginScreen = ({ navigation, route }) => {
   const [newPassword, setNewPassword] = useState("");
   const [code, onCodeChanged] = useState("");
 
+  const [verificationCode, setVerificationCode] = useState("");
+  console.log(verificationCode);
   const { image, loadingImage, selectImage, imagePopupvisible, setPopupVisible } = useImage();
 
   const [scrollEnabled, setScrollEnabled] = useState(false);
@@ -72,11 +75,12 @@ export const LoginScreen = ({ navigation, route }) => {
       if (isAndroid) {
         setScrollEnabled(keyboardHeight > 0);
       }
-      if (keyboardHeight === 0) {
-        scrollRef?.current?.scrollToPosition(0, 0);
-      } else {
-        scrollRef?.current?.scrollToPosition(0, height * 0.15);
-      }
+      if (scrollRef.current)
+        if (keyboardHeight === 0) {
+          scrollRef?.current?.scrollToPosition(0, 0);
+        } else {
+          scrollRef?.current?.scrollToPosition(0, height * 0.15);
+        }
     }, 250),
     []
   );
@@ -164,6 +168,16 @@ export const LoginScreen = ({ navigation, route }) => {
   // const res = await Auth.currentSession();
   // let accessToken = res.getAccessToken();
   // let jwt = accessToken.getJwtToken();
+  //!
+  //!
+  const onVerify = async () => {
+    const authUser = await Auth.confirmSignUp(emailTmp, verificationCode);
+    saveUser(cognitoToUser(authUser));
+    dispatch({
+      type: SAVE_TOKEN,
+      payload: getToken(authUser),
+    });
+  };
 
   const signup = useCallback(() => {
     if (signupVisible) {
@@ -180,17 +194,25 @@ export const LoginScreen = ({ navigation, route }) => {
             attributes.picture = fileName;
           }
           try {
-            await Auth.signUp({
+            const res = await Auth.signUp({
               username: signupEmail.trim(),
               password: signupPassword,
               attributes,
+              autoSignIn: { enabled: true },
             });
-            const authUser = await Auth.signIn(signupEmail.trim(), signupPassword);
-            saveUser(cognitoToUser(authUser));
-            dispatch({
-              type: SAVE_TOKEN,
-              payload: getToken(authUser),
-            });
+            if (res.codeDeliveryDetails) {
+              emailTmp = signupEmail.trim();
+              setSignupVisible(false);
+              setVerifyCodeVisible(true);
+            } else {
+              handleError("error");
+            }
+            // const authUser = await Auth.signIn(signupEmail.trim(), signupPassword);
+            // saveUser(cognitoToUser(authUser));
+            // dispatch({
+            //   type: SAVE_TOKEN,
+            //   payload: getToken(authUser),
+            // });
           } catch (error) {
             handleError(error);
           } finally {
@@ -363,6 +385,7 @@ export const LoginScreen = ({ navigation, route }) => {
             onNewPasswordChanged={onNewPasswordChanged}
             changePassword={changePassword}
           />
+          <VerifyCodeView onPress={onVerify} visible={verifyCodeVisible} verificationCode={verificationCode} setVerificationCode={setVerificationCode} />
         </View>
       </KeyboardAwareScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={imagePopupvisible} setPopupVisible={setPopupVisible} />

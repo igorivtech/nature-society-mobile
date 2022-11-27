@@ -21,7 +21,7 @@ import { ProfileScreen } from "./components/screens/ProfileScreen";
 import { UserContext } from "./context/context";
 import { initialState, reducer } from "./context/userReducer";
 import { useOnboarding } from "./hooks/memory";
-import Amplify, { Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { useUser } from "./hooks/useUser";
 import { useUserUsageTime } from "./hooks/useUserUsageTime";
@@ -65,7 +65,6 @@ export default function App() {
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
-    //
     const unsubscribe = NetInfo.addEventListener((state) => {
       console.log("Connection type", state.type);
       console.log("Is connected?", state.isConnected);

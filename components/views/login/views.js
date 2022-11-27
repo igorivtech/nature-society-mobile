@@ -1,13 +1,5 @@
 import React, { memo, useEffect, useRef } from "react";
-import {
-  Animated,
-  Easing,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Easing, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { strings } from "../../../values/strings";
 import { textStyles } from "../../../values/textStyles";
 import { Input } from "./Input";
@@ -15,368 +7,217 @@ import { CoolButton } from "../onboarding/views";
 import { colors } from "../../../values/colors";
 import { CARD_RADIUS, smallScreen, width } from "../../../values/consts";
 import { globalStyles } from "../../../values/styles";
-import {ActivityIndicator} from "../ActivityIndicator"
+import { ActivityIndicator } from "../ActivityIndicator";
 
 const CARD_ANIMATION_DURATION = 400;
 
 const useVisible = (visible, initialScale, initialOpacity) => {
-
   const opacity = useRef(new Animated.Value(initialOpacity)).current;
   const scale = useRef(new Animated.Value(initialScale)).current;
 
-  useEffect(()=>{
+  useEffect(() => {
     Animated.timing(opacity, {
       toValue: visible ? 1 : 0,
       useNativeDriver: true,
-      duration: visible ? CARD_ANIMATION_DURATION : (CARD_ANIMATION_DURATION - 100),
-      timing: Easing.inOut(Easing.ease)
+      duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION - 100,
+      timing: Easing.inOut(Easing.ease),
     }).start();
     Animated.timing(scale, {
       toValue: visible ? 1 : 0.8,
       useNativeDriver: true,
-      duration: visible ? CARD_ANIMATION_DURATION : (CARD_ANIMATION_DURATION - 100),
-      timing: Easing.inOut(Easing.ease)
+      duration: visible ? CARD_ANIMATION_DURATION : CARD_ANIMATION_DURATION - 100,
+      timing: Easing.inOut(Easing.ease),
     }).start();
   }, [visible]);
 
-  return {opacity, scale}
-}
+  return { opacity, scale };
+};
 
-export const LoginView = memo(
-  ({
-    visible,
-    email,
-    onEmailChanged,
-    password,
-    onPasswordChanged,
-    forgotPassword,
-    login,
-    signup,
-    loading
-  }) => {
+export const LoginView = memo(({ visible, email, onEmailChanged, password, onPasswordChanged, forgotPassword, login, signup, loading }) => {
+  const { opacity, scale } = useVisible(visible, 0, 1);
 
-    const {opacity, scale} = useVisible(visible, 0, 1);
+  return (
+    <View style={styles.absolutePopup(visible)}>
+      <Animated.View style={styles.cardContainer(opacity, scale)}>
+        <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
 
-    return (
-      <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity, scale)}>
-          <Text style={styles.loginTitle}>{strings.loginScreen.title}</Text>
+        <Input autoCapitalize="none" keyboardType="email-address" title={strings.email} onChange={onEmailChanged} value={email} />
+        <Input extraMargin={true} autoCapitalize="none" title={strings.password} onChange={onPasswordChanged} value={password} secure={true} />
 
-          <Input
-            autoCapitalize="none"
-            keyboardType="email-address"
-            title={strings.email}
-            onChange={onEmailChanged}
-            value={email}
-          />
-          <Input
-            extraMargin={true}
-            autoCapitalize="none"
-            title={strings.password}
-            onChange={onPasswordChanged}
-            value={password}
-            secure={true}
-          />
+        <CoolButton
+          loading={loading}
+          textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: "white",
+          }}
+          title={strings.login}
+          onPress={login}
+        />
 
-          <CoolButton
-            loading={loading}
-            textStyle={{
-              ...textStyles.boldOfSize(24),
-              color: "white",
-            }}
-            title={strings.login}
-            onPress={login}
-          />
+        <View style={styles.bottomButtonsContainer}>
+          <SmallButton onPress={forgotPassword} title={strings.loginScreen.forgotPassword} />
+          <SmallButton onPress={signup} title={strings.loginScreen.signup} />
+        </View>
+      </Animated.View>
+    </View>
+  );
+});
 
-          <View style={styles.bottomButtonsContainer}>
-            <SmallButton
-              onPress={forgotPassword}
-              title={strings.loginScreen.forgotPassword}
-            />
-            <SmallButton onPress={signup} title={strings.loginScreen.signup} />
-          </View>
-        </Animated.View>
-      </View>
-    );
-  }
-);
+export const ForgotPasswordView = memo(({ visible, email, onEmailChanged, restorePassword }) => {
+  const { opacity, scale } = useVisible(visible, 0, 0);
 
-export const ForgotPasswordView = memo(
-  ({
-    visible,
-    email,
-    onEmailChanged,
-    restorePassword
-  }) => {
+  return (
+    <View style={styles.absolutePopup(visible)}>
+      <Animated.View style={styles.cardContainer(opacity, scale)}>
+        <Text style={styles.loginTitle}>{strings.loginScreen.restorePassword}</Text>
 
-    const {opacity, scale} = useVisible(visible, 0, 0);
-    
-    return (
-      <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity, scale)}>
-          <Text style={styles.loginTitle}>{strings.loginScreen.restorePassword}</Text>
+        <Input autoCapitalize="none" keyboardType="email-address" title={strings.email} onChange={onEmailChanged} value={email} extraMargin={true} />
 
-          <Input
-            autoCapitalize="none"
-            keyboardType="email-address"
-            title={strings.email}
-            onChange={onEmailChanged}
-            value={email}
-            extraMargin={true}
-          />
+        <CoolButton
+          textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: "white",
+          }}
+          title={strings.loginScreen.restorePasswordButton}
+          onPress={restorePassword}
+        />
+      </Animated.View>
+    </View>
+  );
+});
 
-          <CoolButton
-            textStyle={{
-              ...textStyles.boldOfSize(24),
-              color: "white",
-            }}
-            title={strings.loginScreen.restorePasswordButton}
-            onPress={restorePassword}
-          />
+export const EmailSentView = memo(({ visible, gotIt }) => {
+  const { opacity, scale } = useVisible(visible, 0, 0);
 
-        </Animated.View>
-      </View>
-    );
-  }
-);
+  return (
+    <View style={styles.absolutePopup(visible)}>
+      <Animated.View style={styles.cardContainer(opacity, scale)}>
+        <Text style={styles.emailSentTitle}>{strings.loginScreen.restorePassword}</Text>
 
-export const EmailSentView = memo(
-  ({
-    visible,
-    gotIt,
-  }) => {
+        <Text style={styles.emailSentDesc}>{strings.loginScreen.emailSentDesc}</Text>
 
-    const {opacity, scale} = useVisible(visible, 0, 0);
+        <CoolButton
+          textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: "white",
+          }}
+          title={strings.loginScreen.emailSentButton}
+          onPress={gotIt}
+        />
+      </Animated.View>
+    </View>
+  );
+});
 
-    return (
-      <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity, scale)}>
-          <Text style={styles.emailSentTitle}>{strings.loginScreen.restorePassword}</Text>
+export const NewPasswordView = memo(({ visible, code, onCodeChanged, newPassword, onNewPasswordChanged, changePassword }) => {
+  const { opacity, scale } = useVisible(visible, 0, 0);
 
-          <Text style={styles.emailSentDesc}>{strings.loginScreen.emailSentDesc}</Text>
+  return (
+    <View style={styles.absolutePopup(visible)}>
+      <Animated.View style={styles.cardContainer(opacity, scale)}>
+        <Text style={styles.loginTitle}>{strings.loginScreen.chooseNewPasswordTitle}</Text>
 
-          <CoolButton
-            textStyle={{
-              ...textStyles.boldOfSize(24),
-              color: "white",
-            }}
-            title={strings.loginScreen.emailSentButton}
-            onPress={gotIt}
-          />
+        <Input autoCapitalize="none" title={strings.code} onChange={onCodeChanged} value={code} />
 
-        </Animated.View>
-      </View>
-    );
-  }
-);
+        <Input autoCapitalize="none" title={strings.password} onChange={onNewPasswordChanged} value={newPassword} secure={true} />
 
-export const NewPasswordView = memo(
-  ({
-    visible,
-    code,
-    onCodeChanged,
-    newPassword,
-    onNewPasswordChanged,
-    changePassword
-  }) => {
-
-    const {opacity, scale} = useVisible(visible, 0, 0);
-    
-    return (
-      <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity, scale)}>
-          <Text style={styles.loginTitle}>{strings.loginScreen.chooseNewPasswordTitle}</Text>
-
-          <Input
-            autoCapitalize="none"
-            title={strings.code}
-            onChange={onCodeChanged}
-            value={code}
-          />
-
-          <Input
-            autoCapitalize="none"
-            title={strings.password}
-            onChange={onNewPasswordChanged}
-            value={newPassword}
-            secure={true}
-          />
-
-          <CoolButton
-            textStyle={{
-              ...textStyles.boldOfSize(24),
-              color: "white",
-            }}
-            title={strings.loginScreen.chooseNewPasswordTitle}
-            onPress={changePassword}
-          />
-
-        </Animated.View>
-      </View>
-    );
-  }
-);
+        <CoolButton
+          textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: "white",
+          }}
+          title={strings.loginScreen.chooseNewPasswordTitle}
+          onPress={changePassword}
+        />
+      </Animated.View>
+    </View>
+  );
+});
 
 const PIC_SIZE = smallScreen ? 100 : 111;
 const INNER_PIC_SIZE = PIC_SIZE - 6;
 
-export const SignupView = memo(
-  ({
-    visible,
-    name,
-    onNameChanged,
-    email,
-    onEmailChanged,
-    password,
-    onPasswordChanged,
-    login,
-    signup,
-    selectImage,
-    image,
-    loadingImage,
-    loading
-  }) => {
+export const SignupView = memo(({ visible, name, onNameChanged, email, onEmailChanged, password, onPasswordChanged, login, signup, selectImage, image, loadingImage, loading }) => {
+  const { opacity, scale } = useVisible(visible, 0, 0);
 
-    const {opacity, scale} = useVisible(visible, 0, 0);
+  return (
+    <View style={styles.absolutePopup(visible)}>
+      <Animated.View style={styles.cardContainer(opacity, scale)}>
+        <Text style={styles.loginTitle}>{strings.loginScreen.signupTitle}</Text>
 
-    return (
-      <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity, scale)}>
-          <Text style={styles.loginTitle}>
-            {strings.loginScreen.signupTitle}
+        <Input title={strings.fullName} onChange={onNameChanged} value={name} />
+
+        <Input autoCapitalize="none" keyboardType="email-address" title={strings.email} onChange={onEmailChanged} value={email} />
+        <Input autoCapitalize="none" title={strings.password} onChange={onPasswordChanged} value={password} secure={true} passwordHint={true} />
+
+        <View style={styles.profilePicContainer}>
+          <TouchableOpacity onPress={selectImage} style={styles.profilePicButton}>
+            {loadingImage ? <ActivityIndicator color={colors.treeBlues} /> : <Image source={require("../../../assets/images/upload_icon.png")} />}
+            {image ? <Image style={styles.profilePic} source={{ uri: image.uri }} /> : null}
+          </TouchableOpacity>
+          <Text style={styles.profilePicTitle}>
+            {strings.loginScreen.profilePic}
+            <Text style={styles.profilePicDetail}>{"\n" + strings.loginScreen.notMandatory}</Text>
           </Text>
+        </View>
 
-          <Input
-            title={strings.fullName}
-            onChange={onNameChanged}
-            value={name}
-          />
+        <CoolButton
+          loading={loading}
+          textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: "white",
+          }}
+          title={strings.loginScreen.finishSignup}
+          onPress={signup}
+        />
 
-          <Input
-            autoCapitalize="none"
-            keyboardType="email-address"
-            title={strings.email}
-            onChange={onEmailChanged}
-            value={email}
-          />
-          <Input
-            autoCapitalize="none"
-            title={strings.password}
-            onChange={onPasswordChanged}
-            value={password}
-            secure={true}
-            passwordHint={true}
-          />
+        <View style={styles.bottomButtonsSignupContainer}>
+          <Text style={styles.orText}>{strings.or}</Text>
+          <SmallButton onPress={login} title={strings.login} />
+        </View>
+      </Animated.View>
+    </View>
+  );
+});
 
-          <View style={styles.profilePicContainer}>
-            <TouchableOpacity onPress={selectImage} style={styles.profilePicButton}>
-              {loadingImage ? (
-                <ActivityIndicator color={colors.treeBlues} />
-              ) : (
-                <Image source={require("../../../assets/images/upload_icon.png")} />
-              )}
-              {image ? (<Image style={styles.profilePic} source={{ uri: image.uri }} />) : null}
-            </TouchableOpacity>
-            <Text style={styles.profilePicTitle}>
-              {strings.loginScreen.profilePic}
-              <Text style={styles.profilePicDetail}>
-                {"\n"+strings.loginScreen.notMandatory}
-              </Text>
-            </Text>
-          </View>
+export const ProfileView = memo(({ loading, visible, name, onNameChanged, email, onEmailChanged, logout, updateChanges, selectImage, image, loadingImage, setLoadingImage }) => {
+  const { opacity, scale } = useVisible(visible, 0, 1);
 
-          <CoolButton
-            loading={loading}
-            textStyle={{
-              ...textStyles.boldOfSize(24),
-              color: "white",
-            }}
-            title={strings.loginScreen.finishSignup}
-            onPress={signup}
-          />
+  return (
+    <View style={styles.absolutePopup(visible)}>
+      <Animated.View style={styles.cardContainer(opacity, scale)}>
+        <Text style={styles.loginTitle}>{strings.loginScreen.updateDetailsTitle}</Text>
 
-          <View style={styles.bottomButtonsSignupContainer}>
-            <Text style={styles.orText}>{strings.or}</Text>
-            <SmallButton onPress={login} title={strings.login} />
-          </View>
-        </Animated.View>
-      </View>
-    );
-  }
-);
+        <Input title={strings.fullName} onChange={onNameChanged} value={name} />
 
-export const ProfileView = memo(
-  ({
-    loading,
-    visible,
-    name,
-    onNameChanged,
-    email,
-    onEmailChanged,
-    logout,
-    updateChanges,
-    selectImage,
-    image,
-    loadingImage,
-    setLoadingImage
-  }) => {
+        <Input autoCapitalize="none" keyboardType="email-address" title={strings.email} onChange={onEmailChanged} value={email} />
 
-    const {opacity, scale} = useVisible(visible, 0, 1);
+        <View style={styles.profilePicContainerLarge}>
+          <TouchableOpacity onPress={selectImage} style={styles.profilePicButton}>
+            {loadingImage ? <ActivityIndicator color={colors.treeBlues} /> : <Image source={require("../../../assets/images/upload_icon.png")} />}
+            {image ? <Image onLoad={() => setLoadingImage(false)} style={styles.profilePic} source={{ uri: image.uri }} /> : null}
+          </TouchableOpacity>
+          <Text style={styles.profilePicTitle}>{strings.loginScreen.profilePic}</Text>
+        </View>
 
-    return (
-      <View style={styles.absolutePopup(visible)}>
-        <Animated.View style={styles.cardContainer(opacity, scale)}>
-          <Text style={styles.loginTitle}>
-            {strings.loginScreen.updateDetailsTitle}
-          </Text>
+        <CoolButton
+          loading={loading}
+          textStyle={{
+            ...textStyles.boldOfSize(24),
+            color: "white",
+          }}
+          title={strings.loginScreen.updateDetails}
+          onPress={updateChanges}
+        />
 
-          <Input
-            title={strings.fullName}
-            onChange={onNameChanged}
-            value={name}
-          />
-
-          <Input
-            autoCapitalize="none"
-            keyboardType="email-address"
-            title={strings.email}
-            onChange={onEmailChanged}
-            value={email}
-          />
-
-          <View style={styles.profilePicContainerLarge}>
-            <TouchableOpacity onPress={selectImage} style={styles.profilePicButton}>
-              {loadingImage ? (
-                <ActivityIndicator color={colors.treeBlues} />
-              ) : (
-                <Image source={require("../../../assets/images/upload_icon.png")} />
-              )}
-              {image ? (<Image onLoad={()=>setLoadingImage(false)} style={styles.profilePic} source={{ uri: image.uri }} />) : null}
-            </TouchableOpacity>
-            <Text style={styles.profilePicTitle}>
-              {strings.loginScreen.profilePic}
-            </Text>
-          </View>
-
-          <CoolButton
-            loading={loading}
-            textStyle={{
-              ...textStyles.boldOfSize(24),
-              color: "white",
-            }}
-            title={strings.loginScreen.updateDetails}
-            onPress={updateChanges}
-          />
-
-          <View style={styles.bottomButtonsSignupContainer}>
-            <Text style={styles.orText}>{strings.or}</Text>
-            <SmallButton onPress={logout} title={strings.logout} />
-          </View>
-        </Animated.View>
-      </View>
-    );
-  }
-);
+        <View style={styles.bottomButtonsSignupContainer}>
+          <Text style={styles.orText}>{strings.or}</Text>
+          <SmallButton onPress={logout} title={strings.logout} />
+        </View>
+      </Animated.View>
+    </View>
+  );
+});
 
 export const SmallButton = memo(({ title, onPress }) => {
   return (
@@ -386,18 +227,32 @@ export const SmallButton = memo(({ title, onPress }) => {
   );
 });
 
+export const VerifyCodeView = memo(({ verificationCode, setVerificationCode, visible, onPress }) => {
+  const { opacity, scale } = useVisible(visible, 0, 0);
+
+  return (
+    <View style={styles.absolutePopup(visible)}>
+      <Animated.View style={styles.cardContainer(opacity, scale)}>
+        <Text style={styles.emailSentDesc}>{strings.popups.verify.title}</Text>
+        <Input keyboardType={"number-pad"} onChange={setVerificationCode} value={verificationCode} title={strings.code}></Input>
+        <CoolButton onPress={onPress} title={strings.popups.verify.btn} />
+      </Animated.View>
+    </View>
+  );
+});
+
 const styles = StyleSheet.create({
   profilePicDetail: {
     ...textStyles.normalOfSize(12),
     color: colors.treeBlues,
-    lineHeight: 16
+    lineHeight: 16,
   },
   profilePicTitle: {
     ...textStyles.normalOfSize(18),
     color: colors.treeBlues,
-    flexGrow: 1, 
+    flexGrow: 1,
     flexShrink: 1,
-    paddingRight: smallScreen ? 2 : 8
+    paddingRight: smallScreen ? 2 : 8,
   },
 
   profilePic: {
@@ -441,7 +296,7 @@ const styles = StyleSheet.create({
   }),
 
   cardContainer: (opacity, scale) => ({
-    transform: [{scale}],
+    transform: [{ scale }],
     opacity: opacity,
     alignItems: "center",
     justifyContent: "space-between",
@@ -451,7 +306,7 @@ const styles = StyleSheet.create({
     width: width - 2 * 30,
     backgroundColor: "white",
     borderRadius: CARD_RADIUS,
-    ...globalStyles.shadow
+    ...globalStyles.shadow,
   }),
 
   orText: {
@@ -503,6 +358,5 @@ const styles = StyleSheet.create({
     color: colors.treeBlues,
     textAlign: "right",
     width: "100%",
-  }
-
+  },
 });
