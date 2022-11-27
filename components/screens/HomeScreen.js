@@ -520,16 +520,15 @@ export const HomeScreen = ({ navigation, route }) => {
       }
     });
   };
-
   const markerPressed = useCallback(
     (place) => {
       if (selectedPlace != null && place._id === selectedPlace._id) {
-        if (mapAtPlace(mapRef.current.__lastRegion, place)) {
-          showPlace(place);
-        } else {
-          lockAutoSearching.current = true;
-          animateToItem(place);
-        }
+        // if (mapAtPlace(mapRef.current.__lastRegion, place)) {
+        showPlace(place);
+        // } else {
+        //   lockAutoSearching.current = true;
+        animateToItem(place);
+        // }
       } else {
         const index = sortedPlaces.findIndex((p) => p.key === place.key);
         if (index > -1) {

@@ -119,7 +119,7 @@ export const ProgressScreen = ({ navigation, route }) => {
     if (data.length > 0) {
       const currentIndex = data.findIndex((achievement) => achievement.current);
       AsyncStorage.getItem(ALREADY_SHOWN).then((alreadyShown) => {
-        if (alreadyShown) {
+        if (alreadyShown && scrollView.current) {
           scrollView.current.scrollTo({ x: 0, y: pathHeight * currentIndex, animated: false });
           setScrollEnabled(true);
         } else {
@@ -148,7 +148,7 @@ export const ProgressScreen = ({ navigation, route }) => {
                 return;
               }
               translateY.setValue(0);
-              scrollView.current.scrollTo({ x: 0, y: pathHeight * currentIndex, animated: false });
+              scrollView.current ? scrollView.current.scrollTo({ x: 0, y: pathHeight * currentIndex, animated: false }) : null;
               scrollY.setValue(pathHeight * currentIndex);
               translateY.removeAllListeners();
               setScrollEnabled(true);

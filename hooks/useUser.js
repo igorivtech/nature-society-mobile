@@ -107,8 +107,8 @@ function isNumeric(value) {
 
 export const cognitoToUser = (cognitoUser) => {
   const { attributes } = cognitoUser;
-  let unlockedPlaces = !attributes[ATTRIBUTE_UNLOCKED_PLACES] ? JSON.parse(attributes[ATTRIBUTE_UNLOCKED_PLACES]) : null;
-  if (Array.isArray(unlockedPlaces) && unlockedPlaces.length > 0) {
+  let unlockedPlaces = attributes[ATTRIBUTE_UNLOCKED_PLACES] ? JSON.parse(attributes[ATTRIBUTE_UNLOCKED_PLACES]) : false;
+  if (unlockedPlaces && unlockedPlaces.length > 0) {
     unlockedPlaces = arrayToDic(unlockedPlaces);
   }
   const user = {

@@ -5587,10 +5587,10 @@
     "path-browserify" "^1.0.0"
     "url-parse" "^1.5.9"
 
-"expo-camera@~13.0.0":
-  "integrity" "sha512-3OVETNVtvlQojQSfghto9nn/Y/90DA0xOyEeJqNz9N8CX8klnclyXbBSeXtDN6aFz1lQH8D/fKePbFKNxoPsyg=="
-  "resolved" "https://registry.npmjs.org/expo-camera/-/expo-camera-13.0.0.tgz"
-  "version" "13.0.0"
+"expo-camera@~13.1.0":
+  "integrity" "sha512-YD1Gd5nyhk3ekXgVTsTLrhd0Nlug51NI7hjBKq2BOP+X5YyrcZLVarZAXXdc5vgeW73VBYIne1rpX9Q0qJdlrw=="
+  "resolved" "https://registry.npmjs.org/expo-camera/-/expo-camera-13.1.0.tgz"
+  "version" "13.1.0"
   dependencies:
     "@koale/useworker" "^4.0.2"
     "invariant" "^2.2.4"

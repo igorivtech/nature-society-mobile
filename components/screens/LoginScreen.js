@@ -51,7 +51,6 @@ export const LoginScreen = ({ navigation, route }) => {
   const [code, onCodeChanged] = useState("");
 
   const [verificationCode, setVerificationCode] = useState("");
-  console.log(verificationCode);
   const { image, loadingImage, selectImage, imagePopupvisible, setPopupVisible } = useImage();
 
   const [scrollEnabled, setScrollEnabled] = useState(false);
@@ -151,7 +150,13 @@ export const LoginScreen = ({ navigation, route }) => {
               payload: getToken(cognitoUser),
             });
           })
-          .catch((error) => handleError(error))
+          .catch((error) => {
+            if (error.code === "UserNotConfirmedException") {
+              emailTmp = loginEmail;
+              setLoginVisible(false);
+              setVerifyCodeVisible(true);
+            } else handleError(error);
+          })
           .finally(() => setLoadingLogin(false));
       } else {
         if (!validateEmail(loginEmail)) {
@@ -171,12 +176,21 @@ export const LoginScreen = ({ navigation, route }) => {
   //!
   //!
   const onVerify = async () => {
-    const authUser = await Auth.confirmSignUp(emailTmp, verificationCode);
-    saveUser(cognitoToUser(authUser));
-    dispatch({
-      type: SAVE_TOKEN,
-      payload: getToken(authUser),
-    });
+    try {
+      const authUser = await Auth.confirmSignUp(emailTmp, verificationCode);
+      if (authUser === "SUCCESS") {
+        const authUserLogIn = await Auth.signIn(emailTmp, signupPassword || loginPassword);
+        saveUser(cognitoToUser(authUserLogIn));
+        dispatch({
+          type: SAVE_TOKEN,
+          payload: getToken(authUser),
+        });
+      } else {
+        handleError("CodeMismatchException");
+      }
+    } catch (e) {
+      handleError(e);
+    }
   };
 
   const signup = useCallback(() => {
