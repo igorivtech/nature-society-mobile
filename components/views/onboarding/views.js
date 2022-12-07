@@ -17,26 +17,25 @@ const SMALL_SCALE = 0.8;
 
 const animations = {
   0: null,
-  1: 'pulse',
-  2: 'pulse'
-}
+  1: "pulse",
+  2: "pulse",
+};
 
 const delays = {
   0: 0,
   1: 0,
-  2: 0
-}
+  2: 0,
+};
 
 const iterationDelay = {
   0: 0,
   1: 0,
-  2: 0
-}
+  2: 0,
+};
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex, doneVisible = false, transform, finished }) => {
-
   const opacity = useRef(new Animated.Value(selected ? 1 : 0.5)).current;
   const innerScale = useRef(new Animated.Value(selected ? 1 : 0.75)).current;
 
@@ -47,32 +46,34 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
           useNativeDriver: true,
           toValue: 1,
           easing: Easing.inOut(Easing.ease),
-          duration: 600
+          duration: 600,
         }),
         Animated.timing(innerScale, {
           useNativeDriver: true,
           toValue: 1,
           easing: Easing.inOut(Easing.ease),
-          duration: 600
+          duration: 600,
         }),
-      ]).start()
+      ]).start();
     } else {
       Animated.parallel([
         Animated.timing(opacity, {
           useNativeDriver: true,
           toValue: selected ? 1 : 0.5,
-          easing: Easing.inOut(Easing.ease)
+          easing: Easing.inOut(Easing.ease),
         }),
         Animated.timing(innerScale, {
           useNativeDriver: true,
           toValue: selected ? 1 : 0.75,
-          easing: Easing.inOut(Easing.ease)
+          easing: Easing.inOut(Easing.ease),
         }),
-      ]).start()
+      ]).start();
     }
   }, [finished, selected]);
 
   const onPress = () => {
+    console.log(setIndex);
+    console.log(doneVisible);
     if (setIndex != null) {
       if (doneVisible) {
         return;
@@ -83,15 +84,14 @@ export const OnboardingButton = memo(({ alpha, scale, index, selected, setIndex,
 
   return (
     <AnimatedPressable onPress={onPress}>
-      <Animated.View style={{
+      <Animated.View
+        style={{
           opacity,
-          transform: [{scale}]
-        }}>
-          <Animated.Image
-            style={styles.buttonContainer(alpha, innerScale)}
-            source={images[index]}
-          />
-        </Animated.View>
+          transform: [{ scale }],
+        }}
+      >
+        <Animated.Image style={styles.buttonContainer(alpha, innerScale)} source={images[index]} />
+      </Animated.View>
     </AnimatedPressable>
   );
 });
@@ -100,33 +100,28 @@ const styles = StyleSheet.create({
   buttonContainer: (opacity, scale) => ({
     opacity,
     transform: [{ scale }],
-  })
-})
+  }),
+});
 
 export const CoolButton = memo(({ textStyle = {}, title, onPress, loading = false }) => {
-
   const opacity = useRef(new Animated.Value(1)).current;
 
-  useEffect(()=>{
+  useEffect(() => {
     Animated.timing(opacity, {
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
-      toValue: loading ? 0.7 : 1
+      toValue: loading ? 0.7 : 1,
     }).start();
   }, [loading]);
-  
+
   return (
     <TouchableOpacity activeOpacity={0.7} disabled={loading} onPress={onPress}>
-      <Animated.View
-        style={coolStyles.container(opacity)}
-      >
+      <Animated.View style={coolStyles.container(opacity)}>
         <View>
           <View style={coolStyles.indicatorContainer}>
-            <ActivityIndicator animating={loading} style={coolStyles.indicator} color='white'  />
+            <ActivityIndicator animating={loading} style={coolStyles.indicator} color="white" />
           </View>
-          <Text style={{...textStyles.onboardingCoolButton, ...textStyle}}>
-            {title}
-          </Text>
+          <Text style={{ ...textStyles.onboardingCoolButton, ...textStyle }}>{title}</Text>
         </View>
       </Animated.View>
     </TouchableOpacity>
@@ -144,11 +139,11 @@ const coolStyles = StyleSheet.create({
     justifyContent: "center",
   }),
   indicatorContainer: {
-    flexDirection: 'row',
-    position: 'absolute',
-    alignItems: 'center',
+    flexDirection: "row",
+    position: "absolute",
+    alignItems: "center",
   },
   indicator: {
-    transform: [{translateX: -24}]
-  }
-})
+    transform: [{ translateX: -24 }],
+  },
+});

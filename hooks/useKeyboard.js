@@ -16,11 +16,11 @@ export const useKeyboard = () => {
   };
 
   useEffect(() => {
-    Keyboard.addListener(showKey, onKeyboardShow);
-    Keyboard.addListener(hideKey, onKeyboardHide);
+    const action1 = Keyboard.addListener(showKey, onKeyboardShow);
+    const action2 = Keyboard.addListener(hideKey, onKeyboardHide);
     return () => {
-      // Keyboard.removeListener(showKey, onKeyboardShow);
-      // Keyboard.removeListener(hideKey, onKeyboardHide);
+      action1.remove();
+      action2.remove();
     };
   }, []);
 

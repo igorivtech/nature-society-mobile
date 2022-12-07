@@ -26,10 +26,13 @@ export const useDeepLink = (dispatch) => {
     if (url == null) {
       return;
     }
-    const idInArray = Linking.parse(url)
-      .path.split("showPlace/")
-      .filter((e) => e != "");
-    if (idInArray.length === 1) {
+
+    const idInArray = Linking.parse(url).path
+      ? Linking.parse(url)
+          .path.split("showPlace/")
+          .filter((e) => e != "")
+      : null;
+    if (idInArray !== null && idInArray.length === 1) {
       handlePlaceId(idInArray[0].replace(/\\|\//g, ""));
     }
   };

@@ -89,7 +89,7 @@ export const HomeScreen = ({ navigation, route }) => {
 
   // STARTUP POINT
   useEffect(() => {
-    // tryFetchLocation();
+    tryFetchLocation();
     mapRef.current.setMapBoundaries(MAP_BOUNDARY_NORTHEAST, MAP_BOUNDARY_SOUTHWEST);
     // notification - DEBUG
     // setTimeout(() => {
@@ -130,8 +130,11 @@ export const HomeScreen = ({ navigation, route }) => {
   const tryFetchLocation = async () => {
     let { status } = await Location.getForegroundPermissionsAsync();
     //  getForegroundPermissions();
+    console.log(status);
     if (status === "granted") {
+      console.log("awating postition");
       let location = await Location.getLastKnownPositionAsync({});
+      console.log(location);
       if (location) {
         setLocation(location.coords);
       } else {
@@ -480,10 +483,29 @@ export const HomeScreen = ({ navigation, route }) => {
     [navigation]
   );
 
-  const askLocationPermissions = useCallback(() => {
+  const askLocationPermissions = useCallback(async () => {
     // console.log(useLocationPermissions);
     // useLocationPermissions().askLocation();
-    Location.requestForegroundPermissionsAsync();
+    // tryFetchLocation();
+    console.log("2");
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    console.log(status);
+    if (status === "granted") {
+      console.log("awating postition");
+      let location = await Location.getLastKnownPositionAsync();
+      console.log(location);
+      if (location) {
+        setLocation(location.coords);
+      } else {
+        lockAutoSearching.current = false;
+        console.log("actuallyGetPlaces: try fetch location granted but no location");
+        actuallyGetPlaces(INITIAL_REGION, null);
+      }
+    } else {
+      lockAutoSearching.current = false;
+      console.log("actuallyGetPlaces: try fetch location not");
+      actuallyGetPlaces(INITIAL_REGION, null);
+    }
   }, []);
 
   const askPush = () => {

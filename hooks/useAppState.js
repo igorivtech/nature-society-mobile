@@ -20,9 +20,9 @@ export const useAppState = (onBackground = null, onForeground = null) => {
   };
 
   useEffect(() => {
-    AppState.addEventListener("change", handleAppStateChange);
+    const list = AppState.addEventListener("change", handleAppStateChange);
     return () => {
-      // AppState.removeEventListener("change", handleAppStateChange);
+      list.remove();
     };
   }, []);
 };

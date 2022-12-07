@@ -243,6 +243,8 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const setIndex = useCallback(
     (i) => {
+      console.log(i);
+      flatListRef.current.scrollToIndex({ index: i === 1 ? 1 : i === 2 ? 0 : 2 });
       setSelectedIndex(i);
     },
     [selectedIndex]
@@ -323,32 +325,6 @@ export const OnboardingScreen = ({ navigation }) => {
             ref={flatListRef}
             onScroll={handleScroll}
           ></FlatList>
-          {/* <Carousel
-            // onBeforeSnapToItem={onBeforeSnapToItem}
-            data={[0, 1, 2]}
-            width={width}
-            autoFillData={true}
-            autoPlayReverser={true}
-            modeConfig={{ snapDirection: "left" }}
-            ref={carousel}
-            onSnapToItem={(i) => {
-              console.log(i);
-              onBeforeSnapToItem(i);
-            }}
-            loop={true}
-            renderItem={({ item, index }) => {
-              return (
-                <View style={styles.itemContainer}>
-                  <View style={styles.itemInnerContainaer}>
-                    <View style={styles.textsContainer}>{item === 0 ? <Text1 opacity={1} /> : item === 1 ? <Text2 opacity={1} /> : <Text3 opacity={1} />}</View>
-                    <View style={styles.lottieContainer}>
-                      <LottieView source={animations[item]} loop={true} autoPlay={true} resizeMode={item === 0 ? "contain" : "cover"} />
-                    </View>
-                  </View>
-                </View>
-              );
-            }}
-          /> */}
         </Animated.View>
         <View style={globalStyles.marginBottom(bottomSafeAreaInset + 24)}>
           <FirstButton position="relative" altTitleString={finishOnboardingButtonTitle} altTitle={true} scale={secondButtonScale} onPress={nextOrFinish} />

@@ -19,14 +19,9 @@ export const useImage = () => {
   const selectImageCamera = useCallback(async () => {
     setLoadingImage(true);
     const { status } = await requestPermission();
-    //  Permissions.askAsync(
-    //   Permissions.CAMERA
-    // );
     if (status === "granted") {
       ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        // allowsEditing: true,
-        // aspect: [4, 3],
         quality: DEFAULT_IMAGE_QUALITY,
       })
         .then(async (result) => {
@@ -51,13 +46,10 @@ export const useImage = () => {
     setLoadingImage(true);
     console.log("here");
     const { status, permissions } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    //  Permissions.askAsync(Permissions.CAMERA_ROLL);
     console.log(status);
     if (status === "all" || status === "granted") {
       ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        // allowsEditing: true,
-        // aspect: [4, 3],
         quality: DEFAULT_IMAGE_QUALITY,
       })
         .then(async (result) => {

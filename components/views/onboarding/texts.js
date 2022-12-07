@@ -4,7 +4,6 @@ import { strings } from "../../../values/strings";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 import { colors } from "../../../values/colors";
-// import Highlighter from "react-native-highlight-words";
 import { smallScreen } from "../../../values/consts";
 
 export const TextsView = ({ index, scale }) => {
@@ -33,50 +32,19 @@ export const TextsView = ({ index, scale }) => {
 
 const fontSize = smallScreen ? 18 : 24;
 
-// const Highlight = ({ regular, highlight, text, words, position = "relative" }) => {
-//   return (
-//     <Highlighter
-//       adjustsFontSizeToFit={true}
-//       numberOfLines={smallScreen ? 4 : 3}
-//       style={[regular, { position, lineHeight: regular.fontSize }]}
-//       highlightStyle={highlight}
-//       searchWords={words}
-//       textToHighlight={text}
-//     />
-//   );
-// };
-
 export const Text1 = ({ opacity }) => {
   return (
-    <Animated.View style={{ opacity, ...globalStyles.centerChildren }}>
-      {/* <Highlight
-        regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
-        highlight={textStyles.normalOfSize(fontSize, colors.clear, "center")}
-        text={strings.onboardingScreen.newItem1}
-        words={["חפשו", "נקיים", "ריקים מאדם", "מלוכלכים", "עמוסים במבקרים"]}
-      />
-      <Highlight
-        position="absolute"
-        regular={textStyles.normalOfSize(fontSize, colors.clear, "center")}
-        highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
-        text={strings.onboardingScreen.newItem1}
-        words={["חפשו"]}
-      />
-      <Highlight
-        position="absolute"
-        regular={textStyles.normalOfSize(fontSize, colors.clear, "center")}
-        highlight={textStyles.normalOfSize(fontSize, colors.treeBlues, "center")}
-        text={strings.onboardingScreen.newItem1}
-        words={["נקיים", "ריקים מאדם"]}
-      />
-      <Highlight
-        position="absolute"
-        regular={textStyles.normalOfSize(fontSize, colors.clear, "center")}
-        highlight={textStyles.normalOfSize(fontSize, colors.desertRock, "center")}
-        text={strings.onboardingScreen.newItem1}
-        words={["מלוכלכים", "עמוסים במבקרים"]}
-      /> */}
-      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem1}</Text>
+    <Animated.View style={{ opacity, ...globalStyles.centerChildren, flexDirection: "row", flexWrap: "wrap" }}>
+      <Text style={[textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")]}>
+        {strings.onboardingScreen.newItem1}
+        <Text style={textStyles.normalOfSize(fontSize, colors.treeBlues, "center")}>{strings.onboardingScreen.newItem11}</Text>
+        <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem12}</Text>
+        <Text style={textStyles.normalOfSize(fontSize, colors.desertRock, "center")}>{strings.onboardingScreen.newItem13}</Text>
+        <Text style={textStyles.normalOfSize(fontSize, colors.treeBlues, "center")}>{strings.onboardingScreen.newItem14}</Text>
+        <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem15}</Text>
+        <Text style={textStyles.normalOfSize(fontSize, colors.desertRock, "center")}>{strings.onboardingScreen.newItem16}</Text>
+      </Text>
+      <Text></Text>
     </Animated.View>
   );
 };
@@ -89,13 +57,10 @@ export const Text2 = ({ opacity }) => {
         opacity,
       }}
     >
-      {/* <Highlight
-        regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
-        highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
-        text={strings.onboardingScreen.newItem2}
-        words={["דווחו"]}
-      /> */}
-      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem2}</Text>
+      <Text style={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}>
+        {strings.onboardingScreen.newItem2}
+        <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem21}</Text>
+      </Text>
     </Animated.View>
   );
 };
@@ -108,13 +73,10 @@ export const Text3 = ({ opacity }) => {
         opacity,
       }}
     >
-      {/* <Highlight
-        regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
-        highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
-        text={strings.onboardingScreen.newItem3}
-        words={["התקדמו"]}
-      /> */}
-      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem3}</Text>
+      <Text style={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}>
+        {strings.onboardingScreen.newItem3}
+        <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem31}</Text>
+      </Text>
     </Animated.View>
   );
 };

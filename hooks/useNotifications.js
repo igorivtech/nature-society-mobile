@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import { ASK_PUSH, SAVE_NOTIFICATION } from "../context/userReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,6 +6,7 @@ import { Auth } from "aws-amplify";
 import { ATTRIBUTE_PUSH_TOKEN } from "./useUser";
 import { useServer } from "./useServer";
 import { getExpoToken } from "./helpers";
+import * as Device from "expo-device";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -78,10 +78,7 @@ export const useNotifications = (state, dispatch) => {
 
   useEffect(() => {
     // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      // console.log(notification);
-      // setNotification(notification);
-    });
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {});
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
@@ -103,11 +100,8 @@ export const useNotifications = (state, dispatch) => {
 
 async function registerForPushNotificationsAsync() {
   let token;
-  if (Constants.isDevice) {
+  if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    // Permissions.getAsync(
-    //   Permissions.NOTIFICATIONS
-    // );
     let finalStatus = existingStatus;
     if (existingStatus !== "granted") {
       const { status } = await Notifications.getPermissionsAsync();
@@ -137,7 +131,7 @@ async function registerForPushNotificationsAsync() {
 
 export const shouldAskUser = async () => {
   let ask = false;
-  if (Constants.isDevice) {
+  if (Device.isDevice) {
     const { status } = await Notifications.getPermissionsAsync();
     ask = status === "undetermined";
   }

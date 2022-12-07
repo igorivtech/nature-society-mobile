@@ -1,9 +1,9 @@
 import * as ImageManipulator from "expo-image-manipulator";
-import { CLEANNESS_COLORS, height, isAlt, MAP_BOUNDARY_NORTHEAST, MAP_BOUNDARY_SOUTHWEST, SCREEN_ASPECT_RATIO, width } from "../values/consts";
+import { CLEANNESS_COLORS, height, isAlt, MAP_BOUNDARY_NORTHEAST, MAP_BOUNDARY_SOUTHWEST, width } from "../values/consts";
 import { landscapeImages } from "../values/images";
 import { strings } from "../values/strings";
 import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
+import * as Device from "expo-device";
 
 export const isLocationInIsrael = (coordinate) => {
   return (
@@ -16,7 +16,7 @@ export const isLocationInIsrael = (coordinate) => {
 
 export const getExpoToken = async () => {
   let token;
-  if (Constants.isDevice) {
+  if (Device.isDevice) {
     const { status } = await Notifications.getPermissionsAsync();
     //  Permissions.getAsync(
     //   Permissions.NOTIFICATIONS
@@ -134,15 +134,9 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
 
   res.forEach((place, i) => {
     res[i].key = place._id;
-    // const {longitudeDelta, latitudeDelta} = calcPlaceDelta({
-    //   southWest: place.southwest[0],
-    //   northEast: place.northeast[0]
-    // })
     res[i].position = {
       longitude: place.location.coordinates[0],
       latitude: place.location.coordinates[1],
-      // latitudeDelta: 0.1 * SCREEN_ASPECT_RATIO,
-      // longitudeDelta: 0.1,
     };
     if (place.title == null || place.title == "" || place.title.trim() === "") {
       res[i].title = "אין שם";
@@ -181,12 +175,6 @@ export const convertServerPlaces = (serverPlaces, location, specialSort = false)
     }
   });
 
-  // if (specialSort) {
-  //   res = specialSortPlaces(res, location);
-  // } else if (location) {
-  //   res.sort((p1, p2) => p1.distance > p2.distance);
-  // }
-
   return res;
 };
 
@@ -200,11 +188,6 @@ export const siteColor = (rating) => {
 
 export const placeLocked = (user, place) => {
   return false;
-  // if (user == null) {
-  //   return true;
-  // }
-  // const unlockedPlaces = user.unlockedPlaces;
-  // return unlockedPlaces[place._id] == null && unlockedPlaces[`${place.siteDocumentId}`] == null
 };
 
 export const specialSortPlaces = (res, location = null) => {
@@ -237,89 +220,8 @@ export const specialSortPlaces = (res, location = null) => {
 const firstNameOnly = (fullName) => {
   const parts = fullName.split(" ");
   return parts[0];
-  // if (parts.length === 1) {
-  //   return parts[0];
-  // } else {
-  //   const firstChar = parts[parts.length - 1].substring(0, 1).trim();
-  //   if (firstChar.length === 0) {
-  //     return `${parts[0]}.`
-  //   } else {
-  //     return `${parts[0]} ${firstChar}.`
-  //   }
-  // }
 };
 
-// {
-//   image:
-//     "https://www.rei.com/dam/catskills_060117_003_hero_lg.jpg",
-//   lastVisitorImage: "https://www.w3schools.com/w3images/avatar6.png",
-//   description:
-//     "כל היא שעומדת בבסיס הסביבתנות - תנועה פוליטית' חברתית ופילוסופית רחבה ומגוונת שמטרתה להגן על מרכיב הטבע שנותר בסביבה הטבעית' ובמקרים רבים אף לשקם או להרחיב את חלקו של הטבע בסביבה זו. הגנת הסביבה' בהקשר זה' היא הניסיון לשמר מצב של השפעה אנושית מינימלית על הסביבה הטבעית",
-// },
-
-// Object {
-//   "_id": "5fde3850eb3a77cdb6579e4e",
-//   "cleanesss": 0,
-//   "crowdness": 0,
-//   "description": "מקום ממש טוב",
-//   "dis": 8865.925634581798,
-//   "image": "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-//   "lastVisitors": Array [
-//     Object {
-//       "lastVisitorImage": "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
-//       "lastVisitorName": "נא בא",
-//       "lastVisitorRank": 400,
-//     },
-//     Object {
-//       "lastVisitorImage": "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
-//       "lastVisitorName": "בן אדם",
-//       "lastVisitorRank": 900,
-//     },
-//     Object {
-//       "lastVisitorImage": "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
-//       "lastVisitorName": "בת אדם",
-//       "lastVisitorRank": 100,
-//     },
-//   ],
-//   "location": Object {
-//     "coordinates": Array [
-//       35.3995774218733,
-//       31.509952863146665,
-//     ],
-//     "type": "Point",
-//   },
-//   "northeast": Array [
-//     Object {
-//       "latitude": 31.512768978305747,
-//       "longitude": 35.40287565291429,
-//     },
-//   ],
-//   "similarReports": Array [
-//     Object {
-//       "1": 23,
-//     },
-//     Object {
-//       "2": 83,
-//     },
-//     Object {
-//       "3": 41,
-//     },
-//     Object {
-//       "4": 53,
-//     },
-//     Object {
-//       "5": 32,
-//     },
-//   ],
-//   "southwest": Array [
-//     Object {
-//       "latitude": 31.50713674798758,
-//       "longitude": 35.39627919083232,
-//     },
-//   ],
-//   "title": " ",
-//   "type": " ",
-// },
 function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
@@ -337,22 +239,6 @@ const distance = (lat1, lon1, lat2, lon2) => {
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d;
-
-    // var radlat1 = Math.PI * lat1/180;
-    // var radlat2 = Math.PI * lat2/180;
-    // var theta = lon1-lon2;
-    // var radtheta = Math.PI * theta/180;
-    // var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-    // if (dist > 1) {
-    // 	dist = 1;
-    // }
-    // dist = Math.acos(dist);
-    // dist = dist * 180/Math.PI;
-    // dist = dist * 60 * 1.1515;
-    // // if (unit=="K") { dist = dist * 1.609344 }
-    // // if (unit=="N") { dist = dist * 0.8684 }
-    // dist = dist * 1.609344
-    // return Math.round(dist * 100) / 100;
   }
 };
 
