@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as Analytics from "expo-firebase-analytics";
-import * as Facebook from 'expo-facebook';
+import { Settings } from "react-native-fbsdk-next";
 
 export const useAnalytics = () => {
   useEffect(() => {
@@ -10,10 +10,8 @@ export const useAnalytics = () => {
     //   purpose: "Opens the internal settings",
     // }).then(v=>console.log({v})).catch(e=>console.log({e}));
     //
-    Facebook.initializeAsync({
-      appId: "139938011330970",
-      appName: "בשביל הטבע",
-      autoLogAppEvents: true
-    }).then(()=>{});
+    // Facebook.initializeAsync("139938011330970").then(() => {});
+    // Settings.initializeSDK();
+    // Settings.setAppID("139938011330970");
   }, []);
 };

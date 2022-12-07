@@ -4,7 +4,7 @@ import { strings } from "../../../values/strings";
 import { globalStyles } from "../../../values/styles";
 import { textStyles } from "../../../values/textStyles";
 import { colors } from "../../../values/colors";
-import Highlighter from "react-native-highlight-words";
+// import Highlighter from "react-native-highlight-words";
 import { smallScreen } from "../../../values/consts";
 
 export const TextsView = ({ index, scale }) => {
@@ -31,39 +31,29 @@ export const TextsView = ({ index, scale }) => {
   );
 };
 
-const fontSize = smallScreen ? 18 : 24
+const fontSize = smallScreen ? 18 : 24;
 
-const Highlight = ({
-  regular,
-  highlight,
-  text,
-  words,
-  position = "relative",
-}) => {
-  return (
-    <Highlighter
-      adjustsFontSizeToFit={true} 
-      numberOfLines={smallScreen ? 4 : 3}
-      style={[regular, { position, lineHeight: regular.fontSize }]}
-      highlightStyle={highlight}
-      searchWords={words}
-      textToHighlight={text}
-    />
-  );
-};
+// const Highlight = ({ regular, highlight, text, words, position = "relative" }) => {
+//   return (
+//     <Highlighter
+//       adjustsFontSizeToFit={true}
+//       numberOfLines={smallScreen ? 4 : 3}
+//       style={[regular, { position, lineHeight: regular.fontSize }]}
+//       highlightStyle={highlight}
+//       searchWords={words}
+//       textToHighlight={text}
+//     />
+//   );
+// };
 
 export const Text1 = ({ opacity }) => {
   return (
     <Animated.View style={{ opacity, ...globalStyles.centerChildren }}>
-      <Highlight
+      {/* <Highlight
         regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
         highlight={textStyles.normalOfSize(fontSize, colors.clear, "center")}
         text={strings.onboardingScreen.newItem1}
-        words={[
-          'חפשו',
-          "נקיים", "ריקים מאדם",
-          "מלוכלכים", "עמוסים במבקרים"
-        ]}
+        words={["חפשו", "נקיים", "ריקים מאדם", "מלוכלכים", "עמוסים במבקרים"]}
       />
       <Highlight
         position="absolute"
@@ -85,7 +75,8 @@ export const Text1 = ({ opacity }) => {
         highlight={textStyles.normalOfSize(fontSize, colors.desertRock, "center")}
         text={strings.onboardingScreen.newItem1}
         words={["מלוכלכים", "עמוסים במבקרים"]}
-      />
+      /> */}
+      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem1}</Text>
     </Animated.View>
   );
 };
@@ -98,12 +89,13 @@ export const Text2 = ({ opacity }) => {
         opacity,
       }}
     >
-      <Highlight
+      {/* <Highlight
         regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
         highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem2}
         words={["דווחו"]}
-      />
+      /> */}
+      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem2}</Text>
     </Animated.View>
   );
 };
@@ -116,38 +108,37 @@ export const Text3 = ({ opacity }) => {
         opacity,
       }}
     >
-      <Highlight
+      {/* <Highlight
         regular={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}
         highlight={textStyles.boldOfSize(fontSize, colors.darkWithTone, "center")}
         text={strings.onboardingScreen.newItem3}
         words={["התקדמו"]}
-      />
+      /> */}
+      <Text style={textStyles.normalOfSize(fontSize, colors.darkWithTone, "center")}>{strings.onboardingScreen.newItem3}</Text>
     </Animated.View>
   );
 };
 
-export const SkipButton = ({zIndex, scale, onPress, bottomSafeAreaInset, position = 'absolute'}) => {
+export const SkipButton = ({ zIndex, scale, onPress, bottomSafeAreaInset, position = "absolute" }) => {
   return (
     <View style={styles.firstButtonOuterOuterContainer(zIndex, bottomSafeAreaInset, position)}>
       <Animated.View style={styles.firstButtonOuterContainer(scale)}>
         <TouchableOpacity onPress={onPress}>
-          <Text style={textStyles.normalOfSize(14, colors.darkWithTone, "center")}>
-            {strings.onboardingScreen.skipButton}
-          </Text>
+          <Text style={textStyles.normalOfSize(14, colors.darkWithTone, "center")}>{strings.onboardingScreen.skipButton}</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
-  )
-}
+  );
+};
 
-export const FirstButton = ({ zIndex, altTitle=false, scale, onPress, bottomSafeAreaInset, altTitleString = null, position = 'absolute' }) => {
+export const FirstButton = ({ zIndex, altTitle = false, scale, onPress, bottomSafeAreaInset, altTitleString = null, position = "absolute" }) => {
   return (
     <View style={styles.firstButtonOuterOuterContainer(zIndex, bottomSafeAreaInset, position)}>
       <Animated.View style={styles.firstButtonOuterContainer(scale)}>
         <TouchableOpacity onPress={onPress}>
           <View style={styles.firstButtonContainer(altTitle)}>
             <Text style={textStyles.boldOfSize(26, altTitle ? colors.treeBlues : "white", "center")}>
-              {altTitle ? (altTitleString ?? strings.onboardingScreen.secondButton) : strings.onboardingScreen.firstButton}
+              {altTitle ? altTitleString ?? strings.onboardingScreen.secondButton : strings.onboardingScreen.firstButton}
             </Text>
           </View>
         </TouchableOpacity>
@@ -159,7 +150,7 @@ export const FirstButton = ({ zIndex, altTitle=false, scale, onPress, bottomSafe
 const styles = StyleSheet.create({
   textsContainer: (scale) => ({
     opacity: scale,
-    transform: [{scale}],
+    transform: [{ scale }],
     ...globalStyles.shadow,
     justifyContent: "center",
     alignItems: "center",
@@ -172,14 +163,14 @@ const styles = StyleSheet.create({
   firstButtonOuterOuterContainer: (zIndex, bottomSafeAreaInset, position) => ({
     zIndex,
     position,
-    bottom: position === 'absolute' ? bottomSafeAreaInset + 75 : 0,
+    bottom: position === "absolute" ? bottomSafeAreaInset + 75 : 0,
     left: 0,
     right: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   }),
   firstButtonOuterContainer: (scale) => ({
-    transform: [{scale}],
+    transform: [{ scale }],
   }),
   firstButtonContainer: (alt) => ({
     borderWidth: alt ? 2 : 0,
@@ -187,9 +178,9 @@ const styles = StyleSheet.create({
     height: 42,
     width: 231,
     borderRadius: 7.5,
-    backgroundColor: alt ? 'white' : colors.treeBlues,
-    justifyContent: 'center',
-    alignItems: 'center',
-    ...(alt ? globalStyles.shadow : {})
+    backgroundColor: alt ? "white" : colors.treeBlues,
+    justifyContent: "center",
+    alignItems: "center",
+    ...(alt ? globalStyles.shadow : {}),
   }),
 });

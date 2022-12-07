@@ -1,46 +1,38 @@
 import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Keyboard,
-} from "react-native";
+import { View, StyleSheet, SafeAreaView, ScrollView, Keyboard } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { colors } from "../../values/colors";
-import {useKeyboard} from '../../hooks/useKeyboard'
+import { useKeyboard } from "../../hooks/useKeyboard";
 import { ProfileView } from "../views/login/views";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { DEFAULT_IMAGE_QUALITY, errors, height, isAndroid, smallScreen, width } from "../../values/consts";
 import { UserContext } from "../../context/context";
 import { SAVE_TOKEN, SAVE_USER } from "../../context/userReducer";
-import * as Permissions from "expo-permissions";
 import { Popup } from "../views/Popup";
 import { strings } from "../../values/strings";
 import { askSettings } from "../../hooks/usePermissions";
-import { Auth } from 'aws-amplify';
+import { Auth } from "aws-amplify";
 import { useUploadImage } from "../../hooks/aws";
 import { cognitoToUser } from "../../hooks/useUser";
 import { objectLength, resizeImage, validateEmail } from "../../hooks/helpers";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import _ from "lodash";
 import { useImage } from "../../hooks/useImage";
 
 export const ProfileScreen = ({ navigation }) => {
-
   const [errorData, setErrorData] = useState(strings.popups.empty);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
 
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-  const {state, dispatch} = useContext(UserContext);
-  const {user} = state;
+  const { state, dispatch } = useContext(UserContext);
+  const { user } = state;
 
   const [name, setName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
 
-  const {image, setImage, loadingImage, selectImage, imagePopupvisible, setPopupVisible, setLoadingImage} = useImage();
-  
+  const { image, setImage, loadingImage, selectImage, imagePopupvisible, setPopupVisible, setLoadingImage } = useImage();
+
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [keyboardHeight] = useKeyboard();
   const [safeAreaHeight, setSafeAreaHeight] = useState(height);
@@ -49,7 +41,7 @@ export const ProfileScreen = ({ navigation }) => {
 
   const { uploadImage } = useUploadImage();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (user) {
       if (user.name) {
         setName(user.name);
@@ -60,32 +52,35 @@ export const ProfileScreen = ({ navigation }) => {
       if (user.image) {
         setLoadingImage(true);
         setImage({
-          uri: user.image
-        })
+          uri: user.image,
+        });
       }
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     debounce.cancel();
     debounce(keyboardHeight);
   }, [keyboardHeight]);
 
-  const debounce = useCallback(_.debounce((keyboardHeight) => {
-    setScrollEnabled(smallScreen && keyboardHeight > 0);
-    if (isAndroid) {
-      setScrollEnabled(keyboardHeight > 0);
-    }
-    if (keyboardHeight === 0) {
-      scrollRef?.current.scrollToPosition(0, 0);
-    } else {
-      scrollRef?.current.scrollToPosition(0, height*0.15);
-    }
-  }, 250), []);
+  const debounce = useCallback(
+    _.debounce((keyboardHeight) => {
+      setScrollEnabled(smallScreen && keyboardHeight > 0);
+      if (isAndroid) {
+        setScrollEnabled(keyboardHeight > 0);
+      }
+      if (keyboardHeight === 0) {
+        scrollRef?.current.scrollToPosition(0, 0);
+      } else {
+        scrollRef?.current.scrollToPosition(0, height * 0.15);
+      }
+    }, 250),
+    []
+  );
 
   const onSafeAreaLayout = (event) => {
     setSafeAreaHeight(event.nativeEvent.layout.height);
-  }
+  };
 
   const onNameChanged = useCallback((value) => {
     setName(value);
@@ -100,7 +95,7 @@ export const ProfileScreen = ({ navigation }) => {
   };
 
   const updateChanges = useCallback(async () => {
-    let attributes = {}
+    let attributes = {};
     if (name !== user.name) {
       if (name.trim().length === 0) {
         handleError(errors.enterName);
@@ -130,7 +125,7 @@ export const ProfileScreen = ({ navigation }) => {
           bypassCache: true,
         });
         let result = await Auth.updateUserAttributes(cognitoUser, attributes);
-        if (result === 'SUCCESS') {
+        if (result === "SUCCESS") {
           let updatedCognitoUser = await Auth.currentAuthenticatedUser({
             bypassCache: true,
           });
@@ -143,41 +138,46 @@ export const ProfileScreen = ({ navigation }) => {
       } finally {
         setLoadingUpdate(false);
       }
-    })
-  }, [name, user, signupEmail, image])
+    });
+  }, [name, user, signupEmail, image]);
 
   const logout = useCallback(() => {
-    Auth.signOut().then(()=>{
-      updateUser(null);
-    }).catch((error)=>{
-      console.error(error);
-      updateUser(null);
-    });
-  }, [])
+    Auth.signOut()
+      .then(() => {
+        updateUser(null);
+      })
+      .catch((error) => {
+        console.error(error);
+        updateUser(null);
+      });
+  }, []);
 
   const updateUser = (user) => {
     dispatch({
       type: SAVE_USER,
-      payload: user
+      payload: user,
     });
     if (user === null) {
       dispatch({
         type: SAVE_TOKEN,
-        payload: null
+        payload: null,
       });
     }
-    navigation.navigate("Home")
-  }
+    navigation.navigate("Home");
+  };
 
-  const tapClose = useCallback((event) => {
-    if (event.nativeEvent.state === State.END) {
-      if (keyboardHeight > 0 ) {
-        Keyboard.dismiss();
-      } else {
-        goBack();
+  const tapClose = useCallback(
+    (event) => {
+      if (event.nativeEvent.state === State.END) {
+        if (keyboardHeight > 0) {
+          Keyboard.dismiss();
+        } else {
+          goBack();
+        }
       }
-    }
-  }, [keyboardHeight])
+    },
+    [keyboardHeight]
+  );
 
   const handleError = (error) => {
     if (error) {
@@ -185,14 +185,12 @@ export const ProfileScreen = ({ navigation }) => {
       setErrorPopupVisible(true);
     }
     console.error(error);
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView onLayout={onSafeAreaLayout} ref={scrollRef} scrollEnabled={scrollEnabled} contentContainerStyle={styles.scrollView}>
-
         <View style={styles.popupsContainer(safeAreaHeight)}>
-
           <TapGestureHandler onHandlerStateChange={tapClose}>
             <View style={StyleSheet.absoluteFill} />
           </TapGestureHandler>
@@ -211,7 +209,6 @@ export const ProfileScreen = ({ navigation }) => {
             logout={logout}
             updateChanges={updateChanges}
           />
-
         </View>
       </KeyboardAwareScrollView>
       <Popup textData={strings.popups.gallery} action={askSettings} popupVisible={imagePopupvisible} setPopupVisible={setPopupVisible} />
@@ -220,7 +217,7 @@ export const ProfileScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.clear,
@@ -230,14 +227,14 @@ const styles = StyleSheet.create({
 
   scrollView: {
     flexGrow: 1,
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: "center",
   },
 
   popupsContainer: (height) => ({
     height,
     width: width,
-    alignItems: 'center',
-    justifyContent: 'center',
-  })
+    alignItems: "center",
+    justifyContent: "center",
+  }),
 });

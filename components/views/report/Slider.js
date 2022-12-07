@@ -8,7 +8,7 @@ import LottieView from 'lottie-react-native';
 import { strings } from "../../../values/strings";
 import { colors } from "../../../values/colors";
 import useIsMounted from 'ismounted';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { globalStyles } from "../../../values/styles";
 import {ActivityIndicator} from "../ActivityIndicator";
 

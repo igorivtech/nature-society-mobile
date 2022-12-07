@@ -21,7 +21,7 @@ import useIsMounted from "ismounted";
 import { useShare } from "../../hooks/useShare";
 import { useImage } from "../../hooks/useImage";
 import { useAndroidOnBack } from "../../hooks/useAndroidOnBack";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ClosePanelArrow } from "../views/ClosePanelArrow";
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler";
 

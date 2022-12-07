@@ -5,7 +5,7 @@ export const useAppState = (onBackground = null, onForeground = null) => {
   const appState = useRef(AppState.currentState);
 
   const handleAppStateChange = (nextAppState) => {
-    if (appState.current === 'background' && nextAppState === "active") {
+    if (appState.current === "background" && nextAppState === "active") {
       // App has come to the foreground!
       if (onForeground) {
         onForeground();
@@ -22,7 +22,7 @@ export const useAppState = (onBackground = null, onForeground = null) => {
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChange);
     return () => {
-      AppState.removeEventListener("change", handleAppStateChange);
+      // AppState.removeEventListener("change", handleAppStateChange);
     };
   }, []);
 };

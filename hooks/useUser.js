@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Amplify, { Auth } from "aws-amplify";
 import { SAVE_SETTINGS, SAVE_TOKEN, SAVE_USER, SAVE_OFFLINE_USER } from "../context/userReducer";
 import { useServer } from "./useServer";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getExpoToken } from "./helpers";
 import { useAppState } from "./useAppState";
 
@@ -12,18 +12,20 @@ export const ATTRIBUTE_UNLOCKED_PLACES = "custom:unlockedPlaces";
 export const ATTRIBUTE_PUSH_TOKEN = "custom:pushToken";
 export const ATTRIBUTE_LAST_USED_DATE = "custom:lastUsedDate";
 
-export const OFFLINE_USER_KEY = 'OFFLINE_USER_KEY';
+export const OFFLINE_USER_KEY = "OFFLINE_USER_KEY";
 
 export const useUser = (dispatch) => {
   const [loadingUser, setLoadingUser] = useState(true);
-  const {updatePushToken} = useServer();
+  const { updatePushToken } = useServer();
 
   const lastRefresh = useRef(new Date());
 
-  useAppState(null, async () => { // onForeground
+  useAppState(null, async () => {
+    // onForeground
     const now = new Date();
-    const secondsDiff = (now - lastRefresh.current)/1000;
-    if (secondsDiff >= 60 * 30) { // 60 seconds in minute, 30 minutes
+    const secondsDiff = (now - lastRefresh.current) / 1000;
+    if (secondsDiff >= 60 * 30) {
+      // 60 seconds in minute, 30 minutes
       lastRefresh.current = now;
       try {
         const cognitoUser = await Auth.currentAuthenticatedUser();
@@ -42,7 +44,7 @@ export const useUser = (dispatch) => {
   });
 
   useEffect(() => {
-    getExpoToken().then(pushToken=>{
+    getExpoToken().then((pushToken) => {
       if (pushToken != null) {
         updatePushToken(pushToken);
       }
@@ -62,14 +64,14 @@ export const useUser = (dispatch) => {
         });
         // send token and date to Ron
       })
-      .catch(async(error) => {
+      .catch(async (error) => {
         const savedOfflineUser = await AsyncStorage.getItem(OFFLINE_USER_KEY);
         const user = JSON.parse(savedOfflineUser);
         if (savedOfflineUser != null && user != null) {
           dispatch({
             type: SAVE_OFFLINE_USER,
-            payload: user
-          })
+            payload: user,
+          });
         }
       })
       .finally(() => {
@@ -105,8 +107,8 @@ function isNumeric(value) {
 
 export const cognitoToUser = (cognitoUser) => {
   const { attributes } = cognitoUser;
-  let unlockedPlaces = JSON.parse(attributes[ATTRIBUTE_UNLOCKED_PLACES]);
-  if (Array.isArray(unlockedPlaces)) {
+  let unlockedPlaces = attributes[ATTRIBUTE_UNLOCKED_PLACES] ? JSON.parse(attributes[ATTRIBUTE_UNLOCKED_PLACES]) : false;
+  if (unlockedPlaces && unlockedPlaces.length > 0) {
     unlockedPlaces = arrayToDic(unlockedPlaces);
   }
   const user = {
@@ -124,11 +126,7 @@ export const cognitoToUser = (cognitoUser) => {
 
 export const getToken = (cognitoUser) => {
   const { signInUserSession } = cognitoUser;
-  if (
-    signInUserSession &&
-    signInUserSession.accessToken &&
-    signInUserSession.accessToken.jwtToken
-  ) {
+  if (signInUserSession && signInUserSession.accessToken && signInUserSession.accessToken.jwtToken) {
     return signInUserSession.accessToken.jwtToken;
   }
   return null;
