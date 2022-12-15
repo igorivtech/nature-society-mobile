@@ -49,6 +49,8 @@
     <true/>
     <key>FacebookAutoLogAppEventsEnabled</key>
     <true/>
+    <key>FacebookClientToken</key>
+    <string>664306093049-taeeklono5kpl1tapr31ja7893rnrmag.apps.googleusercontent.com</string>
     <key>FacebookDisplayName</key>
     <string>בשביל הטבע</string>
     <key>GMSApiKey</key>
